@@ -1,0 +1,1169 @@
+Index: lib/main.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:flavr/pages/home_page/HomePage.dart';\r\nimport 'package:flavr/pages/login_page/LoginPage.dart';\r\nimport 'package:flavr/pages/outlet_menu/OutletMenu.dart';\r\nimport 'package:flavr/pages/outlets_list_page/OutletsLists.dart';\r\nimport 'package:flavr/pages/splash.dart';\r\nimport 'package:flutter/material.dart';\r\n\r\nvoid main() {\r\n  runApp(const MyApp());\r\n}\r\n\r\nclass MyApp extends StatelessWidget {\r\n\r\n  const MyApp({Key? key}) : super(key: key);\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return MaterialApp(\r\n      title: 'Flutter Demo',\r\n      theme: ThemeData.light(),\r\n      debugShowCheckedModeBanner: false,\r\n      initialRoute: \"/login\",\r\n      routes: {\r\n        \"/splash\": (context)=>const SplashScreen(),\r\n        \"/login\": (context)=>const LoginPage(),\r\n        \"/outletList\": (context)=> const OutletsList(),\r\n        \"/outletMenu\": (context)=> const OutletMenu(),\r\n        \"/homePage\": (context)=> const HomePage()\r\n      },\r\n    );\r\n  }\r\n}\r\n\r\n\r\nclass Example extends StatefulWidget {\r\n  const Example({Key? key}) : super(key: key);\r\n\r\n  @override\r\n  State<Example> createState() => _ExampleState();\r\n}\r\n\r\nclass _ExampleState extends State<Example> {\r\n\r\n  @override\r\n  void initState() {\r\n    super.initState();\r\n  }\r\n\r\n  @override\r\n  void dispose() {\r\n\r\n    super.dispose();\r\n  }\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return const Placeholder();\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/main.dart b/lib/main.dart
+--- a/lib/main.dart	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ b/lib/main.dart	(date 1685443071967)
+@@ -2,7 +2,7 @@
+ import 'package:flavr/pages/login_page/LoginPage.dart';
+ import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
+ import 'package:flavr/pages/outlets_list_page/OutletsLists.dart';
+-import 'package:flavr/pages/splash.dart';
++import 'package:flavr/pages/splashscreen/splashscreen.dart';
+ import 'package:flutter/material.dart';
+ 
+ void main() {
+@@ -18,9 +18,9 @@
+       title: 'Flutter Demo',
+       theme: ThemeData.light(),
+       debugShowCheckedModeBanner: false,
+-      initialRoute: "/login",
++      initialRoute: "/splashscreen",
+       routes: {
+-        "/splash": (context)=>const SplashScreen(),
++        "/splashscreen": (context)=>const SplashScreen(),
+         "/login": (context)=>const LoginPage(),
+         "/outletList": (context)=> const OutletsList(),
+         "/outletMenu": (context)=> const OutletMenu(),
+Index: lib/pages/splash.dart
+===================================================================
+diff --git a/lib/pages/splash.dart b/lib/pages/splash.dart
+deleted file mode 100644
+--- a/lib/pages/splash.dart	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ /dev/null	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
+@@ -1,21 +0,0 @@
+-import 'package:flutter/material.dart';
+-
+-class SplashScreen extends StatelessWidget {
+-  const SplashScreen({Key? key}) : super(key: key);
+-
+-  @override
+-  Widget build(BuildContext context) {
+-    return Scaffold(
+-        body: DecoratedBox(
+-          decoration: const BoxDecoration(
+-              image: DecorationImage(
+-                  image: AssetImage("assets/images/coffee.png"),
+-                  fit: BoxFit.cover)
+-          ),
+-          child: Expanded(
+-            child: Container(),
+-          ),
+-        ),
+-    );
+-  }
+-}
+Index: .idea/discord.xml
+===================================================================
+diff --git a/.idea/discord.xml b/.idea/discord.xml
+deleted file mode 100644
+--- a/.idea/discord.xml	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ /dev/null	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
+@@ -1,7 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="DiscordProjectSettings">
+-    <option name="show" value="ASK" />
+-    <option name="description" value="" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .dart_tool/package_config_subset
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>archive\r\n2.12\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/archive-3.3.7/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/archive-3.3.7/lib/\r\nasync\r\n2.18\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/async-2.11.0/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/async-2.11.0/lib/\r\nboolean_selector\r\n2.17\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1/lib/\r\ncharacters\r\n2.12\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/characters-1.3.0/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/characters-1.3.0/lib/\r\nclock\r\n2.12\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/clock-1.1.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/clock-1.1.1/lib/\r\ncollection\r\n2.18\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/collection-1.17.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/collection-1.17.1/lib/\r\nconvert\r\n2.18\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/convert-3.1.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/convert-3.1.1/lib/\r\ncrypto\r\n2.19\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/crypto-3.0.3/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/crypto-3.0.3/lib/\r\ncupertino_icons\r\n2.12\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5/lib/\r\nfake_async\r\n2.12\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/fake_async-1.3.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/fake_async-1.3.1/lib/\r\nflutter_lints\r\n2.17\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1/lib/\r\nhttp\r\n3.0\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http-1.0.0/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http-1.0.0/lib/\r\nhttp_parser\r\n2.12\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http_parser-4.0.2/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib/\r\njs\r\n2.19\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/js-0.6.7/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/js-0.6.7/lib/\r\nlints\r\n2.17\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lints-2.0.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lints-2.0.1/lib/\r\nlottie\r\n2.18\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lottie-2.3.2/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lottie-2.3.2/lib/\r\nmatcher\r\n2.18\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/matcher-0.12.15/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/matcher-0.12.15/lib/\r\nmaterial_color_utilities\r\n2.13\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0/lib/\r\nmeta\r\n2.12\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/meta-1.9.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/meta-1.9.1/lib/\r\npath\r\n2.12\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/path-1.8.3/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/path-1.8.3/lib/\r\npointycastle\r\n2.14\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/pointycastle-3.7.3/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/pointycastle-3.7.3/lib/\r\nsource_span\r\n2.14\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/source_span-1.9.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/source_span-1.9.1/lib/\r\nstack_trace\r\n2.18\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/lib/\r\nstream_channel\r\n2.14\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stream_channel-2.1.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stream_channel-2.1.1/lib/\r\nstring_scanner\r\n2.18\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/lib/\r\nterm_glyph\r\n2.12\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/term_glyph-1.2.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/term_glyph-1.2.1/lib/\r\ntest_api\r\n2.18\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/test_api-0.5.1/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/test_api-0.5.1/lib/\r\ntyped_data\r\n2.17\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/typed_data-1.3.2/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/typed_data-1.3.2/lib/\r\nvector_math\r\n2.14\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/vector_math-2.1.4/\r\nfile:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib/\r\nflavr\r\n2.17\r\nfile:///Users/sanyamratreja/AndroidStudioProjects/FlavR/\r\nfile:///Users/sanyamratreja/AndroidStudioProjects/FlavR/lib/\r\nsky_engine\r\n3.0\r\nfile:///Users/sanyamratreja/development/flutter/bin/cache/pkg/sky_engine/\r\nfile:///Users/sanyamratreja/development/flutter/bin/cache/pkg/sky_engine/lib/\r\nflutter\r\n3.0\r\nfile:///Users/sanyamratreja/development/flutter/packages/flutter/\r\nfile:///Users/sanyamratreja/development/flutter/packages/flutter/lib/\r\nflutter_test\r\n3.0\r\nfile:///Users/sanyamratreja/development/flutter/packages/flutter_test/\r\nfile:///Users/sanyamratreja/development/flutter/packages/flutter_test/lib/\r\n2\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.dart_tool/package_config_subset b/.dart_tool/package_config_subset
+--- a/.dart_tool/package_config_subset	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ b/.dart_tool/package_config_subset	(date 1685442618532)
+@@ -1,133 +1,133 @@
++flavr
++2.17
++file:///C:/Users/HP/AndroidStudioProjects/FlavR/
++file:///C:/Users/HP/AndroidStudioProjects/FlavR/lib/
+ archive
+ 2.12
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/archive-3.3.7/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/archive-3.3.7/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.3.7/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.3.7/lib/
+ async
+ 2.18
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/async-2.11.0/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/async-2.11.0/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0/lib/
+ boolean_selector
+ 2.17
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1/lib/
+ characters
+ 2.12
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/characters-1.3.0/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/characters-1.3.0/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0/lib/
+ clock
+ 2.12
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/clock-1.1.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/clock-1.1.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1/lib/
+ collection
+ 2.18
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/collection-1.17.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/collection-1.17.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.1/lib/
+ convert
+ 2.18
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/convert-3.1.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/convert-3.1.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.1/lib/
+ crypto
+ 2.19
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/crypto-3.0.3/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/crypto-3.0.3/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3/lib/
+ cupertino_icons
+ 2.12
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.5/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.5/lib/
+ fake_async
+ 2.12
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/fake_async-1.3.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/fake_async-1.3.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1/lib/
+ flutter_lints
+ 2.17
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.1/lib/
+ http
+ 3.0
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http-1.0.0/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http-1.0.0/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.0.0/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.0.0/lib/
+ http_parser
+ 2.12
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http_parser-4.0.2/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2/lib/
+ js
+ 2.19
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/js-0.6.7/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/js-0.6.7/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7/lib/
+ lints
+ 2.17
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lints-2.0.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lints-2.0.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.0.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.0.1/lib/
+ lottie
+ 2.18
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lottie-2.3.2/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lottie-2.3.2/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.3.2/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.3.2/lib/
+ matcher
+ 2.18
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/matcher-0.12.15/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/matcher-0.12.15/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.15/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.15/lib/
+ material_color_utilities
+ 2.13
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.2.0/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.2.0/lib/
+ meta
+ 2.12
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/meta-1.9.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/meta-1.9.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1/lib/
+ path
+ 2.12
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/path-1.8.3/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/path-1.8.3/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3/lib/
+ pointycastle
+ 2.14
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/pointycastle-3.7.3/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/pointycastle-3.7.3/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3/lib/
+ source_span
+ 2.14
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/source_span-1.9.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/source_span-1.9.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.9.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.9.1/lib/
+ stack_trace
+ 2.18
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0/lib/
+ stream_channel
+ 2.14
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stream_channel-2.1.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stream_channel-2.1.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/stream_channel-2.1.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/stream_channel-2.1.1/lib/
+ string_scanner
+ 2.18
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.2.0/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.2.0/lib/
+ term_glyph
+ 2.12
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/term_glyph-1.2.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/term_glyph-1.2.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1/lib/
+ test_api
+ 2.18
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/test_api-0.5.1/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/test_api-0.5.1/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.5.1/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.5.1/lib/
+ typed_data
+ 2.17
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/typed_data-1.3.2/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/typed_data-1.3.2/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2/lib/
+ vector_math
+ 2.14
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/vector_math-2.1.4/
+-file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib/
+-flavr
+-2.17
+-file:///Users/sanyamratreja/AndroidStudioProjects/FlavR/
+-file:///Users/sanyamratreja/AndroidStudioProjects/FlavR/lib/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4/
++file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4/lib/
+ sky_engine
+ 3.0
+-file:///Users/sanyamratreja/development/flutter/bin/cache/pkg/sky_engine/
+-file:///Users/sanyamratreja/development/flutter/bin/cache/pkg/sky_engine/lib/
++file:///C:/development/flutter/bin/cache/pkg/sky_engine/
++file:///C:/development/flutter/bin/cache/pkg/sky_engine/lib/
+ flutter
+ 3.0
+-file:///Users/sanyamratreja/development/flutter/packages/flutter/
+-file:///Users/sanyamratreja/development/flutter/packages/flutter/lib/
++file:///C:/development/flutter/packages/flutter/
++file:///C:/development/flutter/packages/flutter/lib/
+ flutter_test
+ 3.0
+-file:///Users/sanyamratreja/development/flutter/packages/flutter_test/
+-file:///Users/sanyamratreja/development/flutter/packages/flutter_test/lib/
++file:///C:/development/flutter/packages/flutter_test/
++file:///C:/development/flutter/packages/flutter_test/lib/
+ 2
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"VcsDirectoryMappings\">\r\n    <mapping directory=\"$PROJECT_DIR$\" vcs=\"Git\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+--- a/.idea/vcs.xml	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ b/.idea/vcs.xml	(date 1685442987487)
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="VcsDirectoryMappings">
+-    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++    <mapping directory="" vcs="Git" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: ios/Flutter/flutter_export_environment.sh
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#!/bin/sh\r\n# This is a generated file; do not edit or check into version control.\r\nexport \"FLUTTER_ROOT=/Users/sanyamratreja/development/flutter\"\r\nexport \"FLUTTER_APPLICATION_PATH=/Users/sanyamratreja/AndroidStudioProjects/FlavR\"\r\nexport \"COCOAPODS_PARALLEL_CODE_SIGN=true\"\r\nexport \"FLUTTER_TARGET=lib/main.dart\"\r\nexport \"FLUTTER_BUILD_DIR=build\"\r\nexport \"FLUTTER_BUILD_NAME=1.0.0\"\r\nexport \"FLUTTER_BUILD_NUMBER=1\"\r\nexport \"DART_OBFUSCATION=false\"\r\nexport \"TRACK_WIDGET_CREATION=true\"\r\nexport \"TREE_SHAKE_ICONS=false\"\r\nexport \"PACKAGE_CONFIG=.dart_tool/package_config.json\"\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ios/Flutter/flutter_export_environment.sh b/ios/Flutter/flutter_export_environment.sh
+--- a/ios/Flutter/flutter_export_environment.sh	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ b/ios/Flutter/flutter_export_environment.sh	(date 1685442618616)
+@@ -1,9 +1,9 @@
+ #!/bin/sh
+ # This is a generated file; do not edit or check into version control.
+-export "FLUTTER_ROOT=/Users/sanyamratreja/development/flutter"
+-export "FLUTTER_APPLICATION_PATH=/Users/sanyamratreja/AndroidStudioProjects/FlavR"
++export "FLUTTER_ROOT=C:\development\flutter"
++export "FLUTTER_APPLICATION_PATH=C:\Users\HP\AndroidStudioProjects\FlavR"
+ export "COCOAPODS_PARALLEL_CODE_SIGN=true"
+-export "FLUTTER_TARGET=lib/main.dart"
++export "FLUTTER_TARGET=lib\main.dart"
+ export "FLUTTER_BUILD_DIR=build"
+ export "FLUTTER_BUILD_NAME=1.0.0"
+ export "FLUTTER_BUILD_NUMBER=1"
+Index: .idea/libraries/Dart_Packages.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"libraryTable\">\r\n  <library name=\"Dart Packages\" type=\"DartPackagesLibraryType\">\r\n    <properties>\r\n      <option name=\"packageNameToDirsMap\">\r\n        <entry key=\"archive\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/archive-3.3.7/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"async\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/async-2.11.0/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"boolean_selector\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"characters\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/characters-1.3.0/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"clock\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/clock-1.1.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"collection\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/collection-1.17.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"convert\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/convert-3.1.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"crypto\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/crypto-3.0.3/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"cupertino_icons\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"fake_async\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/fake_async-1.3.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"flutter\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/development/flutter/packages/flutter/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"flutter_lints\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"flutter_test\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/development/flutter/packages/flutter_test/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"http\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/http-1.0.0/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"http_parser\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"js\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/js-0.6.7/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"lints\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/lints-2.0.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"lottie\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/lottie-2.3.2/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"matcher\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/matcher-0.12.15/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"material_color_utilities\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"meta\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.9.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"path\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/path-1.8.3/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"pointycastle\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/pointycastle-3.7.3/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"sky_engine\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/development/flutter/bin/cache/pkg/sky_engine/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"source_span\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/source_span-1.9.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"stack_trace\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"stream_channel\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/stream_channel-2.1.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"string_scanner\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"term_glyph\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/term_glyph-1.2.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"test_api\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/test_api-0.5.1/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"typed_data\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/typed_data-1.3.2/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n        <entry key=\"vector_math\">\r\n          <value>\r\n            <list>\r\n              <option value=\"$USER_HOME$/.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib\" />\r\n            </list>\r\n          </value>\r\n        </entry>\r\n      </option>\r\n    </properties>\r\n    <CLASSES>\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/archive-3.3.7/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/async-2.11.0/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/characters-1.3.0/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/clock-1.1.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/collection-1.17.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/convert-3.1.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/crypto-3.0.3/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/fake_async-1.3.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/http-1.0.0/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/js-0.6.7/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/lints-2.0.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/lottie-2.3.2/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/matcher-0.12.15/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.9.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/path-1.8.3/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/pointycastle-3.7.3/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/source_span-1.9.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/stream_channel-2.1.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/term_glyph-1.2.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/test_api-0.5.1/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/typed_data-1.3.2/lib\" />\r\n      <root url=\"file://$USER_HOME$/.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/pkg/sky_engine/lib\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/packages/flutter/lib\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/packages/flutter_test/lib\" />\r\n    </CLASSES>\r\n    <JAVADOC />\r\n    <SOURCES />\r\n  </library>\r\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/Dart_Packages.xml b/.idea/libraries/Dart_Packages.xml
+--- a/.idea/libraries/Dart_Packages.xml	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ b/.idea/libraries/Dart_Packages.xml	(date 1685442987448)
+@@ -5,262 +5,262 @@
+         <entry key="archive">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/archive-3.3.7/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.3.7/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="async">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/async-2.11.0/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="boolean_selector">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="characters">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/characters-1.3.0/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="clock">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/clock-1.1.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="collection">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/collection-1.17.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="convert">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/convert-3.1.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="crypto">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/crypto-3.0.3/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="cupertino_icons">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.5/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="fake_async">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/fake_async-1.3.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="flutter">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/development/flutter/packages/flutter/lib" />
++              <option value="$PROJECT_DIR$/../../../../development/flutter/packages/flutter/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="flutter_lints">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="flutter_test">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/development/flutter/packages/flutter_test/lib" />
++              <option value="$PROJECT_DIR$/../../../../development/flutter/packages/flutter_test/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="http">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/http-1.0.0/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.0.0/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="http_parser">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="js">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/js-0.6.7/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="lints">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/lints-2.0.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.0.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="lottie">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/lottie-2.3.2/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.3.2/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="matcher">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/matcher-0.12.15/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.15/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="material_color_utilities">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.2.0/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="meta">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.9.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="path">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path-1.8.3/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="pointycastle">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/pointycastle-3.7.3/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="sky_engine">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/development/flutter/bin/cache/pkg/sky_engine/lib" />
++              <option value="$PROJECT_DIR$/../../../../development/flutter/bin/cache/pkg/sky_engine/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="source_span">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/source_span-1.9.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.9.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="stack_trace">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="stream_channel">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/stream_channel-2.1.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/stream_channel-2.1.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="string_scanner">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.2.0/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="term_glyph">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/term_glyph-1.2.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="test_api">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/test_api-0.5.1/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.5.1/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="typed_data">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/typed_data-1.3.2/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2/lib" />
+             </list>
+           </value>
+         </entry>
+         <entry key="vector_math">
+           <value>
+             <list>
+-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib" />
++              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4/lib" />
+             </list>
+           </value>
+         </entry>
+       </option>
+     </properties>
+     <CLASSES>
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/archive-3.3.7/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/async-2.11.0/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/characters-1.3.0/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/clock-1.1.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/collection-1.17.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/convert-3.1.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/crypto-3.0.3/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/fake_async-1.3.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/http-1.0.0/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/js-0.6.7/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/lints-2.0.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/lottie-2.3.2/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/matcher-0.12.15/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/meta-1.9.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path-1.8.3/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pointycastle-3.7.3/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/source_span-1.9.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/stack_trace-1.11.0/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/stream_channel-2.1.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/string_scanner-1.2.0/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/term_glyph-1.2.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/test_api-0.5.1/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/typed_data-1.3.2/lib" />
+-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/vector_math-2.1.4/lib" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/pkg/sky_engine/lib" />
+-      <root url="file://$USER_HOME$/development/flutter/packages/flutter/lib" />
+-      <root url="file://$USER_HOME$/development/flutter/packages/flutter_test/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.3.7/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.5/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.0.0/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.0.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.3.2/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.15/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.2.0/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.9.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/stream_channel-2.1.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.2.0/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.5.1/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2/lib" />
++      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4/lib" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/pkg/sky_engine/lib" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/packages/flutter/lib" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/packages/flutter_test/lib" />
+     </CLASSES>
+     <JAVADOC />
+     <SOURCES />
+Index: ios/Flutter/Generated.xcconfig
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// This is a generated file; do not edit or check into version control.\r\nFLUTTER_ROOT=/Users/sanyamratreja/development/flutter\r\nFLUTTER_APPLICATION_PATH=/Users/sanyamratreja/AndroidStudioProjects/FlavR\r\nCOCOAPODS_PARALLEL_CODE_SIGN=true\r\nFLUTTER_TARGET=lib/main.dart\r\nFLUTTER_BUILD_DIR=build\r\nFLUTTER_BUILD_NAME=1.0.0\r\nFLUTTER_BUILD_NUMBER=1\r\nEXCLUDED_ARCHS[sdk=iphonesimulator*]=i386\r\nEXCLUDED_ARCHS[sdk=iphoneos*]=armv7\r\nDART_OBFUSCATION=false\r\nTRACK_WIDGET_CREATION=true\r\nTREE_SHAKE_ICONS=false\r\nPACKAGE_CONFIG=.dart_tool/package_config.json\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/ios/Flutter/Generated.xcconfig b/ios/Flutter/Generated.xcconfig
+--- a/ios/Flutter/Generated.xcconfig	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ b/ios/Flutter/Generated.xcconfig	(date 1685442618614)
+@@ -1,8 +1,8 @@
+ // This is a generated file; do not edit or check into version control.
+-FLUTTER_ROOT=/Users/sanyamratreja/development/flutter
+-FLUTTER_APPLICATION_PATH=/Users/sanyamratreja/AndroidStudioProjects/FlavR
++FLUTTER_ROOT=C:\development\flutter
++FLUTTER_APPLICATION_PATH=C:\Users\HP\AndroidStudioProjects\FlavR
+ COCOAPODS_PARALLEL_CODE_SIGN=true
+-FLUTTER_TARGET=lib/main.dart
++FLUTTER_TARGET=lib\main.dart
+ FLUTTER_BUILD_DIR=build
+ FLUTTER_BUILD_NAME=1.0.0
+ FLUTTER_BUILD_NUMBER=1
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"settings.editor.selected.configurable\" value=\"org.jetbrains.plugins.github.ui.GithubSettingsConfigurable\" />\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"main.dart\" type=\"FlutterRunConfigurationType\" factoryName=\"Flutter\">\r\n      <option name=\"filePath\" value=\"$PROJECT_DIR$/lib/main.dart\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ b/.idea/workspace.xml	(date 1685443834316)
+@@ -1,12 +1,83 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="PropertiesComponent">
+-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
++  <component name="AutoImportSettings">
++    <option name="autoReloadType" value="NONE" />
++  </component>
++  <component name="ChangeListManager">
++    <list default="true" id="3bbd59e2-e7ab-4b0c-879f-5f7f19dd359c" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/lib/pages/splashscreen/splashscreen.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config_subset" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config_subset" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/discord.xml" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/ios/Flutter/Generated.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/Generated.xcconfig" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/ios/Flutter/flutter_export_environment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Flutter/flutter_export_environment.sh" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.h" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/lib/pages/splash.dart" beforeDir="false" />
++    </list>
++    <option name="SHOW_DIALOG" value="false" />
++    <option name="HIGHLIGHT_CONFLICTS" value="true" />
++    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
++    <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
++  <component name="MarkdownSettingsMigration">
++    <option name="stateVersion" value="1" />
++  </component>
++  <component name="ProjectId" id="2QVdsuCl6gJAQus0GsjezwZ8k6C" />
++  <component name="ProjectViewState">
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
+   </component>
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "RunOnceActivity.OpenProjectViewOnStart": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "RunOnceActivity.cidr.known.project.marker": "true",
++    "cidr.known.project.marker": "true",
++    "dart.analysis.tool.window.visible": "false",
++    "last_opened_file_path": "C:/Users/HP/AndroidStudioProjects/untitled",
++    "project.structure.last.edited": "Project",
++    "project.structure.proportion": "0.0",
++    "project.structure.side.proportion": "0.2",
++    "show.migrate.to.gradle.popup": "false"
++  }
++}]]></component>
+   <component name="RunManager">
+     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+       <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+       <method v="2" />
+     </configuration>
+   </component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
++  <component name="TaskManager">
++    <task active="true" id="Default" summary="Default task">
++      <changelist id="3bbd59e2-e7ab-4b0c-879f-5f7f19dd359c" name="Changes" comment="" />
++      <created>1685442892956</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
++      <updated>1685442892956</updated>
++    </task>
++    <servers />
++  </component>
++  <component name="Vcs.Log.Tabs.Properties">
++    <option name="TAB_STATES">
++      <map>
++        <entry key="MAIN">
++          <value>
++            <State />
++          </value>
++        </entry>
++      </map>
++    </option>
++  </component>
+ </project>
+\ No newline at end of file
+Index: android/local.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>sdk.dir=/Users/sanyamratreja/Library/Android/sdk\r\nflutter.sdk=/Users/sanyamratreja/development/flutter\r\nflutter.buildMode=debug\r\nflutter.versionName=1.0.0\r\nflutter.versionCode=1
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>ISO-8859-1
+===================================================================
+diff --git a/android/local.properties b/android/local.properties
+--- a/android/local.properties	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ b/android/local.properties	(date 1685443850447)
+@@ -1,5 +1,5 @@
+-sdk.dir=/Users/sanyamratreja/Library/Android/sdk
+-flutter.sdk=/Users/sanyamratreja/development/flutter
++sdk.dir=C:/Users/HP/AppData/Local/Android/Sdk
++flutter.sdk=C:\\development\\flutter
+ flutter.buildMode=debug
+ flutter.versionName=1.0.0
+ flutter.versionCode=1
+\ No newline at end of file
+Index: .dart_tool/package_config.json
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n  \"configVersion\": 2,\r\n  \"packages\": [\r\n    {\r\n      \"name\": \"archive\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/archive-3.3.7\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.12\"\r\n    },\r\n    {\r\n      \"name\": \"async\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/async-2.11.0\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.18\"\r\n    },\r\n    {\r\n      \"name\": \"boolean_selector\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.17\"\r\n    },\r\n    {\r\n      \"name\": \"characters\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/characters-1.3.0\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.12\"\r\n    },\r\n    {\r\n      \"name\": \"clock\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/clock-1.1.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.12\"\r\n    },\r\n    {\r\n      \"name\": \"collection\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/collection-1.17.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.18\"\r\n    },\r\n    {\r\n      \"name\": \"convert\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/convert-3.1.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.18\"\r\n    },\r\n    {\r\n      \"name\": \"crypto\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/crypto-3.0.3\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.19\"\r\n    },\r\n    {\r\n      \"name\": \"cupertino_icons\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.12\"\r\n    },\r\n    {\r\n      \"name\": \"fake_async\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/fake_async-1.3.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.12\"\r\n    },\r\n    {\r\n      \"name\": \"flutter\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/development/flutter/packages/flutter\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"3.0\"\r\n    },\r\n    {\r\n      \"name\": \"flutter_lints\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.17\"\r\n    },\r\n    {\r\n      \"name\": \"flutter_test\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/development/flutter/packages/flutter_test\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"3.0\"\r\n    },\r\n    {\r\n      \"name\": \"http\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http-1.0.0\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"3.0\"\r\n    },\r\n    {\r\n      \"name\": \"http_parser\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http_parser-4.0.2\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.12\"\r\n    },\r\n    {\r\n      \"name\": \"js\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/js-0.6.7\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.19\"\r\n    },\r\n    {\r\n      \"name\": \"lints\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lints-2.0.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.17\"\r\n    },\r\n    {\r\n      \"name\": \"lottie\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lottie-2.3.2\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.18\"\r\n    },\r\n    {\r\n      \"name\": \"matcher\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/matcher-0.12.15\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.18\"\r\n    },\r\n    {\r\n      \"name\": \"material_color_utilities\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.13\"\r\n    },\r\n    {\r\n      \"name\": \"meta\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/meta-1.9.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.12\"\r\n    },\r\n    {\r\n      \"name\": \"path\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/path-1.8.3\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.12\"\r\n    },\r\n    {\r\n      \"name\": \"pointycastle\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/pointycastle-3.7.3\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.14\"\r\n    },\r\n    {\r\n      \"name\": \"sky_engine\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/development/flutter/bin/cache/pkg/sky_engine\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"3.0\"\r\n    },\r\n    {\r\n      \"name\": \"source_span\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/source_span-1.9.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.14\"\r\n    },\r\n    {\r\n      \"name\": \"stack_trace\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stack_trace-1.11.0\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.18\"\r\n    },\r\n    {\r\n      \"name\": \"stream_channel\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stream_channel-2.1.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.14\"\r\n    },\r\n    {\r\n      \"name\": \"string_scanner\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/string_scanner-1.2.0\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.18\"\r\n    },\r\n    {\r\n      \"name\": \"term_glyph\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/term_glyph-1.2.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.12\"\r\n    },\r\n    {\r\n      \"name\": \"test_api\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/test_api-0.5.1\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.18\"\r\n    },\r\n    {\r\n      \"name\": \"typed_data\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/typed_data-1.3.2\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.17\"\r\n    },\r\n    {\r\n      \"name\": \"vector_math\",\r\n      \"rootUri\": \"file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/vector_math-2.1.4\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.14\"\r\n    },\r\n    {\r\n      \"name\": \"flavr\",\r\n      \"rootUri\": \"../\",\r\n      \"packageUri\": \"lib/\",\r\n      \"languageVersion\": \"2.17\"\r\n    }\r\n  ],\r\n  \"generated\": \"2023-05-30T09:31:49.171423Z\",\r\n  \"generator\": \"pub\",\r\n  \"generatorVersion\": \"3.0.2\"\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.dart_tool/package_config.json b/.dart_tool/package_config.json
+--- a/.dart_tool/package_config.json	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ b/.dart_tool/package_config.json	(date 1685442618476)
+@@ -3,193 +3,193 @@
+   "packages": [
+     {
+       "name": "archive",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/archive-3.3.7",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/archive-3.3.7",
+       "packageUri": "lib/",
+       "languageVersion": "2.12"
+     },
+     {
+       "name": "async",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/async-2.11.0",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0",
+       "packageUri": "lib/",
+       "languageVersion": "2.18"
+     },
+     {
+       "name": "boolean_selector",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.17"
+     },
+     {
+       "name": "characters",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/characters-1.3.0",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0",
+       "packageUri": "lib/",
+       "languageVersion": "2.12"
+     },
+     {
+       "name": "clock",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/clock-1.1.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.12"
+     },
+     {
+       "name": "collection",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/collection-1.17.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.18"
+     },
+     {
+       "name": "convert",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/convert-3.1.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/convert-3.1.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.18"
+     },
+     {
+       "name": "crypto",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/crypto-3.0.3",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.3",
+       "packageUri": "lib/",
+       "languageVersion": "2.19"
+     },
+     {
+       "name": "cupertino_icons",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.5",
+       "packageUri": "lib/",
+       "languageVersion": "2.12"
+     },
+     {
+       "name": "fake_async",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/fake_async-1.3.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/fake_async-1.3.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.12"
+     },
+     {
+       "name": "flutter",
+-      "rootUri": "file:///Users/sanyamratreja/development/flutter/packages/flutter",
++      "rootUri": "file:///C:/development/flutter/packages/flutter",
+       "packageUri": "lib/",
+       "languageVersion": "3.0"
+     },
+     {
+       "name": "flutter_lints",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/flutter_lints-2.0.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.17"
+     },
+     {
+       "name": "flutter_test",
+-      "rootUri": "file:///Users/sanyamratreja/development/flutter/packages/flutter_test",
++      "rootUri": "file:///C:/development/flutter/packages/flutter_test",
+       "packageUri": "lib/",
+       "languageVersion": "3.0"
+     },
+     {
+       "name": "http",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http-1.0.0",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.0.0",
+       "packageUri": "lib/",
+       "languageVersion": "3.0"
+     },
+     {
+       "name": "http_parser",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/http_parser-4.0.2",
+       "packageUri": "lib/",
+       "languageVersion": "2.12"
+     },
+     {
+       "name": "js",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/js-0.6.7",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.7",
+       "packageUri": "lib/",
+       "languageVersion": "2.19"
+     },
+     {
+       "name": "lints",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lints-2.0.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.0.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.17"
+     },
+     {
+       "name": "lottie",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/lottie-2.3.2",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/lottie-2.3.2",
+       "packageUri": "lib/",
+       "languageVersion": "2.18"
+     },
+     {
+       "name": "matcher",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/matcher-0.12.15",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.15",
+       "packageUri": "lib/",
+       "languageVersion": "2.18"
+     },
+     {
+       "name": "material_color_utilities",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/material_color_utilities-0.2.0",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.2.0",
+       "packageUri": "lib/",
+       "languageVersion": "2.13"
+     },
+     {
+       "name": "meta",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/meta-1.9.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.12"
+     },
+     {
+       "name": "path",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/path-1.8.3",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
+       "packageUri": "lib/",
+       "languageVersion": "2.12"
+     },
+     {
+       "name": "pointycastle",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/pointycastle-3.7.3",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/pointycastle-3.7.3",
+       "packageUri": "lib/",
+       "languageVersion": "2.14"
+     },
+     {
+       "name": "sky_engine",
+-      "rootUri": "file:///Users/sanyamratreja/development/flutter/bin/cache/pkg/sky_engine",
++      "rootUri": "file:///C:/development/flutter/bin/cache/pkg/sky_engine",
+       "packageUri": "lib/",
+       "languageVersion": "3.0"
+     },
+     {
+       "name": "source_span",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/source_span-1.9.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.9.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.14"
+     },
+     {
+       "name": "stack_trace",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stack_trace-1.11.0",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/stack_trace-1.11.0",
+       "packageUri": "lib/",
+       "languageVersion": "2.18"
+     },
+     {
+       "name": "stream_channel",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/stream_channel-2.1.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/stream_channel-2.1.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.14"
+     },
+     {
+       "name": "string_scanner",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/string_scanner-1.2.0",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/string_scanner-1.2.0",
+       "packageUri": "lib/",
+       "languageVersion": "2.18"
+     },
+     {
+       "name": "term_glyph",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/term_glyph-1.2.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.12"
+     },
+     {
+       "name": "test_api",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/test_api-0.5.1",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.5.1",
+       "packageUri": "lib/",
+       "languageVersion": "2.18"
+     },
+     {
+       "name": "typed_data",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/typed_data-1.3.2",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/typed_data-1.3.2",
+       "packageUri": "lib/",
+       "languageVersion": "2.17"
+     },
+     {
+       "name": "vector_math",
+-      "rootUri": "file:///Users/sanyamratreja/.pub-cache/hosted/pub.dev/vector_math-2.1.4",
++      "rootUri": "file:///C:/Users/HP/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
+       "packageUri": "lib/",
+       "languageVersion": "2.14"
+     },
+@@ -200,7 +200,7 @@
+       "languageVersion": "2.17"
+     }
+   ],
+-  "generated": "2023-05-30T09:31:49.171423Z",
++  "generated": "2023-05-30T10:30:18.475745Z",
+   "generator": "pub",
+   "generatorVersion": "3.0.2"
+ }
+Index: lib/pages/splashscreen/splashscreen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/pages/splashscreen/splashscreen.dart b/lib/pages/splashscreen/splashscreen.dart
+new file mode 100644
+--- /dev/null	(date 1685443071958)
++++ b/lib/pages/splashscreen/splashscreen.dart	(date 1685443071958)
+@@ -0,0 +1,54 @@
++import 'dart:async';
++import 'package:flutter/material.dart';
++
++class SplashScreen extends StatefulWidget {
++  const SplashScreen({Key? key}) : super(key: key);
++
++  @override
++  State<SplashScreen> createState() => _SplashScreenState();
++}
++
++class _SplashScreenState extends State<SplashScreen> {
++  @override
++  void initState()
++  {
++    super.initState();
++    Timer(const Duration(seconds: 3),
++          () => Navigator.popAndPushNamed(context, "/login"),
++    );
++  }
++  @override
++
++  Widget build(BuildContext context) {
++    final height = MediaQuery.of(context).size.height;
++    return Scaffold(
++        body: DecoratedBox(
++          decoration: const BoxDecoration(
++              image: DecorationImage(
++                  image: AssetImage("assets/images/coffee.png"),
++                  fit: BoxFit.cover)),
++          child: Stack(
++            children: [
++              const Center(
++                  child: Image(image: AssetImage("assets/images/nescafe.png"))),
++              Align(
++                alignment: Alignment.bottomCenter,
++                child: Padding(
++                  padding: EdgeInsets.fromLTRB(0, 0, 0, 0.0525 * height),
++                  child: const Text(
++                    "It all starts with nescafe",
++                    style: TextStyle(
++                        fontSize: 23,
++                        fontWeight: FontWeight.bold,
++                        fontStyle: FontStyle.italic,
++                        color: Colors.white),
++                  ),
++                ),
++              )
++            ],
++          ),
++        ));
++  }
++
++}
++
+Index: .idea/libraries/Dart_SDK.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"libraryTable\">\r\n  <library name=\"Dart SDK\">\r\n    <CLASSES>\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/async\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/cli\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/collection\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/convert\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/core\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/developer\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/ffi\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/html\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/indexed_db\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/io\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/isolate\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/js\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/js_interop\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/js_util\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/math\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/mirrors\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/svg\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/typed_data\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/web_audio\" />\r\n      <root url=\"file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/web_gl\" />\r\n    </CLASSES>\r\n    <JAVADOC />\r\n    <SOURCES />\r\n  </library>\r\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/Dart_SDK.xml b/.idea/libraries/Dart_SDK.xml
+--- a/.idea/libraries/Dart_SDK.xml	(revision a0c7b65d0dffd1f5da2bfe9d4750938011312305)
++++ b/.idea/libraries/Dart_SDK.xml	(date 1685442892945)
+@@ -1,26 +1,26 @@
+ <component name="libraryTable">
+   <library name="Dart SDK">
+     <CLASSES>
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/async" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/cli" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/collection" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/convert" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/core" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/developer" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/ffi" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/html" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/indexed_db" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/io" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/isolate" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/js" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/js_interop" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/js_util" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/math" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/mirrors" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/svg" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/typed_data" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/web_audio" />
+-      <root url="file://$USER_HOME$/development/flutter/bin/cache/dart-sdk/lib/web_gl" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/async" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/cli" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/collection" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/convert" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/core" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/developer" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/ffi" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/html" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/indexed_db" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/io" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/isolate" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/js" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/js_interop" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/js_util" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/math" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/mirrors" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/svg" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/typed_data" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/web_audio" />
++      <root url="file://$PROJECT_DIR$/../../../../development/flutter/bin/cache/dart-sdk/lib/web_gl" />
+     </CLASSES>
+     <JAVADOC />
+     <SOURCES />
