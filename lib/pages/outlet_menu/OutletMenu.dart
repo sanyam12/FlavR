@@ -1,10 +1,18 @@
 import 'dart:developer';
-
 import 'package:flavr/pages/outlet_menu/Categories.dart';
-import 'package:flavr/pages/outlet_menu/Outlet.dart';
 import 'package:flavr/pages/outlet_menu/OutletMenuBloc.dart';
 import 'package:flavr/pages/outlet_menu/Product.dart';
 import 'package:flutter/material.dart';
+
+
+//todo add higher quality images or vectors
+//todo add loading pages
+//todo add default image
+//todo outlet button pending
+//todo profile button pending
+//todo toggle for veg and non veg
+//todo change color of navigation and notification bars
+
 
 class OutletMenu extends StatefulWidget {
   const OutletMenu({Key? key}) : super(key: key);
@@ -91,6 +99,9 @@ class _OutletMenuState extends State<OutletMenu> {
                 (0.05278 * width), (0.0225 * height), (0.05278 * width), 0),
             child: TextField(
               controller: searchController,
+              onChanged: (String search){
+                bloc.searchQuerySink.add(search);
+              },
               // style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -116,10 +127,16 @@ class _OutletMenuState extends State<OutletMenu> {
           Padding(
             padding:
                 EdgeInsets.fromLTRB((0.0389 * width), (0.0225 * height), 0, 0),
-            child: Row(
+            child: const Row(
               children: [
-                Image.asset("assets/images/veg_symbol.png"),
-                const Padding(
+                Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    Icon(Icons.crop_square_sharp, color: Colors.green, size: 36,),
+                    Icon(Icons.circle, color: Colors.green, size: 14),
+                  ],
+                ),
+                Padding(
                   padding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
                   child: Text(
                     "Veg",
@@ -127,10 +144,16 @@ class _OutletMenuState extends State<OutletMenu> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(13.0, 0, 0, 0),
-                  child: Image.asset("assets/images/non_veg_symbol.png"),
+                  padding: EdgeInsets.fromLTRB(13.0, 0, 0, 0),
+                  child: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      Icon(Icons.crop_square_sharp, color: Colors.red, size: 36,),
+                      Icon(Icons.circle, color: Colors.red, size: 14),
+                    ],
+                  ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
                   child: Text(
                     "Non-Veg",
@@ -221,8 +244,12 @@ class _OutletMenuState extends State<OutletMenu> {
                         for (var i in snapshot.data!) {
                           List<Widget> menuItems = [];
                           for (var j in i.products) {
-                            menuItems.add(MenuItem(
-                                width: width, height: height, product: j)
+                            menuItems.add(
+                              MenuItem(
+                                width: width,
+                                height: height,
+                                product: j
+                              ),
                             );
                           }
                           columnChild.add(
@@ -255,7 +282,7 @@ class _OutletMenuState extends State<OutletMenu> {
 class MenuItem extends StatelessWidget {
   const MenuItem(
       {Key? key,
-      required this.width,
+      required  this.width,
       required this.height,
       required this.product})
       : super(key: key);

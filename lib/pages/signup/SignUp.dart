@@ -1,60 +1,39 @@
+import 'package:flavr/pages/signup/signup_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:rive/rive.dart';
+import '../login_page/LoginPage.dart';
 
-import 'login_bloc.dart';
+//todo keep logged in pending
 
-//todo store token
-//todo google sign in
-//todo keep logged in using splash and checking stored for stored token
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpState extends State<SignUp> {
+  final _signupBlock = SignupBloc();
   final mailController = TextEditingController();
+  final nameController = TextEditingController();
   final passwordController = TextEditingController();
   final _formState = GlobalKey<FormState>();
-  final _loginPageBloc = LoginBloc();
-  Artboard? _riveArtboard;
-  RiveAnimationController? _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    rootBundle.load("assets/rive/google.riv").then(
-      (value) async {
-        final file = RiveFile.import(value);
-        final artboard = file.mainArtboard;
-        artboard.addController(_controller = SimpleAnimation("idle"));
-        setState(() {
-          _riveArtboard = artboard;
-        });
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
     final width = queryData.size.width;
     final height = queryData.size.height;
-
     return BlocProvider(
       create: (context) {
-        return _loginPageBloc;
+        return _signupBlock;
       },
-      child: BlocListener<LoginBloc, LoginState>(
-        listener: (context, LoginState state) {
-          if (state is LoginSuccessful) {
+      child: BlocListener<SignupBloc, SignupState>(
+        listener: (context, SignupState state) {
+          if (state is SignupSuccessful) {
             Navigator.popAndPushNamed(context, "/outletMenu");
-          } else if (state is LoginFailed) {
+          } else if (state is SignupFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
@@ -87,11 +66,51 @@ class _LoginPageState extends State<LoginPage> {
                     padding: EdgeInsets.fromLTRB(0, (0.0475 * height), 0, 0),
                     child: RuledHeading(
                       width: (0.230556 * width),
-                      title: "Login",
+                      title: "Sign Up",
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, (0.025 * height), 0, 0),
+                    child: SizedBox(
+                      width: (0.719444 * width),
+                      height: (0.0575 * height),
+                      child: Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(13, 0, 0, 0),
+                          child: Center(
+                            child: TextFormField(
+                              controller: nameController,
+                              keyboardType: TextInputType.text,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Enter Name",
+                                hintStyle: TextStyle(
+                                  fontSize: 18,
+                                ),
+                                isDense: true,
+                                prefixIconConstraints:
+                                    BoxConstraints(minHeight: 0, minWidth: 0),
+                                // contentPadding: EdgeInsets.fromLTRB(170, 0, 0, 0)
+                              ),
+                              validator: (s) {
+                                if (s == null || s.isEmpty) {
+                                  return "Enter Name";
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                     child: SizedBox(
                       width: (0.719444 * width),
                       height: (0.0575 * height),
@@ -179,11 +198,11 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: () {
                             if (_formState.currentState!.validate()) {
                               setState(() {
-                                _loginPageBloc.add(
-                                    LoginButtonPressed(
-                                        email: mailController.text,
-                                        password: passwordController.text
-                                    ),
+                                _signupBlock.add(
+                                  SignupButtonPressed(
+                                      name: nameController.text,
+                                      email: mailController.text,
+                                      password: passwordController.text),
                                 );
                               });
                             }
@@ -196,95 +215,12 @@ class _LoginPageState extends State<LoginPage> {
                           )),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 0),
-                    child: SizedBox(
-                      width: (0.719444 * width),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.pushNamed(context, "/signUp");
-                        },
-                          child: const Text("Don’t have account? Sign Up"),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, (0.025 * height), 0, 0),
-                    child: RuledHeading(width: (0.35 * width), title: "or"),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Implementation Pending"),
-                        ),
-                      );
-                    },
-                    style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                    child: SizedBox(
-                      width: (0.7194 * width),
-                      height: (0.0575 * height),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                (0.0972222 * width), 0, 0, 0),
-                            child: SizedBox(
-                              width: 25,
-                              height: 25,
-                              child: _riveArtboard == null
-                                  ? const SizedBox()
-                                  : Rive(artboard: _riveArtboard!),
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
-                            child: Text(
-                              "Continue with Google",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class RuledHeading extends StatelessWidget {
-  const RuledHeading({Key? key, required this.width, required this.title})
-      : super(key: key);
-  final double width;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          color: const Color(0xFF4B4848),
-          width: width,
-          height: 1,
-        ),
-        Text(
-          title,
-          style: const TextStyle(color: Color(0xFF4B4848), fontSize: 12),
-        ),
-        Container(
-          color: const Color(0xFF4B4848),
-          width: width,
-          height: 1,
-        ),
-      ],
     );
   }
 }
