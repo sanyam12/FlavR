@@ -6,7 +6,11 @@ class OutletsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Column(),
+      body: Column(
+        children: [
+          Text("Choose Outlet"),
+        ],
+      ),
     );
   }
 }
