@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'Categories.dart';
 import 'Product.dart';
-import 'dart:developer';
 
 class OutletMenuBloc {
   final List<Product> productsList = [];
-  final List<Categories> categoriesList = [];
+  List<Categories> categoriesList = [];
   final _productsListStreamController = StreamController<List<Product>>();
   final _menuItemsStreamController = StreamController<List<Categories>>();
+  final _searchQueryStreamController = StreamController<String>();
 
   Stream<List<Product>> get productsListStream =>
       _productsListStreamController.stream;
@@ -24,15 +24,32 @@ class OutletMenuBloc {
   StreamSink<List<Categories>> get productSink =>
       _menuItemsStreamController.sink;
 
+  StreamSink<String> get searchQuerySink =>
+    _searchQueryStreamController.sink;
+
   OutletMenuBloc() {
     _fetchProducts().then((value) {
-      //log(value.toString());
       _productsListStreamController.sink.add(value);
     });
 
     _fetchMenuItems().then((value) {
       _menuItemsStreamController.sink.add(value);
     });
+
+    _searchQueryStreamController.stream.listen(_searchResult);
+  }
+
+  _searchResult(String query){
+    List<Categories> list=[];
+    for(var i in categoriesList){
+      var temp = Categories(i.category, i.products.where((element) => element.name.toLowerCase().contains(query.toLowerCase())).toList());
+      if(temp.products.isNotEmpty){
+        list.add(temp);
+      }
+    }
+    log(list.toString());
+    _menuItemsStreamController.add(list);
+    // _productsListStreamController.add(productsList.where((element) => element.name.contains(query)).toList());
   }
 
   Future<List<Product>> _fetchProducts() async {
@@ -86,9 +103,10 @@ class OutletMenuBloc {
           Categories(
             category,
             productsList
-          )
+          ),
       );
     }
+    categoriesList = ans;
 
     return ans;
   }

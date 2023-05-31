@@ -10,7 +10,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  final controller = TextEditingController();
+  final mailController = TextEditingController();
+  final passwordController = TextEditingController();
   final _formState = GlobalKey<FormState>();
 
   @override
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
 
               Padding(
                 padding:
-                EdgeInsets.fromLTRB(0, (0.0675 * height), 0, 0),
+                EdgeInsets.fromLTRB(0, (0.0475 * height), 0, 0),
                 child: RuledHeading(
                   width: (0.230556 * width),
                   title: "Login or Sign Up",
@@ -65,31 +66,63 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.fromLTRB(13, 0, 0, 0),
                       child: Center(
                         child: TextFormField(
-                          controller: controller,
-                          keyboardType: TextInputType.phone,
+                          controller: mailController,
+                          keyboardType: TextInputType.text,
                           decoration: const InputDecoration(
                               border: InputBorder.none,
-                              hintText: "Enter Phone Number",
+                              hintText: "Enter Email",
                               hintStyle: TextStyle(
                                 fontSize: 18,
-                              ),
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 7.0, 0),
-                                child: Text(
-                                  "+91",
-                                  style: TextStyle(
-                                      fontSize: 18
-                                  ),
-                                ),
                               ),
                               isDense: true,
                               prefixIconConstraints: BoxConstraints(
                                   minHeight: 0, minWidth: 0),
-                              contentPadding: EdgeInsets.fromLTRB(170, 0, 0, 0)
+                              // contentPadding: EdgeInsets.fromLTRB(170, 0, 0, 0)
                           ),
                           validator: (s){
                             if(s==null || s.isEmpty) {
-                                return "Enter Phone No.";
+                                return "Enter Email";
+                            }else{
+                              return null;
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                child: SizedBox(
+                  width: (0.719444 * width),
+                  height: (0.0575 * height),
+                  child: Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(13, 0, 0, 0),
+                      child: Center(
+                        child: TextFormField(
+                          controller: passwordController,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Enter Password",
+                            hintStyle: TextStyle(
+                              fontSize: 18,
+                            ),
+                            isDense: true,
+                            prefixIconConstraints: BoxConstraints(
+                                minHeight: 0, minWidth: 0),
+                            // contentPadding: EdgeInsets.fromLTRB(170, 0, 0, 0)
+                          ),
+                          validator: (s){
+                            if(s==null || s.isEmpty) {
+                              return "Enter Password";
                             }else{
                               return null;
                             }

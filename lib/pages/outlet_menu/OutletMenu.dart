@@ -1,10 +1,18 @@
 import 'dart:developer';
-
 import 'package:flavr/pages/outlet_menu/Categories.dart';
-import 'package:flavr/pages/outlet_menu/Outlet.dart';
 import 'package:flavr/pages/outlet_menu/OutletMenuBloc.dart';
 import 'package:flavr/pages/outlet_menu/Product.dart';
 import 'package:flutter/material.dart';
+
+
+//todo add higher quality images or vectors
+//todo add loading pages
+//todo add default image
+//todo outlet button pending
+//todo profile button pending
+//todo toggle for veg and non veg
+//todo change color of navigation and notification bars
+
 
 class OutletMenu extends StatefulWidget {
   const OutletMenu({Key? key}) : super(key: key);
@@ -91,6 +99,9 @@ class _OutletMenuState extends State<OutletMenu> {
                 (0.05278 * width), (0.0225 * height), (0.05278 * width), 0),
             child: TextField(
               controller: searchController,
+              onChanged: (String search){
+                bloc.searchQuerySink.add(search);
+              },
               // style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -118,7 +129,13 @@ class _OutletMenuState extends State<OutletMenu> {
                 EdgeInsets.fromLTRB((0.0389 * width), (0.0225 * height), 0, 0),
             child: Row(
               children: [
-                Image.asset("assets/images/veg_symbol.png"),
+                const Stack(
+                  alignment: AlignmentDirectional.center,
+                  children: [
+                    Icon(Icons.crop_square_sharp, color: Colors.green, size: 36,),
+                    Icon(Icons.circle, color: Colors.green, size: 14),
+                  ],
+                ),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
                   child: Text(
