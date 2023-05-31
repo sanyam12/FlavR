@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flavr/pages/cart/CartPage.dart';
 import 'package:flavr/pages/order_history/OrderHistory.dart';
 import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
