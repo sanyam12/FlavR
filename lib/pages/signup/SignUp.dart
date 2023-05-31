@@ -2,8 +2,9 @@ import 'package:flavr/pages/signup/signup_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-
 import '../login_page/LoginPage.dart';
+
+//todo keep logged in pending
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
