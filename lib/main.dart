@@ -2,6 +2,7 @@ import 'package:flavr/pages/home_page/HomePage.dart';
 import 'package:flavr/pages/login_page/LoginPage.dart';
 import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
 import 'package:flavr/pages/outlets_list_page/OutletsLists.dart';
+import 'package:flavr/pages/signup/SignUp.dart';
 import 'package:flavr/pages/splashscreen/SplashScreen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +19,11 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData.light(),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/outletList",
+      initialRoute: "/login",
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
         "/login": (context)=>const LoginPage(),
+        "/signUp": (context)=>const SignUp(),
         "/outletList": (context)=> const OutletsList(),
         "/outletMenu": (context)=> const OutletMenu(),
         "/homePage": (context)=> const HomePage()

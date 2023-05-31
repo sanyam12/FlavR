@@ -4,11 +4,42 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca05c908-4603-42a5-b1ab-476054737e69" name="Changes" comment="menu screen search working" />
+    <list default="true" id="ca05c908-4603-42a5-b1ab-476054737e69" name="Changes" comment="menu screen search working">
+      <change afterPath="$PROJECT_DIR$/assets/images/google.riv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/rive/google.riv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/login_page/login_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/login_page/login_event.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/login_page/login_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/signup/SignUp.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/signup/signup_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/signup/signup_event.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/signup/signup_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dart_tool/package_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/package_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/FlavR.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FlavR.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/login_page/LoginBloc.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/login_page/LoginPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/login_page/LoginPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -33,10 +64,16 @@
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;dart.settings&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/rive" />
+      <recent name="$PROJECT_DIR$/assets/images" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
       <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
@@ -80,7 +117,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685509833973</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="menu screen search working">
+      <created>1685510075732</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1685510075732</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -100,5 +144,21 @@
     <MESSAGE value="android app crash fixed" />
     <MESSAGE value="menu screen search working" />
     <option name="LAST_COMMIT_MESSAGE" value="menu screen search working" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/pages/signup/SignUp.dart</url>
+          <line>31</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/pages/signup/SignUp.dart</url>
+          <line>70</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
