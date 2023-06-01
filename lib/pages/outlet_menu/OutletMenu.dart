@@ -53,50 +53,44 @@ class _OutletMenuState extends State<OutletMenu> {
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(
-                (0.1 * width), (0.03875 * height), (0.1 * width), 0),
-            child: Container(
-              // color: Colors.red,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    // color: Colors.red,
-                    child: Row(
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Outlet",
-                          style: TextStyle(
-                              fontSize: 20,
-                              decoration: TextDecoration.underline),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.expand_more),
-                        )
-                      ],
+                (0.05 * width), (0.024 * height), (0.05 * width), 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "Outlet",
+                      style: TextStyle(
+                          fontSize: 20,
+                          decoration: TextDecoration.underline),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.expand_more),
+                    )
+                  ],
+                ),
+                CircleAvatar(
+                  maxRadius: 30,
+                  backgroundColor: Colors.transparent,
+                  child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.person,
+                      color: Colors.black,
+                      size: 35,
                     ),
                   ),
-                  CircleAvatar(
-                    maxRadius: 30,
-                    backgroundColor: Colors.transparent,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.person,
-                        color: Colors.black,
-                        size: 35,
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(
-                (0.05278 * width), (0.0225 * height), (0.05278 * width), 0),
+                (0.05278 * width), (0.012 * height), (0.05278 * width), 0),
             child: TextField(
               controller: searchController,
               onChanged: (String search){
@@ -132,8 +126,8 @@ class _OutletMenuState extends State<OutletMenu> {
                 Stack(
                   alignment: AlignmentDirectional.center,
                   children: [
-                    Icon(Icons.crop_square_sharp, color: Colors.green, size: 36,),
-                    Icon(Icons.circle, color: Colors.green, size: 14),
+                    Icon(Icons.crop_square_sharp, color: Colors.green, size: 30,),
+                    Icon(Icons.circle, color: Colors.green, size: 10),
                   ],
                 ),
                 Padding(
@@ -148,8 +142,8 @@ class _OutletMenuState extends State<OutletMenu> {
                   child: Stack(
                     alignment: AlignmentDirectional.center,
                     children: [
-                      Icon(Icons.crop_square_sharp, color: Colors.red, size: 36,),
-                      Icon(Icons.circle, color: Colors.red, size: 14),
+                      Icon(Icons.crop_square_sharp, color: Colors.red, size: 30,),
+                      Icon(Icons.circle, color: Colors.red, size: 10),
                     ],
                   ),
                 ),
@@ -209,7 +203,7 @@ class _OutletMenuState extends State<OutletMenu> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB((0.013889 * width), 0, 0, 0),
+                  padding: EdgeInsets.fromLTRB((0.05 * width), 0, 0, 0),
                   child: Stack(
                     children: <Widget>[
                       // Stroked text as border.
@@ -234,6 +228,7 @@ class _OutletMenuState extends State<OutletMenu> {
                   ),
                 ),
                 Expanded(
+
                   child: StreamBuilder(
                     stream: bloc.menuItemsStream,
                     builder:
@@ -254,6 +249,11 @@ class _OutletMenuState extends State<OutletMenu> {
                           }
                           columnChild.add(
                             ExpansionTile(
+                              initiallyExpanded: true,
+                              textColor: Colors.black,
+                              collapsedTextColor: Colors.black,
+                              collapsedIconColor: Colors.black,
+                              iconColor: Colors.black,
                               title: Text(i.category),
                               children: menuItems
                             ),
@@ -309,8 +309,23 @@ class MenuItem extends StatelessWidget {
                     children: [
                       Padding(
                         padding:
-                            EdgeInsets.fromLTRB(0, (0.01375 * height), 0, 0),
-                        child: Image.asset((product.veg)?"assets/images/veg_symbol.png" : "assets/images/non_veg_symbol.png"),
+                            EdgeInsets.fromLTRB(0.012*width, (0.01375 * height), 0, 0),
+                        child:
+                            (product.veg)?
+                            const Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                Icon(Icons.crop_square_sharp, color: Colors.green, size: 25,),
+                                Icon(Icons.circle, color: Colors.green, size: 10),
+                              ],
+                            ) :
+                            const Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                Icon(Icons.crop_square_sharp, color: Colors.red, size: 25,),
+                                Icon(Icons.circle, color: Colors.red, size: 10),
+                              ],
+                            ),
                       ),
                       Padding(
                         padding:
@@ -327,17 +342,20 @@ class MenuItem extends StatelessWidget {
                                 child: Text(
                                   product.name,
                                   overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 18),
+                                  style: const TextStyle(fontSize: 17),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0,2,0,2),
+                                child: Text(
+                                  "₹ ${product.price}",
+                                  style: const TextStyle(
+                                      fontSize: 15, fontWeight: FontWeight.bold),
                                 ),
                               ),
                               Text(
-                                "₹ ${product.price}",
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              Text(
                                 product.description,
-                                style: const TextStyle(fontSize: 14),
+                                style: const TextStyle(fontSize: 12),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ],
@@ -355,7 +373,7 @@ class MenuItem extends StatelessWidget {
                         width: (0.28611 * width),
                         height: (0.1125 * height),
                         child: (product.productImage=="null")?
-                        Image.asset("assets/images/google.png"):
+                        Image.asset("assets/images/hamburger.jpg" , fit: BoxFit.cover,):
                         Image.network(product.productImage),
                         // child: Container(
                         //   decoration: BoxDecoration(
@@ -395,7 +413,8 @@ class MenuItem extends StatelessWidget {
                                 size: 34,
                               ),
                             ),
-                          )),
+                          )
+                      ),
                     ),
                   ),
                 ),
@@ -421,7 +440,7 @@ class RecommendedItemIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: (0.201 * width),
       height: (0.08625 * height),
       child: Column(
@@ -434,17 +453,20 @@ class RecommendedItemIcon extends StatelessWidget {
                 border: Border.all(width: 1, color: Colors.transparent),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
-              child: Image.asset(
-                "assets/images/google.png",
-                fit: BoxFit.cover,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.asset(
+                  "assets/images/hamburger.jpg",
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 6.0, 0, 0),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 6.0, 0, 0),
             child: Text(
-              name,
-              style: const TextStyle(fontSize: 15),
+              "hamburger",
+              style: TextStyle(fontSize: 12),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
             ),
