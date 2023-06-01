@@ -56,7 +56,7 @@ class _OutletMenuState extends State<OutletMenu> {
                 (0.05 * width), (0.024 * height), (0.05 * width), 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                   // crossAxisAlignment: CrossAxisAlignment.center,
@@ -248,14 +248,17 @@ class _OutletMenuState extends State<OutletMenu> {
                             );
                           }
                           columnChild.add(
-                            ExpansionTile(
-                              initiallyExpanded: true,
-                              textColor: Colors.black,
-                              collapsedTextColor: Colors.black,
-                              collapsedIconColor: Colors.black,
-                              iconColor: Colors.black,
-                              title: Text(i.category),
-                              children: menuItems
+                            Theme(
+                              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+                              child: ExpansionTile(
+                                initiallyExpanded: true,
+                                textColor: Colors.black,
+                                collapsedTextColor: Colors.black,
+                                collapsedIconColor: Colors.black,
+                                iconColor: Colors.black,
+                                title: Text(i.category),
+                                children: menuItems
+                              ),
                             ),
                           );
                         }
@@ -370,7 +373,7 @@ class MenuItem extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: SizedBox(
-                        width: (0.28611 * width),
+                        width: (0.25 * width),
                         height: (0.1125 * height),
                         child: (product.productImage=="null")?
                         Image.asset("assets/images/hamburger.jpg" , fit: BoxFit.cover,):
