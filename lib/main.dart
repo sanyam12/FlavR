@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/outletMenu",
+      initialRoute: "/outletList",
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
         "/login": (context)=>const LoginPage(),

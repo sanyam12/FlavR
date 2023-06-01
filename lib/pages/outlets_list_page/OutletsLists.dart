@@ -19,20 +19,25 @@ class _OutletsListState extends State<OutletsList> {
       body: Column(
         children: [
           Padding(
-            padding: EdgeInsets.fromLTRB(0 , 0.05*height , 0 ,0),
-            child: const Text(
-              "Choose Outlet",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+            padding: EdgeInsets.fromLTRB(7, 0.05*height , 0 ,0),
+            child: Container(
+              width: double.infinity,
+              alignment: Alignment.centerLeft,
+              child: const Text(
+                "Choose Outlet",
+                style: TextStyle(
+                  fontFamily:"inter",
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600
+                ),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(0 , 0.03*height , 0 ,0),
+            padding: EdgeInsets.fromLTRB(0 , 0.015*height , 0 ,0),
             child: Center(
               child: SizedBox(
-                height: 0.08*height,
+                height: 0.065*height,
                 width: 0.91111*width,
                 child: TextField(
                   controller: controller,
