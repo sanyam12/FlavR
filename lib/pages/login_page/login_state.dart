@@ -19,7 +19,7 @@ class LoginSuccessful extends LoginState{
 
 class LoginFailed extends LoginState{
   final String message;
-  LoginFailed(this.message);
+  const LoginFailed(this.message);
 
   @override
   List<Object?> get props => [message];
