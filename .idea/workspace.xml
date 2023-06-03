@@ -4,9 +4,14 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="outlet menu ka aur sundr chehra">
+    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="choose outlet">
+      <change afterPath="$PROJECT_DIR$/assets/animations/a.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/animations/add.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/animations/add_to.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/FlavR.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FlavR.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
@@ -19,14 +24,10 @@
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/StorageItem.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/login_page/login_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/login_page/login_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/signup/signup_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/signup/signup_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/splashscreen/SplashScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/splashscreen/SplashScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/storage_service.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,41 +42,34 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="dbc25afc4fe702d7a295d2dbd30073eac331ad3e" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2QVW4WWNN4BfYycrTlncZlZC4I1" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2QWTX7NGzYMqnvD8bpWIC2lcC9C" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/HP/AndroidStudioProjects/untitled&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets/rive" />
-      <recent name="$PROJECT_DIR$/assets/images" />
+      <recent name="C:\Users\HP\AndroidStudioProjects\FlavR\assets\animations" />
+      <recent name="C:\Users\HP\AndroidStudioProjects\FlavR\assets\fonts" />
+      <recent name="C:\Users\HP\AndroidStudioProjects\FlavR\assets\images" />
     </key>
   </component>
   <component name="RunManager">
@@ -87,69 +81,41 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="outlet menu ka aur sundr chehra" />
-      <created>1685439037895</created>
+      <changelist id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="" />
+      <created>1685468377080</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1685439037895</updated>
+      <updated>1685468377080</updated>
     </task>
-    <task id="LOCAL-00001" summary="initial commit">
-      <created>1685439155876</created>
+    <task id="LOCAL-00001" summary="splash screen hai isme">
+      <created>1685509749829</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1685439155876</updated>
+      <updated>1685509749829</updated>
     </task>
-    <task id="LOCAL-00002" summary="initial commit">
-      <created>1685439312247</created>
+    <task id="LOCAL-00002" summary="outlet menu ka sundr chehra">
+      <created>1685616063940</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1685439312247</updated>
+      <updated>1685616063940</updated>
     </task>
-    <task id="LOCAL-00003" summary="android app crash fixed">
-      <created>1685445114867</created>
+    <task id="LOCAL-00003" summary="outlet menu ka aur sundr chehra">
+      <created>1685617428680</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1685445114867</updated>
+      <updated>1685617428680</updated>
     </task>
-    <task id="LOCAL-00004" summary="menu screen search working">
-      <created>1685509833973</created>
+    <task id="LOCAL-00004" summary="choose outlet">
+      <created>1685620976665</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1685509833973</updated>
+      <updated>1685620976665</updated>
     </task>
-    <task id="LOCAL-00005" summary="menu screen search working">
-      <created>1685510075732</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1685510075732</updated>
-    </task>
-    <task id="LOCAL-00006" summary="login and sign up page working">
-      <created>1685555116769</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1685555116769</updated>
-    </task>
-    <task id="LOCAL-00007" summary="login and sign up page working">
-      <created>1685555707741</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1685555707741</updated>
-    </task>
-    <task id="LOCAL-00008" summary="login and signup page buttons rounded">
-      <created>1685595889398</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1685595889398</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -164,28 +130,10 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="initial commit" />
-    <MESSAGE value="android app crash fixed" />
-    <MESSAGE value="menu screen search working" />
-    <MESSAGE value="login and sign up page working" />
-    <MESSAGE value="login and signup page buttons rounded" />
-    <option name="LAST_COMMIT_MESSAGE" value="login and signup page buttons rounded" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/pages/signup/SignUp.dart</url>
-          <line>71</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart</url>
-          <line>376</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="splash screen hai isme" />
+    <MESSAGE value="outlet menu ka sundr chehra" />
+    <MESSAGE value="outlet menu ka aur sundr chehra" />
+    <MESSAGE value="choose outlet" />
+    <option name="LAST_COMMIT_MESSAGE" value="choose outlet" />
   </component>
 </project>
