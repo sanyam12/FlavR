@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flavr/models/StorageItem.dart';
-import 'package:flavr/services/storage_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,9 +24,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         );
         var json = jsonDecode(response.body);
         if(response.statusCode==200){
-          StorageService service = StorageService();
-          // log(json["token"]);
-          service.writeSecureData(StorageItem("token", json["token"]));
+          const service = FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
+          await service.write(key: "token", value: json["token"]);
           emit(const LoginSuccessful(true));
         }else{
           emit(LoginFailed(json["message"].toString()));
