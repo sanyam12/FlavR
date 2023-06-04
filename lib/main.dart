@@ -1,3 +1,4 @@
+import 'package:flavr/pages/cart/CartPage.dart';
 import 'package:flavr/pages/home_page/HomePage.dart';
 import 'package:flavr/pages/login_page/LoginPage.dart';
 import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/splashscreen",
+      initialRoute: "/cart",
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
         "/login": (context)=>const LoginPage(),
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         "/outletList/addOutlet": (context)=> const ScanQRCode(),
         "/outletMenu": (context)=> const OutletMenu(),
         "/homePage": (context)=> const HomePage(),
+        "/cart" : (context) => const CartPage(),
         "/profile": (context)=> const ProfilePage()
       },
     );
