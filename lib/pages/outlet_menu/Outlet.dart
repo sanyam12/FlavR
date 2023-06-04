@@ -3,8 +3,9 @@ class Outlet{
   String _outletName;
   String _address;
   String _owner;
+  String? _imageUrl;
 
-  Outlet(this._id, this._address, this._outletName, this._owner);
+  Outlet(this._id, this._address, this._outletName, this._owner, this._imageUrl);
 
   //setter
   set id(String id){
@@ -23,16 +24,22 @@ class Outlet{
     _owner = owner;
   }
 
+  set imageUrl(String? imageUrl){
+    _imageUrl = imageUrl;
+  }
+
   String get id => _id;
   String get address=> _address;
   String get outletName => _outletName;
   String get owner => _owner;
+  String? get imageUrl =>_imageUrl;
 
   Outlet.fromJson(Map<String, dynamic> json)
       : _id = json["_id"],
         _owner = json["owner"],
         _outletName = json["outletName"],
-        _address = json["address"];
+        _address = json["address"],
+        _imageUrl = json["outletImage"]["url"];
 
   Map<String, dynamic> toJson() =>{
     "id":_id,

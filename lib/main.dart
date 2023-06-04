@@ -2,6 +2,7 @@ import 'package:flavr/pages/home_page/HomePage.dart';
 import 'package:flavr/pages/login_page/LoginPage.dart';
 import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
 import 'package:flavr/pages/outlets_list_page/OutletsLists.dart';
+import 'package:flavr/pages/outlets_list_page/scan_qr/ScanQR.dart';
 import 'package:flavr/pages/profile_page/ProfiePage.dart';
 import 'package:flavr/pages/signup/SignUp.dart';
 import 'package:flavr/pages/splashscreen/SplashScreen.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         "/login": (context)=>const LoginPage(),
         "/signUp": (context)=>const SignUp(),
         "/outletList": (context)=> const OutletsList(),
+        "/outletList/addOutlet": (context)=> const ScanQRCode(),
         "/outletMenu": (context)=> const OutletMenu(),
         "/homePage": (context)=> const HomePage(),
         "/profile": (context)=> const ProfilePage()

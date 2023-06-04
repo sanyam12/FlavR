@@ -20,3 +20,23 @@ class OnProfileButtonClicked extends OutletListEvent{
   @override
   List<Object?> get props => [];
 }
+
+class GetAllOutletsList extends OutletListEvent{
+
+  @override
+  List<Object?> get props => [];
+}
+
+class OnScanQRCoreClick extends OutletListEvent{
+  @override
+  List<Object?> get props => [];
+}
+
+class OnOutletSelection extends OutletListEvent{
+  final String id;
+  const OnOutletSelection(this.id);
+
+  @override
+  List<Object?> get props => [id];
+
+}
