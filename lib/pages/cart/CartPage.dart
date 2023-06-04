@@ -98,7 +98,7 @@ class _CartPageState extends State<CartPage> {
                                    Column(
                                     children: [
                                        Padding(
-                                        padding:  EdgeInsets.fromLTRB(0,0.0075*height,0,0),
+                                        padding:  EdgeInsets.fromLTRB(0,0.0075*height,0,8),
                                         child: const Text("Shillong Shezwan Maggi" , style: TextStyle(
                                           fontFamily: "inter",
                                           fontWeight: FontWeight.w200
@@ -119,37 +119,309 @@ class _CartPageState extends State<CartPage> {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(0.12222*width , 0 ,0,0),
-                              child: Card(
-                                  elevation: 2 ,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                      side: const BorderSide(
-                                        color: Color(0xFFE4BE74),
-                                      )
-                                  ),
-                                  child:  SizedBox(
-                                    height: 0.0325*height,
-                                    width: 0.2055*width,
-                                    child: const Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Icon(Icons.remove , size: 20),
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(3,0,3,0),
-                                          child: Text(
-                                            '2',
-                                            style: TextStyle(fontSize: 12 , fontFamily: "inter"),
-                                          ),
-                                        ),
-                                        Icon(Icons.add , size: 20)
-
-                                      ],
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0.15*width , 2 ,0,0),
+                                child: Card(
+                                    elevation: 2 ,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        side: const BorderSide(
+                                          color: Color(0xFFE4BE74),
+                                        )
                                     ),
-                                  )
+                                    child:  SizedBox(
+                                      height: 0.0325*height,
+                                      width: 0.2055*width,
+                                      child: const Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(Icons.remove , size: 20),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(3,0,3,0),
+                                            child: Text(
+                                              '2',
+                                              style: TextStyle(fontSize: 12 , fontFamily: "inter"),
+                                            ),
+                                          ),
+                                          Icon(Icons.add , size: 20)
+
+                                        ],
+                                      ),
+                                    )
+                                ),
                               ),
                             ),
+                            SizedBox(
+                              width:0.88889* width,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0.02*width,0,0,0),
+                                    child: const Stack(
+                                      alignment: AlignmentDirectional.center,
+                                      children: [
+                                        Icon(Icons.crop_square_sharp, color: Colors.green, size: 30,),
+                                        Icon(Icons.circle, color: Colors.green, size: 10),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Padding(
+                                        padding:  EdgeInsets.fromLTRB(0,0.0075*height,0,8),
+                                        child: const Text("Shillong Shezwan Maggi" , style: TextStyle(
+                                            fontFamily: "inter",
+                                            fontWeight: FontWeight.w200
+                                        ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0,0,0.05*width,0),
+                                    child: const Row(
+                                      children: [
+                                        Icon(Icons.currency_rupee),
+                                        Text("100"),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0.15*width , 2 ,0,0),
+                                child: Card(
+                                    elevation: 2 ,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        side: const BorderSide(
+                                          color: Color(0xFFE4BE74),
+                                        )
+                                    ),
+                                    child:  SizedBox(
+                                      height: 0.0325*height,
+                                      width: 0.2055*width,
+                                      child: const Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(Icons.remove , size: 20),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(3,0,3,0),
+                                            child: Text(
+                                              '2',
+                                              style: TextStyle(fontSize: 12 , fontFamily: "inter"),
+                                            ),
+                                          ),
+                                          Icon(Icons.add , size: 20)
+
+                                        ],
+                                      ),
+                                    )
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width:0.88889* width,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0.02*width,0,0,0),
+                                    child: const Stack(
+                                      alignment: AlignmentDirectional.center,
+                                      children: [
+                                        Icon(Icons.crop_square_sharp, color: Colors.green, size: 30,),
+                                        Icon(Icons.circle, color: Colors.green, size: 10),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Padding(
+                                        padding:  EdgeInsets.fromLTRB(0,0.0075*height,0,8),
+                                        child: const Text("Shillong Shezwan Maggi" , style: TextStyle(
+                                            fontFamily: "inter",
+                                            fontWeight: FontWeight.w200
+                                        ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0,0,0.05*width,0),
+                                    child: const Row(
+                                      children: [
+                                        Icon(Icons.currency_rupee),
+                                        Text("100"),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0.15*width , 2 ,0,0),
+                                child: Card(
+                                    elevation: 2 ,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        side: const BorderSide(
+                                          color: Color(0xFFE4BE74),
+                                        )
+                                    ),
+                                    child:  SizedBox(
+                                      height: 0.0325*height,
+                                      width: 0.2055*width,
+                                      child: const Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(Icons.remove , size: 20),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(3,0,3,0),
+                                            child: Text(
+                                              '2',
+                                              style: TextStyle(fontSize: 12 , fontFamily: "inter"),
+                                            ),
+                                          ),
+                                          Icon(Icons.add , size: 20)
+
+                                        ],
+                                      ),
+                                    )
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width:0.88889* width,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0.02*width,0,0,0),
+                                    child: const Stack(
+                                      alignment: AlignmentDirectional.center,
+                                      children: [
+                                        Icon(Icons.crop_square_sharp, color: Colors.green, size: 30,),
+                                        Icon(Icons.circle, color: Colors.green, size: 10),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Padding(
+                                        padding:  EdgeInsets.fromLTRB(0,0.0075*height,0,8),
+                                        child: const Text("Shillong Shezwan Maggi" , style: TextStyle(
+                                            fontFamily: "inter",
+                                            fontWeight: FontWeight.w200
+                                        ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0,0,0.05*width,0),
+                                    child: const Row(
+                                      children: [
+                                        Icon(Icons.currency_rupee),
+                                        Text("100"),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(0.15*width , 2 ,0,0),
+                                child: Card(
+                                    elevation: 2 ,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        side: const BorderSide(
+                                          color: Color(0xFFE4BE74),
+                                        )
+                                    ),
+                                    child:  SizedBox(
+                                      height: 0.0325*height,
+                                      width: 0.2055*width,
+                                      child: const Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Icon(Icons.remove , size: 20),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(3,0,3,0),
+                                            child: Text(
+                                              '2',
+                                              style: TextStyle(fontSize: 12 , fontFamily: "inter"),
+                                            ),
+                                          ),
+                                          Icon(Icons.add , size: 20)
+                                        ],
+                                      ),
+                                    )
+                                ),
+                              ),
+                            ),
+
+                          SizedBox(
+
+                            width:0.88889* width,
+                            height: 0.06125*height,
+                            child:Padding(
+                              padding:  EdgeInsets.fromLTRB(0.03*width,0.02*height,0,0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    'Grand Total',
+                                    style: TextStyle(
+                                        fontSize: 15 ,
+                                        fontFamily: "inter"  ,
+                                        fontWeight: FontWeight.w800
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0,0,0.05*width,0),
+                                    child: const Row(
+                                      children: [
+                                        Icon(Icons.currency_rupee),
+                                        Text("100"),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                          ),
+                             Card(
+                              elevation: 10,
+                              shadowColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                side:  const BorderSide
+                                  (
+                                  color: Color(0xFFE4BE74),
+                                    width: 1.0,
+
+
+                                    // {   color =  Color(0xFF000000),
+                                    //   double width = 1.0,
+                                    //   BorderStyle style = BorderStyle.solid,
+                                    //   double strokeAlign = strokeAlignInside,
+                                    // }
+                                )
+                              ),
+                            )
                           ],
                         )
                     ),
