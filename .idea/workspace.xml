@@ -4,62 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="outlet list scan QR and saved outlet list working">
-      <change afterPath="$PROJECT_DIR$/assets/fonts/JimNightshade-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/noodles.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/pasta.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/pizza.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/sandwich.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/google_signin/SignInWithGoogle.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/google_signin/sign_in_with_google_bloc.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/google_signin/sign_in_with_google_event.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/google_signin/sign_in_with_google_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_event.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_state.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/payment/payment.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/payment/payment_bloc.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/payment/payment_event.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/payment/payment_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="login screen created">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/debug/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/debug/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/kotlin/com/flavr/flavr/flavr/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/kotlin/com/example/flavr/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/profile/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/profile/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Info.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/login_page/LoginPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/login_page/LoginPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/Outlet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/Outlet.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenuBloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenuBloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/outlets_list_page/OutletsLists.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlets_list_page/OutletsLists.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/signup/SignUp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/signup/SignUp.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/splashscreen/SplashScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/splashscreen/SplashScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685896869371</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="login screen created">
+      <created>1686118456434</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1686118456434</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -225,6 +179,7 @@
     <MESSAGE value="login and signup page buttons rounded" />
     <MESSAGE value="outlet menu ka aur sundr chehra" />
     <MESSAGE value="outlet list scan QR and saved outlet list working" />
-    <option name="LAST_COMMIT_MESSAGE" value="outlet list scan QR and saved outlet list working" />
+    <MESSAGE value="login screen created" />
+    <option name="LAST_COMMIT_MESSAGE" value="login screen created" />
   </component>
 </project>

@@ -73,7 +73,9 @@ class _OutletMenuState extends State<OutletMenu> {
                 menuItemsStream.add(state.menuList);
               }
             },
-            child: ,
+            child: const Center(
+              child: Text("Menu Screen"),
+            ),
           ),
         ),
       ),
