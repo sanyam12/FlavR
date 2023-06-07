@@ -16,6 +16,11 @@ public final class GeneratedPluginRegistrant {
   private static final String TAG = "GeneratedPluginRegistrant";
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
     try {
+      flutterEngine.getPlugins().add(new com.cashfree.flutter_cashfree_pg_sdk.FlutterCashfreePgSdkPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin flutter_cashfree_pg_sdk, com.cashfree.flutter_cashfree_pg_sdk.FlutterCashfreePgSdkPlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new com.it_nomads.fluttersecurestorage.FlutterSecureStoragePlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin flutter_secure_storage, com.it_nomads.fluttersecurestorage.FlutterSecureStoragePlugin", e);

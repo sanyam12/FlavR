@@ -38,3 +38,11 @@ class ScanButtonClicked extends OutletListState{
   List<Object?> get props => [];
 }
 
+class OutletSelected extends OutletListState{
+  final String id;
+  const OutletSelected(this.id);
+
+  @override
+  List<Object?> get props => [id];
+
+}

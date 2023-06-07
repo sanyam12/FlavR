@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
         String? check = await service.read(key: "token");
         if(check==null){
           if(context.mounted){
-            Navigator.popAndPushNamed(context, "/login");
+            Navigator.popAndPushNamed(context, "/signInWithGoogle");
           }
         }else{
           if(context.mounted){
@@ -58,7 +59,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       fontSize: 23,
                       fontWeight: FontWeight.bold,
                       fontStyle: FontStyle.italic,
-                      color: Colors.white),
+                      color: Colors.white,
+                  ),
                 ),
               ),
             ),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Outlet{
   String _id;
   String _outletName;

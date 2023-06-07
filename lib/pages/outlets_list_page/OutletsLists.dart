@@ -19,6 +19,12 @@ class _OutletsListState extends State<OutletsList> {
   late final OutletListBloc _outletListBloc;
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
@@ -37,13 +43,19 @@ class _OutletsListState extends State<OutletsList> {
             listener: (context, state) {
               if (state is NavigateToProfile) {
                 Navigator.pushNamed(context, "/profile");
-              } else if (state is ScanButtonClicked) {
+              }
+              else if (state is ScanButtonClicked) {
                 Navigator.pushNamed(context, "/outletList/addOutlet");
-              } else if (state is GetAllOutletsListState) {
+              }
+              else if (state is GetAllOutletsListState) {
                 setState(() {
                   list.add(state.list);
+                  log(state.list.toString());
                   //outletList = state.list;
                 });
+              }
+              else if (state is OutletSelected){
+                Navigator.pop(context);
               }
             },
             child: Column(
@@ -145,9 +157,11 @@ class _OutletsListState extends State<OutletsList> {
                             );
                           } else {
                             return const Center(
-                                child: Text("Something Went Wrong"));
+                                child: CircularProgressIndicator()
+                            );
                           }
-                        }))
+                        }),
+                )
               ],
             ),
           ),

@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -17,8 +15,8 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
       if(event is OnProfileButtonClicked){
         emit(const NavigateToProfile());
         emit(OutletListInitial());
-      }else if(event is GetAllOutletsList){
-        //TODO Not Implemented
+      }
+      else if(event is GetAllOutletsList){
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         const secureService = FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: false));
         final token = await secureService.read(key: "token");
@@ -45,9 +43,15 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
           }
         }
         emit(GetAllOutletsListState(list: outletLists));
-      }else if (event is OnScanQRCoreClick){
+      }
+      else if (event is OnScanQRCoreClick){
         emit(ScanButtonClicked());
         emit(OutletListInitial());
+      }
+      else if (event is OnOutletSelection){
+        final pref = await SharedPreferences.getInstance();
+        await pref.setString("selectedOutlet", event.id);
+        emit(OutletSelected(event.id));
       }
     });
   }
