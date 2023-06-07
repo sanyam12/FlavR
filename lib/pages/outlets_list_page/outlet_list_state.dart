@@ -33,3 +33,8 @@ class NavigateToProfile extends OutletListState{
   List<Object?> get props => [];
 }
 
+class ScanButtonClicked extends OutletListState{
+  @override
+  List<Object?> get props => [];
+}
+

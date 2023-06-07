@@ -1,7 +1,12 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flavr/pages/outlets_list_page/outlet_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
+import '../outlet_menu/Outlet.dart';
 
 class OutletsList extends StatefulWidget {
   const OutletsList({Key? key}) : super(key: key);
@@ -23,6 +28,8 @@ class _OutletsListState extends State<OutletsList> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+    StreamController<List<Outlet>> list = StreamController<List<Outlet>>();
+    //List<Outlet> outletList = [];
 
     return BlocProvider(
         create: (context) {
@@ -465,38 +472,29 @@ class Frame extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: SizedBox(
               width: width,
-              height: 0.34125 * height,
+              height: 0.25 * height,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                       width: width,
-                      height: 0.26625 * height,
+                      height: 0.20 * height,
                       child: Image.asset(
-                        "assets/images/subway.jpeg",
+                        "assets/images/burger.jpg",
                         fit: BoxFit.fill,
                       )),
-                  Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0.0277 * width, 0.01 * height, 0, 0),
-                      child: const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Nescafe",
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            "Jalandhar, punjab",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                        ],
+                  const Expanded(
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(9.0, 0, 0, 0),
+                        child: Text(
+                          "Domino's , India",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: "inter",
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                     ),
                   )

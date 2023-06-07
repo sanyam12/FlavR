@@ -4,7 +4,6 @@ import 'package:flavr/pages/outlet_menu/OutletMenuBloc.dart';
 import 'package:flavr/pages/outlet_menu/Product.dart';
 import 'package:flutter/material.dart';
 
-
 //todo add higher quality images or vectors
 //todo add loading pages
 //todo add default image
@@ -12,7 +11,6 @@ import 'package:flutter/material.dart';
 //todo profile button pending
 //todo toggle for veg and non veg
 //todo change color of navigation and notification bars
-
 
 class OutletMenu extends StatefulWidget {
   const OutletMenu({Key? key}) : super(key: key);
@@ -48,235 +46,243 @@ class _OutletMenuState extends State<OutletMenu> {
     // Navigator.pushNamed(context, "/login");
 
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-                (0.05 * width), (0.024 * height), (0.05 * width), 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Row(
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Outlet",
-                      style: TextStyle(
-                          fontSize: 20,
-                          decoration: TextDecoration.underline),
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                  (0.05 * width), (0 * height), (0.05 * width), 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed("/outletList");
+                    },
+                    child: const Row(
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Outlet",
+                          style: TextStyle(
+                            fontSize: 20,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                        Icon(Icons.expand_more)
+                      ],
                     ),
-                    IconButton(
+                  ),
+                  CircleAvatar(
+                    maxRadius: 30,
+                    backgroundColor: Colors.transparent,
+                    child: IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.expand_more),
-                    )
-                  ],
-                ),
-                CircleAvatar(
-                  maxRadius: 30,
-                  backgroundColor: Colors.transparent,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.person,
-                      color: Colors.black,
-                      size: 35,
+                      icon: const Icon(
+                        Icons.person,
+                        color: Colors.black,
+                        size: 35,
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-                (0.05278 * width), (0.012 * height), (0.05278 * width), 0),
-            child: TextField(
-              controller: searchController,
-              onChanged: (String search){
-                bloc.searchQuerySink.add(search);
-              },
-              // style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28.0),
-                  ),
-                  hintText: "Search in Menu",
-                  hintStyle: const TextStyle(color: Colors.black),
-                  suffixIcon: const Icon(
-                    Icons.search,
-                    size: 22,
-                  ),
-                  isDense: true,
-                  prefixIconConstraints:
-                      const BoxConstraints(minHeight: 0, minWidth: 0),
-                  fillColor: const Color(0xFFFFFAEA),
-                  // contentPadding: const EdgeInsets.symmetric(horizontal: 26),
-                  filled: true,
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28.0),
-                  )),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                  (0.05278 * width), (0.012 * height), (0.05278 * width), 0),
+              child: TextField(
+                controller: searchController,
+                onChanged: (String search) {
+                  bloc.searchQuerySink.add(search);
+                },
+                // style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(28.0),
+                    ),
+                    hintText: "Search in Menu",
+                    hintStyle: const TextStyle(color: Colors.black),
+                    suffixIcon: const Icon(
+                      Icons.search,
+                      size: 22,
+                    ),
+                    isDense: true,
+                    prefixIconConstraints:
+                        const BoxConstraints(minHeight: 0, minWidth: 0),
+                    fillColor: const Color(0xFFFFFAEA),
+                    // contentPadding: const EdgeInsets.symmetric(horizontal: 26),
+                    filled: true,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(28.0),
+                    )),
+              ),
             ),
-          ),
-          Padding(
-            padding:
-                EdgeInsets.fromLTRB((0.0389 * width), (0.0225 * height), 0, 0),
-            child: const Row(
-              children: [
-                Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    Icon(Icons.crop_square_sharp, color: Colors.green, size: 30,),
-                    Icon(Icons.circle, color: Colors.green, size: 10),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
-                  child: Text(
-                    "Veg",
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(13.0, 0, 0, 0),
-                  child: Stack(
+            Padding(
+              padding:
+                  EdgeInsets.fromLTRB((0.0389 * width), (0.0225 * height), 0, 0),
+              child: const Row(
+                children: [
+                  Stack(
                     alignment: AlignmentDirectional.center,
                     children: [
-                      Icon(Icons.crop_square_sharp, color: Colors.red, size: 30,),
-                      Icon(Icons.circle, color: Colors.red, size: 10),
+                      Icon(
+                        Icons.crop_square_sharp,
+                        color: Colors.green,
+                        size: 30,
+                      ),
+                      Icon(Icons.circle, color: Colors.green, size: 10),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
-                  child: Text(
-                    "Non-Veg",
-                    style: TextStyle(fontSize: 14),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
+                    child: Text(
+                      "Veg",
+                      style: TextStyle(fontSize: 14),
+                    ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(13.0, 0, 0, 0),
+                    child: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        Icon(
+                          Icons.crop_square_sharp,
+                          color: Colors.red,
+                          size: 30,
+                        ),
+                        Icon(Icons.circle, color: Colors.red, size: 10),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(8.0, 0, 0, 0),
+                    child: Text(
+                      "Non-Veg",
+                      style: TextStyle(fontSize: 14),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding:
-                EdgeInsets.fromLTRB((0.0389 * width), (0.01475 * height), 0, 0),
-            child: const Row(
-              children: [
-                Text(
-                  "Recommended for you",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                )
-              ],
+            Padding(
+              padding:
+                  EdgeInsets.fromLTRB((0.0389 * width), (0.01475 * height), 0, 0),
+              child: const Row(
+                children: [
+                  Text(
+                    "Recommended for you",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  )
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      (0.0333 * width), (0.0175 * height), 0, 0),
-                  child: SizedBox(
-                    height: (0.08625 * height) + (0.0175 * height),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        (0.0333 * width), (0.0175 * height), 0, 0),
+                    child: SizedBox(
+                      height: (0.08625 * height) + (0.0175 * height),
+                      child: StreamBuilder(
+                          stream: bloc.productsListStream,
+                          builder:
+                              (context, AsyncSnapshot<List<Product>> snapshot) {
+                            if (snapshot.data != null) {
+                              return ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    return RecommendedItemIcon(
+                                      width: width,
+                                      height: height,
+                                      name: snapshot.data![index].name,
+                                    );
+                                  });
+                            } else {
+                              return const Center(
+                                child: Text("Something Went Wrong!"),
+                              );
+                            }
+                          }),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB((0.05 * width), 0, 0, 0),
+                    child: Stack(
+                      children: <Widget>[
+                        // Stroked text as border.
+                        Text(
+                          "Let's Dive In",
+                          style: TextStyle(
+                              fontSize: 25,
+                              foreground: Paint()
+                                ..style = PaintingStyle.stroke
+                                ..strokeWidth = 1
+                                ..color =
+                                    const Color(0xFF000000).withOpacity(0.3),
+                              fontWeight: FontWeight.bold),
+                        ),
+                        // Solid text as fill.
+                        const Text(
+                          "Let's Dive In",
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
                     child: StreamBuilder(
-                        stream: bloc.productsListStream,
-                        builder:
-                            (context, AsyncSnapshot<List<Product>> snapshot) {
-                          if (snapshot.data != null) {
-                            log("data${snapshot.data}");
-                            return ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
-                                  return RecommendedItemIcon(
-                                    width: width,
-                                    height: height,
-                                    name: snapshot.data![index].name,
-                                  );
-                                });
-                          } else {
-                            return const Center(
-                              child: Text("Something Went Wrong!"),
-                            );
-                          }
-                        }),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB((0.05 * width), 0, 0, 0),
-                  child: Stack(
-                    children: <Widget>[
-                      // Stroked text as border.
-                      Text(
-                        "Let's Dive In",
-                        style: TextStyle(
-                            fontSize: 25,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 1
-                              ..color =
-                                  const Color(0xFF000000).withOpacity(0.3),
-                            fontWeight: FontWeight.bold),
-                      ),
-                      // Solid text as fill.
-                      const Text(
-                        "Let's Dive In",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
+                      stream: bloc.menuItemsStream,
+                      builder:
+                          (context, AsyncSnapshot<List<Categories>> snapshot) {
+                        if (snapshot.data != null) {
+                          List<Widget> columnChild = [];
 
-                  child: StreamBuilder(
-                    stream: bloc.menuItemsStream,
-                    builder:
-                        (context, AsyncSnapshot<List<Categories>> snapshot) {
-                      if (snapshot.data != null) {
-                        List<Widget> columnChild = [];
-
-                        for (var i in snapshot.data!) {
-                          List<Widget> menuItems = [];
-                          for (var j in i.products) {
-                            menuItems.add(
-                              MenuItem(
-                                width: width,
-                                height: height,
-                                product: j
+                          for (var i in snapshot.data!) {
+                            List<Widget> menuItems = [];
+                            for (var j in i.products) {
+                              menuItems.add(
+                                MenuItem(
+                                    width: width, height: height, product: j),
+                              );
+                            }
+                            columnChild.add(
+                              Theme(
+                                data: Theme.of(context)
+                                    .copyWith(dividerColor: Colors.transparent),
+                                child: ExpansionTile(
+                                    initiallyExpanded: true,
+                                    textColor: Colors.black,
+                                    collapsedTextColor: Colors.black,
+                                    collapsedIconColor: Colors.black,
+                                    iconColor: Colors.black,
+                                    title: Text(i.category),
+                                    children: menuItems),
                               ),
                             );
                           }
-                          columnChild.add(
-                            Theme(
-                              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-                              child: ExpansionTile(
-                                initiallyExpanded: true,
-                                textColor: Colors.black,
-                                collapsedTextColor: Colors.black,
-                                collapsedIconColor: Colors.black,
-                                iconColor: Colors.black,
-                                title: Text(i.category),
-                                children: menuItems
-                              ),
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: columnChild,
                             ),
                           );
+                        } else {
+                          return const Text("Something Went Wrong");
                         }
-                        return SingleChildScrollView(
-                          child: Column(
-                            children: columnChild,
-                          ),
-                        );
-                      } else {
-                        return const Text("Something Went Wrong");
-                      }
-                    },
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -285,7 +291,7 @@ class _OutletMenuState extends State<OutletMenu> {
 class MenuItem extends StatelessWidget {
   const MenuItem(
       {Key? key,
-      required  this.width,
+      required this.width,
       required this.height,
       required this.product})
       : super(key: key);
@@ -296,7 +302,6 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: (0.0388 * width)),
       child: SizedBox(
@@ -311,30 +316,39 @@ class MenuItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsets.fromLTRB(0.012*width, (0.01375 * height), 0, 0),
-                        child:
-                            (product.veg)?
-                            const Stack(
-                              alignment: AlignmentDirectional.center,
-                              children: [
-                                Icon(Icons.crop_square_sharp, color: Colors.green, size: 25,),
-                                Icon(Icons.circle, color: Colors.green, size: 10),
-                              ],
-                            ) :
-                            const Stack(
-                              alignment: AlignmentDirectional.center,
-                              children: [
-                                Icon(Icons.crop_square_sharp, color: Colors.red, size: 25,),
-                                Icon(Icons.circle, color: Colors.red, size: 10),
-                              ],
-                            ),
+                        padding: EdgeInsets.fromLTRB(
+                            0.012 * width, (0.01375 * height), 0, 0),
+                        child: (product.veg)
+                            ? const Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: [
+                                  Icon(
+                                    Icons.crop_square_sharp,
+                                    color: Colors.green,
+                                    size: 25,
+                                  ),
+                                  Icon(Icons.circle,
+                                      color: Colors.green, size: 10),
+                                ],
+                              )
+                            : const Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: [
+                                  Icon(
+                                    Icons.crop_square_sharp,
+                                    color: Colors.red,
+                                    size: 25,
+                                  ),
+                                  Icon(Icons.circle,
+                                      color: Colors.red, size: 10),
+                                ],
+                              ),
                       ),
                       Padding(
                         padding:
                             EdgeInsets.fromLTRB(((0.033 * width)), 0, 0, 0),
                         child: SizedBox(
-                          width: (0.51222*width),
+                          width: (0.51222 * width),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -349,11 +363,12 @@ class MenuItem extends StatelessWidget {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(0,2,0,2),
+                                padding: const EdgeInsets.fromLTRB(0, 2, 0, 2),
                                 child: Text(
                                   "₹ ${product.price}",
                                   style: const TextStyle(
-                                      fontSize: 15, fontWeight: FontWeight.bold),
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ),
                               Text(
@@ -375,9 +390,12 @@ class MenuItem extends StatelessWidget {
                       child: SizedBox(
                         width: (0.25 * width),
                         height: (0.1125 * height),
-                        child: (product.productImage=="null")?
-                        Image.asset("assets/images/hamburger.jpg" , fit: BoxFit.cover,):
-                        Image.network(product.productImage),
+                        child: (product.productImage == "null")
+                            ? Image.asset(
+                                "assets/images/hamburger.jpg",
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(product.productImage),
                         // child: Container(
                         //   decoration: BoxDecoration(
                         //     border: Border.all(width: 1, color: Colors.transparent),
@@ -416,8 +434,7 @@ class MenuItem extends StatelessWidget {
                                 size: 34,
                               ),
                             ),
-                          )
-                      ),
+                          )),
                     ),
                   ),
                 ),
