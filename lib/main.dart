@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/cart",
+      initialRoute: "/outletList",
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
         "/login": (context)=>const LoginPage(),
