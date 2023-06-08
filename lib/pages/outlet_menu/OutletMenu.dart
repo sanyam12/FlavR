@@ -24,6 +24,7 @@ class _OutletMenuState extends State<OutletMenu> {
   final selectedOutletStream = StreamController<String>();
   final productsListStream = StreamController<List<Product>>();
   final menuItemsStream = StreamController<List<Categories>>();
+  String selectedCategory = "All";
 
   @override
   void dispose() {
@@ -58,27 +59,480 @@ class _OutletMenuState extends State<OutletMenu> {
           },
           child: BlocListener<OutletMenuBloc, OutletMenuState>(
             listener: (context, state) {
-              if(state is NavigateToOutletList){
+              if (state is NavigateToOutletList) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Navigator.pushNamed(context, "/outletList")
                       .then((value) => {bloc.add(RefreshMenuEvent())});
                 });
-              }
-              else if(state is RefreshedOutletData){
+              } else if (state is RefreshedOutletData) {
                 menuItemsStream.add(state.menuList);
                 productsListStream.add(state.productList);
                 selectedOutletStream.add(state.outletName);
-              }
-              else if(state is SearchResultState){
+              } else if (state is SearchResultState) {
                 menuItemsStream.add(state.menuList);
               }
             },
-            child: const Center(
-              child: Text("Menu Screen"),
+            child: StreamBuilder(
+              stream: selectedOutletStream.stream,
+              builder: (context, AsyncSnapshot<String> snapshot) {
+                if (!snapshot.hasData || snapshot.data! == "Outlet") {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return StreamBuilder(
+                    stream: menuItemsStream.stream,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Categories>> categoryList) {
+                      if (!categoryList.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 19),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          "/outletList",
+                                        );
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            snapshot.data!.toString(),
+                                            style:
+                                                const TextStyle(fontSize: 15),
+                                          ),
+                                          const Icon(Icons.expand_more)
+                                        ],
+                                      ),
+                                    ),
+                                    const Icon(Icons.person)
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                  0.033333 * width,
+                                  0,
+                                  0.033333 * width,
+                                  0,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7),
+                                          ),
+                                          child: SizedBox(
+                                            width: 0.175 * width,
+                                            height: 0.03 * height,
+                                            child: const Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                VegetarianSymbol(
+                                                  color: Colors.green,
+                                                ),
+                                                Text("Veg")
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(7),
+                                          ),
+                                          child: SizedBox(
+                                            width: 0.24444 * width,
+                                            height: 0.03 * height,
+                                            child: const Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                VegetarianSymbol(
+                                                    color: Colors.red),
+                                                Text("Non-Veg"),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const Icon(Icons.search)
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                  0.03333 * width,
+                                  0.01625 * height,
+                                  0,
+                                  0,
+                                ),
+                                child: SizedBox(
+                                  width: width,
+                                  height: 0.13 * height,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: categoryList.data!.length,
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            selectedCategory = categoryList
+                                                .data![index].category;
+                                          });
+                                        },
+                                        child: Card(
+                                          color: (selectedCategory ==
+                                                  categoryList
+                                                      .data![index].category)
+                                              ? const Color(0xFFA3C2B3)
+                                              : Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: SizedBox(
+                                            height: double.infinity,
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                        0.09166666667 * width,
+                                                    vertical: 0.02125 * height,
+                                                  ),
+                                                  child: Image.asset(
+                                                    "assets/images/Fast food.png",
+                                                  ),
+                                                ),
+                                                Text(
+                                                  categoryList
+                                                      .data![index].category,
+                                                  style: TextStyle(
+                                                    color: (selectedCategory ==
+                                                            categoryList
+                                                                .data![index]
+                                                                .category)
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                  0.03056 * width,
+                                  0.041667 * height,
+                                  0,
+                                  0,
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Recommended",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                  0.02125 * height,
+                                  0.02778 * width,
+                                  0,
+                                  0,
+                                ),
+                                child: SizedBox(
+                                  width: width,
+                                  height: 0.2625 * height,
+                                  child: StreamBuilder(
+                                    stream: productsListStream.stream,
+                                    builder: (context,
+                                        AsyncSnapshot<List<Product>>
+                                            productList) {
+                                      if (productList.hasData) {
+                                        return ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: productList.data!.length,
+                                          itemBuilder: (context, index) {
+                                            return SizedBox(
+                                              width: 0.4944 * width,
+                                              height: 0.2625 * height,
+                                              child: RecommendedItemIcon(
+                                                width: width,
+                                                height: height,
+                                                name: "Maggi",
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        return const CircularProgressIndicator();
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                              if (selectedCategory == "All")
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      0.052778 * width, 0.02 * height, 0, 0),
+                                  child: const Row(
+                                    children: [
+                                      Text(
+                                        "All",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 24),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    0.05278 * width, 0.01125 * height, 0, 0),
+                                child: CategoryMenu(
+                                  width: width,
+                                  height: height,
+                                  list: (selectedCategory == "All")
+                                      ? categoryList.data!
+                                      : categoryList.data!
+                                          .where((element) =>
+                                              element.category ==
+                                              selectedCategory)
+                                          .toList(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  );
+                }
+              },
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class CategoryMenu extends StatelessWidget {
+  const CategoryMenu(
+      {super.key,
+      required this.width,
+      required this.height,
+      required this.list});
+
+  final double width;
+  final double height;
+  final List<Categories> list;
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> children = [];
+    bool check = (list.length > 1);
+    for (var i in list) {
+      if (check && i.category != "All") {
+        children.add(Row(
+          children: [
+            Text(
+              i.category,
+              style: const TextStyle(fontSize: 15),
+            ),
+          ],
+        ));
+
+        for (var j in i.products) {
+          children.add(
+            SizedBox(
+              width: 0.8888 * width,
+              height: 0.1575 * height,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: SizedBox(
+                    width: 0.8888 * width,
+                    height: 0.1575 * height,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 0.2861*width,
+                            height: 0.1275*height,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: SizedBox(
+                                        width: 0.2861 * width,
+                                        height: 0.1025 * height,
+                                        child: (j.productImage != "null")
+                                            ? Image.network(j.productImage)
+                                            : Image.asset("assets/images/pasta.jpeg"),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: SizedBox(
+                                    width: 0.205556*width,
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        side: const BorderSide(
+                                          color: Color(0xFF004932),
+                                          width: 1
+                                        ),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(5),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
+                                              width: 0.06777*width,
+                                              height: 0.03125*height,
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: const Color(0xFFD6EAE1),
+                                                  padding: EdgeInsets.zero
+                                                ),
+                                                onPressed: () {},
+                                                child: const Icon(Icons.remove, color: Colors.black,),
+                                              ),
+                                            ),
+                                            const Text("1"),
+                                            SizedBox(
+                                              width: 0.06777*width,
+                                              height: 0.03125*height,
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor: const Color(0xFFD6EAE1),
+                                                    padding: EdgeInsets.zero
+                                                ),
+                                                onPressed: () {},
+                                                child: const Icon(Icons.add, color: Colors.black,),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0.0611*width, 0,0,0),
+                            child: SizedBox(
+                              width: 0.456*width,
+                              height: 0.08625*height,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      VegetarianSymbol(color: j.veg?Colors.green:Colors.red),
+                                      SizedBox(
+                                        width: 0.38*width,
+                                        child: Text(
+                                            j.name,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(0.0566*width,0,0,0),
+                                        width: 0.4*width,
+                                        child: Text(
+                                            "₹${j.price}",
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 0.4*width,
+                                        padding: EdgeInsets.fromLTRB(0.0566*width,0,0,0),
+                                        child: Text(
+                                          j.description,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+      }
+    }
+
+    return Column(
+      children: children,
     );
   }
 }
@@ -257,6 +711,31 @@ class MenuItem extends StatelessWidget {
   }
 }
 
+class VegetarianSymbol extends StatelessWidget {
+  const VegetarianSymbol({super.key, required this.color});
+
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        Icon(
+          Icons.crop_square_sharp,
+          color: color,
+          size: 30,
+        ),
+        Icon(
+          Icons.circle,
+          color: color,
+          size: 10,
+        ),
+      ],
+    );
+  }
+}
+
 class RecommendedItemIcon extends StatelessWidget {
   const RecommendedItemIcon(
       {Key? key, required this.width, required this.height, required this.name})
@@ -270,43 +749,89 @@ class RecommendedItemIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: (0.201 * width),
-      height: (0.08625 * height),
-      child: Column(
-        children: [
-          SizedBox(
-            width: (0.16111 * width),
-            height: (0.05625 * height),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.transparent),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: SizedBox(
+        width: 0.4944 * width,
+        height: 0.2625 * height,
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0.03125 * height, 0, 0),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  VegetarianSymbol(color: Colors.green),
+                  Text("Original Maggie")
+                ],
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Image.asset(
-                  "assets/images/hamburger.jpg",
-                  fit: BoxFit.cover,
+            ),
+            const Text("₹ 40"),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0.0125 * height, 0, 0),
+              child: SizedBox(
+                width: 0.2861 * width,
+                height: 0.1125 * height,
+                child: Image.asset("assets/images/pasta.jpeg"),
+              ),
+            ),
+            Card(
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Color(0xFF004932), width: 1),
+                  borderRadius: BorderRadius.circular(5)),
+              child: SizedBox(
+                width: 0.20556 * width,
+                height: 0.03125 * height,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 0.07778 * width,
+                      height: double.infinity,
+                      child: ElevatedButton(
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xFFD6EAE1),
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.zero,
+                            elevation: 0),
+                        onPressed: () {},
+                        child: const Center(
+                          child: Icon(
+                            Icons.remove,
+                            size: 15,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Text("1"),
+                    SizedBox(
+                      width: 0.07778 * width,
+                      height: double.infinity,
+                      child: ElevatedButton(
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xFFD6EAE1),
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.zero,
+                            elevation: 0),
+                        onPressed: () {},
+                        child: const Icon(
+                          Icons.add,
+                          size: 15,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(0, 6.0, 0, 0),
-            child: Text(
-              "hamburger",
-              style: TextStyle(fontSize: 12),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
 }
-
 
 //StreamBuilder(
 //               stream: selectedOutletStream.stream,

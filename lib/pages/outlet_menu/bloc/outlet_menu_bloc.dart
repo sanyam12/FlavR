@@ -105,7 +105,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
         ),
       );
     }
-
+    ans.insert(0,Categories("All", []));
     return ans;
   }
 

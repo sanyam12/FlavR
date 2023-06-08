@@ -34,7 +34,6 @@ class _OutletsListState extends State<OutletsList> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    StreamController<List<Outlet>> list = StreamController<List<Outlet>>();
     //List<Outlet> outletList = [];
 
     return BlocProvider(
