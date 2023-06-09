@@ -2,6 +2,7 @@ import 'package:flavr/pages/cart/CartPage.dart';
 import 'package:flavr/pages/google_signin/SignInWithGoogle.dart';
 import 'package:flavr/pages/home_page/HomePage.dart';
 import 'package:flavr/pages/login_page/LoginPage.dart';
+import 'package:flavr/pages/ordernumber/OrderNumber.dart';
 import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
 import 'package:flavr/pages/outlets_list_page/OutletsLists.dart';
 import 'package:flavr/pages/outlets_list_page/scan_qr/ScanQR.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/splashscreen",
+      initialRoute: "/ordernumber",
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
         "/signInWithGoogle":(context)=>const SignInWithGoogle(),
@@ -40,7 +41,8 @@ class MyApp extends StatelessWidget {
         "/homePage": (context)=> const HomePage(),
         "/cart" : (context) => const CartPage(),
         "/profile": (context)=> const ProfilePage(),
-        "/payment": (context)=> const Payment()
+        "/payment": (context)=> const Payment(),
+        "/ordernumber": (context)=> const OrderNumber()
       },
     );
   }
