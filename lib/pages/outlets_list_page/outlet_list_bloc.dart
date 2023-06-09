@@ -30,7 +30,7 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
             };
             var response = await http.get(
                 Uri.https(
-                    "flavrapi.onrender.com",
+                    "flavr.tech",
                     "outlet/getOutlet",
                   query
                 ),

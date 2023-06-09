@@ -76,7 +76,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     } else {
       final query = {"outletid": id};
       var response = await http.get(
-          Uri.https("flavrapi.onrender.com", "outlet/getOutlet", query),
+          Uri.https("flavr.tech", "outlet/getOutlet", query),
           headers: {"Authorization": "Bearer $token"});
       final json = jsonDecode(response.body);
       return Outlet.fromJson(json["result"][0]);
@@ -89,7 +89,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
 
     var queryParameters = {"outletid": id};
     var response = await http.get(Uri.https(
-        "flavrapi.onrender.com", "products/getAllCategories", queryParameters));
+        "flavr.tech", "products/getAllCategories", queryParameters));
 
     var json = jsonDecode(response.body);
     for (var i in json["categories"]) {
@@ -98,7 +98,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
 
     for (var category in categoryList) {
       queryParameters = {"categoryName": category, "outletid": id};
-      response = await http.get(Uri.https("flavrapi.onrender.com",
+      response = await http.get(Uri.https("flavr.tech",
           "/products/getProductsByCategory", queryParameters));
       json = jsonDecode(response.body);
       final List<Product> productsList = [];
@@ -119,7 +119,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     var query = {"outletid": id};
 
     var a = await http.get(Uri.https(
-        "flavrapi.onrender.com", "/products/getProductsOfOutlet", query));
+        "flavr.tech", "/products/getProductsOfOutlet", query));
 
     var json = jsonDecode(a.body);
     for (var i in json["products"]) {
