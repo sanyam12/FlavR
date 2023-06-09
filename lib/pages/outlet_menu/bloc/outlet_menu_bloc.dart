@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer' as logger;
+import 'dart:math';
 import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -11,58 +13,71 @@ import '../Outlet.dart';
 import '../Product.dart';
 
 part 'outlet_menu_event.dart';
+
 part 'outlet_menu_state.dart';
 
 class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
-
-  List<Categories> categoriesList = [];
-
   OutletMenuBloc() : super(OutletMenuInitial()) {
-    on<OutletMenuEvent>((event, emit)async {
-      if(event is RefreshMenuEvent){
+    // List<Categories> categoriesList = [];
+    on<OutletMenuEvent>((event, emit) async {
+      if (event is RefreshMenuEvent) {
         String outletName = "Outlet";
         final selectedOutlet = await _fetchSelectedOutlet();
-        if(selectedOutlet!=null){
+        if (selectedOutlet != null) {
           outletName = selectedOutlet.outletName;
-          final List<Product> productList = await _fetchProducts(selectedOutlet.id);
-          categoriesList = await _fetchMenuItems(selectedOutlet.id);
+          final List<Product> productList =
+              await _fetchProducts(selectedOutlet.id);
+          final categoriesList = await _fetchMenuItems(selectedOutlet.id);
 
           emit(RefreshedOutletData(outletName, productList, categoriesList));
-
-        }else{
+        } else {
           emit(NavigateToOutletList());
         }
-
       }
-      else if(event is SearchQueryEvent){
-        final list = _searchResult(event.query);
-        emit(SearchResultState(list));
+      else if (event is SearchQueryEvent) {
+        logger.log("search bloc check");
+        final List<Categories> newList = [];
+        for (var element in event.categoriesList) {
+          newList.add(element);
+        }
+        final list = _searchResult(event.query, newList);
+        final state = SearchResultState(list);
+        logger.log(state.props.toString());
+        emit(state);
       }
     });
   }
 
+  List<Categories> _searchResult(
+      String query, List<Categories> categoriesList) {
+    List<Categories> list = [];
+    for (var i in categoriesList) {
+      var temp = Categories(
+          i.category,
+          i.products
+              .where((element) =>
+                  element.name.toLowerCase().contains(query.toLowerCase()))
+              .toList());
+      if (temp.products.isNotEmpty) {
+        list.add(temp);
+      }
+    }
+    return list;
+  }
 
-  Future<Outlet?> _fetchSelectedOutlet() async{
+  Future<Outlet?> _fetchSelectedOutlet() async {
     final pref = await SharedPreferences.getInstance();
     final id = pref.getString("selectedOutlet");
-    const secureService = FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: false));
+    const secureService = FlutterSecureStorage(
+        aOptions: AndroidOptions(encryptedSharedPreferences: false));
     final token = await secureService.read(key: "token");
-    if(id==null){
+    if (id == null) {
       return null;
-    }else{
-      final query = {
-        "outletid": id
-      };
+    } else {
+      final query = {"outletid": id};
       var response = await http.get(
-          Uri.https(
-              "flavrapi.onrender.com",
-              "outlet/getOutlet",
-              query
-          ),
-          headers: {
-            "Authorization": "Bearer $token"
-          }
-      );
+          Uri.https("flavrapi.onrender.com", "outlet/getOutlet", query),
+          headers: {"Authorization": "Bearer $token"});
       final json = jsonDecode(response.body);
       return Outlet.fromJson(json["result"][0]);
     }
@@ -81,31 +96,20 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       categoryList.add(i["category"].toString());
     }
 
-    for(var category in categoryList){
-      queryParameters = {
-        "categoryName": category,
-        "outletid":id
-      };
-      response = await http.get(
-          Uri.https(
-              "flavrapi.onrender.com",
-              "/products/getProductsByCategory",
-              queryParameters
-          )
-      );
+    for (var category in categoryList) {
+      queryParameters = {"categoryName": category, "outletid": id};
+      response = await http.get(Uri.https("flavrapi.onrender.com",
+          "/products/getProductsByCategory", queryParameters));
       json = jsonDecode(response.body);
       final List<Product> productsList = [];
-      for(var product in json["products"]){
+      for (var product in json["products"]) {
         productsList.add(Product.fromJson(product));
       }
       ans.add(
-        Categories(
-            category,
-            productsList
-        ),
+        Categories(category, productsList),
       );
     }
-    ans.insert(0,Categories("All", []));
+    ans.insert(0, Categories("All", []));
     return ans;
   }
 
@@ -123,17 +127,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     }
 
     //log(a.body);
-    return list;
-  }
-
-  List<Categories> _searchResult(String query){
-    List<Categories> list=[];
-    for(var i in categoriesList){
-      var temp = Categories(i.category, i.products.where((element) => element.name.toLowerCase().contains(query.toLowerCase())).toList());
-      if(temp.products.isNotEmpty){
-        list.add(temp);
-      }
-    }
     return list;
   }
 }

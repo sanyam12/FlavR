@@ -32,6 +32,6 @@ class SearchResultState extends OutletMenuState{
   const SearchResultState(this.menuList);
 
   @override
-  List<Object?> get props => [menuList];
+  List<Object?> get props => [menuList, Random().nextInt(10000)];
 
 }

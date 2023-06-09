@@ -11,9 +11,10 @@ class RefreshMenuEvent extends OutletMenuEvent{
 
 class SearchQueryEvent extends OutletMenuEvent{
   final String query;
-  const SearchQueryEvent(this.query);
+  final List<Categories> categoriesList;
+  const SearchQueryEvent(this.query, this.categoriesList);
 
   @override
-  List<Object?> get props => [query];
+  List<Object?> get props => [query, categoriesList];
 
 }
