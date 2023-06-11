@@ -5,9 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="menu search button added">
+      <change afterPath="$PROJECT_DIR$/lib/pages/cart/Cart.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/cart/CartItems.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/Product.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/Product.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_event.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_state.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686308338944</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="menu search button added">
+      <created>1686313256443</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1686313256443</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -213,5 +232,16 @@
     <MESSAGE value="menu screen completed" />
     <MESSAGE value="menu search button added" />
     <option name="LAST_COMMIT_MESSAGE" value="menu search button added" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart</url>
+          <line>18</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

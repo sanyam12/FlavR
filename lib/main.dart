@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/ordernumber",
+      initialRoute: "/splashscreen",
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
         "/signInWithGoogle":(context)=>const SignInWithGoogle(),

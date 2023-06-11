@@ -74,6 +74,8 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - vibration (1.7.5):
+    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -81,6 +83,7 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - vibration (from `.symlinks/plugins/vibration/ios`)
 
 SPEC REPOS:
   trunk:
@@ -113,6 +116,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/mobile_scanner/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  vibration:
+    :path: ".symlinks/plugins/vibration/ios"
 
 SPEC CHECKSUMS:
   CashfreeAnalyticsSDK: 6d3825916b1f37e38e26cc3b825eef31c9a8b4b9
@@ -137,6 +142,7 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
+  vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
 
 PODFILE CHECKSUM: 72b7850e6d13763cd119308efb3cbae90222c870
 

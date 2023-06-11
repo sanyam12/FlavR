@@ -63,7 +63,7 @@ class Product {
   String get productImage => _productImage;
 
   Product.fromJson(Map<String, dynamic> json)
-      : _id = json["6470c99f6940badfa7047608"].toString(),
+      : _id = json["_id"].toString(),
         _category = json["category"],
         _name = json["productName"].toString(),
         _description = json["description"],
