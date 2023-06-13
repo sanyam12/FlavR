@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="menu search button added">
+    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="order number">
+      <change afterPath="$PROJECT_DIR$/lib/pages/edit_profile/EditProfile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/profile_page/ProfiePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/profile_page/ProfiePage.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,47 +31,34 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="dbc25afc4fe702d7a295d2dbd30073eac331ad3e" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="2QVW4WWNN4BfYycrTlncZlZC4I1" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2QWTX7NGzYMqnvD8bpWIC2lcC9C" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/sanyamratreja/AndroidStudioProjects/FlavR/assets/images&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/HP/AndroidStudioProjects/untitled&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
 }</component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets/images" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/assets/images" />
-      <recent name="$PROJECT_DIR$/assets/fonts" />
-      <recent name="$PROJECT_DIR$/android/app/src/main/kotlin/com/example/flavr" />
-      <recent name="$PROJECT_DIR$/assets/rive" />
+      <recent name="C:\Users\HP\AndroidStudioProjects\FlavR\assets\animations" />
+      <recent name="C:\Users\HP\AndroidStudioProjects\FlavR\assets\images" />
+      <recent name="C:\Users\HP\AndroidStudioProjects\FlavR\assets\fonts" />
     </key>
   </component>
   <component name="RunManager">
@@ -74,118 +70,76 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="outlet menu ka aur sundr chehra" />
-      <created>1685439037895</created>
+      <changelist id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="" />
+      <created>1685468377080</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1685439037895</updated>
+      <updated>1685468377080</updated>
     </task>
-    <task id="LOCAL-00001" summary="initial commit">
-      <created>1685439155876</created>
+    <task id="LOCAL-00001" summary="splash screen hai isme">
+      <created>1685509749829</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1685439155876</updated>
+      <updated>1685509749829</updated>
     </task>
-    <task id="LOCAL-00002" summary="initial commit">
-      <created>1685439312247</created>
+    <task id="LOCAL-00002" summary="outlet menu ka sundr chehra">
+      <created>1685616063940</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1685439312247</updated>
+      <updated>1685616063940</updated>
     </task>
-    <task id="LOCAL-00003" summary="android app crash fixed">
-      <created>1685445114867</created>
+    <task id="LOCAL-00003" summary="outlet menu ka aur sundr chehra">
+      <created>1685617428680</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1685445114867</updated>
+      <updated>1685617428680</updated>
     </task>
-    <task id="LOCAL-00004" summary="menu screen search working">
-      <created>1685509833973</created>
+    <task id="LOCAL-00004" summary="choose outlet">
+      <created>1685620976665</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1685509833973</updated>
+      <updated>1685620976665</updated>
     </task>
-    <task id="LOCAL-00005" summary="menu screen search working">
-      <created>1685510075732</created>
+    <task id="LOCAL-00005" summary="cart waali screen">
+      <created>1685803835069</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1685510075732</updated>
+      <updated>1685803835069</updated>
     </task>
-    <task id="LOCAL-00006" summary="login and sign up page working">
-      <created>1685555116769</created>
+    <task id="LOCAL-00006" summary="cart waali screen part 2">
+      <created>1685812947305</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1685555116769</updated>
+      <updated>1685812947305</updated>
     </task>
-    <task id="LOCAL-00007" summary="login and sign up page working">
-      <created>1685555707741</created>
+    <task id="LOCAL-00007" summary="cart waali screen part 3">
+      <created>1685903866117</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1685555707741</updated>
+      <updated>1685903866117</updated>
     </task>
-    <task id="LOCAL-00008" summary="login and signup page buttons rounded">
-      <created>1685595889398</created>
+    <task id="LOCAL-00008" summary="cart screen">
+      <created>1686212625635</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1685595889398</updated>
+      <updated>1686212625635</updated>
     </task>
-    <task id="LOCAL-00009" summary="outlet menu ka aur sundr chehra">
-      <created>1685770310721</created>
+    <task id="LOCAL-00009" summary="order number">
+      <created>1686306488081</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1685770310721</updated>
+      <updated>1686306488081</updated>
     </task>
-    <task id="LOCAL-00010" summary="outlet list scan QR and saved outlet list working">
-      <created>1685896869371</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1685896869371</updated>
-    </task>
-    <task id="LOCAL-00011" summary="login screen created">
-      <created>1686118456434</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1686118456434</updated>
-    </task>
-    <task id="LOCAL-00012" summary="login screen created">
-      <created>1686119319493</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1686119319493</updated>
-    </task>
-    <task id="LOCAL-00013" summary="menu screen">
-      <created>1686212683230</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1686212683230</updated>
-    </task>
-    <task id="LOCAL-00014" summary="menu screen completed">
-      <created>1686212878276</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1686212878276</updated>
-    </task>
-    <task id="LOCAL-00015" summary="menu search button added">
-      <created>1686308338944</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1686308338944</updated>
-    </task>
-    <option name="localTasksCounter" value="16" />
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -200,18 +154,15 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="initial commit" />
-    <MESSAGE value="android app crash fixed" />
-    <MESSAGE value="menu screen search working" />
-    <MESSAGE value="login and sign up page working" />
-    <MESSAGE value="login and signup page buttons rounded" />
+    <MESSAGE value="splash screen hai isme" />
+    <MESSAGE value="outlet menu ka sundr chehra" />
     <MESSAGE value="outlet menu ka aur sundr chehra" />
-    <MESSAGE value="outlet list scan QR and saved outlet list working" />
-    <MESSAGE value="login screen created" />
-    <MESSAGE value="menu screen" />
-    <MESSAGE value="menu screen completed" />
-    <MESSAGE value="menu search button added" />
-    <option name="LAST_COMMIT_MESSAGE" value="menu search button added" />
+    <MESSAGE value="choose outlet" />
+    <MESSAGE value="cart waali screen" />
+    <MESSAGE value="cart waali screen part 2" />
+    <MESSAGE value="cart waali screen part 3" />
+    <MESSAGE value="cart screen" />
+    <MESSAGE value="order number" />
+    <option name="LAST_COMMIT_MESSAGE" value="order number" />
   </component>
 </project>

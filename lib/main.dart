@@ -1,4 +1,5 @@
 import 'package:flavr/pages/cart/CartPage.dart';
+import 'package:flavr/pages/edit_profile/EditProfile.dart';
 import 'package:flavr/pages/google_signin/SignInWithGoogle.dart';
 import 'package:flavr/pages/home_page/HomePage.dart';
 import 'package:flavr/pages/login_page/LoginPage.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/ordernumber",
+      initialRoute: "/profile",
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
         "/signInWithGoogle":(context)=>const SignInWithGoogle(),
@@ -42,7 +43,8 @@ class MyApp extends StatelessWidget {
         "/cart" : (context) => const CartPage(),
         "/profile": (context)=> const ProfilePage(),
         "/payment": (context)=> const Payment(),
-        "/ordernumber": (context)=> const OrderNumber()
+        "/ordernumber": (context)=> const OrderNumber(),
+        "/edit_profile": (context)=> const EditProfile(),
       },
     );
   }
