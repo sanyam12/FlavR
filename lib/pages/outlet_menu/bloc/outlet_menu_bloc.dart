@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
-import 'dart:developer' as logger;
 import 'dart:math';
 import 'package:flavr/pages/cart/Cart.dart';
 import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
@@ -41,7 +40,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
         }
       }
       else if (event is SearchQueryEvent) {
-        logger.log("search bloc check");
         final List<Categories> newList = [];
         for (var element in event.categoriesList) {
           newList.add(element);
@@ -82,7 +80,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
         );
       }
       else if (event is GetCartEvent) {
-        logger.log("sending cart details back");
         emit(CartDataState(event.cart));
       }
     });

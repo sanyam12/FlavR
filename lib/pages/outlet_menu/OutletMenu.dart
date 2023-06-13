@@ -66,9 +66,7 @@ class _OutletMenuState extends State<OutletMenu> {
           },
           child: BlocListener<OutletMenuBloc, OutletMenuState>(
             listener: (context, state) {
-              log(state.props.toString());
               if (state is NavigateToOutletList) {
-                log("navigate state");
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Navigator.pushNamed(context, "/outletList")
                       .then((value) => {bloc.add(RefreshMenuEvent())});
@@ -81,12 +79,9 @@ class _OutletMenuState extends State<OutletMenu> {
                 cart = state.cart;
 
               } else if (state is SearchResultState) {
-                log("search result received");
                 setState(() {
                   menuItemsStream.add(state.menuList);
                 });
-              } else if (state is CartDataState) {
-                log("steadfast ${cart.items}");
               }else if (state is AmountUpdatedState){
                 amount = state.amount;
               }
@@ -482,76 +477,83 @@ class _OutletMenuState extends State<OutletMenu> {
                                     SizedBox(
                                       width: 0.8888888889 * width,
                                       height: 0.08625 * height,
-                                      child: Card(
-                                        color: const Color(0xFFA3C2B3),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0.03 * width, 0, 0, 0),
-                                              child: ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10))),
-                                                onPressed: () {},
-                                                child: const Text(
-                                                  "Place Order",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
+                                      child: GestureDetector(
+                                        onTap: (){
+                                          Navigator.of(context).pushNamed("/cart");
+                                        },
+                                        child: Card(
+                                          color: const Color(0xFFA3C2B3),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0.03 * width, 0, 0, 0),
+                                                child: ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.white,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10))),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pushNamed("/payment");
+                                                  },
+                                                  child: const Text(
+                                                    "Place Order",
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(0, 0,
-                                                  0.08333333333 * width, 0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  const Text(
-                                                    "Total Amount",
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 24,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      const Icon(
-                                                        Icons.currency_rupee,
+                                              Padding(
+                                                padding: EdgeInsets.fromLTRB(0, 0,
+                                                    0.08333333333 * width, 0),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    const Text(
+                                                      "Total Amount",
+                                                      style: TextStyle(
                                                         color: Colors.white,
+                                                        fontSize: 24,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                       ),
-                                                      Text(
-                                                        amount.toString(),
-                                                        style: const TextStyle(
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        const Icon(
+                                                          Icons.currency_rupee,
                                                           color: Colors.white,
-                                                          fontSize: 24,
-                                                          fontWeight:
-                                                              FontWeight.bold,
                                                         ),
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            )
-                                          ],
+                                                        Text(
+                                                          amount.toString(),
+                                                          style: const TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 24,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     )
@@ -717,7 +719,6 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                                 : 0,
                                                             widget.cart));
                                                   }
-                                                  log("sending update");
                                                 });
                                                 widget.updateParentState();
                                               },

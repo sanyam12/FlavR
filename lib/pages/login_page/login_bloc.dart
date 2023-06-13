@@ -19,7 +19,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           "password": event.password
         };
         var response = await http.post(
-          Uri.https("flavrapi.onrender.com", "/user/login"),
+          Uri.https("flavr.tech", "/user/login"),
             body: body
         );
         var json = jsonDecode(response.body);

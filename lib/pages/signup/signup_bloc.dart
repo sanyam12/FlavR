@@ -42,7 +42,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     };
 
     final loginResponse = await http.post(
-        Uri.https("flavrapi.onrender.com", "/user/login"),
+        Uri.https("flavr.tech", "/user/login"),
         body: body
     );
 
