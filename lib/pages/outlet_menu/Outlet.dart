@@ -6,6 +6,7 @@ class Outlet{
   String _address;
   String _owner;
   String? _imageUrl;
+  bool isFavourite = false;
 
   Outlet(this._id, this._address, this._outletName, this._owner, this._imageUrl);
 
@@ -40,7 +41,7 @@ class Outlet{
       : _id = json["_id"],
         _owner = json["owner"],
         _outletName = json["outletName"],
-        _address = json["address"],
+        _address = json["address"]["addressLine1"],
         _imageUrl = json["outletImage"]["url"];
 
   Map<String, dynamic> toJson() =>{

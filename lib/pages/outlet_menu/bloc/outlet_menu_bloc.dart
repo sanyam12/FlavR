@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:developer' as logger;
 import 'dart:math';
 import 'package:flavr/pages/cart/Cart.dart';
 import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
@@ -21,21 +22,27 @@ part 'outlet_menu_state.dart';
 
 class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
   OutletMenuBloc() : super(OutletMenuInitial()) {
-    // List<Categories> categoriesList = [];
     on<OutletMenuEvent>((event, emit) async {
       if (event is RefreshMenuEvent) {
-        String outletName = "Outlet";
-        final selectedOutlet = await _fetchSelectedOutlet();
-        if (selectedOutlet != null) {
-          outletName = selectedOutlet.outletName;
-          final List<Product> productList =
-              await _fetchProducts(selectedOutlet.id);
-          final categoriesList = await _fetchMenuItems(selectedOutlet.id);
-          final cart = await _fetchUserCart();
+        try {
+          String outletName = "Outlet";
+          final selectedOutlet = await _fetchSelectedOutlet();
+          if (selectedOutlet != null) {
+            outletName = selectedOutlet.outletName;
+            final List<Product> productList =
+                await _fetchProducts(selectedOutlet.id);
+            final categoriesList = await _fetchMenuItems(selectedOutlet.id);
+            final cart = await _fetchUserCart();
 
-          emit(RefreshedOutletData(outletName, productList, categoriesList, cart));
-          emit(const AmountUpdatedState(100));
-        } else {
+            emit(RefreshedOutletData(outletName, productList, categoriesList, cart));
+            emit(const AmountUpdatedState(100));
+          } else {
+            logger.log("error in selected Outlet");
+            emit(NavigateToOutletList());
+          }
+        } on Exception catch (e) {
+          logger.log("error in refresh menu event of outlet menu $e");
+          emit(ShowSnackbar(e.toString()));
           emit(NavigateToOutletList());
         }
       }
@@ -49,38 +56,51 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
         emit(state);
       }
       else if (event is UpdateCartEvent) {
-        event.cart.items[event.product.id] = event.newQuantity;
+        try {
+          final outletId = await _fetchSelectedOutlet();
+          logger.log(event.cart.outletId);
+          if(outletId!=null){
+            event.cart.items[event.product.id] = event.newQuantity;
 
-        List items = [];
-        event.cart.items.forEach((key, value) {
-          items.add(
-            {
-              "product": key,
-              "quantity": value
-            }
-          );
-        });
+            List items = [];
+            event.cart.items.forEach((key, value) {
+              if(value!=0){
+                items.add(
+                    {
+                      "product": key,
+                      "quantity": value
+                    }
+                );
+                logger.log(value.toString());
+              }
+            });
 
-        const secureStorage = FlutterSecureStorage(
-            aOptions: AndroidOptions(encryptedSharedPreferences: true));
-        final token = await secureStorage.read(key: "token");
-        final data = jsonEncode({
-          "items": items
-        });
-        final response = await http.post(
-          Uri.https(
-            "flavr.tech",
-            "/user/addProductsToCart"
-          ),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $token'
-          },
-          body: data,
-        );
-      }
-      else if (event is GetCartEvent) {
-        emit(CartDataState(event.cart));
+            const secureStorage = FlutterSecureStorage(
+                aOptions: AndroidOptions(encryptedSharedPreferences: true));
+            final token = await secureStorage.read(key: "token");
+            final data = jsonEncode({
+              "outletid": outletId.id,
+              "items": items
+            });
+            final response = await http.post(
+              Uri.https(
+                  "flavr.tech",
+                  "/user/addProductsToCart"
+              ),
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $token'
+              },
+              body: data,
+            );
+            logger.log(response.body.toString());
+          }
+          else{
+            emit(const ShowSnackbar("Outlet Not Selected"));
+          }
+        } on Exception catch (e) {
+          logger.log(e.toString());
+        }
       }
     });
   }
@@ -106,17 +126,26 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     final pref = await SharedPreferences.getInstance();
     final id = pref.getString("selectedOutlet");
     const secureService = FlutterSecureStorage(
-        aOptions: AndroidOptions(encryptedSharedPreferences: false));
+        aOptions: AndroidOptions(encryptedSharedPreferences: true));
     final token = await secureService.read(key: "token");
     if (id == null) {
       return null;
     } else {
       final query = {"outletid": id};
       var response = await http.get(
-          Uri.https("flavr.tech", "outlet/getOutlet", query),
-          headers: {"Authorization": "Bearer $token"});
+          Uri.https(
+            "flavr.tech",
+            "outlet/getOutlet",
+            query,
+          ),
+          headers: {"Authorization": "Bearer $token"},
+      );
       final json = jsonDecode(response.body);
-      return Outlet.fromJson(json["result"][0]);
+      if(json["result"]!=null && (json["result"] as List).isNotEmpty){
+        return Outlet.fromJson(json["result"][0]);
+      }else{
+        return null;
+      }
     }
   }
 
@@ -129,25 +158,29 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
         Uri.https("flavr.tech", "products/getAllCategories", queryParameters));
 
     var json = jsonDecode(response.body);
-    for (var i in json["categories"]) {
-      categoryList.add(i["category"].toString());
-    }
-
-    for (var category in categoryList) {
-      queryParameters = {"categoryName": category, "outletid": id};
-      response = await http.get(Uri.https(
-          "flavr.tech", "/products/getProductsByCategory", queryParameters));
-      json = jsonDecode(response.body);
-      final List<Product> productsList = [];
-      for (var product in json["products"]) {
-        productsList.add(Product.fromJson(product));
+    if(response.statusCode==200){
+      for (var i in json["categories"]) {
+        categoryList.add(i["category"].toString());
       }
-      ans.add(
-        Categories(category, productsList),
-      );
+
+      for (var category in categoryList) {
+        queryParameters = {"categoryName": category, "outletid": id};
+        response = await http.get(Uri.https(
+            "flavr.tech", "/products/getProductsByCategory", queryParameters));
+        json = jsonDecode(response.body);
+        final List<Product> productsList = [];
+        for (var product in json["products"]) {
+          productsList.add(Product.fromJson(product));
+        }
+        ans.add(
+          Categories(category, productsList),
+        );
+      }
+      ans.insert(0, Categories("All", []));
+      return ans;
+    }else{
+      throw Exception("something went wrong: ${response.body}");
     }
-    ans.insert(0, Categories("All", []));
-    return ans;
   }
 
   Future<List<Product>> _fetchProducts(String id) async {
@@ -181,7 +214,8 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
 
     if(response.statusCode==200){
       final json = jsonDecode(response.body);
-      final HashMap<String, int> temp= HashMap<String, int>();
+      logger.log(token.toString());
+      final HashMap<String, int> temp = HashMap<String, int>();
       final list = json["cart"] as List;
       for(var i in list){
         temp[i["product"]["_id"]] = i["quantity"];

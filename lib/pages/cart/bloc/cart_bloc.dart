@@ -56,6 +56,40 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
         emit(RefreshUI(grandTotal,Random().nextInt(10000)));
       }
+      else if (event is UpdateCartEvent){
+        event.cart.items[event.product.id] = event.newQuantity;
+
+        List items = [];
+        event.cart.items.forEach((key, value) {
+          if(value!=0){
+            items.add(
+                {
+                  "product": key,
+                  "quantity": value
+                }
+            );
+            logger.log(value.toString());
+          }
+        });
+
+        const secureStorage = FlutterSecureStorage(
+            aOptions: AndroidOptions(encryptedSharedPreferences: true));
+        final token = await secureStorage.read(key: "token");
+        final data = jsonEncode({
+          "items": items
+        });
+        final response = await http.post(
+          Uri.https(
+              "flavr.tech",
+              "/user/addProductsToCart"
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token'
+          },
+          body: data,
+        );
+      }
     });
   }
 }

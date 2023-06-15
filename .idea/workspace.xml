@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="cart backend">
-      <change afterPath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_bloc.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_event.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
@@ -22,13 +19,20 @@
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/cart/Cart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/Cart.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/login_page/login_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/login_page/login_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_event.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/Outlet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/Outlet.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_event.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/outlets_list_page/OutletsLists.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlets_list_page/OutletsLists.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/signup/signup_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/signup/signup_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_event.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_state.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,20 +65,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/sanyamratreja/AndroidStudioProjects/FlavR/assets/images&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "io.flutter.reload.alreadyRun": "true",
+    "last_opened_file_path": "/Users/sanyamratreja/AndroidStudioProjects/FlavR/assets/images",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/images" />
@@ -220,7 +227,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686483361239</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="cart backend">
+      <created>1686657059009</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1686657059009</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -255,13 +269,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart</url>
-          <line>18</line>
-          <option name="timeStamp" value="4" />
+          <line>27</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/pages/cart/CartPage.dart</url>
-          <line>145</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/lib/pages/outlets_list_page/outlet_list_bloc.dart</url>
+          <line>21</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -63,3 +63,12 @@ class AmountUpdatedState extends OutletMenuState{
   List<Object?> get props => [amount];
 
 }
+
+class ShowSnackbar extends OutletMenuState{
+  final String message;
+  const ShowSnackbar(this.message);
+
+  @override
+  List<Object?> get props => [message];
+
+}
