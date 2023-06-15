@@ -21,3 +21,12 @@ class UpdateCartEvent extends CartEvent{
   @override
   List<Object?> get props => [product, newQuantity, cart];
 }
+
+class UpdateGrandTotal extends CartEvent{
+  final Cart cart;
+  final List<Product> list;
+  const UpdateGrandTotal(this.cart, this.list);
+
+  @override
+  List<Object?> get props => [cart, list];
+}

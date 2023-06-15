@@ -33,8 +33,14 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
                 await _fetchProducts(selectedOutlet.id);
             final categoriesList = await _fetchMenuItems(selectedOutlet.id);
             final cart = await _fetchUserCart();
-
-            emit(RefreshedOutletData(outletName, productList, categoriesList, cart));
+            for(var i in cart.items.entries){
+              logger.log("${i.key} ${i.value}");
+            }
+            if(cart.outletId==selectedOutlet.id){
+              emit(RefreshedOutletData(outletName, productList, categoriesList, cart));
+            }else{
+              emit(RefreshedOutletData(outletName, productList, categoriesList, cart));
+            }
             emit(const AmountUpdatedState(100));
           } else {
             logger.log("error in selected Outlet");
@@ -57,7 +63,8 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       }
       else if (event is UpdateCartEvent) {
         try {
-          final outletId = await _fetchSelectedOutlet();
+          final pref = await SharedPreferences.getInstance();
+          final outletId = pref.getString("selectedOutlet");
           logger.log(event.cart.outletId);
           if(outletId!=null){
             event.cart.items[event.product.id] = event.newQuantity;
@@ -79,7 +86,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
                 aOptions: AndroidOptions(encryptedSharedPreferences: true));
             final token = await secureStorage.read(key: "token");
             final data = jsonEncode({
-              "outletid": outletId.id,
+              "outletid": outletId,
               "items": items
             });
             final response = await http.post(
@@ -216,11 +223,14 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       final json = jsonDecode(response.body);
       logger.log(token.toString());
       final HashMap<String, int> temp = HashMap<String, int>();
-      final list = json["cart"] as List;
+      final outletId = json["cart"]["outlet"];
+      final list = json["cart"]["products"] as List;
+      // logger.log(list[0].toString());
       for(var i in list){
-        temp[i["product"]["_id"]] = i["quantity"];
+        temp[i["product"]] = i["quantity"];
       }
       cart.items = temp;
+      cart.outletId = outletId.toString();
     }
 
     return cart;

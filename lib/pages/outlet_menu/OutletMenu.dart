@@ -71,26 +71,21 @@ class _OutletMenuState extends State<OutletMenu> {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Navigator.popAndPushNamed(context, "/outletList");
                 });
-              }
-              else if (state is RefreshedOutletData) {
+              } else if (state is RefreshedOutletData) {
                 menuItemsStream.add(state.menuList);
                 productsListStream.add(state.productList);
                 selectedOutletStream.add(state.outletName);
                 refreshedMenuItems = state.menuList;
-
-              }
-              else if (state is SearchResultState) {
+                cart = state.cart;
+              } else if (state is SearchResultState) {
                 setState(() {
                   menuItemsStream.add(state.menuList);
                 });
-              }
-              else if (state is AmountUpdatedState){
+              } else if (state is AmountUpdatedState) {
                 amount = state.amount;
-              }
-              else if (state is ShowSnackbar){
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.message))
-                );
+              } else if (state is ShowSnackbar) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(state.message)));
               }
             },
             child: StreamBuilder(
@@ -486,11 +481,17 @@ class _OutletMenuState extends State<OutletMenu> {
                                       width: 0.8888888889 * width,
                                       height: 0.08625 * height,
                                       child: GestureDetector(
-                                        onTap: ()async{
-                                          final newCart = await Navigator.of(context).push<Cart>(
-                                            MaterialPageRoute(builder: (context)=>const CartPage())
+                                        onTap: () async {
+                                          final newCart =
+                                              await Navigator.of(context)
+                                                  .push<Cart>(
+                                            MaterialPageRoute(
+                                              builder: (context) => CartPage(
+                                                initialCart: cart,
+                                              ),
+                                            )
                                           );
-                                          if(newCart!=null){
+                                          if (newCart != null) {
                                             setState(() {
                                               cart = newCart;
                                             });
@@ -521,7 +522,8 @@ class _OutletMenuState extends State<OutletMenu> {
                                                                       .circular(
                                                                           10))),
                                                   onPressed: () {
-                                                    Navigator.of(context).pushNamed("/payment");
+                                                    Navigator.of(context)
+                                                        .pushNamed("/payment");
                                                   },
                                                   child: const Text(
                                                     "Place Order",
@@ -532,8 +534,11 @@ class _OutletMenuState extends State<OutletMenu> {
                                                 ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsets.fromLTRB(0, 0,
-                                                    0.08333333333 * width, 0),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0,
+                                                    0,
+                                                    0.08333333333 * width,
+                                                    0),
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -555,7 +560,8 @@ class _OutletMenuState extends State<OutletMenu> {
                                                         ),
                                                         Text(
                                                           amount.toString(),
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 24,
                                                             fontWeight:

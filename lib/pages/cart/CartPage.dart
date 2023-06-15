@@ -10,7 +10,9 @@ import 'package:slider_button/slider_button.dart';
 import '../outlet_menu/Product.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key}) : super(key: key);
+  final Cart initialCart;
+
+  const CartPage({Key? key, required this.initialCart}) : super(key: key);
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -19,19 +21,31 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   bool? valuefirst = false;
   final cartBloc = CartBloc();
-  Cart cart = Cart();
   List<Product> list = [];
   bool isLoading = true;
   int grandTotal = 0;
+  Cart cart = Cart();
 
   @override
   Widget build(BuildContext context) {
+    cart = widget.initialCart;
+    log(cart.items.length.toString());
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
     List<Widget> extras = [
-      GrandTotal(width: width, height: height, grandTotal: grandTotal,),
-      AddMoreItems(width: width, height: height),
+      GrandTotal(
+        width: width,
+        height: height,
+        grandTotal: grandTotal,
+      ),
+      AddMoreItems(
+        width: width,
+        height: height,
+        onTap: () {
+          Navigator.pop(context, cart);
+        },
+      ),
       AddOtherInstructions(
         width: width,
         height: height,
@@ -41,10 +55,6 @@ class _CartPageState extends State<CartPage> {
             valuefirst = value;
           });
         },
-      ),
-      YourDetails(
-        width: width,
-        height: height,
       ),
       AddSpecialInstructions(width: width, height: height),
     ];
@@ -58,8 +68,8 @@ class _CartPageState extends State<CartPage> {
             product: i,
             cart: cart,
             bloc: cartBloc,
-            updateParentState: (){
-              setState(() {});
+            updateParentState: () {
+              cartBloc.add(UpdateGrandTotal(cart, list));
             },
           ),
         );
@@ -69,7 +79,7 @@ class _CartPageState extends State<CartPage> {
     children.addAll(extras);
 
     return WillPopScope(
-      onWillPop: ()async{
+      onWillPop: () async {
         Navigator.pop(context, cart);
         return true;
       },
@@ -83,15 +93,22 @@ class _CartPageState extends State<CartPage> {
             centerTitle: true,
             leading: BackButton(
               color: Colors.black,
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context, cart);
               },
             ),
-            title: const Text("Cart", style: TextStyle(color: Colors.black),),
+            title: const Text(
+              "Cart",
+              style: TextStyle(color: Colors.black),
+            ),
             actions: [
               IconButton(
                 alignment: Alignment.topRight,
-                icon: const Icon(Icons.person,size: 30, color: Colors.black,),
+                icon: const Icon(
+                  Icons.person,
+                  size: 30,
+                  color: Colors.black,
+                ),
                 onPressed: () {
                   Navigator.pushNamed(context, "/profile");
                 },
@@ -110,6 +127,10 @@ class _CartPageState extends State<CartPage> {
                 if (state is RefreshUI) {
                   setState(() {
                     isLoading = false;
+                    grandTotal = state.grandTotal;
+                  });
+                } else if (state is GrandTotalChanged) {
+                  setState(() {
                     grandTotal = state.grandTotal;
                   });
                 }
@@ -169,8 +190,8 @@ class _CartPageState extends State<CartPage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding:
-                                      EdgeInsets.fromLTRB(0.19 * width, 0, 0, 0),
+                                  padding: EdgeInsets.fromLTRB(
+                                      0.19 * width, 0, 0, 0),
                                   child: SliderButton(
                                     backgroundColor: const Color(0xff004932),
                                     action: () {
@@ -188,6 +209,7 @@ class _CartPageState extends State<CartPage> {
                                       color: Colors.black,
                                     ),
                                     buttonSize: 45,
+                                    dismissible: true,
                                     buttonColor: const Color(0xffD6EAE1),
                                     baseColor: const Color(0xffD6EAE1),
                                     disable: false,
@@ -264,11 +286,11 @@ class _CartItemsState extends State<CartItems> {
                       child: SizedBox(
                         height: 0.2 * widget.height,
                         width: 0.3 * widget.width,
-                        child: (widget.product.productImage!="null")?
-                            Image.network(widget.product.productImage)
-                        :const Image(
-                          image: AssetImage("assets/images/pizza.jpg"),
-                        ),
+                        child: (widget.product.productImage != "null")
+                            ? Image.network(widget.product.productImage)
+                            : const Image(
+                                image: AssetImage("assets/images/pizza.jpg"),
+                              ),
                       ),
                     ),
                     Align(
@@ -284,8 +306,7 @@ class _CartItemsState extends State<CartItems> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(5),
                             child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SizedBox(
                                   width: 0.06777 * widget.width,
@@ -293,25 +314,24 @@ class _CartItemsState extends State<CartItems> {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor:
-                                        const Color(0xFFD6EAE1),
+                                            const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
                                       setState(() {
-                                        if (widget.cart.items[widget.product.id] !=
-                                            null &&
-                                            widget.cart.items[widget.product.id]! >
+                                        if (widget.cart
+                                                    .items[widget.product.id] !=
+                                                null &&
+                                            widget.cart
+                                                    .items[widget.product.id]! >
                                                 0) {
-                                          widget
-                                              .bloc
-                                              .add(UpdateCartEvent(
+                                          widget.bloc.add(UpdateCartEvent(
                                               widget.product,
-                                              (widget.cart.items[widget.product
-                                                  .id] !=
-                                                  null)
-                                                  ? widget.cart
-                                                  .items[
-                                              widget.product.id]! -
-                                                  1
+                                              (widget.cart.items[
+                                                          widget.product.id] !=
+                                                      null)
+                                                  ? widget.cart.items[
+                                                          widget.product.id]! -
+                                                      1
                                                   : 0,
                                               widget.cart));
                                         }
@@ -324,32 +344,31 @@ class _CartItemsState extends State<CartItems> {
                                     ),
                                   ),
                                 ),
-                                Text((widget.cart.items[widget.product.id] == null)
+                                Text((widget.cart.items[widget.product.id] ==
+                                        null)
                                     ? "0"
                                     : widget.cart.items[widget.product.id]!
-                                    .toString()),
+                                        .toString()),
                                 SizedBox(
                                   width: 0.06777 * widget.width,
                                   height: 0.03125 * widget.height,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor:
-                                        const Color(0xFFD6EAE1),
+                                            const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
                                       setState(() {
-                                        widget.bloc.add(
-                                            UpdateCartEvent(
-                                                widget.product,
-                                                (widget.cart.items[
-                                                widget.product.id] !=
+                                        widget.bloc.add(UpdateCartEvent(
+                                            widget.product,
+                                            (widget.cart.items[
+                                                        widget.product.id] !=
                                                     null)
-                                                    ? widget.cart
-                                                    .items[
-                                                widget.product.id]! +
+                                                ? widget.cart.items[
+                                                        widget.product.id]! +
                                                     1
-                                                    : 1,
-                                                widget.cart));
+                                                : 1,
+                                            widget.cart));
                                       });
                                       widget.updateParentState();
                                     },
@@ -470,7 +489,11 @@ class _CartItemsState extends State<CartItems> {
 }
 
 class GrandTotal extends StatelessWidget {
-  const GrandTotal({super.key, required this.width, required this.height, required this.grandTotal});
+  const GrandTotal(
+      {super.key,
+      required this.width,
+      required this.height,
+      required this.grandTotal});
 
   final double width;
   final double height;
@@ -510,39 +533,47 @@ class GrandTotal extends StatelessWidget {
 }
 
 class AddMoreItems extends StatelessWidget {
-  const AddMoreItems({super.key, required this.width, required this.height});
+  const AddMoreItems(
+      {super.key,
+      required this.width,
+      required this.height,
+      required this.onTap});
 
   final double width;
   final double height;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 0.888 * width,
-      child: Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(color: Color(0xffBDBDBC))),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(0.025 * width, 0, 0, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Add more items",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: "inter",
+    return InkWell(
+      onTap: onTap,
+      child: SizedBox(
+        width: 0.888 * width,
+        child: Card(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: const BorderSide(color: Color(0xffBDBDBC))),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0.025 * width, 0, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Add more items",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontFamily: "inter",
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/outletMenu");
-                },
-                icon: const Icon(Icons.arrow_forward_ios),
-                iconSize: 15,
-              ),
-            ],
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/outletMenu");
+                  },
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  iconSize: 15,
+                ),
+              ],
+            ),
           ),
         ),
       ),

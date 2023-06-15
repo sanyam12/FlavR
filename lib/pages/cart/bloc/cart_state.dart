@@ -17,3 +17,23 @@ class RefreshUI extends CartState{
   List<Object?> get props => [grandTotal, seed];
 
 }
+
+// class GetCartFromArguments()
+
+class ShowSnackbar extends CartState{
+  final String message;
+  const ShowSnackbar(this.message);
+
+  @override
+  List<Object?> get props => [message];
+
+}
+
+class GrandTotalChanged extends CartState{
+  final int grandTotal;
+  const GrandTotalChanged(this.grandTotal);
+
+  @override
+  List<Object?> get props => [grandTotal];
+
+}

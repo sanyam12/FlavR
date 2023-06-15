@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         "/outletList/addOutlet": (context)=> const ScanQRCode(),
         "/outletMenu": (context)=> const OutletMenu(),
         "/homePage": (context)=> const HomePage(),
-        "/cart" : (context) => const CartPage(),
+        // "/cart" : (context) => const CartPage(),
         "/profile": (context)=> const ProfilePage(),
         "/payment": (context)=> const Payment(),
         "/ordernumber": (context)=> const OrderNumber()
