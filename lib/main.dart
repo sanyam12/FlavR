@@ -12,7 +12,6 @@ import 'package:flavr/pages/profile_page/ProfiePage.dart';
 import 'package:flavr/pages/signup/SignUp.dart';
 import 'package:flavr/pages/splashscreen/SplashScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 void main() {
   // debugPaintSizeEnabled = true;

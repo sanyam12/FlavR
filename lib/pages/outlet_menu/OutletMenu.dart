@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
+import 'package:flavr/pages/cart/CartPage.dart';
 import 'package:flavr/pages/outlet_menu/Categories.dart';
 import 'package:flavr/pages/outlet_menu/Product.dart';
 import 'package:flutter/material.dart';
@@ -61,29 +62,35 @@ class _OutletMenuState extends State<OutletMenu> {
       body: SafeArea(
         child: BlocProvider(
           create: (context) {
-            bloc.add(RefreshMenuEvent());
+            bloc.add(RefreshMenuEvent(cart));
             return bloc;
           },
           child: BlocListener<OutletMenuBloc, OutletMenuState>(
             listener: (context, state) {
               if (state is NavigateToOutletList) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Navigator.pushNamed(context, "/outletList")
-                      .then((value) => {bloc.add(RefreshMenuEvent())});
+                  Navigator.popAndPushNamed(context, "/outletList");
                 });
-              } else if (state is RefreshedOutletData) {
+              }
+              else if (state is RefreshedOutletData) {
                 menuItemsStream.add(state.menuList);
                 productsListStream.add(state.productList);
                 selectedOutletStream.add(state.outletName);
                 refreshedMenuItems = state.menuList;
-                cart = state.cart;
 
-              } else if (state is SearchResultState) {
+              }
+              else if (state is SearchResultState) {
                 setState(() {
                   menuItemsStream.add(state.menuList);
                 });
-              }else if (state is AmountUpdatedState){
+              }
+              else if (state is AmountUpdatedState){
                 amount = state.amount;
+              }
+              else if (state is ShowSnackbar){
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(state.message))
+                );
               }
             },
             child: StreamBuilder(
@@ -269,6 +276,7 @@ class _OutletMenuState extends State<OutletMenu> {
                                     ),
                                     Expanded(
                                       child: SingleChildScrollView(
+                                        physics: const ClampingScrollPhysics(),
                                         child: Column(
                                           children: [
                                             // if(isSearchActive)
@@ -478,8 +486,15 @@ class _OutletMenuState extends State<OutletMenu> {
                                       width: 0.8888888889 * width,
                                       height: 0.08625 * height,
                                       child: GestureDetector(
-                                        onTap: (){
-                                          Navigator.of(context).pushNamed("/cart");
+                                        onTap: ()async{
+                                          final newCart = await Navigator.of(context).push<Cart>(
+                                            MaterialPageRoute(builder: (context)=>const CartPage())
+                                          );
+                                          if(newCart!=null){
+                                            setState(() {
+                                              cart = newCart;
+                                            });
+                                          }
                                         },
                                         child: Card(
                                           color: const Color(0xFFA3C2B3),

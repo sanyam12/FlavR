@@ -56,6 +56,11 @@ class _CartPageState extends State<CartPage> {
             width: width,
             height: height,
             product: i,
+            cart: cart,
+            bloc: cartBloc,
+            updateParentState: (){
+              setState(() {});
+            },
           ),
         );
       }
@@ -63,147 +68,148 @@ class _CartPageState extends State<CartPage> {
 
     children.addAll(extras);
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: BlocProvider(
-          create: (context) {
-            cartBloc.add(GetCart(cart, list));
-            return cartBloc;
-          },
-          child: BlocListener<CartBloc, CartState>(
-            listener: (context, state) {
-              if (state is RefreshUI) {
-                setState(() {
-                  isLoading = false;
-                  grandTotal = state.grandTotal;
-                });
-              }
+    return WillPopScope(
+      onWillPop: ()async{
+        Navigator.pop(context, cart);
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(45),
+          child: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            centerTitle: true,
+            leading: BackButton(
+              color: Colors.black,
+              onPressed: (){
+                Navigator.pop(context, cart);
+              },
+            ),
+            title: const Text("Cart", style: TextStyle(color: Colors.black),),
+            actions: [
+              IconButton(
+                alignment: Alignment.topRight,
+                icon: const Icon(Icons.person,size: 30, color: Colors.black,),
+                onPressed: () {
+                  Navigator.pushNamed(context, "/profile");
+                },
+              )
+            ],
+          ),
+        ),
+        body: SafeArea(
+          child: BlocProvider(
+            create: (context) {
+              cartBloc.add(GetCart(cart, list));
+              return cartBloc;
             },
-            child: (isLoading)
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            0.05 * width, 0, 0.05 * width, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                              alignment: Alignment.topLeft,
-                              color: Colors.black,
-                              icon: const Icon(Icons.arrow_back_ios),
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
+            child: BlocListener<CartBloc, CartState>(
+              listener: (context, state) {
+                if (state is RefreshUI) {
+                  setState(() {
+                    isLoading = false;
+                    grandTotal = state.grandTotal;
+                  });
+                }
+              },
+              child: (isLoading)
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: children,
                             ),
-                            IconButton(
-                              alignment: Alignment.topRight,
-                              color: Colors.black,
-                              icon: const Icon(Icons.person),
-                              onPressed: () {
-                                Navigator.pushNamed(context, "/profile");
-                              },
-                            )
-                          ],
-                        ),
-                      ),
-                      const Text(
-                        "Cart",
-                        style: TextStyle(fontFamily: "inter", fontSize: 25),
-                      ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: children,
                           ),
                         ),
-                      ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                        width: double.infinity,
-                        height: 0.10875 * height,
-                        child: Card(
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15.0, horizontal: 10.0),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.currency_rupee,
-                                          color: Colors.black,
-                                          size: 20,
-                                        ),
-                                        Text(
-                                          grandTotal.toString(),
-                                          style: const TextStyle(
+                        Container(
+                          alignment: Alignment.bottomCenter,
+                          width: double.infinity,
+                          height: 0.10875 * height,
+                          child: Card(
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15.0, horizontal: 10.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.currency_rupee,
                                             color: Colors.black,
-                                            fontFamily: "inter",
-                                            fontSize: 20,
+                                            size: 20,
                                           ),
+                                          Text(
+                                            grandTotal.toString(),
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontFamily: "inter",
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Text(
+                                        "Total",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                          fontFamily: "inter",
                                         ),
-                                      ],
-                                    ),
-                                    const Text(
-                                      "Total",
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(0.19 * width, 0, 0, 0),
+                                  child: SliderButton(
+                                    backgroundColor: const Color(0xff004932),
+                                    action: () {
+                                      Navigator.pushNamed(context, "/payment");
+                                    },
+                                    label: const Text(
+                                      "Proceed to pay",
                                       style: TextStyle(
-                                        color: Colors.black,
+                                        color: Colors.white,
                                         fontSize: 15,
-                                        fontFamily: "inter",
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.fromLTRB(0.19 * width, 0, 0, 0),
-                                child: SliderButton(
-                                  backgroundColor: const Color(0xff004932),
-                                  action: () {
-                                    Navigator.pushNamed(context, "/payment");
-                                  },
-                                  label: const Text(
-                                    "Proceed to pay",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
+                                    icon: const Icon(
+                                      Icons.wallet,
+                                      color: Colors.black,
                                     ),
+                                    buttonSize: 45,
+                                    buttonColor: const Color(0xffD6EAE1),
+                                    baseColor: const Color(0xffD6EAE1),
+                                    disable: false,
+                                    width: 0.55 * width,
+                                    height: 0.07 * height,
                                   ),
-                                  icon: const Icon(
-                                    Icons.wallet,
-                                    color: Colors.black,
-                                  ),
-                                  buttonSize: 45,
-                                  buttonColor: const Color(0xffD6EAE1),
-                                  baseColor: const Color(0xffD6EAE1),
-                                  disable: false,
-                                  width: 0.55 * width,
-                                  height: 0.07 * height,
                                 ),
-                              ),
-                              // ElevatedButton(
-                              //     onPressed: () {
-                              //       Navigator.pushNamed(context, "/payment");
-                              //     },
-                              //     child: const Text(
-                              //       "Check Out",
-                              //     )
-                              // ),
-                            ],
+                                // ElevatedButton(
+                                //     onPressed: () {
+                                //       Navigator.pushNamed(context, "/payment");
+                                //     },
+                                //     child: const Text(
+                                //       "Check Out",
+                                //     )
+                                // ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+            ),
           ),
         ),
       ),
@@ -211,24 +217,35 @@ class _CartPageState extends State<CartPage> {
   }
 }
 
-class CartItems extends StatelessWidget {
+class CartItems extends StatefulWidget {
   const CartItems(
       {super.key,
       required this.width,
       required this.height,
-      required this.product});
+      required this.product,
+      required this.cart,
+      required this.bloc,
+      required this.updateParentState});
 
   final double width;
   final double height;
   final Product product;
+  final Cart cart;
+  final CartBloc bloc;
+  final void Function() updateParentState;
 
+  @override
+  State<CartItems> createState() => _CartItemsState();
+}
+
+class _CartItemsState extends State<CartItems> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(0, 0.0125 * height, 0, 0),
+      padding: EdgeInsets.fromLTRB(0, 0.0125 * widget.height, 0, 0),
       // padding: EdgeInsets.symmetric(horizontal: 0.07778 * width),
       child: SizedBox(
-        width: 0.888 * width,
+        width: 0.888 * widget.width,
         child: Card(
           elevation: 3,
           shadowColor: Colors.black,
@@ -238,22 +255,121 @@ class CartItems extends StatelessWidget {
           child: Row(
             children: [
               SizedBox(
-                width: 0.2861 * width,
-                height: 0.1275 * height,
+                width: 0.2861 * widget.width,
+                height: 0.1275 * widget.height,
                 child: Stack(
                   children: [
-                    SizedBox(
-                      height: 0.2 * height,
-                      width: 0.3 * width,
-                      child: const Image(
-                        image: AssetImage("assets/images/pizza.jpg"),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: SizedBox(
+                        height: 0.2 * widget.height,
+                        width: 0.3 * widget.width,
+                        child: (widget.product.productImage!="null")?
+                            Image.network(widget.product.productImage)
+                        :const Image(
+                          image: AssetImage("assets/images/pizza.jpg"),
+                        ),
                       ),
                     ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SizedBox(
+                        width: 0.205556 * widget.width,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(
+                                color: Color(0xFF004932), width: 1),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: Row(
+                              mainAxisAlignment:
+                              MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 0.06777 * widget.width,
+                                  height: 0.03125 * widget.height,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                        const Color(0xFFD6EAE1),
+                                        padding: EdgeInsets.zero),
+                                    onPressed: () {
+                                      setState(() {
+                                        if (widget.cart.items[widget.product.id] !=
+                                            null &&
+                                            widget.cart.items[widget.product.id]! >
+                                                0) {
+                                          widget
+                                              .bloc
+                                              .add(UpdateCartEvent(
+                                              widget.product,
+                                              (widget.cart.items[widget.product
+                                                  .id] !=
+                                                  null)
+                                                  ? widget.cart
+                                                  .items[
+                                              widget.product.id]! -
+                                                  1
+                                                  : 0,
+                                              widget.cart));
+                                        }
+                                      });
+                                      widget.updateParentState();
+                                    },
+                                    child: const Icon(
+                                      Icons.remove,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                Text((widget.cart.items[widget.product.id] == null)
+                                    ? "0"
+                                    : widget.cart.items[widget.product.id]!
+                                    .toString()),
+                                SizedBox(
+                                  width: 0.06777 * widget.width,
+                                  height: 0.03125 * widget.height,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                        const Color(0xFFD6EAE1),
+                                        padding: EdgeInsets.zero),
+                                    onPressed: () {
+                                      setState(() {
+                                        widget.bloc.add(
+                                            UpdateCartEvent(
+                                                widget.product,
+                                                (widget.cart.items[
+                                                widget.product.id] !=
+                                                    null)
+                                                    ? widget.cart
+                                                    .items[
+                                                widget.product.id]! +
+                                                    1
+                                                    : 1,
+                                                widget.cart));
+                                      });
+                                      widget.updateParentState();
+                                    },
+                                    child: const Icon(
+                                      Icons.add,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0.0618 * width, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(0.0618 * widget.width, 0, 0, 0),
                 child: const Stack(
                   alignment: AlignmentDirectional.center,
                   children: [
@@ -267,12 +383,12 @@ class CartItems extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(0.02 * width, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(0.02 * widget.width, 0, 0, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.name,
+                      widget.product.name,
                       style: const TextStyle(
                           fontSize: 16, fontWeight: FontWeight.w600),
                       overflow: TextOverflow.ellipsis,
@@ -284,14 +400,14 @@ class CartItems extends StatelessWidget {
                           size: 15,
                         ),
                         Text(
-                          product.price.toString(),
+                          widget.product.price.toString(),
                           style: const TextStyle(fontSize: 12),
                         ),
                         const Text("(Medium)"),
                       ],
                     ),
                     Text(
-                      product.description,
+                      widget.product.description,
                       style: const TextStyle(fontSize: 12),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,

@@ -17,23 +17,27 @@ class GetAllOutletsListState extends OutletListState{
   List<Object?> get props => [list];
 }
 
-class GetSearchResultState extends OutletListState{
+class GetSavedOutletListState extends OutletListState{
   final List<Outlet> list;
-  final String query;
-  const GetSearchResultState({required this.list, required this.query});
+  const GetSavedOutletListState({required this.list});
 
   @override
-  List<Object?> get props => [list, query];
+  List<Object?> get props => [list];
+}
+
+class GetSearchResultState extends OutletListState{
+  final List<Outlet> allOutletList;
+  final List<Outlet> savedOutletList;
+  final String query;
+  const GetSearchResultState({required this.allOutletList,required this.savedOutletList, required this.query});
+
+  @override
+  List<Object?> get props => [allOutletList,savedOutletList, query];
 }
 
 class NavigateToProfile extends OutletListState{
   const NavigateToProfile();
 
-  @override
-  List<Object?> get props => [];
-}
-
-class ScanButtonClicked extends OutletListState{
   @override
   List<Object?> get props => [];
 }
@@ -44,5 +48,13 @@ class OutletSelected extends OutletListState{
 
   @override
   List<Object?> get props => [id];
+
+}
+
+class RefreshWidget extends OutletListState{
+  final int seed;
+  const RefreshWidget(this.seed);
+  @override
+  List<Object?> get props => [seed];
 
 }

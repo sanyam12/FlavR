@@ -5,6 +5,8 @@ abstract class OutletMenuEvent extends Equatable {
 }
 
 class RefreshMenuEvent extends OutletMenuEvent{
+  final Cart cart;
+  const RefreshMenuEvent(this.cart);
   @override
   List<Object?> get props => [];
 }
@@ -28,13 +30,5 @@ class UpdateCartEvent extends OutletMenuEvent{
   @override
   List<Object?> get props => [product, newQuantity, cart];
 
-
-}
-
-class GetCartEvent extends OutletMenuEvent{
-  final Cart cart;
-  const GetCartEvent(this.cart);
-  @override
-  List<Object?> get props => [];
 
 }
