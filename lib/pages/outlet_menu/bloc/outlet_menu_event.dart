@@ -18,3 +18,23 @@ class SearchQueryEvent extends OutletMenuEvent{
   List<Object?> get props => [query, categoriesList];
 
 }
+
+class UpdateCartEvent extends OutletMenuEvent{
+  final Product product;
+  final int newQuantity;
+  final Cart cart;
+  const UpdateCartEvent(this.product, this.newQuantity, this.cart);
+
+  @override
+  List<Object?> get props => [product, newQuantity, cart];
+
+
+}
+
+class GetCartEvent extends OutletMenuEvent{
+  final Cart cart;
+  const GetCartEvent(this.cart);
+  @override
+  List<Object?> get props => [];
+
+}
