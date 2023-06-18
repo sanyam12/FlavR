@@ -1,8 +1,11 @@
-import 'dart:developer';
 import 'package:flavr/pages/cart/Cart.dart';
 import 'package:flavr/pages/cart/bloc/cart_bloc.dart';
+import 'package:flavr/pages/ordernumber/OrderNumber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
+import 'package:flutter_cashfree_pg_sdk/api/cfpaymentgateway/cfpaymentgatewayservice.dart';
+import 'package:slidable_button/slidable_button.dart';
 
 // import 'package:lottie/lottie.dart';
 import 'package:slider_button/slider_button.dart';
@@ -25,11 +28,25 @@ class _CartPageState extends State<CartPage> {
   bool isLoading = true;
   int grandTotal = 0;
   Cart cart = Cart();
+  var cfPaymentGatewayService =CFPaymentGatewayService();
+
+  @override
+  void initState() {
+    super.initState();
+    cfPaymentGatewayService.setCallback(verifyPayment, onPaymentError);
+  }
+
+  void verifyPayment(String orderId){
+    cartBloc.add(VerifyPayment(orderId));
+  }
+
+  void onPaymentError(CFErrorResponse errorResponse, String orderId){
+
+  }
 
   @override
   Widget build(BuildContext context) {
     cart = widget.initialCart;
-    log(cart.items.length.toString());
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
@@ -129,9 +146,34 @@ class _CartPageState extends State<CartPage> {
                     isLoading = false;
                     grandTotal = state.grandTotal;
                   });
-                } else if (state is GrandTotalChanged) {
+                }
+                else if (state is GrandTotalChanged) {
                   setState(() {
                     grandTotal = state.grandTotal;
+                  });
+                }
+                else if (state is NavigateToPaymentState){
+                  Navigator.pushNamed(context, "/payment");
+                }
+                else if (state is StartCashFreeService){
+                  cfPaymentGatewayService.doPayment(state.cfDropCheckoutPayment);
+                }
+                else if (state is ShowSnackbar){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(state.message))
+                  );
+                }else if (state is NavigateToOrderNumber){
+                  setState((){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context)=>
+                              OrderNumber(orderNumber: state.orderNumber)
+                      )
+                    );
+                    cart.items.clear();
+                    isLoading = false;
+
                   });
                 }
               },
@@ -189,32 +231,68 @@ class _CartPageState extends State<CartPage> {
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      0.19 * width, 0, 0, 0),
-                                  child: SliderButton(
-                                    backgroundColor: const Color(0xff004932),
-                                    action: () {
-                                      Navigator.pushNamed(context, "/payment");
-                                    },
-                                    label: const Text(
-                                      "Proceed to pay",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        0.19 * width, 0, 0, 0),
+                                    // child: SliderButton(
+                                    //   backgroundColor: const Color(0xff004932),
+                                    //   action: () {
+                                    //     Navigator.pushNamed(context, "/payment");
+                                    //   },
+                                    //   label: const Text(
+                                    //     "Proceed to pay",
+                                    //     style: TextStyle(
+                                    //       color: Colors.white,
+                                    //       fontSize: 15,
+                                    //     ),
+                                    //   ),
+                                    //   icon: const Icon(
+                                    //     Icons.wallet,
+                                    //     color: Colors.black,
+                                    //   ),
+                                    //   buttonSize: 45,
+                                    //   dismissible: true,
+                                    //   buttonColor: const Color(0xffD6EAE1),
+                                    //   baseColor: const Color(0xffD6EAE1),
+                                    //   disable: false,
+                                    //   width: 0.55 * width,
+                                    //   height: 0.07 * height,
+                                    // ),
+                                    child: SizedBox(
+                                      width: 0.55*width,
+                                      height: 0.07*height,
+                                      child: HorizontalSlidableButton(
+                                        isRestart: true,
+                                        height: 0.07 * height,
+                                        buttonWidth: 60,
+                                        color: const Color(0xFF004932),
+                                        buttonColor: const Color(0xFFD6EAE1),
+                                        dismissible: false,
+                                        label: const Icon(Icons.wallet),
+                                        completeSlideAt: 0.75,
+                                        onChanged: (position) {
+                                          if (position ==
+                                              SlidableButtonPosition.end) {
+                                            setState(() {
+                                              position = SlidableButtonPosition.start;
+                                              cartBloc.add(ProceedToPay(cart));
+                                              isLoading = true;
+                                            });
+                                          }
+                                        },
+                                        child: const Center(
+                                          child: Text(
+                                            "Proceed to Pay",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    icon: const Icon(
-                                      Icons.wallet,
-                                      color: Colors.black,
-                                    ),
-                                    buttonSize: 45,
-                                    dismissible: true,
-                                    buttonColor: const Color(0xffD6EAE1),
-                                    baseColor: const Color(0xffD6EAE1),
-                                    disable: false,
-                                    width: 0.55 * width,
-                                    height: 0.07 * height,
                                   ),
                                 ),
                                 // ElevatedButton(
@@ -333,7 +411,8 @@ class _CartItemsState extends State<CartItems> {
                                                           widget.product.id]! -
                                                       1
                                                   : 0,
-                                              widget.cart));
+                                              widget.cart),
+                                          );
                                         }
                                       });
                                       widget.updateParentState();

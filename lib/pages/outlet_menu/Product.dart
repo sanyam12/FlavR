@@ -1,4 +1,5 @@
 import 'Outlet.dart';
+import 'ProductVariantData.dart';
 
 class Product {
   String _id;
@@ -9,9 +10,10 @@ class Product {
   String _outletID;
   bool _veg;
   String _productImage;
+  List<ProductVariantData> variantList;
 
   Product(this._id, this._category, this._name, this._description, this._price,
-      this._outletID, this._veg, this._productImage);
+      this._outletID, this._veg, this._productImage, this.variantList);
 
   set id(String id) {
     _id = id;
@@ -70,7 +72,8 @@ class Product {
         _price = json["price"],
         _outletID = json["outlet"].toString(),
         _veg=json["veg"],
-        _productImage=json["productImage"]["url"];
+        _productImage=json["productImage"]["url"],
+        variantList = (json["variants"] as List).map((e) => ProductVariantData.fromJson(e)).toList();
 
   Map<String, dynamic> toJson() =>{
     "id":_id,

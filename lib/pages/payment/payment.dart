@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cfpayment/cfdropcheckoutpayment.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cfpaymentcomponents/cfpaymentcomponent.dart';
@@ -21,6 +22,23 @@ class _PaymentState extends State<Payment> {
   var cfPaymentGatewayService = CFPaymentGatewayService();
   final orderIDController = TextEditingController();
   final sessionIDController = TextEditingController();
+  static const platform = MethodChannel('com.example.flavr/payment');
+  String _batteryLevel = 'Unknown battery level.';
+
+  Future<void> _getBatteryLevel() async{
+    String batteryLevel;
+    try{
+
+      final result = await platform.invokeMethod('phonepe');
+      batteryLevel = 'Battery level at $result % .';
+    }on PlatformException catch(e){
+      batteryLevel = "Failed to get battery level: '${e.message}'.";
+    }
+
+    setState(() {
+      _batteryLevel = batteryLevel;
+    });
+  }
 
   @override
   void initState() {
@@ -81,6 +99,15 @@ class _PaymentState extends State<Payment> {
             child: const Text(
               "Payment",
             ),
+          ),
+
+          Text(_batteryLevel),
+
+          ElevatedButton(
+              onPressed: (){
+                _getBatteryLevel();
+              },
+              child: const Text("Platform")
           ),
         ],
       ),

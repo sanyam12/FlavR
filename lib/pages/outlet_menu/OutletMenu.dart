@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:developer';
 import 'package:flavr/pages/cart/CartPage.dart';
 import 'package:flavr/pages/outlet_menu/Categories.dart';
 import 'package:flavr/pages/outlet_menu/Product.dart';
@@ -401,7 +400,7 @@ class _OutletMenuState extends State<OutletMenu> {
                                                 ),
                                                 child: SizedBox(
                                                     width: width,
-                                                    height: 0.2625 * height,
+                                                    height: 0.3025 * height,
                                                     child: ListView.builder(
                                                       scrollDirection:
                                                           Axis.horizontal,
@@ -482,6 +481,7 @@ class _OutletMenuState extends State<OutletMenu> {
                                       height: 0.08625 * height,
                                       child: GestureDetector(
                                         onTap: () async {
+
                                           final newCart =
                                               await Navigator.of(context)
                                                   .push<Cart>(
@@ -721,24 +721,15 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                       const Color(0xFFD6EAE1),
                                                   padding: EdgeInsets.zero),
                                               onPressed: () {
+
                                                 setState(() {
-                                                  if (widget.cart.items[j.id] !=
-                                                          null &&
-                                                      widget.cart.items[j.id]! >
-                                                          0) {
-                                                    widget
-                                                        .bloc
-                                                        .add(UpdateCartEvent(
-                                                            j,
-                                                            (widget.cart.items[j
-                                                                        .id] !=
-                                                                    null)
-                                                                ? widget.cart
-                                                                            .items[
-                                                                        j.id]! -
-                                                                    1
-                                                                : 0,
-                                                            widget.cart));
+                                                  if (widget.cart.items[j.id] != null && widget.cart.items[j.id]! > 0) {
+                                                    widget.bloc.add(
+                                                        UpdateCartEvent(j,(widget.cart.items[j.id] != null)
+                                                        ? widget.cart.items[j.id]! - 1
+                                                        : 0, widget.cart
+                                                        ),
+                                                    );
                                                   }
                                                 });
                                                 widget.updateParentState();
@@ -763,18 +754,35 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                   padding: EdgeInsets.zero),
                                               onPressed: () {
                                                 setState(() {
+                                                  showBottomSheet(
+                                                      context: context,
+                                                      backgroundColor: const Color(0xFFA3C2B3),
+                                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                      builder: (context){
+                                                        final List<Widget> list = [];
+                                                        for(var variant in j.variantList){
+                                                          list.add(
+                                                              ListTile(
+                                                                title: Text(variant.variantName),
+                                                                trailing: Text(variant.price.toString()),
+                                                                onTap: (){
+                                                                  Navigator.pop(context);
+                                                                },
+                                                              )
+                                                          );
+                                                        }
+                                                        return Wrap(
+                                                          children: list,
+                                                        );
+                                                      }
+                                                  );
                                                   widget.bloc.add(
-                                                      UpdateCartEvent(
-                                                          j,
-                                                          (widget.cart.items[
-                                                                      j.id] !=
-                                                                  null)
-                                                              ? widget.cart
-                                                                          .items[
-                                                                      j.id]! +
-                                                                  1
-                                                              : 1,
-                                                          widget.cart));
+                                                      UpdateCartEvent(j, (widget.cart.items[j.id] != null)
+                                                          ? widget.cart.items[j.id]! + 1
+                                                          : 1,
+                                                          widget.cart,
+                                                      ),
+                                                  );
                                                 });
                                                 widget.updateParentState();
                                               },

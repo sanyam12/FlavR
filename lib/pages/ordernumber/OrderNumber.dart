@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class OrderNumber extends StatefulWidget {
-  const OrderNumber({Key? key}) : super(key: key);
+  final String orderNumber;
+  const OrderNumber({Key? key, required this.orderNumber}) : super(key: key);
 
   @override
   State<OrderNumber> createState() => _OrderNumberState();

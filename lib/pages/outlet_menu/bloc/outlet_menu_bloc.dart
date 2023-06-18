@@ -8,6 +8,7 @@ import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_cashfree_pg_sdk/api/cfpayment/cfdropcheckoutpayment.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -34,7 +35,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
             final categoriesList = await _fetchMenuItems(selectedOutlet.id);
             final cart = await _fetchUserCart();
             for(var i in cart.items.entries){
-              logger.log("${i.key} ${i.value}");
             }
             if(cart.outletId==selectedOutlet.id){
               emit(RefreshedOutletData(outletName, productList, categoriesList, cart));
@@ -65,7 +65,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
         try {
           final pref = await SharedPreferences.getInstance();
           final outletId = pref.getString("selectedOutlet");
-          logger.log(event.cart.outletId);
           if(outletId!=null){
             event.cart.items[event.product.id] = event.newQuantity;
 
@@ -78,7 +77,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
                       "quantity": value
                     }
                 );
-                logger.log(value.toString());
               }
             });
 
@@ -100,7 +98,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
               },
               body: data,
             );
-            logger.log(response.body.toString());
+            event.cart.outletId = outletId.toString();
           }
           else{
             emit(const ShowSnackbar("Outlet Not Selected"));
@@ -221,13 +219,14 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
 
     if(response.statusCode==200){
       final json = jsonDecode(response.body);
-      logger.log(token.toString());
       final HashMap<String, int> temp = HashMap<String, int>();
       final outletId = json["cart"]["outlet"];
       final list = json["cart"]["products"] as List;
       // logger.log(list[0].toString());
+      logger.log(token.toString());
       for(var i in list){
-        temp[i["product"]] = i["quantity"];
+        logger.log(i["product"].toString());
+        temp[i["product"]["_id"]] = i["quantity"];
       }
       cart.items = temp;
       cart.outletId = outletId.toString();

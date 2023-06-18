@@ -469,6 +469,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  slidable_button:
+    dependency: "direct main"
+    description:
+      name: slidable_button
+      sha256: "8a20672f226898ff5ddaca38ebe87069020dc8d1b2512857b5ed335af0d7c893"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0+1"
   slider_button:
     dependency: "direct main"
     description:
