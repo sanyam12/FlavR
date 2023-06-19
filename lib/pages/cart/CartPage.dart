@@ -395,26 +395,26 @@ class _CartItemsState extends State<CartItems> {
                                             const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
-                                      setState(() {
-                                        if (widget.cart
-                                                    .items[widget.product.id] !=
-                                                null &&
-                                            widget.cart
-                                                    .items[widget.product.id]! >
-                                                0) {
-                                          widget.bloc.add(UpdateCartEvent(
-                                              widget.product,
-                                              (widget.cart.items[
-                                                          widget.product.id] !=
-                                                      null)
-                                                  ? widget.cart.items[
-                                                          widget.product.id]! -
-                                                      1
-                                                  : 0,
-                                              widget.cart),
-                                          );
-                                        }
-                                      });
+                                      // setState(() {
+                                      //   if (widget.cart
+                                      //               .items[widget.product.id] !=
+                                      //           null &&
+                                      //       widget.cart
+                                      //               .items[widget.product.id]! >
+                                      //           0) {
+                                      //     widget.bloc.add(UpdateCartEvent(
+                                      //         widget.product,
+                                      //         (widget.cart.items[
+                                      //                     widget.product.id] !=
+                                      //                 null)
+                                      //             ? widget.cart.items[
+                                      //                     widget.product.id]! -
+                                      //                 1
+                                      //             : 0,
+                                      //         widget.cart),
+                                      //     );
+                                      //   }
+                                      // });
                                       widget.updateParentState();
                                     },
                                     child: const Icon(
@@ -437,18 +437,18 @@ class _CartItemsState extends State<CartItems> {
                                             const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
-                                      setState(() {
-                                        widget.bloc.add(UpdateCartEvent(
-                                            widget.product,
-                                            (widget.cart.items[
-                                                        widget.product.id] !=
-                                                    null)
-                                                ? widget.cart.items[
-                                                        widget.product.id]! +
-                                                    1
-                                                : 1,
-                                            widget.cart));
-                                      });
+                                      // setState(() {
+                                      //   widget.bloc.add(UpdateCartEvent(
+                                      //       widget.product,
+                                      //       (widget.cart.items[
+                                      //                   widget.product.id] !=
+                                      //               null)
+                                      //           ? widget.cart.items[
+                                      //                   widget.product.id]! +
+                                      //               1
+                                      //           : 1,
+                                      //       widget.cart));
+                                      // });
                                       widget.updateParentState();
                                     },
                                     child: const Icon(

@@ -46,11 +46,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         }
 
         int grandTotal = 0;
-        for (var i in event.list) {
-          if (event.cart.items[i.id] != null) {
-            grandTotal += (event.cart.items[i.id]!) * i.price;
-          }
-        }
+        // for (var i in event.list) {
+        //   if (event.cart.items[i.id] != null) {
+        //     grandTotal += (event.cart.items[i.id]!) * i.price;
+        //   }
+        // }
 
         emit(RefreshUI(grandTotal, Random().nextInt(10000)));
       }
@@ -59,7 +59,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           final pref = await SharedPreferences.getInstance();
           final outletId = pref.getString("selectedOutlet");
           if (outletId != null) {
-            event.cart.items[event.product.id] = event.newQuantity;
+            // event.cart.items[event.product.id] = event.newQuantity;
 
             List items = [];
             event.cart.items.forEach((key, value) {
@@ -87,11 +87,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
       else if (event is UpdateGrandTotal) {
         int grandTotal = 0;
-        for (var i in event.list) {
-          if (event.cart.items[i.id] != null) {
-            grandTotal += (event.cart.items[i.id]!) * i.price;
-          }
-        }
+        // for (var i in event.list) {
+        //   if (event.cart.items[i.id] != null) {
+        //     grandTotal += (event.cart.items[i.id]!) * i.price;
+        //   }
+        // }
         emit(GrandTotalChanged(grandTotal));
       }
       else if (event is ProceedToPay) {

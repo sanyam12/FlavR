@@ -39,10 +39,11 @@ class SearchResultState extends OutletMenuState{
 
 class UpdatedCartState extends OutletMenuState{
   final Cart cart;
-  const UpdatedCartState(this.cart);
+  final int seed;
+  const UpdatedCartState(this.cart, this.seed);
 
   @override
-  List<Object?> get props => [cart];
+  List<Object?> get props => [cart, seed];
 
 }
 

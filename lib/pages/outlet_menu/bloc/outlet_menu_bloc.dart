@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer' as logger;
 import 'dart:math';
 import 'package:flavr/pages/cart/Cart.dart';
+import 'package:flavr/pages/cart/CartVariantData.dart';
 import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,18 +67,21 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
           final pref = await SharedPreferences.getInstance();
           final outletId = pref.getString("selectedOutlet");
           if(outletId!=null){
-            event.cart.items[event.product.id] = event.newQuantity;
+            // event.cart.items[event.product.id] = event.newQuantity;
 
             List items = [];
-            event.cart.items.forEach((key, value) {
-              if(value!=0){
-                items.add(
+            event.cart.items.forEach((productID, variantList) {
+              variantList.forEach((variantName, variant) {
+                if(variant.quantity!=0){
+                  items.add(
                     {
-                      "product": key,
-                      "quantity": value
+                      "product":productID,
+                      "variant":variantName,
+                      "quantity":variant.quantity
                     }
-                );
-              }
+                  );
+                }
+              });
             });
 
             const secureStorage = FlutterSecureStorage(
@@ -98,7 +102,9 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
               },
               body: data,
             );
+            // logger.log(data.toString());
             event.cart.outletId = outletId.toString();
+            emit(UpdatedCartState(event.cart, Random().nextInt(10000)));
           }
           else{
             emit(const ShowSnackbar("Outlet Not Selected"));
@@ -219,14 +225,22 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
 
     if(response.statusCode==200){
       final json = jsonDecode(response.body);
-      final HashMap<String, int> temp = HashMap<String, int>();
+      final HashMap<String, HashMap<String, CartVariantData>> temp = HashMap<String, HashMap<String, CartVariantData>>();
       final outletId = json["cart"]["outlet"];
       final list = json["cart"]["products"] as List;
       // logger.log(list[0].toString());
       logger.log(token.toString());
       for(var i in list){
         logger.log(i["product"].toString());
-        temp[i["product"]["_id"]] = i["quantity"];
+
+        // if(temp[i["product"]["id"]]!=null){
+        //   temp[i["product"]["id"]]![i["variant"]]!.quantity = i["quantity"];
+        // }else{
+        //   temp[i["product"]["id"]] = {
+        //     [i["variant"]]:i["quantity"]
+        //   };
+        // }
+        // temp[i["product"]["_id"]] = i["quantity"];
       }
       cart.items = temp;
       cart.outletId = outletId.toString();
