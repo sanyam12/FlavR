@@ -229,9 +229,16 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       final outletId = json["cart"]["outlet"];
       final list = json["cart"]["products"] as List;
       // logger.log(list[0].toString());
-      logger.log(token.toString());
+      logger.log(json.toString());
       for(var i in list){
-        logger.log(i["product"].toString());
+        // logger.log(i["product"].toString());
+        if(temp[i["product"]["_id"]]!=null){
+          temp[i["product"]["_id"]]![i["variant"]] = CartVariantData(i["variant"], i["quantity"]);
+        }else{
+          final map = HashMap<String, CartVariantData>();
+          map[i["variant"]] = CartVariantData(i["variant"], i["quantity"]);
+          temp[i["product"]["_id"]] = map;
+        }
 
         // if(temp[i["product"]["id"]]!=null){
         //   temp[i["product"]["id"]]![i["variant"]]!.quantity = i["quantity"];
