@@ -14,12 +14,11 @@ class GetCart extends CartEvent{
 
 class UpdateCartEvent extends CartEvent{
   final Product product;
-  final int newQuantity;
   final Cart cart;
-  const UpdateCartEvent(this.product, this.newQuantity, this.cart);
+  const UpdateCartEvent(this.product, this.cart);
 
   @override
-  List<Object?> get props => [product, newQuantity, cart];
+  List<Object?> get props => [product, cart];
 }
 
 class UpdateGrandTotal extends CartEvent{

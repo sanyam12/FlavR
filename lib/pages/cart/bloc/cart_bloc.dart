@@ -42,15 +42,32 @@ class CartBloc extends Bloc<CartEvent, CartState> {
               "flavr.tech", "/products/getSingleProduct", {"productid": id}));
 
           event.list.add(
-              Product.fromJson(jsonDecode(productData.body)["product"][0]));
+              Product.fromJson(jsonDecode(productData.body)["product"][0]),
+          );
+
         }
 
         int grandTotal = 0;
-        // for (var i in event.list) {
-        //   if (event.cart.items[i.id] != null) {
-        //     grandTotal += (event.cart.items[i.id]!) * i.price;
-        //   }
-        // }
+        for (var i in event.list) {
+          if(event.cart.items[i.id]!=null){
+            for(var j in event.cart.items[i.id]!.entries){
+              int price = 0;
+              for(var itr in i.variantList){
+                if(itr.variantName==j.value.variantName){
+                  price = itr.price;
+                  break;
+                }
+              }
+              // final check = i.variantList.where((element) => element.variantName==j.value.variantName).toList();
+              grandTotal += price * j.value.quantity;
+            }
+          }
+
+          // if (event.cart.items[i.id] != null) {
+          //
+          //   grandTotal += (event.cart.items[i.id]!) * i.price;
+          // }
+        }
 
         emit(RefreshUI(grandTotal, Random().nextInt(10000)));
       }
@@ -62,18 +79,32 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             // event.cart.items[event.product.id] = event.newQuantity;
 
             List items = [];
-            event.cart.items.forEach((key, value) {
-              if (value != 0) {
-                items.add({"product": key, "quantity": value});
-              }
+            event.cart.items.forEach((productID, variantList) {
+              variantList.forEach((variantName, variant) {
+                if(variant.quantity!=0){
+                  items.add(
+                      {
+                        "product":productID,
+                        "variant":variantName,
+                        "quantity":variant.quantity
+                      }
+                  );
+                }
+              });
             });
 
             const secureStorage = FlutterSecureStorage(
                 aOptions: AndroidOptions(encryptedSharedPreferences: true));
             final token = await secureStorage.read(key: "token");
-            final data = jsonEncode({"outletid": outletId, "items": items});
+            final data = jsonEncode({
+              "outletid": outletId,
+              "items": items,
+            });
             final response = await http.post(
-              Uri.https("flavr.tech", "/user/addProductsToCart"),
+              Uri.https(
+                  "flavr.tech",
+                  "/user/addProductsToCart",
+              ),
               headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer $token'
@@ -87,11 +118,21 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
       else if (event is UpdateGrandTotal) {
         int grandTotal = 0;
-        // for (var i in event.list) {
-        //   if (event.cart.items[i.id] != null) {
-        //     grandTotal += (event.cart.items[i.id]!) * i.price;
-        //   }
-        // }
+        for (var i in event.list) {
+          if (event.cart.items[i.id] != null) {
+            for (var j in event.cart.items[i.id]!.entries) {
+              int price = 0;
+              for (var itr in i.variantList) {
+                if (itr.variantName == j.value.variantName) {
+                  price = itr.price;
+                  break;
+                }
+              }
+              // final check = i.variantList.where((element) => element.variantName==j.value.variantName).toList();
+              grandTotal += price * j.value.quantity;
+            }
+          }
+        }
         emit(GrandTotalChanged(grandTotal));
       }
       else if (event is ProceedToPay) {
@@ -101,20 +142,17 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         final outletId = event.cart.outletId;
 
         final placeOrder = await http.post(
-          //Uri.parse("https://"),]
-          Uri.https(
-            "flavr.tech",
-            "/orders/placeOrder"
-          ),
-          headers: {
-            "Authorization": "Bearer $token",
-          },
-          body: {
-            "outletid": outletId
-          }
-        );
+            //Uri.parse("https://"),]
+            Uri.https("flavr.tech", "/orders/placeOrder"),
+            headers: {
+              "Authorization": "Bearer $token",
+            },
+            body: {
+              "outletid": outletId
+            });
         final orderId = jsonDecode(placeOrder.body)["order_id"].toString();
-        final sessionID = jsonDecode(placeOrder.body)["payment_session_id"].toString();
+        final sessionID =
+            jsonDecode(placeOrder.body)["payment_session_id"].toString();
 
         try {
           var session = CFSessionBuilder()
@@ -123,32 +161,34 @@ class CartBloc extends Bloc<CartEvent, CartState> {
               .setPaymentSessionId(sessionID)
               .build();
 
-          var theme = CFThemeBuilder().setNavigationBarBackgroundColorColor("#FF0000").setPrimaryFont("Menlo").setSecondaryFont("Futura").build();
+          var theme = CFThemeBuilder()
+              .setNavigationBarBackgroundColorColor("#FF0000")
+              .setPrimaryFont("Menlo")
+              .setSecondaryFont("Futura")
+              .build();
           var cfDropCheckoutPayment = CFDropCheckoutPaymentBuilder()
               .setSession(session)
-              .setTheme(theme).build();
+              .setTheme(theme)
+              .build();
 
           emit(StartCashFreeService(cfDropCheckoutPayment));
-
         } on CFException catch (e) {
           emit(ShowSnackbar(e.message));
         }
 
         // logger.log(orderDetails.body);
       }
-      else if (event is VerifyPayment){
-        final orderDetails = await http.get(
-          Uri.parse("http://flavr.tech/orders/getOrder?orderid=${event.orderId}")
-        );
+      else if (event is VerifyPayment) {
+        final orderDetails = await http.get(Uri.parse(
+            "http://flavr.tech/orders/getOrder?orderid=${event.orderId}"));
 
         final json = jsonDecode(orderDetails.body);
-        if(json["order"][0]["payment"]==true){
+        if (json["order"][0]["payment"] == true) {
           emit(NavigateToOrderNumber(Random().nextInt(10000), event.orderId));
-        }else{
+        } else {
           emit(const ShowSnackbar("Payment Failed"));
         }
       }
     });
   }
-
 }

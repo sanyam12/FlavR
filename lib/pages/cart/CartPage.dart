@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flavr/pages/cart/Cart.dart';
 import 'package:flavr/pages/cart/bloc/cart_bloc.dart';
 import 'package:flavr/pages/ordernumber/OrderNumber.dart';
@@ -11,6 +13,7 @@ import 'package:slidable_button/slidable_button.dart';
 import 'package:slider_button/slider_button.dart';
 
 import '../outlet_menu/Product.dart';
+import 'CartVariantData.dart';
 
 class CartPage extends StatefulWidget {
   final Cart initialCart;
@@ -28,7 +31,7 @@ class _CartPageState extends State<CartPage> {
   bool isLoading = true;
   int grandTotal = 0;
   Cart cart = Cart();
-  var cfPaymentGatewayService =CFPaymentGatewayService();
+  var cfPaymentGatewayService = CFPaymentGatewayService();
 
   @override
   void initState() {
@@ -36,13 +39,11 @@ class _CartPageState extends State<CartPage> {
     cfPaymentGatewayService.setCallback(verifyPayment, onPaymentError);
   }
 
-  void verifyPayment(String orderId){
+  void verifyPayment(String orderId) {
     cartBloc.add(VerifyPayment(orderId));
   }
 
-  void onPaymentError(CFErrorResponse errorResponse, String orderId){
-
-  }
+  void onPaymentError(CFErrorResponse errorResponse, String orderId) {}
 
   @override
   Widget build(BuildContext context) {
@@ -77,19 +78,31 @@ class _CartPageState extends State<CartPage> {
     ];
     List<Widget> children = [];
     for (var i in list) {
-      if (cart.items[i.id] != null && cart.items[i.id] != 0) {
-        children.add(
-          CartItems(
-            width: width,
-            height: height,
-            product: i,
-            cart: cart,
-            bloc: cartBloc,
-            updateParentState: () {
-              cartBloc.add(UpdateGrandTotal(cart, list));
-            },
-          ),
-        );
+      for (var variant in i.variantList) {
+        if (cart.items[i.id] != null &&
+            cart.items[i.id]![variant.variantName] != null &&
+            cart.items[i.id]![variant.variantName]!.quantity > 0) {
+          int price = 0;
+          for(var itr in i.variantList){
+            if(itr.variantName==variant.variantName){
+              price = itr.price;
+            }
+          }
+          children.add(
+            CartItems(
+              width: width,
+              height: height,
+              product: i,
+              cart: cart,
+              bloc: cartBloc,
+              variantName: variant.variantName,
+              price: price,
+              updateParentState: () {
+                cartBloc.add(UpdateGrandTotal(cart, list));
+              },
+            ),
+          );
+        }
       }
     }
 
@@ -146,34 +159,27 @@ class _CartPageState extends State<CartPage> {
                     isLoading = false;
                     grandTotal = state.grandTotal;
                   });
-                }
-                else if (state is GrandTotalChanged) {
+                } else if (state is GrandTotalChanged) {
                   setState(() {
                     grandTotal = state.grandTotal;
                   });
-                }
-                else if (state is NavigateToPaymentState){
+                } else if (state is NavigateToPaymentState) {
                   Navigator.pushNamed(context, "/payment");
-                }
-                else if (state is StartCashFreeService){
-                  cfPaymentGatewayService.doPayment(state.cfDropCheckoutPayment);
-                }
-                else if (state is ShowSnackbar){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.message))
-                  );
-                }else if (state is NavigateToOrderNumber){
-                  setState((){
+                } else if (state is StartCashFreeService) {
+                  cfPaymentGatewayService
+                      .doPayment(state.cfDropCheckoutPayment);
+                } else if (state is ShowSnackbar) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(state.message)));
+                } else if (state is NavigateToOrderNumber) {
+                  setState(() {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context)=>
-                              OrderNumber(orderNumber: state.orderNumber)
-                      )
-                    );
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                OrderNumber(orderNumber: state.orderNumber)));
                     cart.items.clear();
                     isLoading = false;
-
                   });
                 }
               },
@@ -260,8 +266,8 @@ class _CartPageState extends State<CartPage> {
                                     //   height: 0.07 * height,
                                     // ),
                                     child: SizedBox(
-                                      width: 0.55*width,
-                                      height: 0.07*height,
+                                      width: 0.55 * width,
+                                      height: 0.07 * height,
                                       child: HorizontalSlidableButton(
                                         isRestart: true,
                                         height: 0.07 * height,
@@ -275,7 +281,8 @@ class _CartPageState extends State<CartPage> {
                                           if (position ==
                                               SlidableButtonPosition.end) {
                                             setState(() {
-                                              position = SlidableButtonPosition.start;
+                                              position =
+                                                  SlidableButtonPosition.start;
                                               cartBloc.add(ProceedToPay(cart));
                                               isLoading = true;
                                             });
@@ -318,20 +325,25 @@ class _CartPageState extends State<CartPage> {
 }
 
 class CartItems extends StatefulWidget {
-  const CartItems(
-      {super.key,
-      required this.width,
-      required this.height,
-      required this.product,
-      required this.cart,
-      required this.bloc,
-      required this.updateParentState});
+  const CartItems({
+    super.key,
+    required this.width,
+    required this.height,
+    required this.product,
+    required this.cart,
+    required this.bloc,
+    required this.variantName,
+    required this.price,
+    required this.updateParentState,
+  });
 
   final double width;
   final double height;
   final Product product;
   final Cart cart;
   final CartBloc bloc;
+  final String variantName;
+  final int price;
   final void Function() updateParentState;
 
   @override
@@ -339,6 +351,14 @@ class CartItems extends StatefulWidget {
 }
 
 class _CartItemsState extends State<CartItems> {
+  String itemCounter(HashMap<String, CartVariantData> list) {
+    int count = 0;
+    list.forEach((key, value) {
+      count += value.quantity;
+    });
+    return count.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -395,27 +415,103 @@ class _CartItemsState extends State<CartItems> {
                                             const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
-                                      // setState(() {
-                                      //   if (widget.cart
-                                      //               .items[widget.product.id] !=
-                                      //           null &&
-                                      //       widget.cart
-                                      //               .items[widget.product.id]! >
-                                      //           0) {
-                                      //     widget.bloc.add(UpdateCartEvent(
-                                      //         widget.product,
-                                      //         (widget.cart.items[
-                                      //                     widget.product.id] !=
-                                      //                 null)
-                                      //             ? widget.cart.items[
-                                      //                     widget.product.id]! -
-                                      //                 1
-                                      //             : 0,
-                                      //         widget.cart),
-                                      //     );
-                                      //   }
-                                      // });
-                                      widget.updateParentState();
+                                      setState(() {
+                                        if (widget
+                                            .product.variantList.isNotEmpty) {
+                                          showBottomSheet(
+                                              context: context,
+                                              backgroundColor:
+                                                  const Color(0xFFA3C2B3),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              builder: (context) {
+                                                final List<Widget> list = [];
+                                                list.add(ListTile(
+                                                  title: Title(
+                                                      color: Colors.black,
+                                                      child: const Text(
+                                                          "Select Items to Remove")),
+                                                ));
+                                                for (var variant in widget
+                                                    .product.variantList) {
+                                                  list.add(ListTile(
+                                                    title: Text(
+                                                        variant.variantName),
+                                                    trailing: Text(variant.price
+                                                        .toString()),
+                                                    onTap: () {
+                                                      if (widget.cart
+                                                                      .items[
+                                                                  widget.product
+                                                                      .id] !=
+                                                              null &&
+                                                          widget.cart.items[
+                                                                  widget.product
+                                                                      .id]![variant
+                                                                  .variantName] !=
+                                                              null &&
+                                                          widget
+                                                                  .cart
+                                                                  .items[widget
+                                                                      .product
+                                                                      .id]![variant.variantName]!
+                                                                  .quantity >
+                                                              0) {
+                                                        widget
+                                                            .cart
+                                                            .items[widget
+                                                                    .product
+                                                                    .id]![
+                                                                variant
+                                                                    .variantName]!
+                                                            .quantity--;
+                                                      }
+                                                      widget.bloc.add(
+                                                        UpdateCartEvent(
+                                                          widget.product,
+                                                          widget.cart,
+                                                        ),
+                                                      );
+                                                      widget
+                                                          .updateParentState();
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ));
+                                                }
+                                                return Wrap(
+                                                  children: list,
+                                                );
+                                              });
+                                        } else {
+                                          if (widget.cart.items[
+                                                      widget.product.id] !=
+                                                  null &&
+                                              widget.cart.items[widget.product
+                                                      .id]!["default"] !=
+                                                  null &&
+                                              widget
+                                                      .cart
+                                                      .items[widget.product
+                                                          .id]!["default"]!
+                                                      .quantity >
+                                                  0) {
+                                            widget
+                                                .cart
+                                                .items[widget.product.id]![
+                                                    "default"]!
+                                                .quantity--;
+                                          }
+                                          widget.bloc.add(
+                                            UpdateCartEvent(
+                                              widget.product,
+                                              widget.cart,
+                                            ),
+                                          );
+                                          widget.updateParentState();
+                                        }
+                                      });
                                     },
                                     child: const Icon(
                                       Icons.remove,
@@ -426,8 +522,8 @@ class _CartItemsState extends State<CartItems> {
                                 Text((widget.cart.items[widget.product.id] ==
                                         null)
                                     ? "0"
-                                    : widget.cart.items[widget.product.id]!
-                                        .toString()),
+                                    : itemCounter(
+                                        widget.cart.items[widget.product.id]!)),
                                 SizedBox(
                                   width: 0.06777 * widget.width,
                                   height: 0.03125 * widget.height,
@@ -437,19 +533,118 @@ class _CartItemsState extends State<CartItems> {
                                             const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
-                                      // setState(() {
-                                      //   widget.bloc.add(UpdateCartEvent(
-                                      //       widget.product,
-                                      //       (widget.cart.items[
-                                      //                   widget.product.id] !=
-                                      //               null)
-                                      //           ? widget.cart.items[
-                                      //                   widget.product.id]! +
-                                      //               1
-                                      //           : 1,
-                                      //       widget.cart));
-                                      // });
-                                      widget.updateParentState();
+                                      setState(() {
+                                        if (widget
+                                            .product.variantList.isNotEmpty) {
+                                          showBottomSheet(
+                                              context: context,
+                                              backgroundColor:
+                                                  const Color(0xFFA3C2B3),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              builder: (context) {
+                                                final List<Widget> list = [];
+                                                for (var variant in widget
+                                                    .product.variantList) {
+                                                  list.add(ListTile(
+                                                    title: Text(
+                                                        variant.variantName),
+                                                    trailing: Text(variant.price
+                                                        .toString()),
+                                                    onTap: () {
+                                                      if (widget.cart.items[
+                                                              widget.product
+                                                                  .id] !=
+                                                          null) {
+                                                        if (widget.cart.items[
+                                                                widget.product
+                                                                    .id]![variant
+                                                                .variantName] !=
+                                                            null) {
+                                                          widget
+                                                              .cart
+                                                              .items[widget
+                                                                      .product
+                                                                      .id]![
+                                                                  variant
+                                                                      .variantName]!
+                                                              .quantity++;
+                                                        } else {
+                                                          widget.cart.items[
+                                                                  widget.product
+                                                                      .id]![variant
+                                                                  .variantName] =
+                                                              CartVariantData(
+                                                                  variant
+                                                                      .variantName,
+                                                                  1);
+                                                        }
+                                                      } else {
+                                                        final temp = HashMap<
+                                                            String,
+                                                            CartVariantData>();
+                                                        temp[variant
+                                                                .variantName] =
+                                                            CartVariantData(
+                                                                variant
+                                                                    .variantName,
+                                                                1);
+                                                        widget.cart.items[widget
+                                                            .product.id] = temp;
+                                                      }
+                                                      widget.bloc.add(
+                                                        UpdateCartEvent(
+                                                          widget.product,
+                                                          widget.cart,
+                                                        ),
+                                                      );
+                                                      widget
+                                                          .updateParentState();
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ));
+                                                }
+                                                return Wrap(
+                                                  children: list,
+                                                );
+                                              });
+                                        } else {
+                                          if (widget.cart
+                                                  .items[widget.product.id] !=
+                                              null) {
+                                            if (widget.cart.items[widget
+                                                    .product.id]!["default"] !=
+                                                null) {
+                                              widget
+                                                  .cart
+                                                  .items[widget.product.id]![
+                                                      "default"]!
+                                                  .quantity++;
+                                            } else {
+                                              widget.cart.items[widget
+                                                      .product.id]!["default"] =
+                                                  CartVariantData("default", 1);
+                                            }
+                                          } else {
+                                            final temp = HashMap<String,
+                                                CartVariantData>();
+                                            temp["default"] =
+                                                CartVariantData("default", 1);
+                                            widget.cart
+                                                    .items[widget.product.id] =
+                                                temp;
+                                          }
+                                          widget.bloc.add(
+                                            UpdateCartEvent(
+                                              widget.product,
+                                              widget.cart,
+                                            ),
+                                          );
+                                          widget.updateParentState();
+                                        }
+                                      });
                                     },
                                     child: const Icon(
                                       Icons.add,
@@ -498,10 +693,10 @@ class _CartItemsState extends State<CartItems> {
                           size: 15,
                         ),
                         Text(
-                          widget.product.price.toString(),
+                          widget.price.toString(),
                           style: const TextStyle(fontSize: 12),
                         ),
-                        const Text("(Medium)"),
+                        Text(widget.variantName),
                       ],
                     ),
                     Text(

@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="variants added to outlet menu">
+    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="get menu implemented for menu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_event.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +238,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687185159034</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="get menu implemented for menu">
+      <created>1687187803451</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1687187803451</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -268,7 +277,8 @@
     <MESSAGE value="cart bug resolved" />
     <MESSAGE value="before changing cart structure" />
     <MESSAGE value="variants added to outlet menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="variants added to outlet menu" />
+    <MESSAGE value="get menu implemented for menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="get menu implemented for menu" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -290,13 +300,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/pages/cart/CartPage.dart</url>
-          <line>396</line>
+          <line>416</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/pages/cart/CartPage.dart</url>
-          <line>439</line>
-          <option name="timeStamp" value="24" />
+          <line>352</line>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
