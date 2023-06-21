@@ -4,11 +4,27 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="get menu implemented for menu">
+    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="variants added to cart page- pending 2 bugs">
+      <change afterPath="$PROJECT_DIR$/lib/pages/order_details/OrderDetails.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/order_details/order_details_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/order_details/order_details_event.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/order_details/order_details_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/ordernumber/order_number_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/ordernumber/order_number_event.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/ordernumber/order_number_state.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/profile_page/OrderData.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/profile_page/profile_bloc.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/profile_page/profile_event.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/pages/profile_page/profile_state.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/bloc/cart_event.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/ordernumber/OrderNumber.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/ordernumber/OrderNumber.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/OutletMenu.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/payment/payment.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/payment/payment.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/profile_page/ProfiePage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/profile_page/ProfiePage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +66,7 @@
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
     "io.flutter.reload.alreadyRun": "true",
-    "last_opened_file_path": "/Users/sanyamratreja/AndroidStudioProjects/FlavR/assets/images",
+    "last_opened_file_path": "/Users/sanyamratreja/AndroidStudioProjects/FlavR",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
@@ -245,7 +261,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687187803451</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="variants added to cart page- pending 2 bugs">
+      <created>1687196954018</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1687196954018</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -278,7 +301,8 @@
     <MESSAGE value="before changing cart structure" />
     <MESSAGE value="variants added to outlet menu" />
     <MESSAGE value="get menu implemented for menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="get menu implemented for menu" />
+    <MESSAGE value="variants added to cart page- pending 2 bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="variants added to cart page- pending 2 bugs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

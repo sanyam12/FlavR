@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'dart:developer' as logger;
 import 'package:flavr/pages/outlet_menu/Product.dart';
 import 'package:flavr/pages/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
@@ -153,7 +154,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         final orderId = jsonDecode(placeOrder.body)["order_id"].toString();
         final sessionID =
             jsonDecode(placeOrder.body)["payment_session_id"].toString();
-
+        logger.log(orderId);
         try {
           var session = CFSessionBuilder()
               .setEnvironment(CFEnvironment.SANDBOX)

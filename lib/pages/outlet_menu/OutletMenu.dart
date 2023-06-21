@@ -151,7 +151,12 @@ class _OutletMenuState extends State<OutletMenu> {
                                               ],
                                             ),
                                           ),
-                                          const Icon(Icons.person)
+                                          InkWell(
+                                              onTap: (){
+                                                Navigator.pushNamed(context, "/profile");
+                                              },
+                                              child: const Icon(Icons.person),
+                                          )
                                         ],
                                       ),
                                     ),

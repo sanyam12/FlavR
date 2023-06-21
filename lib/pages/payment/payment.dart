@@ -22,6 +22,7 @@ class _PaymentState extends State<Payment> {
   var cfPaymentGatewayService = CFPaymentGatewayService();
   final orderIDController = TextEditingController();
   final sessionIDController = TextEditingController();
+  String test = "test";
   static const platform = MethodChannel('com.example.flavr/payment');
   String _batteryLevel = 'Unknown battery level.';
 
@@ -60,6 +61,7 @@ class _PaymentState extends State<Payment> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Text(test),
           TextField(
             controller: orderIDController,
             decoration: const InputDecoration(
