@@ -46,6 +46,7 @@ dependencies:
   flutter_cashfree_pg_sdk: ^2.0.12+15
   rename: ^2.1.1
   slider_button: ^2.0.0
+  flutter_otp_text_field: ^1.1.0+2
 
 dev_dependencies:
   flutter_test:

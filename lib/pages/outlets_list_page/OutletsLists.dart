@@ -394,3 +394,4 @@ class OutletCard extends StatelessWidget {
     );
   }
 }
+

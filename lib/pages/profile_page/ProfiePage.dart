@@ -126,17 +126,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                               ),
                                             ),
                                           ),
-                                          // Container(
-                                          //   width: 65,
-                                          //   height: 65,
-                                          //   decoration: const BoxDecoration(
-                                          //     shape: BoxShape.circle,
-                                          //     image: DecorationImage(
-                                          //         image: AssetImage('assets/images/hamburger.jpg'),
-                                          //         fit: BoxFit.fill
-                                          //     ),
-                                          //   ),
-                                          // ),
                                         ],
                                       ),
                                     ),
