@@ -19,8 +19,9 @@ class RefreshedOutletData extends OutletMenuState{
   final List<Product> productList;
   final List<Categories> menuList;
   final Cart cart;
+  final List<OrderDataClass.OrderData> incompleteOrders;
 
-  const RefreshedOutletData(this.outletName, this.productList, this.menuList, this.cart);
+  const RefreshedOutletData(this.outletName, this.productList, this.menuList, this.cart, this.incompleteOrders);
 
   @override
   List<Object?> get props => [outletName, productList, menuList, cart];

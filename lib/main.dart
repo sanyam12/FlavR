@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flavr/pages/cart/CartPage.dart';
 import 'package:flavr/pages/google_signin/SignInWithGoogle.dart';
 import 'package:flavr/pages/home_page/HomePage.dart';
@@ -12,8 +13,11 @@ import 'package:flavr/pages/signup/SignUp.dart';
 import 'package:flavr/pages/splashscreen/SplashScreen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main(){
   // debugPaintSizeEnabled = true;
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -22,6 +26,9 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.light().copyWith(

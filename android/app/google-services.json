@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "504489315010",
+    "project_id": "flavr-c527b",
+    "storage_bucket": "flavr-c527b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504489315010:android:74ba6e0c6a61db2e59095b",
+        "android_client_info": {
+          "package_name": "com.example.flavr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504489315010-pqt1dcsq1obh5k18kili5aqfigg49fai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDADWA3r8MvQ4WhfZyCt0vpHF6q0yWwCFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504489315010-pqt1dcsq1obh5k18kili5aqfigg49fai.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "504489315010-t87tv0fkdof28tjsq6e5csgeesunh33i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flavr"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
