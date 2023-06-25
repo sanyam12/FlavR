@@ -1,16 +1,24 @@
-import 'dart:developer';
+import 'dart:collection';
+
 import 'package:flavr/pages/cart/Cart.dart';
 import 'package:flavr/pages/cart/bloc/cart_bloc.dart';
+import 'package:flavr/pages/ordernumber/OrderNumber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
+import 'package:flutter_cashfree_pg_sdk/api/cfpaymentgateway/cfpaymentgatewayservice.dart';
+import 'package:slidable_button/slidable_button.dart';
 
 // import 'package:lottie/lottie.dart';
 import 'package:slider_button/slider_button.dart';
 
 import '../outlet_menu/Product.dart';
+import 'CartVariantData.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key}) : super(key: key);
+  final Cart initialCart;
+
+  const CartPage({Key? key, required this.initialCart}) : super(key: key);
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -19,19 +27,43 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   bool? valuefirst = false;
   final cartBloc = CartBloc();
-  Cart cart = Cart();
   List<Product> list = [];
   bool isLoading = true;
   int grandTotal = 0;
+  Cart cart = Cart();
+  var cfPaymentGatewayService = CFPaymentGatewayService();
+
+  @override
+  void initState() {
+    super.initState();
+    cfPaymentGatewayService.setCallback(verifyPayment, onPaymentError);
+  }
+
+  void verifyPayment(String orderId) {
+    cartBloc.add(VerifyPayment(orderId));
+  }
+
+  void onPaymentError(CFErrorResponse errorResponse, String orderId) {}
 
   @override
   Widget build(BuildContext context) {
+    cart = widget.initialCart;
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
     List<Widget> extras = [
-      GrandTotal(width: width, height: height, grandTotal: grandTotal,),
-      AddMoreItems(width: width, height: height),
+      GrandTotal(
+        width: width,
+        height: height,
+        grandTotal: grandTotal,
+      ),
+      AddMoreItems(
+        width: width,
+        height: height,
+        onTap: () {
+          Navigator.pop(context, cart);
+        },
+      ),
       AddOtherInstructions(
         width: width,
         height: height,
@@ -42,34 +74,42 @@ class _CartPageState extends State<CartPage> {
           });
         },
       ),
-      YourDetails(
-        width: width,
-        height: height,
-      ),
       AddSpecialInstructions(width: width, height: height),
     ];
     List<Widget> children = [];
     for (var i in list) {
-      if (cart.items[i.id] != null && cart.items[i.id] != 0) {
-        children.add(
-          CartItems(
-            width: width,
-            height: height,
-            product: i,
-            cart: cart,
-            bloc: cartBloc,
-            updateParentState: (){
-              setState(() {});
-            },
-          ),
-        );
+      for (var variant in i.variantList) {
+        if (cart.items[i.id] != null &&
+            cart.items[i.id]![variant.variantName] != null &&
+            cart.items[i.id]![variant.variantName]!.quantity > 0) {
+          int price = 0;
+          for(var itr in i.variantList){
+            if(itr.variantName==variant.variantName){
+              price = itr.price;
+            }
+          }
+          children.add(
+            CartItems(
+              width: width,
+              height: height,
+              product: i,
+              cart: cart,
+              bloc: cartBloc,
+              variantName: variant.variantName,
+              price: price,
+              updateParentState: () {
+                cartBloc.add(UpdateGrandTotal(cart, list));
+              },
+            ),
+          );
+        }
       }
     }
 
     children.addAll(extras);
 
     return WillPopScope(
-      onWillPop: ()async{
+      onWillPop: () async {
         Navigator.pop(context, cart);
         return true;
       },
@@ -83,15 +123,22 @@ class _CartPageState extends State<CartPage> {
             centerTitle: true,
             leading: BackButton(
               color: Colors.black,
-              onPressed: (){
+              onPressed: () {
                 Navigator.pop(context, cart);
               },
             ),
-            title: const Text("Cart", style: TextStyle(color: Colors.black),),
+            title: const Text(
+              "Cart",
+              style: TextStyle(color: Colors.black),
+            ),
             actions: [
               IconButton(
                 alignment: Alignment.topRight,
-                icon: const Icon(Icons.person,size: 30, color: Colors.black,),
+                icon: const Icon(
+                  Icons.person,
+                  size: 30,
+                  color: Colors.black,
+                ),
                 onPressed: () {
                   Navigator.pushNamed(context, "/profile");
                 },
@@ -111,6 +158,28 @@ class _CartPageState extends State<CartPage> {
                   setState(() {
                     isLoading = false;
                     grandTotal = state.grandTotal;
+                  });
+                } else if (state is GrandTotalChanged) {
+                  setState(() {
+                    grandTotal = state.grandTotal;
+                  });
+                } else if (state is NavigateToPaymentState) {
+                  Navigator.pushNamed(context, "/payment");
+                } else if (state is StartCashFreeService) {
+                  cfPaymentGatewayService
+                      .doPayment(state.cfDropCheckoutPayment);
+                } else if (state is ShowSnackbar) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(state.message)));
+                } else if (state is NavigateToOrderNumber) {
+                  setState(() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                OrderNumber(orderNumber: state.orderNumber)));
+                    cart.items.clear();
+                    isLoading = false;
                   });
                 }
               },
@@ -168,31 +237,69 @@ class _CartPageState extends State<CartPage> {
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.fromLTRB(0.19 * width, 0, 0, 0),
-                                  child: SliderButton(
-                                    backgroundColor: const Color(0xff004932),
-                                    action: () {
-                                      Navigator.pushNamed(context, "/payment");
-                                    },
-                                    label: const Text(
-                                      "Proceed to pay",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        0.19 * width, 0, 0, 0),
+                                    // child: SliderButton(
+                                    //   backgroundColor: const Color(0xff004932),
+                                    //   action: () {
+                                    //     Navigator.pushNamed(context, "/payment");
+                                    //   },
+                                    //   label: const Text(
+                                    //     "Proceed to pay",
+                                    //     style: TextStyle(
+                                    //       color: Colors.white,
+                                    //       fontSize: 15,
+                                    //     ),
+                                    //   ),
+                                    //   icon: const Icon(
+                                    //     Icons.wallet,
+                                    //     color: Colors.black,
+                                    //   ),
+                                    //   buttonSize: 45,
+                                    //   dismissible: true,
+                                    //   buttonColor: const Color(0xffD6EAE1),
+                                    //   baseColor: const Color(0xffD6EAE1),
+                                    //   disable: false,
+                                    //   width: 0.55 * width,
+                                    //   height: 0.07 * height,
+                                    // ),
+                                    child: SizedBox(
+                                      width: 0.55 * width,
+                                      height: 0.07 * height,
+                                      child: HorizontalSlidableButton(
+                                        isRestart: true,
+                                        height: 0.07 * height,
+                                        buttonWidth: 60,
+                                        color: const Color(0xFF004932),
+                                        buttonColor: const Color(0xFFD6EAE1),
+                                        dismissible: false,
+                                        label: const Icon(Icons.wallet),
+                                        completeSlideAt: 0.75,
+                                        onChanged: (position) {
+                                          if (position ==
+                                              SlidableButtonPosition.end) {
+                                            setState(() {
+                                              position =
+                                                  SlidableButtonPosition.start;
+                                              cartBloc.add(ProceedToPay(cart));
+                                              isLoading = true;
+                                            });
+                                          }
+                                        },
+                                        child: const Center(
+                                          child: Text(
+                                            "Proceed to Pay",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    icon: const Icon(
-                                      Icons.wallet,
-                                      color: Colors.black,
-                                    ),
-                                    buttonSize: 45,
-                                    buttonColor: const Color(0xffD6EAE1),
-                                    baseColor: const Color(0xffD6EAE1),
-                                    disable: false,
-                                    width: 0.55 * width,
-                                    height: 0.07 * height,
                                   ),
                                 ),
                                 // ElevatedButton(
@@ -218,20 +325,25 @@ class _CartPageState extends State<CartPage> {
 }
 
 class CartItems extends StatefulWidget {
-  const CartItems(
-      {super.key,
-      required this.width,
-      required this.height,
-      required this.product,
-      required this.cart,
-      required this.bloc,
-      required this.updateParentState});
+  const CartItems({
+    super.key,
+    required this.width,
+    required this.height,
+    required this.product,
+    required this.cart,
+    required this.bloc,
+    required this.variantName,
+    required this.price,
+    required this.updateParentState,
+  });
 
   final double width;
   final double height;
   final Product product;
   final Cart cart;
   final CartBloc bloc;
+  final String variantName;
+  final int price;
   final void Function() updateParentState;
 
   @override
@@ -239,6 +351,14 @@ class CartItems extends StatefulWidget {
 }
 
 class _CartItemsState extends State<CartItems> {
+  String itemCounter(HashMap<String, CartVariantData> list) {
+    int count = 0;
+    list.forEach((key, value) {
+      count += value.quantity;
+    });
+    return count.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -264,11 +384,11 @@ class _CartItemsState extends State<CartItems> {
                       child: SizedBox(
                         height: 0.2 * widget.height,
                         width: 0.3 * widget.width,
-                        child: (widget.product.productImage!="null")?
-                            Image.network(widget.product.productImage)
-                        :const Image(
-                          image: AssetImage("assets/images/pizza.jpg"),
-                        ),
+                        child: (widget.product.productImage != "null")
+                            ? Image.network(widget.product.productImage)
+                            : const Image(
+                                image: AssetImage("assets/images/pizza.jpg"),
+                              ),
                       ),
                     ),
                     Align(
@@ -284,8 +404,7 @@ class _CartItemsState extends State<CartItems> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(5),
                             child: Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SizedBox(
                                   width: 0.06777 * widget.width,
@@ -293,30 +412,106 @@ class _CartItemsState extends State<CartItems> {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor:
-                                        const Color(0xFFD6EAE1),
+                                            const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
                                       setState(() {
-                                        if (widget.cart.items[widget.product.id] !=
-                                            null &&
-                                            widget.cart.items[widget.product.id]! >
-                                                0) {
-                                          widget
-                                              .bloc
-                                              .add(UpdateCartEvent(
+                                        if (widget
+                                            .product.variantList.isNotEmpty) {
+                                          showBottomSheet(
+                                              context: context,
+                                              backgroundColor:
+                                                  const Color(0xFFA3C2B3),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              builder: (context) {
+                                                final List<Widget> list = [];
+                                                list.add(ListTile(
+                                                  title: Title(
+                                                      color: Colors.black,
+                                                      child: const Text(
+                                                          "Select Items to Remove")),
+                                                ));
+                                                for (var variant in widget
+                                                    .product.variantList) {
+                                                  list.add(ListTile(
+                                                    title: Text(
+                                                        variant.variantName),
+                                                    trailing: Text(variant.price
+                                                        .toString()),
+                                                    onTap: () {
+                                                      if (widget.cart
+                                                                      .items[
+                                                                  widget.product
+                                                                      .id] !=
+                                                              null &&
+                                                          widget.cart.items[
+                                                                  widget.product
+                                                                      .id]![variant
+                                                                  .variantName] !=
+                                                              null &&
+                                                          widget
+                                                                  .cart
+                                                                  .items[widget
+                                                                      .product
+                                                                      .id]![variant.variantName]!
+                                                                  .quantity >
+                                                              0) {
+                                                        widget
+                                                            .cart
+                                                            .items[widget
+                                                                    .product
+                                                                    .id]![
+                                                                variant
+                                                                    .variantName]!
+                                                            .quantity--;
+                                                      }
+                                                      widget.bloc.add(
+                                                        UpdateCartEvent(
+                                                          widget.product,
+                                                          widget.cart,
+                                                        ),
+                                                      );
+                                                      widget
+                                                          .updateParentState();
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ));
+                                                }
+                                                return Wrap(
+                                                  children: list,
+                                                );
+                                              });
+                                        } else {
+                                          if (widget.cart.items[
+                                                      widget.product.id] !=
+                                                  null &&
+                                              widget.cart.items[widget.product
+                                                      .id]!["default"] !=
+                                                  null &&
+                                              widget
+                                                      .cart
+                                                      .items[widget.product
+                                                          .id]!["default"]!
+                                                      .quantity >
+                                                  0) {
+                                            widget
+                                                .cart
+                                                .items[widget.product.id]![
+                                                    "default"]!
+                                                .quantity--;
+                                          }
+                                          widget.bloc.add(
+                                            UpdateCartEvent(
                                               widget.product,
-                                              (widget.cart.items[widget.product
-                                                  .id] !=
-                                                  null)
-                                                  ? widget.cart
-                                                  .items[
-                                              widget.product.id]! -
-                                                  1
-                                                  : 0,
-                                              widget.cart));
+                                              widget.cart,
+                                            ),
+                                          );
+                                          widget.updateParentState();
                                         }
                                       });
-                                      widget.updateParentState();
                                     },
                                     child: const Icon(
                                       Icons.remove,
@@ -324,34 +519,132 @@ class _CartItemsState extends State<CartItems> {
                                     ),
                                   ),
                                 ),
-                                Text((widget.cart.items[widget.product.id] == null)
+                                Text((widget.cart.items[widget.product.id] ==
+                                        null)
                                     ? "0"
-                                    : widget.cart.items[widget.product.id]!
-                                    .toString()),
+                                    : itemCounter(
+                                        widget.cart.items[widget.product.id]!)),
                                 SizedBox(
                                   width: 0.06777 * widget.width,
                                   height: 0.03125 * widget.height,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor:
-                                        const Color(0xFFD6EAE1),
+                                            const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
                                       setState(() {
-                                        widget.bloc.add(
+                                        if (widget
+                                            .product.variantList.isNotEmpty) {
+                                          showBottomSheet(
+                                              context: context,
+                                              backgroundColor:
+                                                  const Color(0xFFA3C2B3),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              builder: (context) {
+                                                final List<Widget> list = [];
+                                                for (var variant in widget
+                                                    .product.variantList) {
+                                                  list.add(ListTile(
+                                                    title: Text(
+                                                        variant.variantName),
+                                                    trailing: Text(variant.price
+                                                        .toString()),
+                                                    onTap: () {
+                                                      if (widget.cart.items[
+                                                              widget.product
+                                                                  .id] !=
+                                                          null) {
+                                                        if (widget.cart.items[
+                                                                widget.product
+                                                                    .id]![variant
+                                                                .variantName] !=
+                                                            null) {
+                                                          widget
+                                                              .cart
+                                                              .items[widget
+                                                                      .product
+                                                                      .id]![
+                                                                  variant
+                                                                      .variantName]!
+                                                              .quantity++;
+                                                        } else {
+                                                          widget.cart.items[
+                                                                  widget.product
+                                                                      .id]![variant
+                                                                  .variantName] =
+                                                              CartVariantData(
+                                                                  variant
+                                                                      .variantName,
+                                                                  1);
+                                                        }
+                                                      } else {
+                                                        final temp = HashMap<
+                                                            String,
+                                                            CartVariantData>();
+                                                        temp[variant
+                                                                .variantName] =
+                                                            CartVariantData(
+                                                                variant
+                                                                    .variantName,
+                                                                1);
+                                                        widget.cart.items[widget
+                                                            .product.id] = temp;
+                                                      }
+                                                      widget.bloc.add(
+                                                        UpdateCartEvent(
+                                                          widget.product,
+                                                          widget.cart,
+                                                        ),
+                                                      );
+                                                      widget
+                                                          .updateParentState();
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ));
+                                                }
+                                                return Wrap(
+                                                  children: list,
+                                                );
+                                              });
+                                        } else {
+                                          if (widget.cart
+                                                  .items[widget.product.id] !=
+                                              null) {
+                                            if (widget.cart.items[widget
+                                                    .product.id]!["default"] !=
+                                                null) {
+                                              widget
+                                                  .cart
+                                                  .items[widget.product.id]![
+                                                      "default"]!
+                                                  .quantity++;
+                                            } else {
+                                              widget.cart.items[widget
+                                                      .product.id]!["default"] =
+                                                  CartVariantData("default", 1);
+                                            }
+                                          } else {
+                                            final temp = HashMap<String,
+                                                CartVariantData>();
+                                            temp["default"] =
+                                                CartVariantData("default", 1);
+                                            widget.cart
+                                                    .items[widget.product.id] =
+                                                temp;
+                                          }
+                                          widget.bloc.add(
                                             UpdateCartEvent(
-                                                widget.product,
-                                                (widget.cart.items[
-                                                widget.product.id] !=
-                                                    null)
-                                                    ? widget.cart
-                                                    .items[
-                                                widget.product.id]! +
-                                                    1
-                                                    : 1,
-                                                widget.cart));
+                                              widget.product,
+                                              widget.cart,
+                                            ),
+                                          );
+                                          widget.updateParentState();
+                                        }
                                       });
-                                      widget.updateParentState();
                                     },
                                     child: const Icon(
                                       Icons.add,
@@ -400,10 +693,10 @@ class _CartItemsState extends State<CartItems> {
                           size: 15,
                         ),
                         Text(
-                          widget.product.price.toString(),
+                          widget.price.toString(),
                           style: const TextStyle(fontSize: 12),
                         ),
-                        const Text("(Medium)"),
+                        Text(widget.variantName),
                       ],
                     ),
                     Text(
@@ -470,7 +763,11 @@ class _CartItemsState extends State<CartItems> {
 }
 
 class GrandTotal extends StatelessWidget {
-  const GrandTotal({super.key, required this.width, required this.height, required this.grandTotal});
+  const GrandTotal(
+      {super.key,
+      required this.width,
+      required this.height,
+      required this.grandTotal});
 
   final double width;
   final double height;
@@ -510,39 +807,47 @@ class GrandTotal extends StatelessWidget {
 }
 
 class AddMoreItems extends StatelessWidget {
-  const AddMoreItems({super.key, required this.width, required this.height});
+  const AddMoreItems(
+      {super.key,
+      required this.width,
+      required this.height,
+      required this.onTap});
 
   final double width;
   final double height;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 0.888 * width,
-      child: Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: const BorderSide(color: Color(0xffBDBDBC))),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(0.025 * width, 0, 0, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Add more items",
-                style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: "inter",
+    return InkWell(
+      onTap: onTap,
+      child: SizedBox(
+        width: 0.888 * width,
+        child: Card(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+              side: const BorderSide(color: Color(0xffBDBDBC))),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0.025 * width, 0, 0, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Add more items",
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontFamily: "inter",
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, "/outletMenu");
-                },
-                icon: const Icon(Icons.arrow_forward_ios),
-                iconSize: 15,
-              ),
-            ],
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/outletMenu");
+                  },
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  iconSize: 15,
+                ),
+              ],
+            ),
           ),
         ),
       ),

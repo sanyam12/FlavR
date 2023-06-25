@@ -19,8 +19,9 @@ class RefreshedOutletData extends OutletMenuState{
   final List<Product> productList;
   final List<Categories> menuList;
   final Cart cart;
+  final List<OrderDataClass.OrderData> incompleteOrders;
 
-  const RefreshedOutletData(this.outletName, this.productList, this.menuList, this.cart);
+  const RefreshedOutletData(this.outletName, this.productList, this.menuList, this.cart, this.incompleteOrders);
 
   @override
   List<Object?> get props => [outletName, productList, menuList, cart];
@@ -39,10 +40,11 @@ class SearchResultState extends OutletMenuState{
 
 class UpdatedCartState extends OutletMenuState{
   final Cart cart;
-  const UpdatedCartState(this.cart);
+  final int seed;
+  const UpdatedCartState(this.cart, this.seed);
 
   @override
-  List<Object?> get props => [cart];
+  List<Object?> get props => [cart, seed];
 
 }
 

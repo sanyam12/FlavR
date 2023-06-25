@@ -6,7 +6,20 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
-       <activity
+        <meta-data
+            android:name="com.phonepe.android.sdk.Debuggable"
+            android:value="true"/>
+        <meta-data
+            android:name="com.phonepe.android.sdk.isUAT"
+            android:value="true"/>
+        <meta-data
+            android:name="com.phonepe.android.sdk.MerchantId"
+            android:value="MID"/>
+        <meta-data
+            android:name="com.phonepe.android.sdk.AppId"
+            android:value="your app id given by PhonePe"/>
+
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"

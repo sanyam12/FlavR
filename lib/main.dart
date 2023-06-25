@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flavr/pages/cart/CartPage.dart';
 import 'package:flavr/pages/edit_profile/EditProfile.dart';
 import 'package:flavr/pages/google_signin/SignInWithGoogle.dart';
@@ -14,8 +15,11 @@ import 'package:flavr/pages/signup/SignUp.dart';
 import 'package:flavr/pages/splashscreen/SplashScreen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main(){
   // debugPaintSizeEnabled = true;
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -24,13 +28,16 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.light().copyWith(
         // useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/otp_screen",
+      initialRoute: "/splashscreen",
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
         "/signInWithGoogle":(context)=>const SignInWithGoogle(),
@@ -40,10 +47,10 @@ class MyApp extends StatelessWidget {
         "/outletList/addOutlet": (context)=> const ScanQRCode(),
         "/outletMenu": (context)=> const OutletMenu(),
         "/homePage": (context)=> const HomePage(),
-        "/cart" : (context) => const CartPage(),
+        //"/cart" : (context) => const CartPage(),
         "/profile": (context)=> const ProfilePage(),
         "/payment": (context)=> const Payment(),
-        "/ordernumber": (context)=> const OrderNumber(),
+        //"/ordernumber": (context)=> const OrderNumber(),
         "/edit_profile": (context)=> const EditProfile(),
         "/otp_screen": (context)=> const OtpScreen(),
       },

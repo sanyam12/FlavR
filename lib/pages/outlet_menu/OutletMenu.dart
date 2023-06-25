@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
 import 'package:flavr/pages/cart/CartPage.dart';
+import 'package:flavr/pages/cart/CartVariantData.dart';
 import 'package:flavr/pages/outlet_menu/Categories.dart';
 import 'package:flavr/pages/outlet_menu/Product.dart';
 import 'package:flutter/material.dart';
@@ -77,20 +78,26 @@ class _OutletMenuState extends State<OutletMenu> {
                 productsListStream.add(state.productList);
                 selectedOutletStream.add(state.outletName);
                 refreshedMenuItems = state.menuList;
-
+                cart = state.cart;
               }
               else if (state is SearchResultState) {
                 setState(() {
                   menuItemsStream.add(state.menuList);
                 });
               }
-              else if (state is AmountUpdatedState){
+              else if (state is AmountUpdatedState) {
                 amount = state.amount;
               }
-              else if (state is ShowSnackbar){
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.message))
-                );
+              else if (state is ShowSnackbar) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(state.message)));
+              }
+              else if (state is UpdatedCartState){
+                log("outlet set state");
+                setState(() {
+                  log("cart state update");
+                  cart = state.cart;
+                });
               }
             },
             child: StreamBuilder(
@@ -144,7 +151,12 @@ class _OutletMenuState extends State<OutletMenu> {
                                               ],
                                             ),
                                           ),
-                                          const Icon(Icons.person)
+                                          InkWell(
+                                              onTap: (){
+                                                Navigator.pushNamed(context, "/profile");
+                                              },
+                                              child: const Icon(Icons.person),
+                                          )
                                         ],
                                       ),
                                     ),
@@ -406,7 +418,7 @@ class _OutletMenuState extends State<OutletMenu> {
                                                 ),
                                                 child: SizedBox(
                                                     width: width,
-                                                    height: 0.2625 * height,
+                                                    height: 0.3025 * height,
                                                     child: ListView.builder(
                                                       scrollDirection:
                                                           Axis.horizontal,
@@ -486,11 +498,18 @@ class _OutletMenuState extends State<OutletMenu> {
                                       width: 0.8888888889 * width,
                                       height: 0.08625 * height,
                                       child: GestureDetector(
-                                        onTap: ()async{
-                                          final newCart = await Navigator.of(context).push<Cart>(
-                                            MaterialPageRoute(builder: (context)=>const CartPage())
+                                        onTap: () async {
+
+                                          final newCart =
+                                              await Navigator.of(context)
+                                                  .push<Cart>(
+                                            MaterialPageRoute(
+                                              builder: (context) => CartPage(
+                                                initialCart: cart,
+                                              ),
+                                            )
                                           );
-                                          if(newCart!=null){
+                                          if (newCart != null) {
                                             setState(() {
                                               cart = newCart;
                                             });
@@ -521,7 +540,8 @@ class _OutletMenuState extends State<OutletMenu> {
                                                                       .circular(
                                                                           10))),
                                                   onPressed: () {
-                                                    Navigator.of(context).pushNamed("/payment");
+                                                    Navigator.of(context)
+                                                        .pushNamed("/payment");
                                                   },
                                                   child: const Text(
                                                     "Place Order",
@@ -532,8 +552,11 @@ class _OutletMenuState extends State<OutletMenu> {
                                                 ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsets.fromLTRB(0, 0,
-                                                    0.08333333333 * width, 0),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0,
+                                                    0,
+                                                    0.08333333333 * width,
+                                                    0),
                                                 child: Column(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -555,7 +578,8 @@ class _OutletMenuState extends State<OutletMenu> {
                                                         ),
                                                         Text(
                                                           amount.toString(),
-                                                          style: const TextStyle(
+                                                          style:
+                                                              const TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 24,
                                                             fontWeight:
@@ -631,6 +655,14 @@ class CategoryMenu extends StatefulWidget {
 }
 
 class _CategoryMenuState extends State<CategoryMenu> {
+  String itemCounter(HashMap<String, CartVariantData> list){
+    int count = 0;
+    list.forEach((key, value) {
+      count+=value.quantity;
+    });
+    return count.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [];
@@ -685,7 +717,8 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                       child: (j.productImage != "null")
                                           ? Image.network(j.productImage)
                                           : Image.asset(
-                                              "assets/images/pasta.jpeg"),
+                                              "assets/images/pasta.jpeg",
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -716,26 +749,59 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                   padding: EdgeInsets.zero),
                                               onPressed: () {
                                                 setState(() {
-                                                  if (widget.cart.items[j.id] !=
-                                                          null &&
-                                                      widget.cart.items[j.id]! >
-                                                          0) {
-                                                    widget
-                                                        .bloc
-                                                        .add(UpdateCartEvent(
-                                                            j,
-                                                            (widget.cart.items[j
-                                                                        .id] !=
-                                                                    null)
-                                                                ? widget.cart
-                                                                            .items[
-                                                                        j.id]! -
-                                                                    1
-                                                                : 0,
-                                                            widget.cart));
+                                                  if(j.variantList.isNotEmpty){
+                                                    showBottomSheet(
+                                                        context: context,
+                                                        backgroundColor: const Color(0xFFA3C2B3),
+                                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                        builder: (context){
+                                                          final List<Widget> list = [];
+                                                          list.add(
+                                                              ListTile(
+                                                                title: Title(color: Colors.black, child: const Text("Select Items to Remove")),
+                                                              )
+                                                          );
+                                                          for(var variant in j.variantList){
+                                                            list.add(
+                                                                ListTile(
+                                                                  title: Text(variant.variantName),
+                                                                  trailing: Text(variant.price.toString()),
+                                                                  onTap: (){
+                                                                    if(widget.cart.items[j.id] != null && widget.cart.items[j.id]![variant.variantName] != null && widget.cart.items[j.id]![variant.variantName]!.quantity>0){
+                                                                      widget.cart.items[j.id]![variant.variantName]!.quantity--;
+                                                                    }
+                                                                    widget.bloc.add(
+                                                                      UpdateCartEvent(
+                                                                        j,
+                                                                        widget.cart,
+                                                                      ),
+                                                                    );
+                                                                    widget.updateParentState();
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                )
+                                                            );
+                                                          }
+                                                          return Wrap(
+                                                            children: list,
+                                                          );
+                                                        }
+                                                    );
                                                   }
+                                                  else{
+                                                    if(widget.cart.items[j.id] != null && widget.cart.items[j.id]!["default"] != null && widget.cart.items[j.id]!["default"]!.quantity>0){
+                                                      widget.cart.items[j.id]!["default"]!.quantity--;
+                                                    }
+                                                    widget.bloc.add(
+                                                      UpdateCartEvent(
+                                                        j,
+                                                        widget.cart,
+                                                      ),
+                                                    );
+                                                    widget.updateParentState();
+                                                  }
+
                                                 });
-                                                widget.updateParentState();
                                               },
                                               child: const Icon(
                                                 Icons.remove,
@@ -745,8 +811,8 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                           ),
                                           Text((widget.cart.items[j.id] == null)
                                               ? "0"
-                                              : widget.cart.items[j.id]!
-                                                  .toString()),
+                                              : itemCounter(widget.cart.items[j.id]!)
+                                          ),
                                           SizedBox(
                                             width: 0.06777 * widget.width,
                                             height: 0.03125 * widget.height,
@@ -757,20 +823,69 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                   padding: EdgeInsets.zero),
                                               onPressed: () {
                                                 setState(() {
-                                                  widget.bloc.add(
+                                                  if(j.variantList.isNotEmpty){
+                                                    showBottomSheet(
+                                                        context: context,
+                                                        backgroundColor: const Color(0xFFA3C2B3),
+                                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                        builder: (context){
+                                                          final List<Widget> list = [];
+                                                          for(var variant in j.variantList){
+                                                            list.add(
+                                                                ListTile(
+                                                                  title: Text(variant.variantName),
+                                                                  trailing: Text(variant.price.toString()),
+                                                                  onTap: (){
+                                                                    if(widget.cart.items[j.id]!=null){
+                                                                      if(widget.cart.items[j.id]![variant.variantName]!=null){
+                                                                        widget.cart.items[j.id]![variant.variantName]!.quantity++;
+                                                                      }else{
+                                                                        widget.cart.items[j.id]![variant.variantName] = CartVariantData(variant.variantName, 1);
+                                                                      }
+                                                                    }else{
+                                                                      final temp = HashMap<String, CartVariantData>();
+                                                                      temp[variant.variantName] = CartVariantData(variant.variantName, 1);
+                                                                      widget.cart.items[j.id] = temp;
+                                                                    }
+                                                                    widget.bloc.add(
+                                                                      UpdateCartEvent(
+                                                                        j,
+                                                                        widget.cart,
+                                                                      ),
+                                                                    );
+                                                                    widget.updateParentState();
+                                                                    Navigator.pop(context);
+                                                                  },
+                                                                )
+                                                            );
+                                                          }
+                                                          return Wrap(
+                                                            children: list,
+                                                          );
+                                                        }
+                                                    );
+                                                  }
+                                                  else{
+                                                    if(widget.cart.items[j.id]!=null){
+                                                      if(widget.cart.items[j.id]!["default"]!=null){
+                                                        widget.cart.items[j.id]!["default"]!.quantity++;
+                                                      }else{
+                                                        widget.cart.items[j.id]!["default"] = CartVariantData("default", 1);
+                                                      }
+                                                    } else{
+                                                      final temp = HashMap<String, CartVariantData>();
+                                                      temp["default"] = CartVariantData("default", 1);
+                                                      widget.cart.items[j.id] = temp;
+                                                    }
+                                                    widget.bloc.add(
                                                       UpdateCartEvent(
-                                                          j,
-                                                          (widget.cart.items[
-                                                                      j.id] !=
-                                                                  null)
-                                                              ? widget.cart
-                                                                          .items[
-                                                                      j.id]! +
-                                                                  1
-                                                              : 1,
-                                                          widget.cart));
+                                                        j,
+                                                        widget.cart,
+                                                      ),
+                                                    );
+                                                    widget.updateParentState();
+                                                  }
                                                 });
-                                                widget.updateParentState();
                                               },
                                               child: const Icon(
                                                 Icons.add,
@@ -1080,6 +1195,13 @@ class RecommendedItemIcon extends StatefulWidget {
 
 class _RecommendedItemIconState extends State<RecommendedItemIcon> {
   //todo add image and title parameter
+  String itemCounter(HashMap<String, CartVariantData> list){
+    int count = 0;
+    list.forEach((key, value) {
+      count+=value.quantity;
+    });
+    return count.toString();
+  }
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -1136,18 +1258,52 @@ class _RecommendedItemIconState extends State<RecommendedItemIcon> {
                             elevation: 0),
                         onPressed: () {
                           setState(() {
-                            if (widget.cart.items[widget.product.id] != null &&
-                                widget.cart.items[widget.product.id]! > 0) {
-                              widget.bloc.add(UpdateCartEvent(
+                            if(widget.product.variantList.isNotEmpty){
+                              showBottomSheet(
+                                  context: context,
+                                  backgroundColor: const Color(0xFFA3C2B3),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                  builder: (context){
+                                    final List<Widget> list = [];
+                                    for(var variant in widget.product.variantList){
+                                      list.add(
+                                          ListTile(
+                                            title: Text(variant.variantName),
+                                            trailing: Text(variant.price.toString()),
+                                            onTap: (){
+                                              if(widget.cart.items[widget.product.id] != null && widget.cart.items[widget.product.id]![variant.variantName] != null && widget.cart.items[widget.product.id]![variant.variantName]!.quantity>0){
+                                                widget.cart.items[widget.product.id]![variant.variantName]!.quantity--;
+                                              }
+                                              widget.bloc.add(
+                                                UpdateCartEvent(
+                                                  widget.product,
+                                                  widget.cart,
+                                                ),
+                                              );
+                                              widget.updateParentState();
+                                              Navigator.pop(context);
+                                            },
+                                          )
+                                      );
+                                    }
+                                    return Wrap(
+                                      children: list,
+                                    );
+                                  }
+                              );
+                            } else{
+                              if(widget.cart.items[widget.product.id] != null && widget.cart.items[widget.product.id]!["default"] != null && widget.cart.items[widget.product.id]!["default"]!.quantity>0){
+                                widget.cart.items[widget.product.id]!["default"]!.quantity--;
+                              }
+                              widget.bloc.add(
+                                UpdateCartEvent(
                                   widget.product,
-                                  (widget.cart.items[widget.product.id] != null)
-                                      ? widget.cart.items[widget.product.id]! -
-                                          1
-                                      : 0,
-                                  widget.cart));
+                                  widget.cart,
+                                ),
+                              );
+                              widget.updateParentState();
                             }
                           });
-                          widget.updateParentState();
                         },
                         child: const Center(
                           child: Icon(
@@ -1160,7 +1316,8 @@ class _RecommendedItemIconState extends State<RecommendedItemIcon> {
                     ),
                     Text((widget.cart.items[widget.product.id] == null)
                         ? "0"
-                        : widget.cart.items[widget.product.id].toString()),
+                        : itemCounter(widget.cart.items[widget.product.id]!),
+                    ),
                     SizedBox(
                       width: 0.07778 * widget.width,
                       height: double.infinity,
@@ -1172,14 +1329,70 @@ class _RecommendedItemIconState extends State<RecommendedItemIcon> {
                             elevation: 0),
                         onPressed: () {
                           setState(() {
-                            widget.bloc.add(UpdateCartEvent(
-                                widget.product,
-                                (widget.cart.items[widget.product.id] != null)
-                                    ? widget.cart.items[widget.product.id]! + 1
-                                    : 1,
-                                widget.cart));
+                            if(widget.product.variantList.isNotEmpty){
+                              showBottomSheet(
+                                  context: context,
+                                  backgroundColor: const Color(0xFFA3C2B3),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                  builder: (context){
+                                    final List<Widget> list = [];
+                                    for(var variant in widget.product.variantList){
+                                      list.add(
+                                          ListTile(
+                                            title: Text(variant.variantName),
+                                            trailing: Text(variant.price.toString()),
+                                            onTap: (){
+                                              if(widget.cart.items[widget.product.id]!=null){
+                                                if(widget.cart.items[widget.product.id]![variant.variantName]!=null){
+                                                  widget.cart.items[widget.product.id]![variant.variantName]!.quantity++;
+                                                }else{
+                                                  widget.cart.items[widget.product.id]![variant.variantName] = CartVariantData(variant.variantName, 1);
+                                                }
+                                              }else{
+                                                final temp = HashMap<String, CartVariantData>();
+                                                temp[variant.variantName] = CartVariantData(variant.variantName, 1);
+                                                widget.cart.items[widget.product.id] = temp;
+                                              }
+                                              widget.bloc.add(
+                                                UpdateCartEvent(
+                                                  widget.product,
+                                                  widget.cart,
+                                                ),
+                                              );
+                                              widget.updateParentState();
+                                              Navigator.pop(context);
+                                            },
+                                          )
+                                      );
+                                    }
+                                    return Wrap(
+                                      children: list,
+                                    );
+                                  }
+                              );
+                            }
+                            else{
+                              log("else check add");
+                              if(widget.cart.items[widget.product.id]!=null){
+                                if(widget.cart.items[widget.product.id]!["default"]!=null){
+                                  widget.cart.items[widget.product.id]!["default"]!.quantity++;
+                                }else{
+                                  widget.cart.items[widget.product.id]!["default"] = CartVariantData("default", 1);
+                                }
+                              }else{
+                                final temp = HashMap<String, CartVariantData>();
+                                temp["default"] = CartVariantData("default", 1);
+                                widget.cart.items[widget.product.id] = temp;
+                              }
+                              widget.bloc.add(
+                                UpdateCartEvent(
+                                  widget.product,
+                                  widget.cart,
+                                ),
+                              );
+                              widget.updateParentState();
+                            }
                           });
-                          widget.updateParentState();
                         },
                         child: const Icon(
                           Icons.add,
