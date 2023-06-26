@@ -4,26 +4,16 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="order details page added&#10;profile page pr kuch kaam kra hai">
-      <change afterPath="$PROJECT_DIR$/android/app/google-services.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/Runner/GoogleService-Info.plist" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/firebase_app_id_file.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/firebase_options.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
+    <list default="true" id="ab8174e9-5105-48f2-8dff-36c6f0a9b231" name="Changes" comment="firebase added">
+      <change afterPath="$PROJECT_DIR$/assets/animations/loading.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/animations/preparing_food.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/cart/CartPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/ordernumber/OrderNumber.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/ordernumber/OrderNumber.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/ordernumber/order_number_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/ordernumber/order_number_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/ordernumber/order_number_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/ordernumber/order_number_event.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +68,7 @@
       <recent name="$PROJECT_DIR$/assets/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/animations" />
       <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/assets/fonts" />
       <recent name="$PROJECT_DIR$/android/app/src/main/kotlin/com/example/flavr" />
@@ -274,7 +265,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687371923120</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="firebase added">
+      <created>1687679032939</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1687679032939</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -309,7 +307,8 @@
     <MESSAGE value="get menu implemented for menu" />
     <MESSAGE value="variants added to cart page- pending 2 bugs" />
     <MESSAGE value="order details page added&#10;profile page pr kuch kaam kra hai" />
-    <option name="LAST_COMMIT_MESSAGE" value="order details page added&#10;profile page pr kuch kaam kra hai" />
+    <MESSAGE value="firebase added" />
+    <option name="LAST_COMMIT_MESSAGE" value="firebase added" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -326,7 +325,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/pages/outlet_menu/bloc/outlet_menu_bloc.dart</url>
-          <line>267</line>
+          <line>264</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
@@ -338,6 +337,11 @@
           <url>file://$PROJECT_DIR$/lib/pages/cart/CartPage.dart</url>
           <line>352</line>
           <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/pages/ordernumber/OrderNumber.dart</url>
+          <line>107</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

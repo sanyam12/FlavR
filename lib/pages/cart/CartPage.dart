@@ -177,7 +177,7 @@ class _CartPageState extends State<CartPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                OrderNumber(orderNumber: state.orderNumber)));
+                                OrderNumber(orderId: state.orderNumber)));
                     cart.items.clear();
                     isLoading = false;
                   });

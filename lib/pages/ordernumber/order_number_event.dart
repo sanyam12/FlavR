@@ -4,9 +4,11 @@ abstract class OrderNumberEvent extends Equatable {
   const OrderNumberEvent();
 }
 
-class SocketEvent extends OrderNumberEvent{
-  final String orderNumber;
-  const SocketEvent(this.orderNumber);
+class GetOrderData extends OrderNumberEvent{
+  final String orderId;
+  const GetOrderData(this.orderId);
+
   @override
-  List<Object?> get props => [orderNumber];
+  List<Object?> get props => [orderId];
+
 }
