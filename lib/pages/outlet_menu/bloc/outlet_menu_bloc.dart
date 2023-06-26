@@ -30,8 +30,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     on<OutletMenuEvent>((event, emit) async {
       if (event is RefreshMenuEvent) {
         try {
-          final db = FirebaseFirestore.instance;
-          final data = await db.collection("Order").doc("IgF1s86U30pstB4SsFWq").get();
           String outletName = "Outlet";
           final selectedOutlet = await _fetchSelectedOutlet();
           if (selectedOutlet != null) {
