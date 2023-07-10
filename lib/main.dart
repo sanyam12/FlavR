@@ -18,6 +18,9 @@ import 'firebase_options.dart';
 void main(){
   // debugPaintSizeEnabled = true;
   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -26,9 +29,6 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.light().copyWith(
@@ -36,6 +36,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: "/splashscreen",
+      // home: const OrderNumber(orderId: "649fb75aed043cb1e1c0da1f"),
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
         "/signInWithGoogle":(context)=>const SignInWithGoogle(),

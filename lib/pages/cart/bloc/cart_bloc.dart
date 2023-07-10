@@ -123,12 +123,17 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           if (event.cart.items[i.id] != null) {
             for (var j in event.cart.items[i.id]!.entries) {
               int price = 0;
-              for (var itr in i.variantList) {
-                if (itr.variantName == j.value.variantName) {
-                  price = itr.price;
-                  break;
+              if(j.value.variantName=="default"){
+                price = i.price;
+              }else{
+                for (var itr in i.variantList) {
+                  if (itr.variantName == j.value.variantName) {
+                    price = itr.price;
+                    break;
+                  }
                 }
               }
+              // logger.log(price.toString());
               // final check = i.variantList.where((element) => element.variantName==j.value.variantName).toList();
               grandTotal += price * j.value.quantity;
             }
