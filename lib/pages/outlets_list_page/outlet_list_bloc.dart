@@ -58,6 +58,7 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
         final List<Outlet> list = [];
         final response =
             await http.get(Uri.https("flavr.tech", "/outlet/getAllOutlets"));
+        logger.log(response.body);
         final json = jsonDecode(response.body);
         for (var i in json["outlets"]) {
           list.add(Outlet.fromJson(i));

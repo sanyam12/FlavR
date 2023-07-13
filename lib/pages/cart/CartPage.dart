@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:flavr/pages/cart/Cart.dart';
 import 'package:flavr/pages/cart/bloc/cart_bloc.dart';
@@ -48,6 +49,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     cart = widget.initialCart;
+    log(cart.items.toString());
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
@@ -64,20 +66,40 @@ class _CartPageState extends State<CartPage> {
           Navigator.pop(context, cart);
         },
       ),
-      AddOtherInstructions(
-        width: width,
-        height: height,
-        valuefirst: valuefirst,
-        onChanged: (value) {
-          setState(() {
-            valuefirst = value;
-          });
-        },
-      ),
+      // AddOtherInstructions(
+      //   width: width,
+      //   height: height,
+      //   valuefirst: valuefirst,
+      //   onChanged: (value) {
+      //     setState(() {
+      //       valuefirst = value;
+      //     });
+      //   },
+      // ),
       AddSpecialInstructions(width: width, height: height),
     ];
     List<Widget> children = [];
     for (var i in list) {
+      if(cart.items[i.id]!=null &&
+          cart.items[i.id]!["default"]!=null &&
+          cart.items[i.id]!["default"]!.quantity>0
+      ){
+        int price = 0;
+        // log(i.price.toString());
+        children.add(
+          CartItems(
+              width: width,
+              height: height,
+              product: i,
+              cart: cart,
+              bloc: cartBloc,
+              variantName: "Default",
+              price: i.price,
+              updateParentState: (){
+                cartBloc.add(UpdateGrandTotal(cart, list));
+              })
+        );
+      }
       for (var variant in i.variantList) {
         if (cart.items[i.id] != null &&
             cart.items[i.id]![variant.variantName] != null &&
@@ -107,6 +129,7 @@ class _CartPageState extends State<CartPage> {
     }
 
     children.addAll(extras);
+    cartBloc.add(UpdateGrandTotal(cart, list));
 
     return WillPopScope(
       onWillPop: () async {

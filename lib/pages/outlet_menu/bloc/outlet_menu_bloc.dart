@@ -154,6 +154,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     const secureService = FlutterSecureStorage(
         aOptions: AndroidOptions(encryptedSharedPreferences: true));
     final token = await secureService.read(key: "token");
+    logger.log(token.toString());
     if (id == null) {
       return null;
     } else {
@@ -170,6 +171,8 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       if(json["result"]!=null && (json["result"] as List).isNotEmpty){
         return Outlet.fromJson(json["result"][0]);
       }else{
+        logger.log(response.body);
+        logger.log("check null");
         return null;
       }
     }
@@ -195,7 +198,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
             "flavr.tech", "/products/getProductsByCategory", queryParameters));
         json = jsonDecode(response.body);
         final List<Product> productsList = [];
-        for (var product in json["products"]) {
+        for (var product in json["categoryArray"][0]["products"]) {
           productsList.add(Product.fromJson(product));
         }
         ans.add(

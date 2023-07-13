@@ -66,7 +66,7 @@ class Product {
 
   Product.fromJson(Map<String, dynamic> json)
       : _id = json["_id"].toString(),
-        _category = json["category"],
+        _category = json["category"]["name"],
         _name = json["productName"].toString(),
         _description = json["description"],
         _price = json["price"],

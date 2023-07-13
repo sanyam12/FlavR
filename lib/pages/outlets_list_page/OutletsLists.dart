@@ -198,7 +198,8 @@ class _OutletsListState extends State<OutletsList> {
                                 autoPlay: true,
                                 autoPlayInterval: const Duration(seconds: 2),
                                 enableInfiniteScroll: false,
-                                reverse: true),
+                                reverse: true
+                            ),
                             items: list.map((i) {
                               return Builder(
                                 builder: (BuildContext context) {
