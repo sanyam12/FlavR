@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flavr/pages/google_signin/sign_in_with_google_bloc.dart';
+import 'package:flavr/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -131,8 +134,22 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
                                   side: BorderSide(width: 1),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15))),
-                              onPressed: () {
-                                _signInWithGoogleBloc.add(OnGoogleButtonClick());
+                              onPressed: () async {
+                                final temp = await AuthService().signInWithGoogle();
+                                if(temp != null)
+                                  {
+                                    log("clicked");
+                                    if(temp.user?.uid != null)
+                                      {
+
+                                        if(context.mounted)
+                                          {
+
+                                            Navigator.pushNamed(context, "/outletList");
+                                          }
+                                      }
+                                  }
+                                //_signInWithGoogleBloc.add(OnGoogleButtonClick());
                               },
                               child: Row(
                                 mainAxisAlignment:

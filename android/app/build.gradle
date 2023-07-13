@@ -72,4 +72,5 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'phonepe.intentsdk.android.snapshot:IntentSDK:releaseSDK-788438-SNAPSHOT'
+    implementation platform('com.google.firebase:firebase-bom:32.1.1')
 }

@@ -51,6 +51,8 @@ dependencies:
   socket_io_client: ^2.0.2
   firebase_core: ^2.14.0
   cloud_firestore: ^4.8.1
+  google_sign_in: ^6.1.4
+  firebase_auth: ^4.6.3
 
 dev_dependencies:
   flutter_test:
