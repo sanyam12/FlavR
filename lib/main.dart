@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/signUp",
+      initialRoute: "/signInWithGoogle",
       // home: const OrderNumber(orderId: "649fb75aed043cb1e1c0da1f"),
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         "/payment": (context)=> const Payment(),
         //"/ordernumber": (context)=> const OrderNumber(),
         "/edit_profile": (context)=> const EditProfile(),
-        "/otp_screen": (context)=> const OtpScreen(),
+        // "/otp_screen": (context)=> const OtpScreen(),
       },
     );
   }

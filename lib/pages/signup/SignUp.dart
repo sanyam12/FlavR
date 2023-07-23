@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flavr/pages/signup/signup_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import '../login_page/LoginPage.dart';
+import '../otp_screen/OtpScreen.dart';
 
 //todo keep logged in pending
 
@@ -32,13 +35,37 @@ class _SignUpState extends State<SignUp> {
       child: BlocListener<SignupBloc, SignupState>(
         listener: (context, SignupState state) {
           if (state is SignupSuccessful) {
-            Navigator.popAndPushNamed(context, "/outletMenu");
-          } else if (state is SignupFailed) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => OtpScreen(
+                  email: mailController.text,
+                ),
+              ),
+            );
+          }
+          else if (state is SignupFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
               ),
             );
+          }
+          else if (state is VerificationPending) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message))
+            );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => OtpScreen(
+                  email: mailController.text,
+                ),
+              ),
+            );
+          }
+          else if (state is UserAlreadyExists){
+            Navigator.popAndPushNamed(context, "/login");
           }
         },
         child: Scaffold(
@@ -133,7 +160,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(0,0.0175*height,0,0),
+                            padding:
+                                EdgeInsets.fromLTRB(0, 0.0175 * height, 0, 0),
                             child: SizedBox(
                               width: 0.75 * width,
                               child: TextField(
@@ -160,7 +188,7 @@ class _SignUpState extends State<SignUp> {
                           ),
                           Padding(
                             padding:
-                            EdgeInsets.fromLTRB(0, 0.0175 * height, 0, 0),
+                                EdgeInsets.fromLTRB(0, 0.0175 * height, 0, 0),
                             child: SizedBox(
                               width: 0.75 * width,
                               child: TextField(
@@ -187,8 +215,8 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                0, 0.01625 * height, 0, 0),
+                            padding:
+                                EdgeInsets.fromLTRB(0, 0.01625 * height, 0, 0),
                             child: SizedBox(
                               width: 0.4 * width,
                               child: ElevatedButton(
@@ -196,8 +224,9 @@ class _SignUpState extends State<SignUp> {
                                     backgroundColor: const Color(0xFF004932),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                        BorderRadius.circular(15))),
+                                            BorderRadius.circular(15))),
                                 onPressed: () {
+                                  log("on Pressed");
                                   _signupBlock.add(
                                     SignupButtonPressed(
                                       name: nameController.text,
@@ -209,12 +238,11 @@ class _SignUpState extends State<SignUp> {
                                 child: const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 11),
                                   child: Text(
-                                      "Sign Up",
+                                    "Sign Up",
                                     style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold
-                                    ),
+                                        color: Colors.white,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ),

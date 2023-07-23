@@ -15,3 +15,5 @@ class SignupButtonPressed extends SignupEvent {
   @override
   List<Object?> get props => [name, email, password];
 }
+
+

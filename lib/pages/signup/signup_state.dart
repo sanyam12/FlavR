@@ -19,10 +19,32 @@ class SignupSuccessful extends SignupState{
 
 class SignupFailed extends SignupState{
   final String message;
-  const SignupFailed(this.message);
+  final int seed;
+  const SignupFailed(this.message, this.seed);
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, seed];
+
+
+}
+
+class VerificationPending extends SignupState{
+  final String message;
+  final int seed;
+  const VerificationPending(this.message, this.seed);
+
+  @override
+  List<Object?> get props => [message, seed];
+
+}
+
+class UserAlreadyExists extends SignupState{
+  final String message;
+  final int seed;
+  const UserAlreadyExists(this.message, this.seed);
+
+  @override
+  List<Object?> get props => [message, seed];
 
 
 }

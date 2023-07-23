@@ -135,21 +135,7 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15))),
                               onPressed: () async {
-                                final temp = await AuthService().signInWithGoogle();
-                                if(temp != null)
-                                  {
-                                    log("clicked");
-                                    if(temp.user?.uid != null)
-                                      {
 
-                                        if(context.mounted)
-                                          {
-
-                                            Navigator.pushNamed(context, "/outletList");
-                                          }
-                                      }
-                                  }
-                                //_signInWithGoogleBloc.add(OnGoogleButtonClick());
                               },
                               child: Row(
                                 mainAxisAlignment:

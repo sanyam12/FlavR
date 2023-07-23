@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flavr/firebase_options.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 
 class AuthService{
   Future<UserCredential?> signInWithGoogle() async{
     //open the page to select email
-    final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+    final GoogleSignInAccount? gUser = await GoogleSignIn(clientId: DefaultFirebaseOptions.currentPlatform.iosClientId).signIn();
     if(gUser != null)
       {
         final GoogleSignInAuthentication gAuth =
