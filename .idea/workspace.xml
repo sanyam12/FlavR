@@ -4,28 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf438c3e-32a9-4cc5-9602-b76ba71e9cb8" name="Changes" comment="some bug fixes">
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/google_signin/SignInWithGoogle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/google_signin/SignInWithGoogle.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/google_signin/sign_in_with_google_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/google_signin/sign_in_with_google_bloc.dart" afterDir="false" />
+    <list default="true" id="cf438c3e-32a9-4cc5-9602-b76ba71e9cb8" name="Changes" comment="otp and sign in with google">
       <change beforePath="$PROJECT_DIR$/lib/pages/otp_screen/OtpScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/otp_screen/OtpScreen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/signup/SignUp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/signup/SignUp.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/signup/signup_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/signup/signup_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/signup/signup_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/signup/signup_event.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/signup/signup_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/signup/signup_state.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/services/auth_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/services/auth_service.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +65,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690090422428</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="otp and sign in with google">
+      <created>1690117216889</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1690117216889</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -101,7 +88,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="some bug fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="some bug fixes" />
+    <MESSAGE value="otp and sign in with google" />
+    <option name="LAST_COMMIT_MESSAGE" value="otp and sign in with google" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

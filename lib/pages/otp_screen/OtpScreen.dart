@@ -88,21 +88,28 @@ class _OtpScreenState extends State<OtpScreen> {
                   onSubmit: (String verificationCode) async {
                     log("checking on submit");
                     int check = int.parse(verificationCode);
-                    dynamic body = jsonEncode(
+                    String body = jsonEncode(
                         {"key": widget.email, "otp": check, "role": 0});
 
                     final response = await http.post(
                         Uri.parse("https://flavr.tech/mail/verifyotp"),
-                        body: body.toString(),
-                      headers: {"Content-Type":"application/json"}
-                    );
+                        body: body,
+                        headers: {"Content-Type": "application/json"});
                     final json = jsonDecode(response.body);
-                    if(json["message"]=="OTP Verified, you can log in now."){
-                      if(context.mounted){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(json["message"].toString()))
-                        );
+                    if (json["message"] ==
+                        "OTP Verified, you can log in now.") {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(json["message"].toString())));
                         Navigator.popAndPushNamed(context, "/login");
+                      }
+                    } else {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(json["message"].toString()),
+                          ),
+                        );
                       }
                     }
                     log(body.toString());
