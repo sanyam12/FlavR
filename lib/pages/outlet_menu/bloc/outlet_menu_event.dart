@@ -24,10 +24,11 @@ class SearchQueryEvent extends OutletMenuEvent{
 class UpdateCartEvent extends OutletMenuEvent{
   final Product product;
   final Cart cart;
-  const UpdateCartEvent(this.product, this.cart);
+  final List<Product> list;
+  UpdateCartEvent(this.product, this.cart, this.list);
 
   @override
-  List<Object?> get props => [product, cart];
+  List<Object?> get props => [product, cart, list];
 
 
 }

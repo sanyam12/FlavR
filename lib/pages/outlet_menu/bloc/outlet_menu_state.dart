@@ -58,11 +58,11 @@ class CartDataState extends OutletMenuState{
 
 class AmountUpdatedState extends OutletMenuState{
   final int amount;
-
-  const AmountUpdatedState(this.amount);
+  final int seed;
+  const AmountUpdatedState(this.amount, this.seed);
 
   @override
-  List<Object?> get props => [amount];
+  List<Object?> get props => [amount, seed];
 
 }
 

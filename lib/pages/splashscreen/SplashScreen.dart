@@ -19,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 3),
       ()async {
+        // throw Exception("app crash test");
         var service =const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
         String? check = await service.read(key: "token");
         if(check==null){

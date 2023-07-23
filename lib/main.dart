@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flavr/pages/cart/CartPage.dart';
 import 'package:flavr/pages/edit_profile/EditProfile.dart';
 import 'package:flavr/pages/google_signin/SignInWithGoogle.dart';
@@ -17,12 +20,23 @@ import 'package:flutter/material.dart';
 
 import 'firebase_options.dart';
 
-void main(){
+void main()async{
   // debugPaintSizeEnabled = true;
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp(
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+
   runApp(const MyApp());
 }
 
@@ -37,7 +51,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/splashscreen",
+      initialRoute: "/signUp",
       // home: const OrderNumber(orderId: "649fb75aed043cb1e1c0da1f"),
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),

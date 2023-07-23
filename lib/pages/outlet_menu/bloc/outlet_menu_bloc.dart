@@ -40,7 +40,28 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
             final cart = await _fetchUserCart();
             final incompleteOrders = await fetchIncompleteOrders();
             emit(RefreshedOutletData(outletName, productList, categoriesList, cart, incompleteOrders));
-            emit(const AmountUpdatedState(100));
+            int grandTotal = 0;
+            for (var i in productList) {
+              if (cart.items[i.id] != null) {
+                for (var j in cart.items[i.id]!.entries) {
+                  int price = 0;
+                  if(j.value.variantName=="default"){
+                    price = i.price;
+                  }else{
+                    for (var itr in i.variantList) {
+                      if (itr.variantName == j.value.variantName) {
+                        price = itr.price;
+                        break;
+                      }
+                    }
+                  }
+                  // logger.log(price.toString());
+                  // final check = i.variantList.where((element) => element.variantName==j.value.variantName).toList();
+                  grandTotal += price * j.value.quantity;
+                }
+              }
+            }
+            emit(AmountUpdatedState(grandTotal, Random().nextInt(10000)));
           } else {
             logger.log("error in selected Outlet");
             emit(NavigateToOutletList());
@@ -101,8 +122,33 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
               body: data,
             );
             // logger.log(data.toString());
+            // emit(UpdatedCartState(event.cart, Random().nextInt(10000)));
+            // logger.log("check");
+            int grandTotal = 0;
+            for (var i in event.list) {
+              if (event.cart.items[i.id] != null) {
+                for (var j in event.cart.items[i.id]!.entries) {
+                  int price = 0;
+                  if(j.value.variantName=="default"){
+                    price = i.price;
+                  }else{
+                    for (var itr in i.variantList) {
+                      if (itr.variantName == j.value.variantName) {
+                        price = itr.price;
+                        break;
+                      }
+                    }
+                  }
+                  grandTotal += price * j.value.quantity;
+                }
+              }
+            }
+            // logger.log(grandTotal.toString());
+
+            // event.cart.amount = grandTotal;
             event.cart.outletId = outletId.toString();
-            emit(UpdatedCartState(event.cart, Random().nextInt(10000)));
+
+            emit(AmountUpdatedState(grandTotal, Random().nextInt(10000)));
           }
           else{
             emit(const ShowSnackbar("Outlet Not Selected"));
@@ -218,7 +264,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     var query = {"outletid": id};
 
     var a = await http
-        .get(Uri.https("flavr.tech", "/products/getProductsOfOutlet", query));
+        .get(Uri.https("flavr.tech", "/products/recommended", query));
 
     var json = jsonDecode(a.body);
     for (var i in json["products"]) {

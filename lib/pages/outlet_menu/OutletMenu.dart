@@ -36,7 +36,7 @@ class _OutletMenuState extends State<OutletMenu> {
   String selectedCategory = "All";
   bool isSearchActive = false;
   Cart cart = Cart();
-  int amount = 0;
+  // int amount = 0;
 
   @override
   void dispose() {
@@ -116,8 +116,18 @@ class _OutletMenuState extends State<OutletMenu> {
                       backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10))),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed("/payment");
+                  onPressed: () async {
+                    final newCart = await Navigator.of(context)
+                        .push<Cart>(MaterialPageRoute(
+                      builder: (context) => CartPage(
+                        initialCart: cart,
+                      ),
+                    ));
+                    if (newCart != null) {
+                      setState(() {
+                        cart = newCart;
+                      });
+                    }
                   },
                   child: const Text(
                     "Place Order",
@@ -147,7 +157,7 @@ class _OutletMenuState extends State<OutletMenu> {
                           color: Colors.white,
                         ),
                         Text(
-                          amount.toString(),
+                          cart.amount.toString(),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 24,
@@ -193,7 +203,10 @@ class _OutletMenuState extends State<OutletMenu> {
                   menuItemsStream.add(state.menuList);
                 });
               } else if (state is AmountUpdatedState) {
-                amount = state.amount;
+                setState(() {
+                  cart.amount = state.amount;
+                  log("checececc");
+                });
               } else if (state is ShowSnackbar) {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(state.message)));
@@ -544,10 +557,14 @@ class _OutletMenuState extends State<OutletMenu> {
                                                                 .data![index],
                                                             bloc: bloc,
                                                             cart: cart,
+                                                            productList:
+                                                                productList
+                                                                    .data!,
                                                             updateParentState:
                                                                 () {
                                                               setState(() {});
                                                             },
+                                                            amount: cart.amount,
                                                           ),
                                                         );
                                                       },
@@ -591,9 +608,11 @@ class _OutletMenuState extends State<OutletMenu> {
                                                         .toList(),
                                                 bloc: bloc,
                                                 cart: cart,
+                                                productList: productList.data!,
                                                 updateParentState: () {
                                                   setState(() {});
                                                 },
+                                                amount: cart.amount,
                                               ),
                                             ),
                                           ],
@@ -662,14 +681,18 @@ class CategoryMenu extends StatefulWidget {
       required this.list,
       required this.bloc,
       required this.cart,
-      required this.updateParentState});
+      required this.productList,
+      required this.updateParentState,
+      required this.amount});
 
   final double width;
   final double height;
   final List<Categories> list;
   final OutletMenuBloc bloc;
   final Cart cart;
+  final List<Product> productList;
   final void Function() updateParentState;
+  final int amount;
 
   @override
   State<CategoryMenu> createState() => _CategoryMenuState();
@@ -777,11 +800,12 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                         backgroundColor:
                                                             const Color(
                                                                 0xFFA3C2B3),
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20)),
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                        ),
                                                         builder: (context) {
                                                           final List<Widget>
                                                               list = [];
@@ -823,11 +847,34 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                                               .variantName]!
                                                                       .quantity--;
                                                                 }
+                                                                int grandTotal = 0;
+                                                                for (var i in widget.productList) {
+                                                                  if (widget.cart.items[i.id] != null) {
+                                                                    for (var j in widget.cart.items[i.id]!.entries) {
+                                                                      int price = 0;
+                                                                      if(j.value.variantName=="default"){
+                                                                        price = i.price;
+                                                                      }else{
+                                                                        for (var itr in i.variantList) {
+                                                                          if (itr.variantName == j.value.variantName) {
+                                                                            price = itr.price;
+                                                                            break;
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                      grandTotal += price * j.value.quantity;
+                                                                    }
+                                                                  }
+                                                                }
+                                                                widget.cart.amount = grandTotal;
                                                                 widget.bloc.add(
                                                                   UpdateCartEvent(
-                                                                    j,
-                                                                    widget.cart,
-                                                                  ),
+                                                                      j,
+                                                                      widget
+                                                                          .cart,
+                                                                      widget
+                                                                          .productList,
+                                                                      ),
                                                                 );
                                                                 widget
                                                                     .updateParentState();
@@ -860,10 +907,31 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                               "default"]!
                                                           .quantity--;
                                                     }
+                                                    int grandTotal = 0;
+                                                    for (var i in widget.productList) {
+                                                      if (widget.cart.items[i.id] != null) {
+                                                        for (var j in widget.cart.items[i.id]!.entries) {
+                                                          int price = 0;
+                                                          if(j.value.variantName=="default"){
+                                                            price = i.price;
+                                                          }else{
+                                                            for (var itr in i.variantList) {
+                                                              if (itr.variantName == j.value.variantName) {
+                                                                price = itr.price;
+                                                                break;
+                                                              }
+                                                            }
+                                                          }
+                                                          grandTotal += price * j.value.quantity;
+                                                        }
+                                                      }
+                                                    }
+                                                    widget.cart.amount = grandTotal;
                                                     widget.bloc.add(
                                                       UpdateCartEvent(
-                                                        j,
-                                                        widget.cart,
+                                                          j,
+                                                          widget.cart,
+                                                          widget.productList,
                                                       ),
                                                     );
                                                     widget.updateParentState();
@@ -954,10 +1022,33 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                                           .items[
                                                                       j.id] = temp;
                                                                 }
+                                                                int grandTotal = 0;
+                                                                for (var i in widget.productList) {
+                                                                  if (widget.cart.items[i.id] != null) {
+                                                                    for (var j in widget.cart.items[i.id]!.entries) {
+                                                                      int price = 0;
+                                                                      if(j.value.variantName=="default"){
+                                                                        price = i.price;
+                                                                      }else{
+                                                                        for (var itr in i.variantList) {
+                                                                          if (itr.variantName == j.value.variantName) {
+                                                                            price = itr.price;
+                                                                            break;
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                      grandTotal += price * j.value.quantity;
+                                                                    }
+                                                                  }
+                                                                }
+                                                                widget.cart.amount = grandTotal;
                                                                 widget.bloc.add(
                                                                   UpdateCartEvent(
-                                                                    j,
-                                                                    widget.cart,
+                                                                      j,
+                                                                      widget
+                                                                          .cart,
+                                                                      widget
+                                                                          .productList,
                                                                   ),
                                                                 );
                                                                 widget
@@ -1001,10 +1092,31 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                       widget.cart.items[j.id] =
                                                           temp;
                                                     }
+                                                    int grandTotal = 0;
+                                                    for (var i in widget.productList) {
+                                                      if (widget.cart.items[i.id] != null) {
+                                                        for (var j in widget.cart.items[i.id]!.entries) {
+                                                          int price = 0;
+                                                          if(j.value.variantName=="default"){
+                                                            price = i.price;
+                                                          }else{
+                                                            for (var itr in i.variantList) {
+                                                              if (itr.variantName == j.value.variantName) {
+                                                                price = itr.price;
+                                                                break;
+                                                              }
+                                                            }
+                                                          }
+                                                          grandTotal += price * j.value.quantity;
+                                                        }
+                                                      }
+                                                    }
+                                                    widget.cart.amount = grandTotal;
                                                     widget.bloc.add(
                                                       UpdateCartEvent(
-                                                        j,
-                                                        widget.cart,
+                                                          j,
+                                                          widget.cart,
+                                                          widget.productList,
                                                       ),
                                                     );
                                                     widget.updateParentState();
@@ -1303,7 +1415,9 @@ class RecommendedItemIcon extends StatefulWidget {
       required this.product,
       required this.cart,
       required this.bloc,
-      required this.updateParentState})
+      required this.productList,
+      required this.updateParentState,
+      required this.amount})
       : super(key: key);
 
   final double width;
@@ -1311,7 +1425,9 @@ class RecommendedItemIcon extends StatefulWidget {
   final Product product;
   final Cart cart;
   final OutletMenuBloc bloc;
+  final List<Product> productList;
   final void Function() updateParentState;
+  final int amount;
 
   @override
   State<RecommendedItemIcon> createState() => _RecommendedItemIconState();
@@ -1418,10 +1534,31 @@ class _RecommendedItemIconState extends State<RecommendedItemIcon> {
                                                     variant.variantName]!
                                                 .quantity--;
                                           }
+                                          int grandTotal = 0;
+                                          for (var i in widget.productList) {
+                                            if (widget.cart.items[i.id] != null) {
+                                              for (var j in widget.cart.items[i.id]!.entries) {
+                                                int price = 0;
+                                                if(j.value.variantName=="default"){
+                                                  price = i.price;
+                                                }else{
+                                                  for (var itr in i.variantList) {
+                                                    if (itr.variantName == j.value.variantName) {
+                                                      price = itr.price;
+                                                      break;
+                                                    }
+                                                  }
+                                                }
+                                                grandTotal += price * j.value.quantity;
+                                              }
+                                            }
+                                          }
+                                          widget.cart.amount = grandTotal;
                                           widget.bloc.add(
                                             UpdateCartEvent(
-                                              widget.product,
-                                              widget.cart,
+                                                widget.product,
+                                                widget.cart,
+                                                widget.productList,
                                             ),
                                           );
                                           widget.updateParentState();
@@ -1449,10 +1586,29 @@ class _RecommendedItemIconState extends State<RecommendedItemIcon> {
                                     .items[widget.product.id]!["default"]!
                                     .quantity--;
                               }
+                              int grandTotal = 0;
+                              for (var i in widget.productList) {
+                                if (widget.cart.items[i.id] != null) {
+                                  for (var j in widget.cart.items[i.id]!.entries) {
+                                    int price = 0;
+                                    if(j.value.variantName=="default"){
+                                      price = i.price;
+                                    }else{
+                                      for (var itr in i.variantList) {
+                                        if (itr.variantName == j.value.variantName) {
+                                          price = itr.price;
+                                          break;
+                                        }
+                                      }
+                                    }
+                                    grandTotal += price * j.value.quantity;
+                                  }
+                                }
+                              }
+                              widget.cart.amount = grandTotal;
                               widget.bloc.add(
-                                UpdateCartEvent(
-                                  widget.product,
-                                  widget.cart,
+                                UpdateCartEvent(widget.product, widget.cart,
+                                    widget.productList,
                                 ),
                               );
                               widget.updateParentState();
@@ -1528,10 +1684,31 @@ class _RecommendedItemIconState extends State<RecommendedItemIcon> {
                                                     .items[widget.product.id] =
                                                 temp;
                                           }
+                                          int grandTotal = 0;
+                                          for (var i in widget.productList) {
+                                            if (widget.cart.items[i.id] != null) {
+                                              for (var j in widget.cart.items[i.id]!.entries) {
+                                                int price = 0;
+                                                if(j.value.variantName=="default"){
+                                                  price = i.price;
+                                                }else{
+                                                  for (var itr in i.variantList) {
+                                                    if (itr.variantName == j.value.variantName) {
+                                                      price = itr.price;
+                                                      break;
+                                                    }
+                                                  }
+                                                }
+                                                grandTotal += price * j.value.quantity;
+                                              }
+                                            }
+                                          }
+                                          widget.cart.amount = grandTotal;
                                           widget.bloc.add(
                                             UpdateCartEvent(
-                                              widget.product,
-                                              widget.cart,
+                                                widget.product,
+                                                widget.cart,
+                                                widget.productList,
                                             ),
                                           );
                                           widget.updateParentState();
@@ -1564,11 +1741,29 @@ class _RecommendedItemIconState extends State<RecommendedItemIcon> {
                                 temp["default"] = CartVariantData("default", 1);
                                 widget.cart.items[widget.product.id] = temp;
                               }
+                              int grandTotal = 0;
+                              for (var i in widget.productList) {
+                                if (widget.cart.items[i.id] != null) {
+                                  for (var j in widget.cart.items[i.id]!.entries) {
+                                    int price = 0;
+                                    if(j.value.variantName=="default"){
+                                      price = i.price;
+                                    }else{
+                                      for (var itr in i.variantList) {
+                                        if (itr.variantName == j.value.variantName) {
+                                          price = itr.price;
+                                          break;
+                                        }
+                                      }
+                                    }
+                                    grandTotal += price * j.value.quantity;
+                                  }
+                                }
+                              }
+                              widget.cart.amount = grandTotal;
                               widget.bloc.add(
-                                UpdateCartEvent(
-                                  widget.product,
-                                  widget.cart,
-                                ),
+                                UpdateCartEvent(widget.product, widget.cart,
+                                    widget.productList),
                               );
                               widget.updateParentState();
                             }

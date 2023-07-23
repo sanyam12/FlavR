@@ -21,7 +21,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
             "password": event.password
           };
           var response = await http.post(
-              Uri.https("flavrapi.onrender.com", "/user/signup"),
+              Uri.https("flavr.tech", "/user/signup"),
               body: body);
           var json = jsonDecode(response.body);
           if (response.statusCode == 201) {
