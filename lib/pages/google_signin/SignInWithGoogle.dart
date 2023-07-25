@@ -47,10 +47,19 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
           if (state is GoogleButtonClicked) {
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Implementation Pending")));
-          } else if (state is SignUpClicked) {
+          }
+          else if (state is SignUpClicked) {
             Navigator.of(context).pushNamed("/signUp");
-          } else if (state is LoginClicked) {
+          }
+          else if (state is LoginClicked) {
             Navigator.of(context).pushNamed("/login");
+          }
+          else if (state is ShowSnackbar) {;
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.message)));
+          }
+          else if (state is GoogleLoginSuccess) {
+            Navigator.of(context).popAndPushNamed("/outletMenu");
           }
         },
         child: Scaffold(
@@ -131,11 +140,11 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,
-                                  side: BorderSide(width: 1),
+                                  side: const BorderSide(width: 1),
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15))),
                               onPressed: () async {
-
+                                _signInWithGoogleBloc.add(OnGoogleButtonClick());
                               },
                               child: Row(
                                 mainAxisAlignment:
@@ -182,7 +191,7 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
                         Padding(
                           padding: EdgeInsets.fromLTRB(0, 0.02 * height, 0, 0),
                           child: InkWell(
-                            onTap: (){
+                            onTap: () {
                               _signInWithGoogleBloc.add(OnLoginClick());
                             },
                             child: RichText(

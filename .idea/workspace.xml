@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf438c3e-32a9-4cc5-9602-b76ba71e9cb8" name="Changes" comment="otp and sign in with google">
-      <change beforePath="$PROJECT_DIR$/lib/pages/otp_screen/OtpScreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/otp_screen/OtpScreen.dart" afterDir="false" />
+    <list default="true" id="cf438c3e-32a9-4cc5-9602-b76ba71e9cb8" name="Changes" comment="otp">
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/google_signin/SignInWithGoogle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/google_signin/SignInWithGoogle.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/google_signin/sign_in_with_google_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/google_signin/sign_in_with_google_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pages/google_signin/sign_in_with_google_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/google_signin/sign_in_with_google_state.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +77,14 @@
       <option name="project" value="LOCAL" />
       <updated>1690117216889</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="otp">
+      <created>1690119018691</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1690119018691</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -89,7 +101,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="some bug fixes" />
     <MESSAGE value="otp and sign in with google" />
-    <option name="LAST_COMMIT_MESSAGE" value="otp and sign in with google" />
+    <MESSAGE value="otp" />
+    <option name="LAST_COMMIT_MESSAGE" value="otp" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -106,8 +119,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/pages/google_signin/SignInWithGoogle.dart</url>
-          <line>23</line>
-          <option name="timeStamp" value="3" />
+          <line>147</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

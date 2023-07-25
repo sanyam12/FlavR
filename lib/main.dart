@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
         // useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: "/signInWithGoogle",
+      initialRoute: "/splashscreen",
       // home: const OrderNumber(orderId: "649fb75aed043cb1e1c0da1f"),
       routes: {
         "/splashscreen": (context)=>const SplashScreen(),
