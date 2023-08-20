@@ -34,34 +34,44 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
           final selectedOutlet = await _fetchSelectedOutlet();
           if (selectedOutlet != null) {
             outletName = selectedOutlet.outletName;
-            final List<Product> productList =
-                await _fetchProducts(selectedOutlet.id);
+            // final List<Product> productList =
+            //     await _fetchProducts(selectedOutlet.id);
             final categoriesList = await _fetchMenuItems(selectedOutlet.id);
+
+            emit(RefreshedOutletData(outletName, categoriesList));
+
             final cart = await _fetchUserCart();
+
+            emit(CartState(cart));
+
             final incompleteOrders = await fetchIncompleteOrders();
-            emit(RefreshedOutletData(outletName, productList, categoriesList, cart, incompleteOrders));
-            int grandTotal = 0;
-            for (var i in productList) {
-              if (cart.items[i.id] != null) {
-                for (var j in cart.items[i.id]!.entries) {
-                  int price = 0;
-                  if(j.value.variantName=="default"){
-                    price = i.price;
-                  }else{
-                    for (var itr in i.variantList) {
-                      if (itr.variantName == j.value.variantName) {
-                        price = itr.price;
-                        break;
-                      }
-                    }
-                  }
-                  // logger.log(price.toString());
-                  // final check = i.variantList.where((element) => element.variantName==j.value.variantName).toList();
-                  grandTotal += price * j.value.quantity;
-                }
-              }
-            }
-            emit(AmountUpdatedState(grandTotal, Random().nextInt(10000)));
+
+            emit(IncompleteOrdersState(incompleteOrders));
+            logger.log("done!!");
+
+            // emit(RefreshedOutletData(outletName, productList, categoriesList, cart, incompleteOrders));
+            // int grandTotal = 0;
+            // for (var i in productList) {
+            //   if (cart.items[i.id] != null) {
+            //     for (var j in cart.items[i.id]!.entries) {
+            //       int price = 0;
+            //       if(j.value.variantName=="default"){
+            //         price = i.price;
+            //       }else{
+            //         for (var itr in i.variantList) {
+            //           if (itr.variantName == j.value.variantName) {
+            //             price = itr.price;
+            //             break;
+            //           }
+            //         }
+            //       }
+            //       // logger.log(price.toString());
+            //       // final check = i.variantList.where((element) => element.variantName==j.value.variantName).toList();
+            //       grandTotal += price * j.value.quantity;
+            //     }
+            //   }
+            // }
+            // emit(AmountUpdatedState(grandTotal, Random().nextInt(10000)));
           } else {
             logger.log("error in selected Outlet");
             emit(NavigateToOutletList());
@@ -172,7 +182,9 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     );
     final json = jsonDecode(response.body);
     for(var i in json["orders"] as List){
-      list.add(OrderDataClass.OrderData.fromJson(i));
+      var temp = OrderDataClass.OrderData.fromJson(i);
+      logger.log(i.toString());
+      list.add(temp);
     }
     return list;
   }
@@ -186,7 +198,8 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
           i.products
               .where((element) =>
                   element.name.toLowerCase().contains(query.toLowerCase()))
-              .toList());
+              .toList(),
+          i.iconUrl);
       if (temp.products.isNotEmpty) {
         list.add(temp);
       }
@@ -225,37 +238,51 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
   }
 
   Future<List<Categories>> _fetchMenuItems(String id) async {
-    List<String> categoryList = [];
-    List<Categories> ans = [];
-
-    var queryParameters = {"outletid": id};
-    var response = await http.get(
-        Uri.https("flavr.tech", "products/getAllCategories", queryParameters));
-
-    var json = jsonDecode(response.body);
-    if(response.statusCode==200){
-      for (var i in json["categories"]) {
-        categoryList.add(i["category"].toString());
+    final List<Categories> list= [];
+    list.add(Categories("All", [], ""));
+    final response = await http.get(
+      Uri.parse("https://flavr.tech/products/getProductsByCategory?categoryName=All&outletid=$id"),
+    );
+    final json = jsonDecode(response.body);
+    if(response.statusCode == 200){
+      for(var i in (json["categoryArray"] as List)){
+        list.add(Categories.fromJson(i));
       }
-
-      for (var category in categoryList) {
-        queryParameters = {"categoryName": category, "outletid": id};
-        response = await http.get(Uri.https(
-            "flavr.tech", "/products/getProductsByCategory", queryParameters));
-        json = jsonDecode(response.body);
-        final List<Product> productsList = [];
-        for (var product in json["categoryArray"][0]["products"]) {
-          productsList.add(Product.fromJson(product));
-        }
-        ans.add(
-          Categories(category, productsList),
-        );
-      }
-      ans.insert(0, Categories("All", []));
-      return ans;
+      return list;
     }else{
-      throw Exception("something went wrong: ${response.body}");
+      throw Exception("Something Went Wrong!!");
     }
+    // List<String> categoryList = [];
+    // List<Categories> ans = [];
+    //
+    // var queryParameters = {"outletid": id};
+    // var response = await http.get(
+    //     Uri.https("flavr.tech", "products/getAllCategories", queryParameters));
+    //
+    // var json = jsonDecode(response.body);
+    // if(response.statusCode==200){
+    //   for (var i in json["categories"]) {
+    //     categoryList.add(i["category"].toString());
+    //   }
+    //
+    //   for (var category in categoryList) {
+    //     queryParameters = {"categoryName": category, "outletid": id};
+    //     response = await http.get(Uri.https(
+    //         "flavr.tech", "/products/getProductsByCategory", queryParameters));
+    //     json = jsonDecode(response.body);
+    //     final List<Product> productsList = [];
+    //     for (var product in json["categoryArray"][0]["products"]) {
+    //       productsList.add(Product.fromJson(product));
+    //     }
+    //     ans.add(
+    //       Categories(category, productsList),
+    //     );
+    //   }
+    //   ans.insert(0, Categories("All", []));
+    //   return ans;
+    // }else{
+    //   throw Exception("something went wrong: ${response.body}");
+    // }
   }
 
   Future<List<Product>> _fetchProducts(String id) async {

@@ -13,6 +13,7 @@ import 'package:slidable_button/slidable_button.dart';
 // import 'package:lottie/lottie.dart';
 import 'package:slider_button/slider_button.dart';
 
+import '../../components/loading.dart';
 import '../outlet_menu/Product.dart';
 import 'CartVariantData.dart';
 
@@ -76,7 +77,7 @@ class _CartPageState extends State<CartPage> {
       //     });
       //   },
       // ),
-      AddSpecialInstructions(width: width, height: height),
+      // AddSpecialInstructions(width: width, height: height),
     ];
     List<Widget> children = [];
     for (var i in list) {
@@ -208,7 +209,7 @@ class _CartPageState extends State<CartPage> {
               },
               child: (isLoading)
                   ? const Center(
-                      child: CircularProgressIndicator(),
+                      child: CustomLoadingAnimation(),
                     )
                   : Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -311,14 +312,19 @@ class _CartPageState extends State<CartPage> {
                                             });
                                           }
                                         },
-                                        child: const Center(
-                                          child: Text(
-                                            "Proceed to Pay",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
+                                        child: Container(
+                                          alignment: Alignment.centerLeft,
+                                          child: const Padding(
+                                            padding: EdgeInsets.fromLTRB(63,0,0,0),
+                                            child: Text(
+                                              "Swipe to Pay",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold
+                                              ),
+                                              textAlign: TextAlign.center,
                                             ),
-                                            textAlign: TextAlign.center,
                                           ),
                                         ),
                                       ),
@@ -462,8 +468,11 @@ class _CartItemsState extends State<CartItems> {
                                                   list.add(ListTile(
                                                     title: Text(
                                                         variant.variantName),
-                                                    trailing: Text(variant.price
-                                                        .toString()),
+                                                    trailing: Text(
+                                                        variant.price
+                                                        .toString(),
+                                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                                    ),
                                                     onTap: () {
                                                       if (widget.cart
                                                                       .items[
@@ -575,7 +584,9 @@ class _CartItemsState extends State<CartItems> {
                                                     title: Text(
                                                         variant.variantName),
                                                     trailing: Text(variant.price
-                                                        .toString()),
+                                                        .toString(),
+                                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                                    ),
                                                     onTap: () {
                                                       if (widget.cart.items[
                                                               widget.product
@@ -717,9 +728,11 @@ class _CartItemsState extends State<CartItems> {
                         ),
                         Text(
                           widget.price.toString(),
-                          style: const TextStyle(fontSize: 12),
+                          style: const TextStyle(fontSize: 12,
+                            fontWeight: FontWeight.bold
+                          ),
                         ),
-                        Text(widget.variantName),
+                        Text((widget.variantName!="Default")?widget.variantName:""),
                       ],
                     ),
                     Text(

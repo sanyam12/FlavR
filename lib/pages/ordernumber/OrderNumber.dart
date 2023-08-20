@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../components/loading.dart';
 import '../profile_page/OrderProductData.dart';
 
 class OrderNumber extends StatefulWidget {
@@ -76,7 +77,7 @@ class _OrderNumberState extends State<OrderNumber> {
                     return const Text("Something Went Wrong");
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                    return const Center(child: CustomLoadingAnimation());
                   }
                   final status = snapshot.data!.get("status").toString();
                   log(widget.orderId);

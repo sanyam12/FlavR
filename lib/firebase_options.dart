@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '504489315010',
     projectId: 'flavr-c527b',
     storageBucket: 'flavr-c527b.appspot.com',
+    androidClientId: '504489315010-h6rh9b3405iliftjmp3l5fu6ipt25ma4.apps.googleusercontent.com',
     iosClientId: '504489315010-t87tv0fkdof28tjsq6e5csgeesunh33i.apps.googleusercontent.com',
     iosBundleId: 'com.example.flavr',
   );

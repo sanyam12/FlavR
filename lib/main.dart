@@ -17,6 +17,7 @@ import 'package:flavr/pages/profile_page/ProfiePage.dart';
 import 'package:flavr/pages/signup/SignUp.dart';
 import 'package:flavr/pages/splashscreen/SplashScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'firebase_options.dart';
 
@@ -45,10 +46,16 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent, // transparent status bar
+        statusBarIconBrightness: Brightness.dark, // dark text for status bar
+      statusBarBrightness: Brightness.light
+    ));
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData.light().copyWith(
-        // useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: "/splashscreen",

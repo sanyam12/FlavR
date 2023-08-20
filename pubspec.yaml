@@ -54,10 +54,12 @@ dependencies:
   google_sign_in: ^6.1.4
   firebase_auth: ^4.6.3
   firebase_crashlytics: ^3.3.3
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -68,6 +70,12 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
+  remove_alpha_ios: true
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -81,6 +89,8 @@ flutter:
   assets:
     - assets/animations/
     - assets/images/
+    - assets/gif/
+#    - assets/images/
     - assets/rive/
   #   - images/a_dot_ham.jpeg
 
@@ -103,6 +113,10 @@ flutter:
     - family: Jim Nightshade
       fonts:
         - asset: assets/fonts/JimNightshade-Regular.ttf
+          weight: 400
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
           weight: 400
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

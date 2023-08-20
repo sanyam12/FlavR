@@ -25,10 +25,8 @@ class UpdateCartEvent extends OutletMenuEvent{
   final Product product;
   final Cart cart;
   final List<Product> list;
-  UpdateCartEvent(this.product, this.cart, this.list);
+  const UpdateCartEvent(this.product, this.cart, this.list);
 
   @override
   List<Object?> get props => [product, cart, list];
-
-
 }

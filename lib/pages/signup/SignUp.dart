@@ -118,13 +118,18 @@ class _SignUpState extends State<SignUp> {
                       children: [
                         Positioned(
                           top: 0.18 * height,
-                          child: const Text(
-                            "flavR",
-                            style: TextStyle(
-                                fontSize: 50,
-                                color: Color(0xFF004932),
-                                fontFamily: "Jim Nightshade"),
+                          child: SizedBox(
+                              width: 0.26667*width,
+                              // height: 0.03*height,
+                              child: Image.asset("assets/images/flavr-logo.png")
                           ),
+                          // child: const Text(
+                          //   "flavR",
+                          //   style: TextStyle(
+                          //       fontSize: 50,
+                          //       color: Color(0xFF004932),
+                          //       fontFamily: "Jim Nightshade"),
+                          // ),
                         ),
                       ],
                     ),

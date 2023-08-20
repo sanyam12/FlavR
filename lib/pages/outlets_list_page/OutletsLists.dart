@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 import 'package:flavr/pages/outlets_list_page/outlet_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,6 +32,7 @@ class _OutletsListState extends State<OutletsList> {
   List<Outlet> searchSavedOutletList = [];
   List<Outlet> searchAllOutletList = [];
   bool isExpanded = false;
+  String username = "";
 
   @override
   void dispose() {
@@ -36,14 +40,39 @@ class _OutletsListState extends State<OutletsList> {
     super.dispose();
   }
 
+  String greeting() {
+    final currentTime = DateTime.now();
+    if (currentTime.hour < 12) {
+      return "Good Morning";
+    } else if (currentTime.hour < 18) {
+      return "Good Afternoon";
+    } else {
+      return "Good Evening";
+    }
+  }
+
+  void getUsername() async {
+    const secure = FlutterSecureStorage(
+        aOptions: AndroidOptions(encryptedSharedPreferences: true));
+    final token = await secure.read(key: "token");
+    http.Response response = await http.get(
+        Uri.parse("https://flavr.tech/user/userprofile"),
+        headers: {"Authorization": "Bearer $token"});
+
+    if (response.statusCode == 201) {
+      final json = jsonDecode(response.body);
+      username = (json["user"][0]["userName"]).toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.white));
     // StreamController<List<Outlet>> list = StreamController<List<Outlet>>();
     //List<Outlet> outletList = [];
+
+    getUsername();
 
     return BlocProvider(
       create: (context) {
@@ -81,108 +110,114 @@ class _OutletsListState extends State<OutletsList> {
           body: SafeArea(
             child: Column(
               children: [
-                (isExpanded)
-                    ? SizedBox(
-                        width: width,
-                        child: Row(
+                if (isExpanded)
+                  SizedBox(
+                    width: width,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              if (isExpanded) {
+                                controller.text = "";
+                                log("check");
+                                _outletListBloc.add(
+                                  OnSearchEvent(
+                                    query: "",
+                                    savedOutlets: savedOutletList,
+                                    allOutlets: allOutletList,
+                                  ),
+                                );
+                              }
+                              isExpanded = !isExpanded;
+                            });
+                          },
+                          icon: const Icon(Icons.arrow_back_ios),
+                        ),
+                        Expanded(
+                          child: TextField(
+                            controller: controller,
+                            decoration: const InputDecoration(
+                                hintText: "Search Outlet"),
+                            onChanged: (value) {
+                              log("on changed");
+                              _outletListBloc.add(
+                                OnSearchEvent(
+                                    query: value,
+                                    savedOutlets: savedOutletList,
+                                    allOutlets: allOutletList),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                else
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        0.04166 * width, 0, 0.03 * width, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          // color: Colors.red,
+                          // width: 0.21667 * width,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(greeting(),
+                                  style: const TextStyle(
+                                    color: Color(0xff004932),
+                                    fontFamily: "inter",
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal,
+                                  )),
+                              Text(
+                                username,
+                                style: const TextStyle(
+                                  color: Color(0xff004932),
+                                  fontFamily: "inter",
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Expanded(child: Container(color: Colors.green, child: Text("sfds"),)),
+                        Row(
                           children: [
                             IconButton(
+                              // constraints: const BoxConstraints(),
+                              // padding: EdgeInsets.zero,
                               onPressed: () {
                                 setState(() {
-                                  if (isExpanded) {
-                                    controller.text = "";
-                                    log("check");
-                                    _outletListBloc.add(
-                                      OnSearchEvent(
-                                        query: "",
-                                        savedOutlets: savedOutletList,
-                                        allOutlets: allOutletList,
-                                      ),
-                                    );
-                                  }
                                   isExpanded = !isExpanded;
                                 });
                               },
-                              icon: const Icon(Icons.arrow_back_ios),
-                            ),
-                            Expanded(
-                              child: TextField(
-                                controller: controller,
-                                decoration: const InputDecoration(
-                                    hintText: "Search Outlet"),
-                                onChanged: (value) {
-                                  log("on changed");
-                                  _outletListBloc.add(
-                                    OnSearchEvent(
-                                        query: value,
-                                        savedOutlets: savedOutletList,
-                                        allOutlets: allOutletList),
-                                  );
-                                },
+                              icon: const Icon(
+                                Icons.search,
+                                color: Color(0xff004932),
+                                size: 30,
                               ),
                             ),
-                          ],
-                        ),
-                      )
-                    : Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            0.04166 * width, 0, 0.03 * width, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Column(
-                              children: [
-                                Text("Good morning, ",
-                                    style: TextStyle(
-                                      color: Color(0xff004932),
-                                      fontFamily: "inter",
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal,
-                                    )),
-                                Text(
-                                  "Akshita Goyal",
-                                  style: TextStyle(
-                                    color: Color(0xff004932),
-                                    fontFamily: "inter",
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      0.33 * width, 0, 0, 0),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        isExpanded = !isExpanded;
-                                      });
-                                    },
-                                    icon: const Icon(Icons.search,
-                                        color: Color(0xff004932), size: 30),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      0.05 * width, 0, 0, 0),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      _outletListBloc
-                                          .add(const OnProfileButtonClicked());
-                                    },
-                                    icon: const Icon(Icons.person,
-                                        color: Color(0xff004932), size: 30),
-                                  ),
-                                  // Icons.person , color: Color(0xff004932) , size: 30
-                                )
-                              ],
+                            IconButton(
+                              onPressed: () {
+                                _outletListBloc
+                                    .add(const OnProfileButtonClicked());
+                              },
+                              icon: const Icon(
+                                Icons.person,
+                                color: Color(0xff004932),
+                                size: 30,
+                              ),
                             )
                           ],
-                        ),
-                      ),
+                        )
+                      ],
+                    ),
+                  ),
                 Expanded(
                   child: SingleChildScrollView(
                     physics: const ClampingScrollPhysics(),
@@ -198,8 +233,7 @@ class _OutletsListState extends State<OutletsList> {
                                 autoPlay: true,
                                 autoPlayInterval: const Duration(seconds: 2),
                                 enableInfiniteScroll: false,
-                                reverse: true
-                            ),
+                                reverse: true),
                             items: list.map((i) {
                               return Builder(
                                 builder: (BuildContext context) {
@@ -395,4 +429,3 @@ class OutletCard extends StatelessWidget {
     );
   }
 }
-

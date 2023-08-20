@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flavr/components/loading.dart';
 import 'package:flavr/pages/cart/CartPage.dart';
 import 'package:flavr/pages/cart/CartVariantData.dart';
 import 'package:flavr/pages/ordernumber/OrderNumber.dart';
@@ -11,12 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cart/Cart.dart';
 import '../profile_page/OrderData.dart';
-import 'Outlet.dart';
 import 'bloc/outlet_menu_bloc.dart';
-
-//todo add loading pages
-//todo profile button pending
-//todo toggle for veg and non veg
 
 class OutletMenu extends StatefulWidget {
   const OutletMenu({Key? key}) : super(key: key);
@@ -29,22 +25,35 @@ class _OutletMenuState extends State<OutletMenu> {
   final searchController = TextEditingController();
   String outletName = "Outlet";
   final selectedOutletStream = StreamController<String>();
-  final productsListStream = StreamController<List<Product>>();
+
+  // final productsListStream = StreamController<List<Product>>();
   final menuItemsStream = StreamController<List<Categories>>();
   List<OrderData> incompleteOrders = [];
   List<Categories> refreshedMenuItems = [];
   String selectedCategory = "All";
   bool isSearchActive = false;
   Cart cart = Cart();
+
   // int amount = 0;
 
   @override
   void dispose() {
     searchController.dispose();
     selectedOutletStream.close();
-    productsListStream.close();
+    // productsListStream.close();
     menuItemsStream.close();
     super.dispose();
+  }
+
+  int totalItems() {
+    int ans = 0;
+    for (var i in cart.items.entries) {
+      for (var j in i.value.entries) {
+        ans += j.value.quantity;
+      }
+    }
+    log(ans.toString());
+    return ans;
   }
 
   @override
@@ -74,14 +83,30 @@ class _OutletMenuState extends State<OutletMenu> {
               );
             },
             child: Card(
-              color: const Color(0xFFA3C2B3),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Text(e.id),
-              ),
-            ),
+                color: const Color(0xFFA3C2B3),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Center(
+                          child: (e.orderNumber != null)
+                              ? Text(
+                                  "Order Number:\n${e.orderNumber.toString()}",
+                                  textAlign: TextAlign.center)
+                              : const Text("Order Number:\nNot Assigned",
+                                  textAlign: TextAlign.center)),
+                      Center(
+                          child: Text(
+                        "Price:\n${e.totalPrice.toString()}",
+                        textAlign: TextAlign.center,
+                      )),
+                    ],
+                  ),
+                )),
           ),
         )
         .toList();
@@ -109,66 +134,55 @@ class _OutletMenuState extends State<OutletMenu> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                  onPressed: () async {
-                    final newCart = await Navigator.of(context)
-                        .push<Cart>(MaterialPageRoute(
-                      builder: (context) => CartPage(
-                        initialCart: cart,
-                      ),
-                    ));
-                    if (newCart != null) {
-                      setState(() {
-                        cart = newCart;
-                      });
-                    }
-                  },
-                  child: const Text(
-                    "Place Order",
-                    style: TextStyle(
-                      color: Colors.black,
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(
+                        0.03333 * width, 0, 0.02778 * width, 0),
+                    child: const Icon(
+                      Icons.shopping_cart,
+                      color: Colors.white,
                     ),
+                  ),
+                  Text(
+                    "${totalItems()} Items Added",
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 5, 0.038889 * width, 5),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.currency_rupee,
+                            size: 14,
+                          ),
+                          Text(
+                            "${cart.amount}",
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                      const Text(
+                        "Total Amount",
+                        style: TextStyle(fontSize: 14, color: Colors.grey),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, 0.08333333333 * width, 0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Total Amount",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.currency_rupee,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          cart.amount.toString(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              )
             ],
           ),
         ),
@@ -192,11 +206,11 @@ class _OutletMenuState extends State<OutletMenu> {
               } else if (state is RefreshedOutletData) {
                 setState(() {
                   menuItemsStream.add(state.menuList);
-                  productsListStream.add(state.productList);
+                  // productsListStream.add(state.productList);
                   selectedOutletStream.add(state.outletName);
                   refreshedMenuItems = state.menuList;
-                  incompleteOrders = state.incompleteOrders;
-                  cart = state.cart;
+                  // incompleteOrders = state.incompleteOrders;
+                  // cart = state.cart;
                 });
               } else if (state is SearchResultState) {
                 setState(() {
@@ -205,15 +219,23 @@ class _OutletMenuState extends State<OutletMenu> {
               } else if (state is AmountUpdatedState) {
                 setState(() {
                   cart.amount = state.amount;
-                  log("checececc");
+                  // log("checececc");
                 });
               } else if (state is ShowSnackbar) {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(state.message)));
               } else if (state is UpdatedCartState) {
-                log("outlet set state");
+                // log("outlet set state");
                 setState(() {
-                  log("cart state update");
+                  // log("cart state update");
+                  cart = state.cart;
+                });
+              } else if (state is IncompleteOrdersState) {
+                setState(() {
+                  incompleteOrders = state.list;
+                });
+              } else if (state is CartState) {
+                setState(() {
                   cart = state.cart;
                 });
               }
@@ -223,7 +245,7 @@ class _OutletMenuState extends State<OutletMenu> {
               builder: (context, AsyncSnapshot<String> snapshot) {
                 if (!snapshot.hasData || snapshot.data! == "Outlet") {
                   return const Center(
-                    child: CircularProgressIndicator(),
+                    child: CustomLoadingAnimation(),
                   );
                 } else {
                   return StreamBuilder(
@@ -232,414 +254,409 @@ class _OutletMenuState extends State<OutletMenu> {
                         AsyncSnapshot<List<Categories>> categoryList) {
                       if (!categoryList.hasData) {
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: CustomLoadingAnimation(),
                         );
                       } else {
-                        return StreamBuilder(
-                            stream: productsListStream.stream,
-                            builder: (context,
-                                AsyncSnapshot<List<Product>> productList) {
-                              if (!productList.hasData) {
-                                return const CircularProgressIndicator();
-                              } else {
-                                return Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 19),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              Navigator.pushNamed(
-                                                context,
-                                                "/outletList",
-                                              );
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  snapshot.data!.toString(),
-                                                  style: const TextStyle(
-                                                      fontSize: 15),
-                                                ),
-                                                const Icon(Icons.expand_more)
-                                              ],
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              Navigator.pushNamed(
-                                                  context, "/profile");
-                                            },
-                                            child: const Icon(Icons.person),
-                                          )
-                                        ],
-                                      ),
+                        return Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 19),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        "/outletList",
+                                      );
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          snapshot.data!.toString(),
+                                          style: const TextStyle(fontSize: 15),
+                                        ),
+                                        const Icon(Icons.expand_more)
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                        0.033333 * width,
-                                        0,
-                                        0.033333 * width,
-                                        0,
-                                      ),
-                                      child: (isSearchActive)
-                                          ? Row(
-                                              children: [
-                                                InkWell(
-                                                    onTap: () {
-                                                      setState(() {
-                                                        selectedCategory =
-                                                            "All";
-                                                        menuItemsStream.add(
-                                                            refreshedMenuItems);
-                                                        isSearchActive = false;
-                                                      });
-                                                    },
-                                                    child: const Icon(Icons
-                                                        .arrow_back_ios_new)),
-                                                SizedBox(
-                                                  width: 0.80278 * width,
-                                                  height: 0.045 * height,
-                                                  child: TextField(
-                                                    textAlign: TextAlign.start,
-                                                    controller:
-                                                        searchController,
-                                                    decoration: InputDecoration(
-                                                        fillColor: Colors.white,
-                                                        border: OutlineInputBorder(
-                                                            borderSide:
-                                                                const BorderSide(
-                                                                    color: Color(
-                                                                        0xFFEAE3E3)),
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15)),
-                                                        suffixIcon: const Icon(
-                                                            Icons.search)),
-                                                    onChanged: (s) {
-                                                      final list = _searchResult(
-                                                          s,
-                                                          refreshedMenuItems);
-                                                      if (list.isNotEmpty) {
-                                                        selectedCategory =
-                                                            list[0].category;
-                                                      }
-                                                      menuItemsStream.add(list);
-                                                    },
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, "/profile");
+                                    },
+                                    child: const Icon(Icons.person),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                0.033333 * width,
+                                0,
+                                0.033333 * width,
+                                0,
+                              ),
+                              child: (isSearchActive)
+                                  ? Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedCategory = "All";
+                                              menuItemsStream
+                                                  .add(refreshedMenuItems);
+                                              isSearchActive = false;
+                                            });
+                                          },
+                                          child: const Icon(
+                                              Icons.arrow_back_ios_new),
+                                        ),
+                                        SizedBox(
+                                          width: 0.80278 * width,
+                                          height: 0.045 * height,
+                                          child: TextField(
+                                            textAlign: TextAlign.start,
+                                            controller: searchController,
+                                            decoration: InputDecoration(
+                                                fillColor: Colors.white,
+                                                border: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0xFFEAE3E3),
                                                   ),
-                                                )
-                                              ],
-                                            )
-                                          : Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Card(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(7),
-                                                      ),
-                                                      child: SizedBox(
-                                                        width: 0.175 * width,
-                                                        height: 0.03 * height,
-                                                        child: const Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            VegetarianSymbol(
-                                                              color:
-                                                                  Colors.green,
-                                                            ),
-                                                            Text("Veg")
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Card(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(7),
-                                                      ),
-                                                      child: SizedBox(
-                                                        width: 0.24444 * width,
-                                                        height: 0.03 * height,
-                                                        child: const Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            VegetarianSymbol(
-                                                                color:
-                                                                    Colors.red),
-                                                            Text("Non-Veg"),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
                                                 ),
-                                                IconButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      isSearchActive = true;
-                                                    });
-                                                  },
-                                                  icon:
-                                                      const Icon(Icons.search),
-                                                )
-                                              ],
-                                            ),
-                                    ),
-                                    Expanded(
-                                      child: SingleChildScrollView(
-                                        physics: const ClampingScrollPhysics(),
-                                        child: Column(
+                                                suffixIcon:
+                                                    const Icon(Icons.search)),
+                                            onChanged: (s) {
+                                              final list = _searchResult(
+                                                  s, refreshedMenuItems);
+                                              if (list.isNotEmpty) {
+                                                selectedCategory =
+                                                    list[0].category;
+                                              }
+                                              menuItemsStream.add(list);
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
-                                            // if(isSearchActive)
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                0.03333 * width,
-                                                0.01625 * height,
-                                                0,
-                                                0,
+                                            Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(7),
                                               ),
                                               child: SizedBox(
-                                                width: width,
-                                                height: 0.13 * height,
-                                                child: ListView.builder(
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  itemCount:
-                                                      categoryList.data!.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          selectedCategory =
-                                                              categoryList
-                                                                  .data![index]
-                                                                  .category;
-                                                        });
-                                                      },
-                                                      child: Card(
-                                                        color: (selectedCategory ==
-                                                                categoryList
-                                                                    .data![
-                                                                        index]
-                                                                    .category)
-                                                            ? const Color(
-                                                                0xFFA3C2B3)
-                                                            : Colors.white,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        child: SizedBox(
-                                                          height:
-                                                              double.infinity,
-                                                          child: Column(
-                                                            children: [
-                                                              Padding(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                  horizontal:
-                                                                      0.09166666667 *
-                                                                          width,
-                                                                  vertical:
-                                                                      0.02125 *
-                                                                          height,
-                                                                ),
-                                                                child:
-                                                                    Image.asset(
-                                                                  "assets/images/Fast food.png",
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                categoryList
-                                                                    .data![
-                                                                        index]
-                                                                    .category,
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: (selectedCategory ==
-                                                                          categoryList
-                                                                              .data![
-                                                                                  index]
-                                                                              .category)
-                                                                      ? Colors
-                                                                          .white
-                                                                      : Colors
-                                                                          .black,
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
+                                                width: 0.175 * width,
+                                                height: 0.03 * height,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          8.0, 0, 0, 0),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/images/vegetarian48.png",
                                                       ),
-                                                    );
-                                                  },
+                                                      // VegetarianSymbol(
+                                                      //   color: Colors.green,
+                                                      // ),
+                                                      const Text("Veg")
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                            if (!isSearchActive)
-                                              Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                  0.03056 * width,
-                                                  0.041667 * height,
-                                                  0,
-                                                  0,
-                                                ),
-                                                child: const Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      "Recommended",
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 20,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
+                                            Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(7),
                                               ),
-
-                                            if (!isSearchActive)
-                                              Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                  0.02125 * height,
-                                                  0.02778 * width,
-                                                  0,
-                                                  0,
+                                              child: SizedBox(
+                                                width: 0.24444 * width,
+                                                height: 0.03 * height,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          8.0, 0, 0, 0),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      // VegetarianSymbol(
+                                                      //     color: Colors.red),
+                                                      Image.asset(
+                                                          "assets/images/nonvegetarian48.png"),
+                                                      const Text("Non-Veg"),
+                                                    ],
+                                                  ),
                                                 ),
-                                                child: SizedBox(
-                                                    width: width,
-                                                    height: 0.3025 * height,
-                                                    child: ListView.builder(
-                                                      scrollDirection:
-                                                          Axis.horizontal,
-                                                      itemCount: productList
-                                                          .data!.length,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return SizedBox(
-                                                          width: 0.4944 * width,
-                                                          height:
-                                                              0.2625 * height,
-                                                          child:
-                                                              RecommendedItemIcon(
-                                                            width: width,
-                                                            height: height,
-                                                            product: productList
-                                                                .data![index],
-                                                            bloc: bloc,
-                                                            cart: cart,
-                                                            productList:
-                                                                productList
-                                                                    .data!,
-                                                            updateParentState:
-                                                                () {
-                                                              setState(() {});
-                                                            },
-                                                            amount: cart.amount,
-                                                          ),
-                                                        );
-                                                      },
-                                                    )),
-                                              ),
-                                            if (selectedCategory == "All")
-                                              Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    0.052778 * width,
-                                                    0.02 * height,
-                                                    0,
-                                                    0),
-                                                child: const Row(
-                                                  children: [
-                                                    Text(
-                                                      "All",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 24),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0.05278 * width,
-                                                  0.01125 * height,
-                                                  0,
-                                                  0),
-                                              child: CategoryMenu(
-                                                width: width,
-                                                height: height,
-                                                list: (selectedCategory ==
-                                                        "All")
-                                                    ? categoryList.data!
-                                                    : categoryList.data!
-                                                        .where((element) =>
-                                                            element.category ==
-                                                            selectedCategory)
-                                                        .toList(),
-                                                bloc: bloc,
-                                                cart: cart,
-                                                productList: productList.data!,
-                                                updateParentState: () {
-                                                  setState(() {});
-                                                },
-                                                amount: cart.amount,
                                               ),
                                             ),
                                           ],
                                         ),
-                                      ),
+                                        IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              isSearchActive = true;
+                                            });
+                                          },
+                                          icon: const Icon(Icons.search),
+                                        )
+                                      ],
                                     ),
-                                    SizedBox(
-                                      width: 0.8888888889 * width,
-                                      height: 0.08625 * height,
-                                      child: CarouselSlider(
-                                        items: stackList,
-                                        options: CarouselOptions(
-                                          height: 0.2665625 * height,
-                                          viewportFraction: 1,
-                                          enlargeCenterPage: true,
-                                          autoPlay: false,
-                                          autoPlayInterval:
-                                              const Duration(seconds: 2),
-                                          enableInfiniteScroll: false,
-                                          reverse: false,
+                            ),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                physics: const ClampingScrollPhysics(),
+                                child: Column(
+                                  children: [
+                                    // if(isSearchActive)
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                        0.03333 * width,
+                                        0.01625 * height,
+                                        0,
+                                        0,
+                                      ),
+                                      child: SizedBox(
+                                        width: width,
+                                        height: 0.13 * height,
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: categoryList.data!.length,
+                                          itemBuilder: (context, index) {
+                                            return InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  selectedCategory =
+                                                      categoryList.data![index]
+                                                          .category;
+                                                });
+                                              },
+                                              child: Card(
+                                                color: (selectedCategory ==
+                                                        categoryList
+                                                            .data![index]
+                                                            .category)
+                                                    ? const Color(0xFFA3C2B3)
+                                                    : Colors.white,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: SizedBox(
+                                                  height: double.infinity,
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                          horizontal:
+                                                              0.09166666667 *
+                                                                  width,
+                                                          vertical:
+                                                              0.02125 * height,
+                                                        ),
+                                                        child: (categoryList
+                                                                .data![index]
+                                                                .iconUrl
+                                                                .isEmpty)
+                                                            ? Image.asset(
+                                                                "assets/images/Fast food.png",
+                                                              )
+                                                            : Image.network(
+                                                                categoryList
+                                                                    .data![
+                                                                        index]
+                                                                    .iconUrl,
+                                                                width: 35,
+                                                                height: 35,
+                                                              ),
+                                                      ),
+                                                      Text(
+                                                        categoryList
+                                                            .data![index]
+                                                            .category,
+                                                        style: TextStyle(
+                                                          color: (selectedCategory ==
+                                                                  categoryList
+                                                                      .data![
+                                                                          index]
+                                                                      .category)
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         ),
                                       ),
-                                    )
+                                    ),
+                                    // if (!isSearchActive)
+                                    //   Padding(
+                                    //     padding: EdgeInsets.fromLTRB(
+                                    //       0.03056 * width,
+                                    //       0.041667 * height,
+                                    //       0,
+                                    //       0,
+                                    //     ),
+                                    //     child: const Row(
+                                    //       mainAxisAlignment:
+                                    //       MainAxisAlignment.start,
+                                    //       children: [
+                                    //         Text(
+                                    //           "Recommended",
+                                    //           style: TextStyle(
+                                    //             fontWeight:
+                                    //             FontWeight.bold,
+                                    //             fontSize: 20,
+                                    //           ),
+                                    //         ),
+                                    //       ],
+                                    //     ),
+                                    //   ),
+
+                                    // if (!isSearchActive)
+                                    //   Padding(
+                                    //     padding: EdgeInsets.fromLTRB(
+                                    //       0.02125 * height,
+                                    //       0.02778 * width,
+                                    //       0,
+                                    //       0,
+                                    //     ),
+                                    //     child: SizedBox(
+                                    //         width: width,
+                                    //         height: 0.3025 * height,
+                                    //         child: ListView.builder(
+                                    //           scrollDirection:
+                                    //           Axis.horizontal,
+                                    //           itemCount: productList
+                                    //               .data!.length,
+                                    //           itemBuilder:
+                                    //               (context, index) {
+                                    //             return SizedBox(
+                                    //               width: 0.4944 * width,
+                                    //               height:
+                                    //               0.2625 * height,
+                                    //               child:
+                                    //               RecommendedItemIcon(
+                                    //                 width: width,
+                                    //                 height: height,
+                                    //                 product: productList
+                                    //                     .data![index],
+                                    //                 bloc: bloc,
+                                    //                 cart: cart,
+                                    //                 productList:
+                                    //                 productList
+                                    //                     .data!,
+                                    //                 updateParentState:
+                                    //                     () {
+                                    //                   setState(() {});
+                                    //                 },
+                                    //                 amount: cart.amount,
+                                    //               ),
+                                    //             );
+                                    //           },
+                                    //         )),
+                                    //   ),
+                                    if (selectedCategory == "All")
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            0.052778 * width,
+                                            0.02 * height,
+                                            0,
+                                            0),
+                                        child: const Row(
+                                          children: [
+                                            Text(
+                                              "All",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 24),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          0.05278 * width,
+                                          0.01125 * height,
+                                          0,
+                                          0),
+                                      child: CategoryMenu(
+                                        width: width,
+                                        height: height,
+                                        list: (selectedCategory == "All")
+                                            ? categoryList.data!
+                                            : categoryList.data!
+                                                .where((element) =>
+                                                    element.category ==
+                                                    selectedCategory)
+                                                .toList(),
+                                        bloc: bloc,
+                                        cart: cart,
+                                        // productList: productList.data!,
+                                        updateParentState: () {
+                                          setState(() {});
+                                        },
+                                        amount: cart.amount,
+                                      ),
+                                    ),
                                   ],
-                                );
-                              }
-                            });
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 0.8888888889 * width,
+                              height: 0.08625 * height,
+                              child: CarouselSlider(
+                                items: stackList,
+                                options: CarouselOptions(
+                                  height: 0.2665625 * height,
+                                  viewportFraction: 1,
+                                  enlargeCenterPage: true,
+                                  autoPlay: false,
+                                  autoPlayInterval: const Duration(seconds: 2),
+                                  enableInfiniteScroll: false,
+                                  reverse: false,
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                        // return StreamBuilder(
+                        //     stream: productsListStream.stream,
+                        //     builder: (context,
+                        //         AsyncSnapshot<List<Product>> productList) {
+                        //       if (!productList.hasData) {
+                        //         return const CircularProgressIndicator();
+                        //       } else {
+                        //
+                        //       }
+                        //     });
                       }
                     },
                   );
@@ -664,7 +681,8 @@ class _OutletMenuState extends State<OutletMenu> {
           i.products
               .where((element) =>
                   element.name.toLowerCase().contains(query.toLowerCase()))
-              .toList());
+              .toList(),
+          i.iconUrl);
       if (temp.products.isNotEmpty) {
         list.add(temp);
       }
@@ -681,7 +699,7 @@ class CategoryMenu extends StatefulWidget {
       required this.list,
       required this.bloc,
       required this.cart,
-      required this.productList,
+      // required this.productList,
       required this.updateParentState,
       required this.amount});
 
@@ -690,7 +708,8 @@ class CategoryMenu extends StatefulWidget {
   final List<Categories> list;
   final OutletMenuBloc bloc;
   final Cart cart;
-  final List<Product> productList;
+
+  // final List<Product> productList;
   final void Function() updateParentState;
   final int amount;
 
@@ -707,6 +726,26 @@ class _CategoryMenuState extends State<CategoryMenu> {
     return count.toString();
   }
 
+  int grandTotalCounter(){
+    int grandTotal = 0;
+    for(var i in widget.list){
+      for(var j in i.products){
+        for(var k in j.variantList){
+          if(widget.cart.items[j.id]!=null && widget.cart.items[j.id]![k.variantName]!= null){
+            grandTotal += k.price * widget.cart.items[j.id]![k.variantName]!.quantity;
+          }
+          log("${j.name} ${k.variantName}");
+        }
+        if(widget.cart.items[j.id]!=null && widget.cart.items[j.id]!["default"]!= null){
+          grandTotal += j.price * widget.cart.items[j.id]!["default"]!.quantity;
+        }
+      }
+    }
+
+    log("grand total $grandTotal");
+    return grandTotal;
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [];
@@ -718,7 +757,8 @@ class _CategoryMenuState extends State<CategoryMenu> {
             children: [
               Text(
                 i.category,
-                style: const TextStyle(fontSize: 15),
+                style:
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -731,7 +771,8 @@ class _CategoryMenuState extends State<CategoryMenu> {
             height: 0.1575 * widget.height,
             child: Card(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: SizedBox(
@@ -774,7 +815,9 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                   child: Card(
                                     shape: RoundedRectangleBorder(
                                       side: const BorderSide(
-                                          color: Color(0xFF004932), width: 1),
+                                        color: Color(0xFF004932),
+                                        width: 1,
+                                      ),
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: ClipRRect(
@@ -793,93 +836,65 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                   padding: EdgeInsets.zero),
                                               onPressed: () {
                                                 setState(() {
-                                                  if (j
-                                                      .variantList.isNotEmpty) {
+                                                  if (j.variantList.isNotEmpty) {
                                                     showBottomSheet(
                                                         context: context,
-                                                        backgroundColor:
-                                                            const Color(
-                                                                0xFFA3C2B3),
+                                                        backgroundColor: const Color(0xFFA3C2B3),
                                                         shape:
                                                             RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
-                                                        ),
+                                                              borderRadius: BorderRadius.circular(20),
+                                                            ),
                                                         builder: (context) {
-                                                          final List<Widget>
-                                                              list = [];
+                                                          final List<Widget>list = [];
                                                           list.add(ListTile(
                                                             title: Title(
                                                                 color: Colors
                                                                     .black,
                                                                 child: const Text(
-                                                                    "Select Items to Remove")),
+                                                                    "Select Items to Remove"),
+                                                            ),
                                                           ));
-                                                          for (var variant in j
-                                                              .variantList) {
+                                                          for (var variant in j.variantList) {
                                                             list.add(ListTile(
-                                                              title: Text(variant
-                                                                  .variantName),
-                                                              trailing: Text(
-                                                                  variant.price
-                                                                      .toString()),
+                                                              title: Text(variant.variantName),
+                                                              trailing: Text(variant.price.toString()),
                                                               onTap: () {
-                                                                if (widget.cart.items[
-                                                                            j
-                                                                                .id] !=
-                                                                        null &&
-                                                                    widget.cart.items[
-                                                                            j
-                                                                                .id]![variant
-                                                                            .variantName] !=
-                                                                        null &&
-                                                                    widget
-                                                                            .cart
-                                                                            .items[j.id]![variant.variantName]!
-                                                                            .quantity >
-                                                                        0) {
-                                                                  widget
-                                                                      .cart
-                                                                      .items[
-                                                                          j.id]![
-                                                                          variant
-                                                                              .variantName]!
-                                                                      .quantity--;
+                                                                if (widget.cart.items[j.id] != null &&
+                                                                    widget.cart.items[j.id]![variant.variantName] != null &&
+                                                                    widget.cart.items[j.id]![variant.variantName]!.quantity > 0) {
+                                                                  widget.cart.items[j.id]![variant.variantName]!.quantity--;
                                                                 }
-                                                                int grandTotal = 0;
-                                                                for (var i in widget.productList) {
-                                                                  if (widget.cart.items[i.id] != null) {
-                                                                    for (var j in widget.cart.items[i.id]!.entries) {
-                                                                      int price = 0;
-                                                                      if(j.value.variantName=="default"){
-                                                                        price = i.price;
-                                                                      }else{
-                                                                        for (var itr in i.variantList) {
-                                                                          if (itr.variantName == j.value.variantName) {
-                                                                            price = itr.price;
-                                                                            break;
-                                                                          }
-                                                                        }
-                                                                      }
-                                                                      grandTotal += price * j.value.quantity;
-                                                                    }
-                                                                  }
-                                                                }
-                                                                widget.cart.amount = grandTotal;
-                                                                widget.bloc.add(
-                                                                  UpdateCartEvent(
-                                                                      j,
-                                                                      widget
-                                                                          .cart,
-                                                                      widget
-                                                                          .productList,
-                                                                      ),
-                                                                );
-                                                                widget
-                                                                    .updateParentState();
-                                                                Navigator.pop(
-                                                                    context);
+                                                                // int grandTotal = 0;
+                                                                // for(var i in widget.list){
+                                                                //   for(var j in i.products){
+                                                                //     if(widget.cart.items[j.id]!=null){
+                                                                //       for(var k in widget.cart.items[j.id]!.entries){
+                                                                //         int price = 0;
+                                                                //         if(k.value.variantName=="default"){
+                                                                //           price = j.price;
+                                                                //         }else{
+                                                                //           for(var itr in j.variantList){
+                                                                //             if(itr.variantName==k.value.variantName){
+                                                                //               price = itr.price;
+                                                                //               break;
+                                                                //             }
+                                                                //           }
+                                                                //         }
+                                                                //         grandTotal += price* k.value.quantity;
+                                                                //       }
+                                                                //     }
+                                                                //   }
+                                                                // }
+                                                                widget.cart.amount = grandTotalCounter();
+                                                                // widget.bloc.add(
+                                                                //   UpdateCartEvent(
+                                                                //     j,
+                                                                //     widget.cart,
+                                                                //     widget.productList,
+                                                                //   ),
+                                                                // );
+                                                                widget.updateParentState();
+                                                                Navigator.pop(context);
                                                               },
                                                             ));
                                                           }
@@ -887,53 +902,40 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                             children: list,
                                                           );
                                                         });
-                                                  } else {
-                                                    if (widget.cart
-                                                                .items[j.id] !=
-                                                            null &&
-                                                        widget.cart.items[
-                                                                    j.id]![
-                                                                "default"] !=
-                                                            null &&
-                                                        widget
-                                                                .cart
-                                                                .items[j.id]![
-                                                                    "default"]!
-                                                                .quantity >
-                                                            0) {
-                                                      widget
-                                                          .cart
-                                                          .items[j.id]![
-                                                              "default"]!
-                                                          .quantity--;
+                                                  }
+                                                  else {
+                                                    if (widget.cart.items[j.id] != null
+                                                        && widget.cart.items[j.id]!["default"] != null
+                                                        && widget.cart.items[j.id]!["default"]!.quantity > 0) {
+                                                      widget.cart.items[j.id]!["default"]!.quantity--;
                                                     }
-                                                    int grandTotal = 0;
-                                                    for (var i in widget.productList) {
-                                                      if (widget.cart.items[i.id] != null) {
-                                                        for (var j in widget.cart.items[i.id]!.entries) {
-                                                          int price = 0;
-                                                          if(j.value.variantName=="default"){
-                                                            price = i.price;
-                                                          }else{
-                                                            for (var itr in i.variantList) {
-                                                              if (itr.variantName == j.value.variantName) {
-                                                                price = itr.price;
-                                                                break;
-                                                              }
-                                                            }
-                                                          }
-                                                          grandTotal += price * j.value.quantity;
-                                                        }
-                                                      }
-                                                    }
-                                                    widget.cart.amount = grandTotal;
-                                                    widget.bloc.add(
-                                                      UpdateCartEvent(
-                                                          j,
-                                                          widget.cart,
-                                                          widget.productList,
-                                                      ),
-                                                    );
+                                                    // for (var i in widget.productList) {
+                                                    //   if (widget.cart.items[i.id] != null) {
+                                                    //     for (var j in widget.cart.items[i.id]!.entries) {
+                                                    //       int price = 0;
+                                                    //       if(j.value.variantName=="default"){
+                                                    //         price = i.price;
+                                                    //       }else{
+                                                    //         for (var itr in i.variantList) {
+                                                    //           if (itr.variantName == j.value.variantName) {
+                                                    //             price = itr.price;
+                                                    //             break;
+                                                    //           }
+                                                    //         }
+                                                    //       }
+                                                    //       grandTotal += price * j.value.quantity;
+                                                    //     }
+                                                    //   }
+                                                    // }
+                                                    widget.cart.amount =
+                                                        grandTotalCounter();
+                                                    // widget.bloc.add(
+                                                    //   UpdateCartEvent(
+                                                    //       j,
+                                                    //       widget.cart,
+                                                    //       widget.productList,
+                                                    //   ),
+                                                    // );
                                                     widget.updateParentState();
                                                   }
                                                 });
@@ -946,8 +948,7 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                           ),
                                           Text((widget.cart.items[j.id] == null)
                                               ? "0"
-                                              : itemCounter(
-                                                  widget.cart.items[j.id]!)),
+                                              : itemCounter(widget.cart.items[j.id]!)),
                                           SizedBox(
                                             width: 0.06777 * widget.width,
                                             height: 0.03125 * widget.height,
@@ -958,103 +959,64 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                   padding: EdgeInsets.zero),
                                               onPressed: () {
                                                 setState(() {
-                                                  if (j
-                                                      .variantList.isNotEmpty) {
+                                                  if (j.variantList.isNotEmpty) {
                                                     showBottomSheet(
                                                         context: context,
-                                                        backgroundColor:
-                                                            const Color(
-                                                                0xFFA3C2B3),
+                                                        backgroundColor: const Color(0xFFA3C2B3),
                                                         shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20)),
+                                                            borderRadius: BorderRadius.circular(20)),
                                                         builder: (context) {
-                                                          final List<Widget>
-                                                              list = [];
-                                                          for (var variant in j
-                                                              .variantList) {
+                                                          final List<Widget> list = [];
+                                                          for (var variant in j.variantList) {
                                                             list.add(ListTile(
-                                                              title: Text(variant
-                                                                  .variantName),
+                                                              title: Text(variant.variantName),
                                                               trailing: Text(
-                                                                  variant.price
-                                                                      .toString()),
+                                                                  variant.price.toString()),
                                                               onTap: () {
-                                                                if (widget.cart
-                                                                            .items[
-                                                                        j.id] !=
-                                                                    null) {
-                                                                  if (widget.cart
-                                                                              .items[
-                                                                          j
-                                                                              .id]![variant
-                                                                          .variantName] !=
-                                                                      null) {
-                                                                    widget
-                                                                        .cart
-                                                                        .items[
-                                                                            j.id]![
-                                                                            variant.variantName]!
-                                                                        .quantity++;
+                                                                if (widget.cart.items[j.id] != null) {
+                                                                  if (widget.cart.items[j.id]![variant.variantName] != null) {
+                                                                    widget.cart.items[j.id]![variant.variantName]!.quantity++;
                                                                   } else {
-                                                                    widget.cart.items[
-                                                                            j.id]![
-                                                                        variant
-                                                                            .variantName] = CartVariantData(
-                                                                        variant
-                                                                            .variantName,
-                                                                        1);
+                                                                    widget.cart.items[j.id]![variant.variantName] = CartVariantData(variant.variantName, 1);
                                                                   }
                                                                 } else {
-                                                                  final temp =
-                                                                      HashMap<
-                                                                          String,
-                                                                          CartVariantData>();
-                                                                  temp[variant
-                                                                          .variantName] =
-                                                                      CartVariantData(
-                                                                          variant
-                                                                              .variantName,
-                                                                          1);
-                                                                  widget.cart
-                                                                          .items[
-                                                                      j.id] = temp;
+                                                                  final temp = HashMap<String, CartVariantData>();
+                                                                  temp[variant.variantName] =
+                                                                      CartVariantData(variant.variantName, 1);
+                                                                  widget.cart.items[j.id] = temp;
                                                                 }
-                                                                int grandTotal = 0;
-                                                                for (var i in widget.productList) {
-                                                                  if (widget.cart.items[i.id] != null) {
-                                                                    for (var j in widget.cart.items[i.id]!.entries) {
-                                                                      int price = 0;
-                                                                      if(j.value.variantName=="default"){
-                                                                        price = i.price;
-                                                                      }else{
-                                                                        for (var itr in i.variantList) {
-                                                                          if (itr.variantName == j.value.variantName) {
-                                                                            price = itr.price;
-                                                                            break;
-                                                                          }
-                                                                        }
-                                                                      }
-                                                                      grandTotal += price * j.value.quantity;
-                                                                    }
-                                                                  }
-                                                                }
-                                                                widget.cart.amount = grandTotal;
-                                                                widget.bloc.add(
-                                                                  UpdateCartEvent(
-                                                                      j,
-                                                                      widget
-                                                                          .cart,
-                                                                      widget
-                                                                          .productList,
-                                                                  ),
-                                                                );
-                                                                widget
-                                                                    .updateParentState();
-                                                                Navigator.pop(
-                                                                    context);
+                                                                // int grandTotal = 0;
+                                                                // for (var i in widget.productList) {
+                                                                //   if (widget.cart.items[i.id] != null) {
+                                                                //     for (var j in widget.cart.items[i.id]!.entries) {
+                                                                //       int price = 0;
+                                                                //       if(j.value.variantName=="default"){
+                                                                //         price = i.price;
+                                                                //       }else{
+                                                                //         for (var itr in i.variantList) {
+                                                                //           if (itr.variantName == j.value.variantName) {
+                                                                //             price = itr.price;
+                                                                //             break;
+                                                                //           }
+                                                                //         }
+                                                                //       }
+                                                                //       grandTotal += price * j.value.quantity;
+                                                                //     }
+                                                                //   }
+                                                                // }
+                                                                widget.cart.amount =
+                                                                    grandTotalCounter();
+                                                                // widget.bloc.add(
+                                                                //   UpdateCartEvent(
+                                                                //       j,
+                                                                //       widget
+                                                                //           .cart,
+                                                                //       widget
+                                                                //           .productList,
+                                                                //   ),
+                                                                // );
+                                                                widget.updateParentState();
+                                                                Navigator.pop(context);
                                                               },
                                                             ));
                                                           }
@@ -1062,63 +1024,29 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                                             children: list,
                                                           );
                                                         });
-                                                  } else {
-                                                    if (widget
-                                                            .cart.items[j.id] !=
-                                                        null) {
-                                                      if (widget.cart
-                                                                  .items[j.id]![
-                                                              "default"] !=
-                                                          null) {
-                                                        widget
-                                                            .cart
-                                                            .items[j.id]![
-                                                                "default"]!
-                                                            .quantity++;
+                                                  }
+                                                  else {
+                                                    if (widget.cart.items[j.id] != null) {
+                                                      if (widget.cart.items[j.id]!["default"] != null) {
+                                                        widget.cart.items[j.id]!["default"]!.quantity++;
                                                       } else {
-                                                        widget.cart.items[
-                                                                    j.id]![
-                                                                "default"] =
-                                                            CartVariantData(
-                                                                "default", 1);
-                                                      }
-                                                    } else {
-                                                      final temp = HashMap<
-                                                          String,
-                                                          CartVariantData>();
-                                                      temp["default"] =
-                                                          CartVariantData(
-                                                              "default", 1);
-                                                      widget.cart.items[j.id] =
-                                                          temp;
-                                                    }
-                                                    int grandTotal = 0;
-                                                    for (var i in widget.productList) {
-                                                      if (widget.cart.items[i.id] != null) {
-                                                        for (var j in widget.cart.items[i.id]!.entries) {
-                                                          int price = 0;
-                                                          if(j.value.variantName=="default"){
-                                                            price = i.price;
-                                                          }else{
-                                                            for (var itr in i.variantList) {
-                                                              if (itr.variantName == j.value.variantName) {
-                                                                price = itr.price;
-                                                                break;
-                                                              }
-                                                            }
-                                                          }
-                                                          grandTotal += price * j.value.quantity;
-                                                        }
+                                                        widget.cart.items[j.id]!["default"] = CartVariantData("default", 1);
                                                       }
                                                     }
+                                                    else {
+                                                      final temp = HashMap<String, CartVariantData>();
+                                                      temp["default"] = CartVariantData("default", 1);
+                                                      widget.cart.items[j.id] = temp;
+                                                    }
+                                                    int grandTotal = grandTotalCounter();
                                                     widget.cart.amount = grandTotal;
-                                                    widget.bloc.add(
-                                                      UpdateCartEvent(
-                                                          j,
-                                                          widget.cart,
-                                                          widget.productList,
-                                                      ),
-                                                    );
+                                                    // widget.bloc.add(
+                                                    //   UpdateCartEvent(
+                                                    //       j,
+                                                    //       widget.cart,
+                                                    //       widget.productList,
+                                                    //   ),
+                                                    // );
                                                     widget.updateParentState();
                                                   }
                                                 });
@@ -1142,21 +1070,34 @@ class _CategoryMenuState extends State<CategoryMenu> {
                           padding: EdgeInsets.fromLTRB(
                               0.0611 * widget.width, 0, 0, 0),
                           child: SizedBox(
-                            width: 0.456 * widget.width,
+                            // width: 0.46 * widget.width,
                             height: 0.08625 * widget.height,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
-                                    VegetarianSymbol(
-                                        color:
-                                            j.veg ? Colors.green : Colors.red),
+                                    j.veg
+                                        ? SizedBox(
+                                            width: 0.0654 * widget.width,
+                                            child: Image.asset(
+                                                "assets/images/vegetarian48.png"),
+                                          )
+                                        : SizedBox(
+                                            width: 0.0654 * widget.width,
+                                            child: Image.asset(
+                                                "assets/images/nonvegetarian48.png"),
+                                          ),
+                                    // VegetarianSymbol(
+                                    //     color:
+                                    //         j.veg ? Colors.green : Colors.red),
                                     SizedBox(
                                       width: 0.38 * widget.width,
                                       child: Text(
                                         j.name,
                                         overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -1170,6 +1111,8 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                       child: Text(
                                         "₹${j.price}",
                                         overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
@@ -1183,6 +1126,8 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                       child: Text(
                                         j.description,
                                         overflow: TextOverflow.ellipsis,
+                                        style:
+                                            const TextStyle(color: Colors.grey),
                                       ),
                                     ),
                                   ],
@@ -1395,397 +1340,397 @@ class VegetarianSymbol extends StatelessWidget {
         Icon(
           Icons.crop_square_sharp,
           color: color,
-          size: 30,
+          size: 36 * 0.75,
         ),
         Icon(
           Icons.circle,
           color: color,
-          size: 10,
+          size: 14 * 0.75,
         ),
       ],
     );
   }
 }
 
-class RecommendedItemIcon extends StatefulWidget {
-  const RecommendedItemIcon(
-      {Key? key,
-      required this.width,
-      required this.height,
-      required this.product,
-      required this.cart,
-      required this.bloc,
-      required this.productList,
-      required this.updateParentState,
-      required this.amount})
-      : super(key: key);
-
-  final double width;
-  final double height;
-  final Product product;
-  final Cart cart;
-  final OutletMenuBloc bloc;
-  final List<Product> productList;
-  final void Function() updateParentState;
-  final int amount;
-
-  @override
-  State<RecommendedItemIcon> createState() => _RecommendedItemIconState();
-}
-
-class _RecommendedItemIconState extends State<RecommendedItemIcon> {
-  //todo add image and title parameter
-  String itemCounter(HashMap<String, CartVariantData> list) {
-    int count = 0;
-    list.forEach((key, value) {
-      count += value.quantity;
-    });
-    return count.toString();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: SizedBox(
-        width: 0.4944 * widget.width,
-        height: 0.2625 * widget.height,
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 0.03125 * widget.height, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const VegetarianSymbol(color: Colors.green),
-                  SizedBox(
-                    width: 0.4 * widget.width,
-                    child: Text(
-                      widget.product.name,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            const Text("₹ 40"),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 0.0125 * widget.height, 0, 0),
-              child: SizedBox(
-                width: 0.2861 * widget.width,
-                height: 0.1125 * widget.height,
-                child: Image.asset("assets/images/pasta.jpeg"),
-              ),
-            ),
-            Card(
-              shape: RoundedRectangleBorder(
-                  side: const BorderSide(color: Color(0xFF004932), width: 1),
-                  borderRadius: BorderRadius.circular(5)),
-              child: SizedBox(
-                width: 0.20556 * widget.width,
-                height: 0.03125 * widget.height,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 0.07778 * widget.width,
-                      height: double.infinity,
-                      child: ElevatedButton(
-                        style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xFFD6EAE1),
-                            minimumSize: Size.zero,
-                            padding: EdgeInsets.zero,
-                            elevation: 0),
-                        onPressed: () {
-                          setState(() {
-                            if (widget.product.variantList.isNotEmpty) {
-                              showBottomSheet(
-                                  context: context,
-                                  backgroundColor: const Color(0xFFA3C2B3),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  builder: (context) {
-                                    final List<Widget> list = [];
-                                    for (var variant
-                                        in widget.product.variantList) {
-                                      list.add(ListTile(
-                                        title: Text(variant.variantName),
-                                        trailing:
-                                            Text(variant.price.toString()),
-                                        onTap: () {
-                                          if (widget.cart.items[
-                                                      widget.product.id] !=
-                                                  null &&
-                                              widget.cart.items[
-                                                          widget.product.id]![
-                                                      variant.variantName] !=
-                                                  null &&
-                                              widget
-                                                      .cart
-                                                      .items[
-                                                          widget.product.id]![
-                                                          variant.variantName]!
-                                                      .quantity >
-                                                  0) {
-                                            widget
-                                                .cart
-                                                .items[widget.product.id]![
-                                                    variant.variantName]!
-                                                .quantity--;
-                                          }
-                                          int grandTotal = 0;
-                                          for (var i in widget.productList) {
-                                            if (widget.cart.items[i.id] != null) {
-                                              for (var j in widget.cart.items[i.id]!.entries) {
-                                                int price = 0;
-                                                if(j.value.variantName=="default"){
-                                                  price = i.price;
-                                                }else{
-                                                  for (var itr in i.variantList) {
-                                                    if (itr.variantName == j.value.variantName) {
-                                                      price = itr.price;
-                                                      break;
-                                                    }
-                                                  }
-                                                }
-                                                grandTotal += price * j.value.quantity;
-                                              }
-                                            }
-                                          }
-                                          widget.cart.amount = grandTotal;
-                                          widget.bloc.add(
-                                            UpdateCartEvent(
-                                                widget.product,
-                                                widget.cart,
-                                                widget.productList,
-                                            ),
-                                          );
-                                          widget.updateParentState();
-                                          Navigator.pop(context);
-                                        },
-                                      ));
-                                    }
-                                    return Wrap(
-                                      children: list,
-                                    );
-                                  });
-                            } else {
-                              if (widget.cart.items[widget.product.id] !=
-                                      null &&
-                                  widget.cart.items[widget.product.id]![
-                                          "default"] !=
-                                      null &&
-                                  widget
-                                          .cart
-                                          .items[widget.product.id]!["default"]!
-                                          .quantity >
-                                      0) {
-                                widget
-                                    .cart
-                                    .items[widget.product.id]!["default"]!
-                                    .quantity--;
-                              }
-                              int grandTotal = 0;
-                              for (var i in widget.productList) {
-                                if (widget.cart.items[i.id] != null) {
-                                  for (var j in widget.cart.items[i.id]!.entries) {
-                                    int price = 0;
-                                    if(j.value.variantName=="default"){
-                                      price = i.price;
-                                    }else{
-                                      for (var itr in i.variantList) {
-                                        if (itr.variantName == j.value.variantName) {
-                                          price = itr.price;
-                                          break;
-                                        }
-                                      }
-                                    }
-                                    grandTotal += price * j.value.quantity;
-                                  }
-                                }
-                              }
-                              widget.cart.amount = grandTotal;
-                              widget.bloc.add(
-                                UpdateCartEvent(widget.product, widget.cart,
-                                    widget.productList,
-                                ),
-                              );
-                              widget.updateParentState();
-                            }
-                          });
-                        },
-                        child: const Center(
-                          child: Icon(
-                            Icons.remove,
-                            size: 15,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Text(
-                      (widget.cart.items[widget.product.id] == null)
-                          ? "0"
-                          : itemCounter(widget.cart.items[widget.product.id]!),
-                    ),
-                    SizedBox(
-                      width: 0.07778 * widget.width,
-                      height: double.infinity,
-                      child: ElevatedButton(
-                        style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xFFD6EAE1),
-                            minimumSize: Size.zero,
-                            padding: EdgeInsets.zero,
-                            elevation: 0),
-                        onPressed: () {
-                          setState(() {
-                            if (widget.product.variantList.isNotEmpty) {
-                              showBottomSheet(
-                                  context: context,
-                                  backgroundColor: const Color(0xFFA3C2B3),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  builder: (context) {
-                                    final List<Widget> list = [];
-                                    for (var variant
-                                        in widget.product.variantList) {
-                                      list.add(ListTile(
-                                        title: Text(variant.variantName),
-                                        trailing:
-                                            Text(variant.price.toString()),
-                                        onTap: () {
-                                          if (widget.cart
-                                                  .items[widget.product.id] !=
-                                              null) {
-                                            if (widget.cart.items[
-                                                        widget.product.id]![
-                                                    variant.variantName] !=
-                                                null) {
-                                              widget
-                                                  .cart
-                                                  .items[widget.product.id]![
-                                                      variant.variantName]!
-                                                  .quantity++;
-                                            } else {
-                                              widget.cart.items[
-                                                          widget.product.id]![
-                                                      variant.variantName] =
-                                                  CartVariantData(
-                                                      variant.variantName, 1);
-                                            }
-                                          } else {
-                                            final temp = HashMap<String,
-                                                CartVariantData>();
-                                            temp[variant.variantName] =
-                                                CartVariantData(
-                                                    variant.variantName, 1);
-                                            widget.cart
-                                                    .items[widget.product.id] =
-                                                temp;
-                                          }
-                                          int grandTotal = 0;
-                                          for (var i in widget.productList) {
-                                            if (widget.cart.items[i.id] != null) {
-                                              for (var j in widget.cart.items[i.id]!.entries) {
-                                                int price = 0;
-                                                if(j.value.variantName=="default"){
-                                                  price = i.price;
-                                                }else{
-                                                  for (var itr in i.variantList) {
-                                                    if (itr.variantName == j.value.variantName) {
-                                                      price = itr.price;
-                                                      break;
-                                                    }
-                                                  }
-                                                }
-                                                grandTotal += price * j.value.quantity;
-                                              }
-                                            }
-                                          }
-                                          widget.cart.amount = grandTotal;
-                                          widget.bloc.add(
-                                            UpdateCartEvent(
-                                                widget.product,
-                                                widget.cart,
-                                                widget.productList,
-                                            ),
-                                          );
-                                          widget.updateParentState();
-                                          Navigator.pop(context);
-                                        },
-                                      ));
-                                    }
-                                    return Wrap(
-                                      children: list,
-                                    );
-                                  });
-                            } else {
-                              log("else check add");
-                              if (widget.cart.items[widget.product.id] !=
-                                  null) {
-                                if (widget.cart
-                                        .items[widget.product.id]!["default"] !=
-                                    null) {
-                                  widget
-                                      .cart
-                                      .items[widget.product.id]!["default"]!
-                                      .quantity++;
-                                } else {
-                                  widget.cart.items[widget.product.id]![
-                                          "default"] =
-                                      CartVariantData("default", 1);
-                                }
-                              } else {
-                                final temp = HashMap<String, CartVariantData>();
-                                temp["default"] = CartVariantData("default", 1);
-                                widget.cart.items[widget.product.id] = temp;
-                              }
-                              int grandTotal = 0;
-                              for (var i in widget.productList) {
-                                if (widget.cart.items[i.id] != null) {
-                                  for (var j in widget.cart.items[i.id]!.entries) {
-                                    int price = 0;
-                                    if(j.value.variantName=="default"){
-                                      price = i.price;
-                                    }else{
-                                      for (var itr in i.variantList) {
-                                        if (itr.variantName == j.value.variantName) {
-                                          price = itr.price;
-                                          break;
-                                        }
-                                      }
-                                    }
-                                    grandTotal += price * j.value.quantity;
-                                  }
-                                }
-                              }
-                              widget.cart.amount = grandTotal;
-                              widget.bloc.add(
-                                UpdateCartEvent(widget.product, widget.cart,
-                                    widget.productList),
-                              );
-                              widget.updateParentState();
-                            }
-                          });
-                        },
-                        child: const Icon(
-                          Icons.add,
-                          size: 15,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
+// class RecommendedItemIcon extends StatefulWidget {
+//   const RecommendedItemIcon(
+//       {Key? key,
+//       required this.width,
+//       required this.height,
+//       required this.product,
+//       required this.cart,
+//       required this.bloc,
+//       required this.productList,
+//       required this.updateParentState,
+//       required this.amount})
+//       : super(key: key);
+//
+//   final double width;
+//   final double height;
+//   final Product product;
+//   final Cart cart;
+//   final OutletMenuBloc bloc;
+//   final List<Product> productList;
+//   final void Function() updateParentState;
+//   final int amount;
+//
+//   @override
+//   State<RecommendedItemIcon> createState() => _RecommendedItemIconState();
+// }
+//
+// class _RecommendedItemIconState extends State<RecommendedItemIcon> {
+//   //todo add image and title parameter
+//   String itemCounter(HashMap<String, CartVariantData> list) {
+//     int count = 0;
+//     list.forEach((key, value) {
+//       count += value.quantity;
+//     });
+//     return count.toString();
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+//       child: SizedBox(
+//         width: 0.4944 * widget.width,
+//         height: 0.2625 * widget.height,
+//         child: Column(
+//           children: [
+//             Padding(
+//               padding: EdgeInsets.fromLTRB(0, 0.03125 * widget.height, 0, 0),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   const VegetarianSymbol(color: Colors.green),
+//                   SizedBox(
+//                     width: 0.4 * widget.width,
+//                     child: Text(
+//                       widget.product.name,
+//                       overflow: TextOverflow.ellipsis,
+//                       textAlign: TextAlign.center,
+//                     ),
+//                   )
+//                 ],
+//               ),
+//             ),
+//             const Text("₹ 40"),
+//             Padding(
+//               padding: EdgeInsets.fromLTRB(0, 0.0125 * widget.height, 0, 0),
+//               child: SizedBox(
+//                 width: 0.2861 * widget.width,
+//                 height: 0.1125 * widget.height,
+//                 child: Image.asset("assets/images/pasta.jpeg"),
+//               ),
+//             ),
+//             Card(
+//               shape: RoundedRectangleBorder(
+//                   side: const BorderSide(color: Color(0xFF004932), width: 1),
+//                   borderRadius: BorderRadius.circular(5)),
+//               child: SizedBox(
+//                 width: 0.20556 * widget.width,
+//                 height: 0.03125 * widget.height,
+//                 child: Row(
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     SizedBox(
+//                       width: 0.07778 * widget.width,
+//                       height: double.infinity,
+//                       child: ElevatedButton(
+//                         style: OutlinedButton.styleFrom(
+//                             backgroundColor: const Color(0xFFD6EAE1),
+//                             minimumSize: Size.zero,
+//                             padding: EdgeInsets.zero,
+//                             elevation: 0),
+//                         onPressed: () {
+//                           setState(() {
+//                             if (widget.product.variantList.isNotEmpty) {
+//                               showBottomSheet(
+//                                   context: context,
+//                                   backgroundColor: const Color(0xFFA3C2B3),
+//                                   shape: RoundedRectangleBorder(
+//                                       borderRadius: BorderRadius.circular(20)),
+//                                   builder: (context) {
+//                                     final List<Widget> list = [];
+//                                     for (var variant
+//                                         in widget.product.variantList) {
+//                                       list.add(ListTile(
+//                                         title: Text(variant.variantName),
+//                                         trailing:
+//                                             Text(variant.price.toString()),
+//                                         onTap: () {
+//                                           if (widget.cart.items[
+//                                                       widget.product.id] !=
+//                                                   null &&
+//                                               widget.cart.items[
+//                                                           widget.product.id]![
+//                                                       variant.variantName] !=
+//                                                   null &&
+//                                               widget
+//                                                       .cart
+//                                                       .items[
+//                                                           widget.product.id]![
+//                                                           variant.variantName]!
+//                                                       .quantity >
+//                                                   0) {
+//                                             widget
+//                                                 .cart
+//                                                 .items[widget.product.id]![
+//                                                     variant.variantName]!
+//                                                 .quantity--;
+//                                           }
+//                                           int grandTotal = 0;
+//                                           for (var i in widget.productList) {
+//                                             if (widget.cart.items[i.id] != null) {
+//                                               for (var j in widget.cart.items[i.id]!.entries) {
+//                                                 int price = 0;
+//                                                 if(j.value.variantName=="default"){
+//                                                   price = i.price;
+//                                                 }else{
+//                                                   for (var itr in i.variantList) {
+//                                                     if (itr.variantName == j.value.variantName) {
+//                                                       price = itr.price;
+//                                                       break;
+//                                                     }
+//                                                   }
+//                                                 }
+//                                                 grandTotal += price * j.value.quantity;
+//                                               }
+//                                             }
+//                                           }
+//                                           widget.cart.amount = grandTotal;
+//                                           widget.bloc.add(
+//                                             UpdateCartEvent(
+//                                                 widget.product,
+//                                                 widget.cart,
+//                                                 widget.productList,
+//                                             ),
+//                                           );
+//                                           widget.updateParentState();
+//                                           Navigator.pop(context);
+//                                         },
+//                                       ));
+//                                     }
+//                                     return Wrap(
+//                                       children: list,
+//                                     );
+//                                   });
+//                             } else {
+//                               if (widget.cart.items[widget.product.id] !=
+//                                       null &&
+//                                   widget.cart.items[widget.product.id]![
+//                                           "default"] !=
+//                                       null &&
+//                                   widget
+//                                           .cart
+//                                           .items[widget.product.id]!["default"]!
+//                                           .quantity >
+//                                       0) {
+//                                 widget
+//                                     .cart
+//                                     .items[widget.product.id]!["default"]!
+//                                     .quantity--;
+//                               }
+//                               int grandTotal = 0;
+//                               for (var i in widget.productList) {
+//                                 if (widget.cart.items[i.id] != null) {
+//                                   for (var j in widget.cart.items[i.id]!.entries) {
+//                                     int price = 0;
+//                                     if(j.value.variantName=="default"){
+//                                       price = i.price;
+//                                     }else{
+//                                       for (var itr in i.variantList) {
+//                                         if (itr.variantName == j.value.variantName) {
+//                                           price = itr.price;
+//                                           break;
+//                                         }
+//                                       }
+//                                     }
+//                                     grandTotal += price * j.value.quantity;
+//                                   }
+//                                 }
+//                               }
+//                               widget.cart.amount = grandTotal;
+//                               widget.bloc.add(
+//                                 UpdateCartEvent(widget.product, widget.cart,
+//                                     widget.productList,
+//                                 ),
+//                               );
+//                               widget.updateParentState();
+//                             }
+//                           });
+//                         },
+//                         child: const Center(
+//                           child: Icon(
+//                             Icons.remove,
+//                             size: 15,
+//                             color: Colors.black,
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                     Text(
+//                       (widget.cart.items[widget.product.id] == null)
+//                           ? "0"
+//                           : itemCounter(widget.cart.items[widget.product.id]!),
+//                     ),
+//                     SizedBox(
+//                       width: 0.07778 * widget.width,
+//                       height: double.infinity,
+//                       child: ElevatedButton(
+//                         style: OutlinedButton.styleFrom(
+//                             backgroundColor: const Color(0xFFD6EAE1),
+//                             minimumSize: Size.zero,
+//                             padding: EdgeInsets.zero,
+//                             elevation: 0),
+//                         onPressed: () {
+//                           setState(() {
+//                             if (widget.product.variantList.isNotEmpty) {
+//                               showBottomSheet(
+//                                   context: context,
+//                                   backgroundColor: const Color(0xFFA3C2B3),
+//                                   shape: RoundedRectangleBorder(
+//                                       borderRadius: BorderRadius.circular(20)),
+//                                   builder: (context) {
+//                                     final List<Widget> list = [];
+//                                     for (var variant
+//                                         in widget.product.variantList) {
+//                                       list.add(ListTile(
+//                                         title: Text(variant.variantName),
+//                                         trailing:
+//                                             Text(variant.price.toString()),
+//                                         onTap: () {
+//                                           if (widget.cart
+//                                                   .items[widget.product.id] !=
+//                                               null) {
+//                                             if (widget.cart.items[
+//                                                         widget.product.id]![
+//                                                     variant.variantName] !=
+//                                                 null) {
+//                                               widget
+//                                                   .cart
+//                                                   .items[widget.product.id]![
+//                                                       variant.variantName]!
+//                                                   .quantity++;
+//                                             } else {
+//                                               widget.cart.items[
+//                                                           widget.product.id]![
+//                                                       variant.variantName] =
+//                                                   CartVariantData(
+//                                                       variant.variantName, 1);
+//                                             }
+//                                           } else {
+//                                             final temp = HashMap<String,
+//                                                 CartVariantData>();
+//                                             temp[variant.variantName] =
+//                                                 CartVariantData(
+//                                                     variant.variantName, 1);
+//                                             widget.cart
+//                                                     .items[widget.product.id] =
+//                                                 temp;
+//                                           }
+//                                           int grandTotal = 0;
+//                                           for (var i in widget.productList) {
+//                                             if (widget.cart.items[i.id] != null) {
+//                                               for (var j in widget.cart.items[i.id]!.entries) {
+//                                                 int price = 0;
+//                                                 if(j.value.variantName=="default"){
+//                                                   price = i.price;
+//                                                 }else{
+//                                                   for (var itr in i.variantList) {
+//                                                     if (itr.variantName == j.value.variantName) {
+//                                                       price = itr.price;
+//                                                       break;
+//                                                     }
+//                                                   }
+//                                                 }
+//                                                 grandTotal += price * j.value.quantity;
+//                                               }
+//                                             }
+//                                           }
+//                                           widget.cart.amount = grandTotal;
+//                                           widget.bloc.add(
+//                                             UpdateCartEvent(
+//                                                 widget.product,
+//                                                 widget.cart,
+//                                                 widget.productList,
+//                                             ),
+//                                           );
+//                                           widget.updateParentState();
+//                                           Navigator.pop(context);
+//                                         },
+//                                       ));
+//                                     }
+//                                     return Wrap(
+//                                       children: list,
+//                                     );
+//                                   });
+//                             } else {
+//                               log("else check add");
+//                               if (widget.cart.items[widget.product.id] !=
+//                                   null) {
+//                                 if (widget.cart
+//                                         .items[widget.product.id]!["default"] !=
+//                                     null) {
+//                                   widget
+//                                       .cart
+//                                       .items[widget.product.id]!["default"]!
+//                                       .quantity++;
+//                                 } else {
+//                                   widget.cart.items[widget.product.id]![
+//                                           "default"] =
+//                                       CartVariantData("default", 1);
+//                                 }
+//                               } else {
+//                                 final temp = HashMap<String, CartVariantData>();
+//                                 temp["default"] = CartVariantData("default", 1);
+//                                 widget.cart.items[widget.product.id] = temp;
+//                               }
+//                               int grandTotal = 0;
+//                               for (var i in widget.productList) {
+//                                 if (widget.cart.items[i.id] != null) {
+//                                   for (var j in widget.cart.items[i.id]!.entries) {
+//                                     int price = 0;
+//                                     if(j.value.variantName=="default"){
+//                                       price = i.price;
+//                                     }else{
+//                                       for (var itr in i.variantList) {
+//                                         if (itr.variantName == j.value.variantName) {
+//                                           price = itr.price;
+//                                           break;
+//                                         }
+//                                       }
+//                                     }
+//                                     grandTotal += price * j.value.quantity;
+//                                   }
+//                                 }
+//                               }
+//                               widget.cart.amount = grandTotal;
+//                               widget.bloc.add(
+//                                 UpdateCartEvent(widget.product, widget.cart,
+//                                     widget.productList),
+//                               );
+//                               widget.updateParentState();
+//                             }
+//                           });
+//                         },
+//                         child: const Icon(
+//                           Icons.add,
+//                           size: 15,
+//                           color: Colors.black,
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 //StreamBuilder(
 //               stream: selectedOutletStream.stream,

@@ -16,15 +16,15 @@ class NavigateToOutletList extends OutletMenuState{
 
 class RefreshedOutletData extends OutletMenuState{
   final String outletName;
-  final List<Product> productList;
+  // final List<Product> productList;
   final List<Categories> menuList;
-  final Cart cart;
-  final List<OrderDataClass.OrderData> incompleteOrders;
+  // final Cart cart;
+  // final List<OrderDataClass.OrderData> incompleteOrders;
 
-  const RefreshedOutletData(this.outletName, this.productList, this.menuList, this.cart, this.incompleteOrders);
+  const RefreshedOutletData(this.outletName, this.menuList);
 
   @override
-  List<Object?> get props => [outletName, productList, menuList, cart];
+  List<Object?> get props => [outletName, menuList];
 
 }
 
@@ -73,4 +73,20 @@ class ShowSnackbar extends OutletMenuState{
   @override
   List<Object?> get props => [message];
 
+}
+
+class CartState extends OutletMenuState{
+  final Cart cart;
+  const CartState(this.cart);
+
+  @override
+  List<Object?> get props => [cart];
+}
+
+class IncompleteOrdersState extends OutletMenuState{
+  final List<OrderDataClass.OrderData> list;
+  const IncompleteOrdersState(this.list);
+
+  @override
+  List<Object?> get props => [list];
 }

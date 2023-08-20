@@ -4,7 +4,9 @@ import 'package:flavr/pages/order_details/OrderDetails.dart';
 import 'package:flavr/pages/profile_page/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../components/loading.dart';
 import 'OrderData.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -44,10 +46,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   list = state.list;
                 });
               }
+
             },
             child: (isLoading)
                 ? const Center(
-                    child: CircularProgressIndicator(),
+                    child: CustomLoadingAnimation(),
                   )
                 : Column(
                     children: [
@@ -122,10 +125,21 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             } else {
                               return const Center(
-                                child: CircularProgressIndicator(),
+                                child: CustomLoadingAnimation(),
                               );
                             }
-                          })
+                          }),
+                      ElevatedButton(
+                          onPressed: ()async{
+                            var service = const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
+                            await service.delete(key: "token");
+                            if(context.mounted){
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Logged Out!")));
+                              Navigator.of(context).popAndPushNamed("/signInWithGoogle");
+                            }
+                          },
+                          child: const Text("Log Out")
+                      )
                     ],
                   ),
           ),

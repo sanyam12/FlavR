@@ -42,7 +42,7 @@ class SignInWithGoogleBloc
               const secure = FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
               await secure.write(key: "token", value: json["token"].toString());
               logger.log(json["token"].toString());
-              emit(ShowSnackbar(json["message"]));
+              // emit(ShowSnackbar(json["message"]));
               emit(GoogleLoginSuccess());
               emit(SignInWithGoogleInitial());
             } else {
