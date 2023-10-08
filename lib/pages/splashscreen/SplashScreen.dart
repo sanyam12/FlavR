@@ -43,7 +43,9 @@ class _SplashScreenState extends State<SplashScreen> {
             }
           } catch (e) {
             if(context.mounted){
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Decoding failed")));
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Decoding failed")),
+              );
             }
           }
 
