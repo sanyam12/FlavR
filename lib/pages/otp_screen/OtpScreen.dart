@@ -25,7 +25,7 @@ class _OtpScreenState extends State<OtpScreen> {
   void setCountDown() {
     setState(() {
       if (seconds <= 0) {
-        timer!.cancel();
+        // timer!.cancel();
       } else {
         seconds--;
       }
@@ -33,6 +33,7 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   void sendOTP() async {
+
     setState(() {
       seconds = 120;
     });
@@ -42,7 +43,7 @@ class _OtpScreenState extends State<OtpScreen> {
         "Content-Type": "application/json",
       },
       body: jsonEncode(
-        {"key": widget.email, "role": 1},
+        {"key": widget.email, "role": 0},
       ),
     );
     if (response.statusCode == 201) {
@@ -69,6 +70,7 @@ class _OtpScreenState extends State<OtpScreen> {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setCountDown();
     });
+    sendOTP();
   }
 
   @override
@@ -146,13 +148,15 @@ class _OtpScreenState extends State<OtpScreen> {
                         onSubmit: (String verificationCode) async {
                           log("checking on submit");
                           int check = int.parse(verificationCode);
+                          log("check ${check}");
                           String body = jsonEncode(
                               {"key": widget.email, "otp": check, "role": 0});
 
                           final response = await http.post(
                               Uri.parse("https://flavr.tech/mail/verifyotp"),
                               body: body,
-                              headers: {"Content-Type": "application/json"});
+                              headers: {"Content-Type": "application/json"}
+                          );
                           final json = jsonDecode(response.body);
                           if (json["message"] ==
                               "OTP Verified, you can log in now.") {
@@ -223,7 +227,16 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        // var response = http.post(
+                        //   Uri.parse("https://flavr.tech/mail/verifyotp"),
+                        //   body: jsonEncode({
+                        //     "key": widget.email,
+                        //     "otp": 2650,
+                        //     "role": 1
+                        //   })
+                        // );
+                      },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff004932),
                           shape: RoundedRectangleBorder(
