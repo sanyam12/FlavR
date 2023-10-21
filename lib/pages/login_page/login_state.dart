@@ -26,3 +26,13 @@ class LoginFailed extends LoginState{
 
 
 }
+
+class ShowSnackbar extends LoginState{
+  final String message;
+  const ShowSnackbar(this.message);
+
+  @override
+  List<Object?> get props => [message];
+
+
+}

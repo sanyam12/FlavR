@@ -27,10 +27,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           const service = FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
           await service.write(key: "token", value: json["token"]);
           emit(const LoginSuccessful(true));
+        }else if(json["message"]=="Email is not verified, please complete verification"){
+          emit(ShowSnackbar(json["message"]));
         }else{
+          log(json["message"].toString());
           emit(LoginFailed(json["message"].toString()));
         }
-
       }
     });
   }

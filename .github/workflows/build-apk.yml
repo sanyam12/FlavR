@@ -1,0 +1,24 @@
+name: Build APK
+env:
+  FLUTTER_VERSION: "3.13.0"
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Flutter
+        uses: britannio/action-install-flutter@v1.1
+        with:
+          version: $FLUTTER_VERSION
+      - name: Get Packages
+        run: flutter pub get
+      - name: build apk
+        run: flutter build apk
+      - name: Save the APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release
+          path: outputs/app-release.apk
