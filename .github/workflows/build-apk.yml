@@ -20,4 +20,5 @@ jobs:
       - name: Save the APK
         run: |
           RELEASE_ID=$(curl -X POST -H "Authorization: token $GH_TOKEN" -d '{"tag_name": "v1.0.0", "target_commitish": "main", "name": "Release v1.0.0", "body": "Release Notes"}' "https://api.github.com/repos/${{ github.repository }}/releases" | jq -r '.id')
+          cd build/app/outputs/flutter-apk/
           curl -H "Authorization: token $GH_TOKEN" -H "Content-Type: application/apk" --data-binary @app-release.apk "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=app-release.apk"
