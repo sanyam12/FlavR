@@ -52,7 +52,7 @@ class _OutletMenuState extends State<OutletMenu> {
         ans += j.value.quantity;
       }
     }
-    log(ans.toString());
+    // log(ans.toString());
     return ans;
   }
 
@@ -110,6 +110,7 @@ class _OutletMenuState extends State<OutletMenu> {
           ),
         )
         .toList();
+    log(cart.amount.toString());
     stackList.insert(
       0,
       GestureDetector(
@@ -118,6 +119,7 @@ class _OutletMenuState extends State<OutletMenu> {
               await Navigator.of(context).push<Cart>(MaterialPageRoute(
             builder: (context) => CartPage(
               initialCart: cart,
+              list: refreshedMenuItems
             ),
           ));
           if (newCart != null) {
@@ -734,7 +736,7 @@ class _CategoryMenuState extends State<CategoryMenu> {
           if(widget.cart.items[j.id]!=null && widget.cart.items[j.id]![k.variantName]!= null){
             grandTotal += k.price * widget.cart.items[j.id]![k.variantName]!.quantity;
           }
-          log("${j.name} ${k.variantName}");
+          // log("${j.name} ${k.variantName}");
         }
         if(widget.cart.items[j.id]!=null && widget.cart.items[j.id]!["default"]!= null){
           grandTotal += j.price * widget.cart.items[j.id]!["default"]!.quantity;
@@ -742,7 +744,7 @@ class _CategoryMenuState extends State<CategoryMenu> {
       }
     }
 
-    log("grand total $grandTotal");
+    // log("grand total $grandTotal");
     return grandTotal;
   }
 

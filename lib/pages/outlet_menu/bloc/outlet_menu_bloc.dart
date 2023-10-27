@@ -106,7 +106,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
                     {
                       "product":productID,
                       "variant":variantName,
-                      "quantity":variant.quantity
+                      "quantity":variant.quantity,
                     }
                   );
                 }
@@ -155,7 +155,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
             }
             // logger.log(grandTotal.toString());
 
-            // event.cart.amount = grandTotal;
+            event.cart.amount = grandTotal;
             event.cart.outletId = outletId.toString();
 
             emit(AmountUpdatedState(grandTotal, Random().nextInt(10000)));

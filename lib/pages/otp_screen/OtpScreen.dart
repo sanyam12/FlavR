@@ -47,10 +47,11 @@ class _OtpScreenState extends State<OtpScreen> {
       ),
     );
     if (response.statusCode == 201) {
+      var json = jsonDecode(response.body);
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(response.body),
+            content: Text(json["message"]),
           ),
         );
       }

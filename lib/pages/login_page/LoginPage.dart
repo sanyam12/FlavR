@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'package:flavr/pages/otp_screen/OtpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,6 +62,16 @@ class _LoginPageState extends State<LoginPage> {
                 content: Text(state.message),
               ),
             );
+          } else if (state is VerificationPending) {
+            log("state check");
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return OtpScreen(email: mailController.text);
+                },
+              ),
+            );
           }
         },
         child: Scaffold(
@@ -115,10 +127,10 @@ class _LoginPageState extends State<LoginPage> {
                           Positioned(
                             top: 0.18 * height,
                             child: SizedBox(
-                                width: 0.26667*width,
+                                width: 0.26667 * width,
                                 // height: 0.03*height,
-                                child: Image.asset("assets/images/flavr-logo.png")
-                            ),
+                                child: Image.asset(
+                                    "assets/images/flavr-logo.png")),
                             // child: const Text(
                             //   "flavR",
                             //   style: TextStyle(

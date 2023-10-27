@@ -15,7 +15,8 @@ class GetCart extends CartEvent{
 class UpdateCartEvent extends CartEvent{
   final Product product;
   final Cart cart;
-  const UpdateCartEvent(this.product, this.cart);
+  final List<Categories> list;
+  const UpdateCartEvent(this.product, this.cart, this.list);
 
   @override
   List<Object?> get props => [product, cart];

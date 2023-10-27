@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flavr/pages/cart/Cart.dart';
 import 'package:flavr/pages/cart/bloc/cart_bloc.dart';
 import 'package:flavr/pages/ordernumber/OrderNumber.dart';
+import 'package:flavr/pages/outlet_menu/Categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
@@ -19,8 +20,10 @@ import 'CartVariantData.dart';
 
 class CartPage extends StatefulWidget {
   final Cart initialCart;
+  final List<Categories> list;
 
-  const CartPage({Key? key, required this.initialCart}) : super(key: key);
+  const CartPage({Key? key, required this.initialCart, required this.list})
+      : super(key: key);
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -81,49 +84,48 @@ class _CartPageState extends State<CartPage> {
     ];
     List<Widget> children = [];
     for (var i in list) {
-      if(cart.items[i.id]!=null &&
-          cart.items[i.id]!["default"]!=null &&
-          cart.items[i.id]!["default"]!.quantity>0
-      ){
+      if (cart.items[i.id] != null &&
+          cart.items[i.id]!["default"] != null &&
+          cart.items[i.id]!["default"]!.quantity > 0) {
         int price = 0;
         // log(i.price.toString());
-        children.add(
-          CartItems(
-              width: width,
-              height: height,
-              product: i,
-              cart: cart,
-              bloc: cartBloc,
-              variantName: "Default",
-              price: i.price,
-              updateParentState: (){
-                cartBloc.add(UpdateGrandTotal(cart, list));
-              })
-        );
+        children.add(CartItems(
+          width: width,
+          height: height,
+          product: i,
+          cart: cart,
+          bloc: cartBloc,
+          variantName: "Default",
+          price: i.price,
+          updateParentState: () {
+            cartBloc.add(UpdateGrandTotal(cart, list));
+          },
+          list: widget.list,
+        ));
       }
       for (var variant in i.variantList) {
         if (cart.items[i.id] != null &&
             cart.items[i.id]![variant.variantName] != null &&
             cart.items[i.id]![variant.variantName]!.quantity > 0) {
           int price = 0;
-          for(var itr in i.variantList){
-            if(itr.variantName==variant.variantName){
+          for (var itr in i.variantList) {
+            if (itr.variantName == variant.variantName) {
               price = itr.price;
             }
           }
           children.add(
             CartItems(
-              width: width,
-              height: height,
-              product: i,
-              cart: cart,
-              bloc: cartBloc,
-              variantName: variant.variantName,
-              price: price,
-              updateParentState: () {
-                cartBloc.add(UpdateGrandTotal(cart, list));
-              },
-            ),
+                width: width,
+                height: height,
+                product: i,
+                cart: cart,
+                bloc: cartBloc,
+                variantName: variant.variantName,
+                price: price,
+                updateParentState: () {
+                  cartBloc.add(UpdateGrandTotal(cart, list));
+                },
+                list: widget.list),
           );
         }
       }
@@ -315,14 +317,14 @@ class _CartPageState extends State<CartPage> {
                                         child: Container(
                                           alignment: Alignment.centerLeft,
                                           child: const Padding(
-                                            padding: EdgeInsets.fromLTRB(63,0,0,0),
+                                            padding: EdgeInsets.fromLTRB(
+                                                63, 0, 0, 0),
                                             child: Text(
                                               "Swipe to Pay",
                                               style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold
-                                              ),
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
                                               textAlign: TextAlign.center,
                                             ),
                                           ),
@@ -364,6 +366,7 @@ class CartItems extends StatefulWidget {
     required this.variantName,
     required this.price,
     required this.updateParentState,
+    required this.list,
   });
 
   final double width;
@@ -374,6 +377,7 @@ class CartItems extends StatefulWidget {
   final String variantName;
   final int price;
   final void Function() updateParentState;
+  final List<Categories> list;
 
   @override
   State<CartItems> createState() => _CartItemsState();
@@ -469,9 +473,10 @@ class _CartItemsState extends State<CartItems> {
                                                     title: Text(
                                                         variant.variantName),
                                                     trailing: Text(
-                                                        variant.price
-                                                        .toString(),
-                                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                                      variant.price.toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                     onTap: () {
                                                       if (widget.cart
@@ -502,9 +507,9 @@ class _CartItemsState extends State<CartItems> {
                                                       }
                                                       widget.bloc.add(
                                                         UpdateCartEvent(
-                                                          widget.product,
-                                                          widget.cart,
-                                                        ),
+                                                            widget.product,
+                                                            widget.cart,
+                                                            widget.list),
                                                       );
                                                       widget
                                                           .updateParentState();
@@ -539,6 +544,7 @@ class _CartItemsState extends State<CartItems> {
                                             UpdateCartEvent(
                                               widget.product,
                                               widget.cart,
+                                              widget.list,
                                             ),
                                           );
                                           widget.updateParentState();
@@ -583,9 +589,11 @@ class _CartItemsState extends State<CartItems> {
                                                   list.add(ListTile(
                                                     title: Text(
                                                         variant.variantName),
-                                                    trailing: Text(variant.price
-                                                        .toString(),
-                                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                                    trailing: Text(
+                                                      variant.price.toString(),
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                     onTap: () {
                                                       if (widget.cart.items[
@@ -632,6 +640,7 @@ class _CartItemsState extends State<CartItems> {
                                                         UpdateCartEvent(
                                                           widget.product,
                                                           widget.cart,
+                                                          widget.list,
                                                         ),
                                                       );
                                                       widget
@@ -674,6 +683,7 @@ class _CartItemsState extends State<CartItems> {
                                             UpdateCartEvent(
                                               widget.product,
                                               widget.cart,
+                                              widget.list,
                                             ),
                                           );
                                           widget.updateParentState();
@@ -728,11 +738,12 @@ class _CartItemsState extends State<CartItems> {
                         ),
                         Text(
                           widget.price.toString(),
-                          style: const TextStyle(fontSize: 12,
-                            fontWeight: FontWeight.bold
-                          ),
+                          style: const TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.bold),
                         ),
-                        Text((widget.variantName!="Default")?widget.variantName:""),
+                        Text((widget.variantName != "Default")
+                            ? widget.variantName
+                            : ""),
                       ],
                     ),
                     Text(

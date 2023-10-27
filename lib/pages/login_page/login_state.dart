@@ -19,20 +19,18 @@ class LoginSuccessful extends LoginState{
 
 class LoginFailed extends LoginState{
   final String message;
-  const LoginFailed(this.message);
+  final int seed;
+  const LoginFailed(this.message, this.seed);
 
   @override
-  List<Object?> get props => [message];
-
-
+  List<Object?> get props => [message, seed];
 }
 
-class ShowSnackbar extends LoginState{
-  final String message;
-  const ShowSnackbar(this.message);
+class VerificationPending extends LoginState {
+  final int seed;
+  const VerificationPending(this.seed);
 
   @override
-  List<Object?> get props => [message];
-
+  List<Object?> get props => [seed];
 
 }

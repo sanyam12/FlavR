@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'dart:developer' as logger;
+import 'package:flavr/pages/outlet_menu/Categories.dart';
 import 'package:flavr/pages/outlet_menu/Product.dart';
 import 'package:flavr/pages/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
@@ -93,6 +94,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                 }
               });
             });
+            event.cart.amount = grandTotalCounter(event.list, event.cart);
 
             const secureStorage = FlutterSecureStorage(
                 aOptions: AndroidOptions(encryptedSharedPreferences: true));
@@ -115,7 +117,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           } else {
             emit(const ShowSnackbar("Outlet Not Selected"));
           }
-        } on Exception catch (e) {}
+        } on Exception catch (e) {
+          emit(ShowSnackbar(e.toString()));
+        }
       }
       else if (event is UpdateGrandTotal) {
         int grandTotal = 0;
@@ -196,5 +200,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         }
       }
     });
+  }
+  int grandTotalCounter(List<Categories> list, Cart cart){
+    int grandTotal = 0;
+    for(var i in list){
+      for(var j in i.products){
+        for(var k in j.variantList){
+          if(cart.items[j.id]!=null && cart.items[j.id]![k.variantName]!= null){
+            grandTotal += k.price * cart.items[j.id]![k.variantName]!.quantity;
+          }
+          // log("${j.name} ${k.variantName}");
+        }
+        if(cart.items[j.id]!=null && cart.items[j.id]!["default"]!= null){
+          grandTotal += j.price * cart.items[j.id]!["default"]!.quantity;
+        }
+      }
+    }
+
+    logger.log("grand total $grandTotal");
+    return grandTotal;
   }
 }

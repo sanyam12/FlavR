@@ -30,3 +30,13 @@ class UpdateCartEvent extends OutletMenuEvent{
   @override
   List<Object?> get props => [product, cart, list];
 }
+
+// class RecalculateCartPrice extends OutletMenuEvent{
+//   final Cart cart;
+//   final List<Product> list;
+//   const RecalculateCartPrice(this.cart, this.list);
+//
+//   @override
+//   List<Object?> get props => [cart];
+//
+// }
