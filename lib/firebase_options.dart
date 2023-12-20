@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -48,6 +42,16 @@ class DefaultFirebaseOptions {
         );
     }
   }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDQyr0XLZApjDzwlK7KJBCZqz9kk4kKQMQ',
+    appId: '1:504489315010:web:e19818dc9f899b4559095b',
+    messagingSenderId: '504489315010',
+    projectId: 'flavr-c527b',
+    authDomain: 'flavr-c527b.firebaseapp.com',
+    storageBucket: 'flavr-c527b.appspot.com',
+    measurementId: 'G-2C4RTNEP50',
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDADWA3r8MvQ4WhfZyCt0vpHF6q0yWwCFY',
@@ -66,5 +70,16 @@ class DefaultFirebaseOptions {
     androidClientId: '504489315010-h6rh9b3405iliftjmp3l5fu6ipt25ma4.apps.googleusercontent.com',
     iosClientId: '504489315010-t87tv0fkdof28tjsq6e5csgeesunh33i.apps.googleusercontent.com',
     iosBundleId: 'com.example.flavr',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBgsrncoSXgLw0TycjhGO4zzhyl2Y2akKU',
+    appId: '1:504489315010:ios:74e17afa68bd6ba559095b',
+    messagingSenderId: '504489315010',
+    projectId: 'flavr-c527b',
+    storageBucket: 'flavr-c527b.appspot.com',
+    androidClientId: '504489315010-h6rh9b3405iliftjmp3l5fu6ipt25ma4.apps.googleusercontent.com',
+    iosClientId: '504489315010-2m51cb97ritbdne2pi8vlqtfbmp9hhv6.apps.googleusercontent.com',
+    iosBundleId: 'com.example.flavr.RunnerTests',
   );
 }

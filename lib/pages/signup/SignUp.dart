@@ -92,7 +92,8 @@ class _SignUpState extends State<SignUp> {
                           width: (0.655556 * width),
                           height: (0.19625 * height),
                         ),
-                      )),
+                      ),
+                  ),
                   Positioned(
                       top: 0.2675 * height,
                       left: -0.3333 * width,
@@ -231,7 +232,7 @@ class _SignUpState extends State<SignUp> {
                                         borderRadius:
                                             BorderRadius.circular(15))),
                                 onPressed: () {
-                                  log("on Pressed");
+                                  log("message signup button click check");
                                   _signupBlock.add(
                                     SignupButtonPressed(
                                       name: nameController.text,

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as logger;
 import 'dart:math';
+import 'package:flavr/pages/cart/bloc/cart_bloc.dart';
 import 'package:flavr/pages/signup/SignUp.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -17,35 +18,45 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<SignupEvent>(
       (event, emit) async {
         if (event is SignupButtonPressed) {
-          var body = {
-            "userName": event.name,
-            "email": event.email,
-            "password": event.password
-          };
-          var response = await http.post(
-            Uri.https(
-              "flavr.tech",
-              "/user/signup",
-            ),
-            body: body,
-          );
-          var json = jsonDecode(response.body);
-          logger.log(response.statusCode.toString());
-          if (response.statusCode == 201) {
-            _login(event.email, event.password);
-            emit(const SignupSuccessful(true));
-          }else if (response.statusCode == 409) {
-            logger.log(json["message"]);
-            if(json["message"]=="User already exits, try logging in.") {
-                emit(UserAlreadyExists(json["message"], Random().nextInt(10000)));
-            }else{
-              emit(VerificationPending(json["message"], Random().nextInt(10000)));
+          // try{
+            var body = {
+              "userName": event.name,
+              "email": event.email,
+              "password": event.password
+            };
+            var response = await http.post(
+              Uri.https(
+                "flavr.tech",
+                "/user/signup",
+              ),
+              body: body,
+            );
+            logger.log(body.toString());
+            logger.log("sfsdff ${response.body}");
+            var json = jsonDecode(response.body);
+            logger.log(response.statusCode.toString());
+            if (response.statusCode == 201) {
+              _login(event.email, event.password);
+              emit(const SignupSuccessful(true));
             }
-          } else {
-            logger.log("this");
-            emit(SignupFailed(
-                json["message"].toString(), Random().nextInt(10000)));
-          }
+            else if (response.statusCode == 409) {
+              logger.log(json["message"]);
+              if(json["message"]=="User already exits, try logging in.") {
+                emit(UserAlreadyExists(json["message"], Random().nextInt(10000)));
+              }else{
+                emit(VerificationPending(json["message"], Random().nextInt(10000)));
+              }
+            }
+            else {
+              logger.log("this");
+              emit(SignupFailed(
+                  json["message"].toString(), Random().nextInt(10000)));
+            }
+          // }
+          // catch(e){
+          //   logger.log("hello $e");
+          //   emit(ShowSnackbar(e.toString(), Random().nextInt(10000)));
+          // }
         }
       },
     );

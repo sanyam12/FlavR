@@ -30,6 +30,14 @@
           }
         },
         {
+          "client_id": "504489315010-ogi1gl62fbmkjlshogak7ddg5bf0rrvu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flavr",
+            "certificate_hash": "00ed4118801ddf1ab28b133345af35f6755c2436"
+          }
+        },
+        {
           "client_id": "504489315010-977njsjedt9jcl0b34d7h94ge28trepv.apps.googleusercontent.com",
           "client_type": 3
         }

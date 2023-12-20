@@ -45,6 +45,13 @@ class UserAlreadyExists extends SignupState{
 
   @override
   List<Object?> get props => [message, seed];
+}
 
+class ShowSnackbar extends SignupState{
+  final String message;
+  final int seed;
+  const ShowSnackbar(this.message, this.seed);
 
+  @override
+  List<Object?> get props => [message, seed];
 }

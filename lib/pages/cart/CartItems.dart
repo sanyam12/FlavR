@@ -8,10 +8,10 @@ class CartItems{
   CartItems(this.product, this.quantity);
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
-    data['product'] = this.product;
-    data['quantity'] = this.quantity;
+    data['product'] = product;
+    data['quantity'] = quantity;
 
     return data;
   }

@@ -16,7 +16,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileInitial()) {
     on<ProfileEvent>((event, emit) async {
       if(event is GetProfileData){
-        const secure = FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
+        const secure = FlutterSecureStorage(
+            aOptions: AndroidOptions(encryptedSharedPreferences: true)
+        );
         final token = await secure.read(key: "token");
         http.Response response = await http.get(
           Uri.parse("https://flavr.tech/user/userprofile"),
@@ -34,7 +36,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         }else{
           emit(ShowSnackbar(response.body));
         }
-
       }
     });
   }
