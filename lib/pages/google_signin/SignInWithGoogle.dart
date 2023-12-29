@@ -47,18 +47,15 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
           if (state is GoogleButtonClicked) {
             ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("Implementation Pending")));
-          }
-          else if (state is SignUpClicked) {
+          } else if (state is SignUpClicked) {
             Navigator.of(context).pushNamed("/signUp");
-          }
-          else if (state is LoginClicked) {
+          } else if (state is LoginClicked) {
             Navigator.of(context).pushNamed("/login");
-          }
-          else if (state is ShowSnackbar) {;
+          } else if (state is ShowSnackbar) {
+            ;
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.message)));
-          }
-          else if (state is GoogleLoginSuccess) {
+          } else if (state is GoogleLoginSuccess) {
             Navigator.of(context).popAndPushNamed("/outletMenu");
           }
         },
@@ -110,21 +107,21 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
                     alignment: AlignmentDirectional.center,
                     children: [
                       Positioned(
-                        top: 0.18 * height,
-                        child: SizedBox(
-                          width: 0.26667*width,
-                            // height: 0.03*height,
-                            child: Image.asset("assets/images/flavr-logo.png")
-                        )
-                        // child: const Text(
-                        //   "flavR",
-                        //   style: TextStyle(
-                        //       fontSize: 50,
-                        //       color: Color(0xFF004932),
-                        //       fontFamily: "Jim Nightshade",
-                        //   ),
-                        // ),
-                      ),
+                          top: 0.18 * height,
+                          child: SizedBox(
+                              width: 0.26667 * width,
+                              // height: 0.03*height,
+                              child:
+                                  Image.asset("assets/images/flavr-logo.png"))
+                          // child: const Text(
+                          //   "flavR",
+                          //   style: TextStyle(
+                          //       fontSize: 50,
+                          //       color: Color(0xFF004932),
+                          //       fontFamily: "Jim Nightshade",
+                          //   ),
+                          // ),
+                          ),
                     ],
                   ),
                 ),
@@ -150,7 +147,8 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15))),
                               onPressed: () async {
-                                _signInWithGoogleBloc.add(OnGoogleButtonClick());
+                                _signInWithGoogleBloc
+                                    .add(OnGoogleButtonClick());
                               },
                               child: Row(
                                 mainAxisAlignment:
@@ -184,13 +182,19 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF004932),
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15))),
+                                    borderRadius: BorderRadius.circular(15)),
+                            ),
                             onPressed: () {
                               _signInWithGoogleBloc.add(OnSignUpClick());
                             },
                             child: const Padding(
                               padding: EdgeInsets.symmetric(vertical: 12),
-                              child: Text("Sign up with email"),
+                              child: Text(
+                                "Sign up with email",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
                         ),

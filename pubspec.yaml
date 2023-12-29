@@ -55,6 +55,7 @@ dependencies:
   firebase_auth: ^4.6.3
   firebase_crashlytics: ^3.3.3
   jwt_decoder: ^2.0.1
+  provider: ^6.1.1
 
 dev_dependencies:
   flutter_test:
