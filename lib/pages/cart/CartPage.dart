@@ -1,10 +1,8 @@
 import 'dart:collection';
-import 'dart:developer';
 
 import 'package:flavr/pages/cart/Cart.dart';
 import 'package:flavr/pages/cart/bloc/cart_bloc.dart';
 import 'package:flavr/pages/ordernumber/OrderNumber.dart';
-import 'package:flavr/pages/outlet_menu/Categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
@@ -15,7 +13,8 @@ import 'package:slidable_button/slidable_button.dart';
 import 'package:slider_button/slider_button.dart';
 
 import '../../components/loading.dart';
-import '../outlet_menu/Product.dart';
+import '../../features/outlet_menu/Categories.dart';
+import '../../features/outlet_menu/Product.dart';
 import 'CartVariantData.dart';
 
 class CartPage extends StatefulWidget {
@@ -53,7 +52,6 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     cart = widget.initialCart;
-    log(cart.items.toString());
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 

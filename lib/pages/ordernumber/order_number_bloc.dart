@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
@@ -23,9 +22,7 @@ class OrderNumberBloc extends Bloc<OrderNumberEvent, OrderNumberState> {
           Uri.parse("http://flavr.tech/orders/getOrder?orderid=${event.orderId}"),
         );
 
-        log(response.body);
         final orderData = OrderData.fromJson(jsonDecode(response.body)["order"][0]);
-        log(orderData.toString());
         emit(OrderDataState(orderData));
       }
     });

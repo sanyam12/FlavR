@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flavr/pages/order_details/OrderDetails.dart';
 import 'package:flavr/pages/profile_page/profile_bloc.dart';

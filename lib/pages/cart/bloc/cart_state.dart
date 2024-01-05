@@ -15,7 +15,6 @@ class RefreshUI extends CartState{
   const RefreshUI(this.grandTotal, this.seed);
   @override
   List<Object?> get props => [grandTotal, seed];
-
 }
 
 // class GetCartFromArguments()

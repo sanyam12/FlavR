@@ -52,7 +52,7 @@ class _PaymentState extends State<Payment> {
   }
 
   void onError(CFErrorResponse errorResponse, String orderId) {
-    log("Error while making payment");
+    log("Error while making payment ${errorResponse.toString()}");
   }
 
   @override

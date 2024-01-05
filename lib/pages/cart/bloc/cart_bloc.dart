@@ -1,10 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'dart:developer' as logger;
-import 'package:flavr/pages/outlet_menu/Categories.dart';
-import 'package:flavr/pages/outlet_menu/Product.dart';
-import 'package:flavr/pages/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cfpayment/cfdropcheckoutpayment.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cfpaymentgateway/cfpaymentgatewayservice.dart';
@@ -17,6 +13,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../features/outlet_menu/Categories.dart';
+import '../../../features/outlet_menu/Product.dart';
 import '../Cart.dart';
 
 part 'cart_event.dart';
@@ -163,7 +161,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         final orderId = jsonDecode(placeOrder.body)["order_id"].toString();
         final sessionID =
             jsonDecode(placeOrder.body)["payment_session_id"].toString();
-        logger.log(orderId);
         try {
           var session = CFSessionBuilder()
               .setEnvironment(CFEnvironment.SANDBOX)
@@ -217,7 +214,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       }
     }
 
-    logger.log("grand total $grandTotal");
     return grandTotal;
   }
 }

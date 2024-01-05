@@ -1,4 +1,3 @@
-import 'package:flavr/pages/outlet_menu/Product.dart';
 
 class CartItems{
   final String product;
