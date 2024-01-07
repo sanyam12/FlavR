@@ -1,4 +1,3 @@
-import 'Outlet.dart';
 import 'ProductVariantData.dart';
 
 class RecommendedProduct {

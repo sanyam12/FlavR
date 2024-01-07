@@ -48,4 +48,5 @@ class Outlet{
     "outletName":_outletName,
     "address": _address
   };
+
 }

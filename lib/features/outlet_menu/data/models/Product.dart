@@ -11,8 +11,17 @@ class Product {
   String _productImage;
   List<ProductVariantData> variantList;
 
-  Product(this._id, this._category, this._name, this._description, this._price,
-      this._outletID, this._veg, this._productImage, this.variantList);
+  Product(
+    this._id,
+    this._category,
+    this._name,
+    this._description,
+    this._price,
+    this._outletID,
+    this._veg,
+    this._productImage,
+    this.variantList,
+  );
 
   set id(String id) {
     _id = id;
@@ -38,11 +47,11 @@ class Product {
     _outletID = outlet;
   }
 
-  set veg(bool veg){
+  set veg(bool veg) {
     _veg = veg;
   }
 
-  set productImage(String img){
+  set productImage(String img) {
     _productImage = img;
   }
 
@@ -70,18 +79,20 @@ class Product {
         _description = json["description"],
         _price = json["price"],
         _outletID = json["outlet"].toString(),
-        _veg=json["veg"],
-        _productImage=json["productImage"]["url"],
-        variantList = (json["variants"] as List).map((e) => ProductVariantData.fromJson(e)).toList();
+        _veg = json["veg"],
+        _productImage = json["productImage"]["url"],
+        variantList = (json["variants"] as List)
+            .map((e) => ProductVariantData.fromJson(e))
+            .toList();
 
-  Map<String, dynamic> toJson() =>{
-    "id":_id,
-    "category":_category,
-    "name":_name,
-    "description":_description,
-    "price": _price,
-    "outlet":_outletID,
-    "veg":_veg,
-    "productImage":_productImage
-  };
+  Map<String, dynamic> toJson() => {
+        "id": _id,
+        "category": _category,
+        "name": _name,
+        "description": _description,
+        "price": _price,
+        "outlet": _outletID,
+        "veg": _veg,
+        "productImage": _productImage
+      };
 }

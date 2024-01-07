@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import '../../../outlet_menu/Outlet.dart';
+import '../../../outlet_menu/data/models/Outlet.dart';
 import '../../bloc/outlet_list_bloc.dart';
 import '../widgets/outlet_card.dart';
 

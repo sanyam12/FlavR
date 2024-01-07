@@ -1,7 +1,6 @@
 import 'package:flavr/components/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lottie/lottie.dart';
 import '../../../../components/authentication_image_collection.dart';
 import '../../../otp_screen/presentation/screens/otp_screen.dart';
 import '../../bloc/signup_bloc.dart';

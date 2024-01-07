@@ -10,14 +10,12 @@ class CartInitial extends CartState {
 }
 
 class RefreshUI extends CartState{
-  final int seed;
+  final Cart cart;
   final int grandTotal;
-  const RefreshUI(this.grandTotal, this.seed);
+  const RefreshUI(this.cart, this.grandTotal);
   @override
-  List<Object?> get props => [grandTotal, seed];
+  List<Object?> get props => [grandTotal];
 }
-
-// class GetCartFromArguments()
 
 class ShowSnackbar extends CartState{
   final String message;
@@ -41,15 +39,6 @@ class NavigateToPaymentState extends CartState{
   @override
   List<Object?> get props => [];
 
-}
-
-class StartCashFreeService extends CartState{
-  final CFDropCheckoutPayment cfDropCheckoutPayment;
-
-  const StartCashFreeService(this.cfDropCheckoutPayment);
-
-  @override
-  List<Object?> get props => [cfDropCheckoutPayment];
 }
 
 class NavigateToOrderNumber extends CartState{

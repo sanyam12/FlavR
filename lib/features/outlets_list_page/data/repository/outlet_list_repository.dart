@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 
-import '../../../outlet_menu/Outlet.dart';
+import '../../../outlet_menu/data/models/Outlet.dart';
 import '../data_provider/outlet_list_api_provider.dart';
 import '../data_provider/outlet_list_storage_provider.dart';
 

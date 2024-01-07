@@ -4,39 +4,55 @@ abstract class OutletMenuEvent extends Equatable {
   const OutletMenuEvent();
 }
 
-class RefreshMenuEvent extends OutletMenuEvent{
-  final Cart cart;
-  const RefreshMenuEvent(this.cart);
+class RefreshMenuEvent extends OutletMenuEvent {
+  const RefreshMenuEvent();
+
   @override
   List<Object?> get props => [];
 }
 
-class SearchQueryEvent extends OutletMenuEvent{
+class SearchQueryEvent extends OutletMenuEvent {
   final String query;
   final List<Categories> categoriesList;
+
   const SearchQueryEvent(this.query, this.categoriesList);
 
   @override
   List<Object?> get props => [query, categoriesList];
-
 }
 
-class UpdateCartEvent extends OutletMenuEvent{
+class IncrementAmount extends OutletMenuEvent {
   final Product product;
   final Cart cart;
-  final List<Product> list;
-  const UpdateCartEvent(this.product, this.cart, this.list);
+  final ProductVariantData variantData;
+
+  const IncrementAmount(
+    this.product,
+    this.cart,
+    this.variantData,
+  );
 
   @override
-  List<Object?> get props => [product, cart, list];
+  List<Object?> get props => [];
 }
 
-// class RecalculateCartPrice extends OutletMenuEvent{
+class DecrementAmount extends OutletMenuEvent {
+  final Product product;
+  final Cart cart;
+  final ProductVariantData variantData;
+
+  const DecrementAmount(this.product, this.cart, this.variantData);
+
+  @override
+  List<Object?> get props => [];
+}
+
+// class UpdateCartEvent extends OutletMenuEvent{
+//   final Product product;
 //   final Cart cart;
 //   final List<Product> list;
-//   const RecalculateCartPrice(this.cart, this.list);
+//   const UpdateCartEvent(this.product, this.cart, this.list);
 //
 //   @override
-//   List<Object?> get props => [cart];
-//
+//   List<Object?> get props => [product, cart, list];
 // }

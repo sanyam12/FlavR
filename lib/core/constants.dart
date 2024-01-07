@@ -1,0 +1,1 @@
+const API_DOMAIN = "https://flavr.tech/";

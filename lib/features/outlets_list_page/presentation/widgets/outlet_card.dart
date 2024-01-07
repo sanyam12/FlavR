@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../outlet_menu/Outlet.dart';
+import '../../../outlet_menu/data/models/Outlet.dart';
 
 
 

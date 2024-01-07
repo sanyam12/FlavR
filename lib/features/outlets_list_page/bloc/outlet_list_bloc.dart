@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../outlet_menu/Outlet.dart';
+import '../../outlet_menu/data/models/Outlet.dart';
 import '../data/repository/outlet_list_repository.dart';
 
 part 'outlet_list_event.dart';
