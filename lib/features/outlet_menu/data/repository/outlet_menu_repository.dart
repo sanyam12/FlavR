@@ -1,10 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart';
 import 'package:flavr/features/outlet_menu/data/models/Categories.dart';
 import 'package:flavr/features/outlet_menu/data/models/Outlet.dart';
-
 import '../../../../features/cart/Cart.dart';
 import '../data_provider/outlet_menu_api_provider.dart';
 
@@ -23,9 +20,8 @@ class OutletMenuRepository{
       return name;
   }
   
-  Future<Outlet> getOutlet()async{
+  Future<Outlet> getOutlet(String token)async{
     final id = await getOutletId();
-    final token = await getToken();
     if(id==null){
       throw Exception("No Saved Outlet Found");
     }
@@ -41,9 +37,10 @@ class OutletMenuRepository{
     return list;
   }
 
-  Future<Cart> getCart()async{
-    final token = await _storageProvider.getToken();
-    return await _apiProvider.getCart(token);
+  Future<Cart> getCart(String token)async{
+    final data =  await _apiProvider.getCart(token);
+    //TODO: Pending decode data to get saved cart data
+    return Cart();
   }
   
 }

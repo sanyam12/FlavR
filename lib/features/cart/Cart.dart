@@ -1,7 +1,6 @@
 import 'dart:collection';
 import 'package:flavr/features/outlet_menu/data/models/Product.dart';
 import 'package:flavr/features/cart/CartVariantData.dart';
-import 'package:flavr/features/cart/cart_item.dart';
 
 
 class Cart{

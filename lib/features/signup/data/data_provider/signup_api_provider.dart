@@ -1,6 +1,9 @@
 import 'package:http/http.dart';
 
 class SignupApiProvider {
+  final Client client;
+
+  SignupApiProvider(this.client);
 
   Future<Response> attemptSignup(
     String name,
@@ -12,7 +15,7 @@ class SignupApiProvider {
       "email": email,
       "password": password,
     };
-    return await post(
+    return await client.post(
       Uri.https(
         "flavr.tech",
         "/user/signup",

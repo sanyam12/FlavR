@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:developer';
 
 import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
@@ -45,26 +44,84 @@ class _CategoryMenuState extends State<CategoryMenu> {
   //   return count.toString();
   // }
 
-  int _calculateTotalProductItems(Product product){
+  int _calculateTotalProductItems(Product product) {
     int count = 0;
-    for(var i in widget.cart.items[product] ??<CartVariantData>[]){
-      count+=i.quantity;
+    for (var i in widget.cart.items[product] ?? <CartVariantData>[]) {
+      count += i.quantity;
     }
     return count;
   }
 
+  _sendEvent(OutletMenuEvent event) {
+    context.read<OutletMenuBloc>().add(
+          event,
+        );
+  }
+
+  _showBottomSheet({
+    required String title,
+    required Product product,
+    required void Function(String variant, int price) callback,
+  }) {
+    showBottomSheet(
+      context: context,
+      backgroundColor: const Color(0xFFA3C2B3),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      builder: (context) {
+        return Wrap(
+          children: [
+            ListTile(
+              title: Title(
+                color: Colors.black,
+                child: Text(title),
+              ),
+            ),
+            for (var variant in product.variantList)
+              ListTile(
+                title: Text(variant.variantName),
+                trailing: Text(variant.price.toString()),
+                onTap: () {
+                  callback(variant.variantName, variant.price);
+                  Navigator.pop(context);
+                },
+              )
+          ],
+        );
+      },
+    );
+  }
+
   _incrementAmount(Product j) {
     if (j.variantList.isEmpty) {
-      context.read<OutletMenuBloc>().add(
+      _sendEvent(
+        IncrementAmount(
+          j,
+          widget.cart,
+          ProductVariantData(
+            "default",
+            j.price,
+          ),
+        ),
+      );
+    } else {
+      _showBottomSheet(
+        title: "Select Items to Add",
+        product: j,
+        callback: (name, price) {
+          _sendEvent(
             IncrementAmount(
               j,
               widget.cart,
               ProductVariantData(
-                "default",
-                j.price,
+                name,
+                price,
               ),
             ),
           );
+        },
+      );
     }
   }
 
@@ -77,6 +134,23 @@ class _CategoryMenuState extends State<CategoryMenu> {
               ProductVariantData("default", j.price),
             ),
           );
+    } else {
+      _showBottomSheet(
+        title: "Select Items to Remove",
+        product: j,
+        callback: (name, price) {
+          _sendEvent(
+            DecrementAmount(
+              j,
+              widget.cart,
+              ProductVariantData(
+                name,
+                price,
+              ),
+            ),
+          );
+        },
+      );
     }
   }
 
@@ -180,7 +254,7 @@ class _CategoryMenuState extends State<CategoryMenu> {
                                             ),
                                           ),
                                           Text(_calculateTotalProductItems(j)
-                                                  .toString()),
+                                              .toString()),
                                           SizedBox(
                                             width: 0.06777 * widget.width,
                                             height: 0.03125 * widget.height,

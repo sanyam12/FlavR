@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'features/google_sign_in/bloc/sign_in_with_google_bloc.dart';
 import 'features/google_sign_in/presentation/screens/sign_in_with_google.dart';
@@ -39,6 +40,7 @@ import 'features/splash_screen/bloc/splash_screen_bloc.dart';
 import 'features/splash_screen/data/repository/splash_screen_repository.dart';
 import 'features/splash_screen/presentation/screens/splash_screen.dart';
 import 'firebase_options.dart';
+import 'package:http/http.dart' as http;
 
 void main() async {
   await dotenv.load();
@@ -59,94 +61,127 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late final Client client;
+
+  @override
+  void initState() {
+    super.initState();
+    client = http.Client();
+  }
+
+  @override
+  void dispose() {
+    client.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent, // transparent status bar
         statusBarIconBrightness: Brightness.dark, // dark text for status bar
-        statusBarBrightness: Brightness.light));
-    return ChangeNotifierProvider(
-      create:(context)=>CartChangeProvider(),
-      child: MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider(create: (context) => SplashScreenRepository()),
-          RepositoryProvider(
-            create: (context) => LoginRepository(
-              LoginApiProvider(),
-              LoginSecureStorageProvider(),
-            ),
-          ),
-          RepositoryProvider(create: (context) => SignupApiProvider()),
-          RepositoryProvider(
-              create: (context) => OtpRepository(OtpApiProvider())),
-          RepositoryProvider(
-            create: (context) => OutletListRepository(
-              OutletListStorageProvider(),
-              OutletListApiProvider(),
-            ),
-          ),
-          RepositoryProvider(
-            create: (context) => OutletMenuRepository(
-              OutletMenuApiProvider(),
-              OutletMenuStorageProvider(),
-            ),
-          )
-        ],
-        child: MultiBlocProvider(
+        statusBarBrightness: Brightness.light,
+      ),
+    );
+    return Provider<http.Client>(
+      create: (context) => client,
+      child: ChangeNotifierProvider(
+        create: (context) => CartChangeProvider(),
+        child: MultiRepositoryProvider(
           providers: [
-            BlocProvider(
-              create: (context) =>
-                  SplashScreenBloc(context.read<SplashScreenRepository>()),
-            ),
-            BlocProvider(create: (context) => SignInWithGoogleBloc()),
-            BlocProvider(
-              create: (context) => LoginBloc(context.read<LoginRepository>()),
-            ),
-            BlocProvider(
-              create: (context) => SignupBloc(
-                context.read<SignupApiProvider>(),
+            RepositoryProvider(create: (context) => SplashScreenRepository()),
+            RepositoryProvider(
+              create: (context) => LoginRepository(
+                LoginApiProvider(context.read<http.Client>()),
+                LoginSecureStorageProvider(),
               ),
             ),
-            BlocProvider(
-              create: (context) => OtpScreenBloc(context.read<OtpRepository>()),
-            ),
-            BlocProvider(
-              create: (context) => OutletListBloc(
-                context.read<OutletListRepository>(),
+            RepositoryProvider(
+                create: (context) =>
+                    SignupApiProvider(context.read<http.Client>())),
+            RepositoryProvider(
+                create: (context) =>
+                    OtpRepository(OtpApiProvider(context.read<http.Client>()))),
+            RepositoryProvider(
+              create: (context) => OutletListRepository(
+                OutletListStorageProvider(),
+                OutletListApiProvider(context.read<http.Client>()),
               ),
             ),
-            BlocProvider(
-              create: (context) => OutletMenuBloc(
-                context.read<OutletMenuRepository>(),
+            RepositoryProvider(
+              create: (context) => OutletMenuRepository(
+                OutletMenuApiProvider(context.read<http.Client>()),
+                OutletMenuStorageProvider(),
               ),
-            ),
-            BlocProvider(create: (context)=>CartBloc())
+            )
           ],
-          child: MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => SplashScreenBloc(
+                    context.read<SplashScreenRepository>(),
+                    context.read<http.Client>()),
+              ),
+              BlocProvider(create: (context) => SignInWithGoogleBloc()),
+              BlocProvider(
+                create: (context) => LoginBloc(context.read<LoginRepository>()),
+              ),
+              BlocProvider(
+                create: (context) => SignupBloc(
+                  context.read<SignupApiProvider>(),
+                ),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    OtpScreenBloc(context.read<OtpRepository>()),
+              ),
+              BlocProvider(
+                create: (context) => OutletListBloc(
+                  context.read<OutletListRepository>(),
+                ),
+              ),
+              BlocProvider(
+                create: (context) => OutletMenuBloc(
+                  context.read<OutletMenuRepository>(),
+                ),
+              ),
+              BlocProvider(create: (context) => CartBloc())
+            ],
+            child: MaterialApp(
+              title: 'Flutter Demo',
+              theme: ThemeData(
                 colorScheme: ColorScheme.fromSeed(
                   seedColor: const Color(0xFF004A33),
                 ),
-                textSelectionTheme:
-                    const TextSelectionThemeData(cursorColor: Color(0xff004932))),
-            debugShowCheckedModeBanner: false,
-            initialRoute: "/splashscreen",
-            routes: {
-              "/splashscreen": (context) => const SplashScreen(),
-              "/signInWithGoogle": (context) => const SignInWithGoogle(),
-              "/login": (context) => const LoginPage(),
-              "/signUp": (context) => const SignUp(),
-              "/outletList": (context) => const OutletsList(),
-              "/outletMenu": (context) => const OutletMenu(),
-              "/homePage": (context) => const HomePage(),
-              "/profile": (context) => const ProfilePage(),
-              "/payment": (context) => const Payment(),
-              "/edit_profile": (context) => const EditProfile(),
-            },
+                textSelectionTheme: const TextSelectionThemeData(
+                  cursorColor: Color(0xff004932),
+                ),
+              ),
+              debugShowCheckedModeBanner: false,
+              initialRoute: "/splashscreen",
+              routes: {
+                "/splashscreen": (context) => const SplashScreen(),
+                "/signInWithGoogle": (context) => const SignInWithGoogle(),
+                "/login": (context) => const LoginPage(),
+                "/signUp": (context) => const SignUp(),
+                "/outletList": (context) => const OutletsList(),
+                "/outletMenu": (context) => const OutletMenu(),
+                "/homePage": (context) => const HomePage(),
+                "/profile": (context) => const ProfilePage(),
+                "/payment": (context) => const Payment(),
+                "/edit_profile": (context) => const EditProfile(),
+              },
+            ),
           ),
         ),
       ),

@@ -47,6 +47,16 @@ class DecrementAmount extends OutletMenuEvent {
   List<Object?> get props => [];
 }
 
+class OutletListClicked extends OutletMenuEvent{
+  @override
+  List<Object?> get props => [];
+}
+
+class UpdateCart extends OutletMenuEvent{
+  @override
+  List<Object?> get props => [];
+}
+
 // class UpdateCartEvent extends OutletMenuEvent{
 //   final Product product;
 //   final Cart cart;

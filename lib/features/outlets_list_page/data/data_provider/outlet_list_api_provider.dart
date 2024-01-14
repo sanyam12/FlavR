@@ -1,9 +1,12 @@
 import 'dart:convert';
-
 import 'package:http/http.dart';
 
 
 class OutletListApiProvider {
+  final Client client;
+
+  OutletListApiProvider(this.client);
+
   dynamic getAllOutlets() async {
     final response =
         await get(Uri.https("flavr.tech", "/outlet/getAllOutlets"));
@@ -14,7 +17,7 @@ class OutletListApiProvider {
     final List<String> outletLists = [];
     for (var id in list) {
       final query = {"outletid": id};
-      var response = await get(
+      var response = await client.get(
         Uri.https(
           "flavr.tech",
           "outlet/getOutlet",

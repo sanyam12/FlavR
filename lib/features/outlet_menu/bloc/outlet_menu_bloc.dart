@@ -28,6 +28,16 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     on<RefreshMenuEvent>(_refreshMenu);
     on<IncrementAmount>(_incrementAmount);
     on<DecrementAmount>(_decrementAmount);
+    on<OutletListClicked>(_outletListClicked);
+    on<SearchQueryEvent>(_onSearchEvent);
+    on<UpdateCart>(_onUpdateCart);
+  }
+
+  _onUpdateCart(
+    UpdateCart event,
+    Emitter<OutletMenuState> emit,
+  ) {
+    emit(FetchCart());
   }
 
   _incrementAmount(
@@ -42,9 +52,10 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
         // event.cart.cartTotalItems+1
       );
       if (newCart.items[event.product] != null) {
-        final cartVariant = newCart.items[event.product]?.firstWhere((element) =>
-                element.variantName == event.variantData.variantName);
-        if (cartVariant == null) {
+        final cartVariant = newCart.items[event.product]!.where(
+          (element) => element.variantName == event.variantData.variantName,
+        );
+        if (cartVariant.isEmpty) {
           newCart.items[event.product]?.add(
             CartVariantData(
               event.variantData.variantName,
@@ -53,15 +64,16 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
             ),
           );
         } else {
-          cartVariant.quantity++;
+          cartVariant.first.quantity++;
         }
-      }
-      else {
-        final items = [CartVariantData(
-          event.variantData.variantName,
-          1,
-          event.variantData.price,
-        )];
+      } else {
+        final items = [
+          CartVariantData(
+            event.variantData.variantName,
+            1,
+            event.variantData.price,
+          )
+        ];
         newCart.items[event.product] = items;
       }
       // newCart.items[event.product.id]?.totalItems++;
@@ -84,8 +96,8 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
           // event.cart.amount - event.variantData.price,
           // event.cart.cartTotalItems-1,
         );
-        final cartVariant = newCart.items[event.product]?.firstWhere((element) =>
-                element.variantName == event.variantData.variantName);
+        final cartVariant = newCart.items[event.product]?.firstWhere(
+            (element) => element.variantName == event.variantData.variantName);
         if (cartVariant?.quantity == null || cartVariant!.quantity <= 0) {
           throw Exception("This Item is not added");
         }
@@ -106,13 +118,57 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     Emitter<OutletMenuState> emit,
   ) async {
     try {
-      final outlet = await _repository.getOutlet();
+      final token = await _repository.getToken();
+      final outlet = await _repository.getOutlet(token);
       final menu = await _repository.getOutletMenu(outlet.id);
-      final cart = await _repository.getCart();
+      final cart = await _repository.getCart(token);
       emit(RefreshedOutletData(outlet.outletName, menu, cart));
     } catch (e) {
       emit(ShowSnackBar(e.toString()));
     }
+  }
+
+  _outletListClicked(
+    OutletListClicked event,
+    Emitter<OutletMenuState> emit,
+  ) {
+    emit(NavigateToOutletList());
+    emit(OutletMenuLoading());
+  }
+
+  _onSearchEvent(
+    SearchQueryEvent event,
+    Emitter<OutletMenuState> emit,
+  ) {
+    try {
+      emit(
+        SearchResultState(
+          _searchResult(event.query, event.categoriesList),
+        ),
+      );
+    } catch (e) {
+      emit(ShowSnackBar(e.toString()));
+    }
+  }
+
+  List<Categories> _searchResult(
+    String query,
+    List<Categories> categoriesList,
+  ) {
+    List<Categories> list = [Categories("All", [], "")];
+    for (var i in categoriesList) {
+      var temp = Categories(
+          i.category,
+          i.products
+              .where((element) =>
+                  element.name.toLowerCase().contains(query.toLowerCase()))
+              .toList(),
+          i.iconUrl);
+      if (temp.products.isNotEmpty) {
+        list.add(temp);
+      }
+    }
+    return list;
   }
 
   Future<List<OrderDataClass.OrderData>> fetchIncompleteOrders() async {
@@ -132,25 +188,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     return list;
   }
 
-  List<Categories> _searchResult(
-    String query,
-    List<Categories> categoriesList,
-  ) {
-    List<Categories> list = [];
-    for (var i in categoriesList) {
-      var temp = Categories(
-          i.category,
-          i.products
-              .where((element) =>
-                  element.name.toLowerCase().contains(query.toLowerCase()))
-              .toList(),
-          i.iconUrl);
-      if (temp.products.isNotEmpty) {
-        list.add(temp);
-      }
-    }
-    return list;
-  }
 
   Future<Outlet?> _fetchSelectedOutlet() async {
     final pref = await SharedPreferences.getInstance();

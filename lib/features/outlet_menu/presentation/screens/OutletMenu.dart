@@ -1,16 +1,12 @@
-import 'dart:collection';
 import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flavr/components/loading.dart';
 import 'package:flavr/core/CartChangeProvider.dart';
-import 'package:flavr/features/outlet_menu/data/models/Product.dart';
 import 'package:flavr/features/cart/CartPage.dart';
-import 'package:flavr/features/cart/CartVariantData.dart';
-import 'package:flavr/pages/ordernumber/OrderNumber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../features/cart/Cart.dart';
-import '../../../../pages/profile_page/OrderData.dart';
 import '../../data/models/Categories.dart';
 import '../../bloc/outlet_menu_bloc.dart';
 import '../widgets/category_menu.dart';
@@ -27,24 +23,25 @@ class _OutletMenuState extends State<OutletMenu> {
   String outletName = "Outlet";
   late Cart cart;
   List<Categories> menuList = [];
+  List<Categories> filteredMenuList = [];
   String selectedCategory = "All";
   bool isSearchActive = false;
 
-  int _calculateTotalItems(){
+  int _calculateTotalItems() {
     int cnt = 0;
-    for(var i in cart.items.entries){
-      for(var j in i.value){
-        cnt+=j.quantity;
+    for (var i in cart.items.entries) {
+      for (var j in i.value) {
+        cnt += j.quantity;
       }
     }
     return cnt;
   }
 
-  int _calculateCartAmount(){
+  int _calculateCartAmount() {
     int cnt = 0;
-    for(var i in cart.items.entries){
-      for(var j in i.value){
-        cnt+=(j.quantity*j.price);
+    for (var i in cart.items.entries) {
+      for (var j in i.value) {
+        cnt += (j.quantity * j.price);
       }
     }
     return cnt;
@@ -136,7 +133,17 @@ class _OutletMenuState extends State<OutletMenu> {
               outletName = state.outletName;
               cart = state.cart;
               menuList = state.menuList;
+              filteredMenuList = state.menuList;
               context.read<CartChangeProvider>().updateCart(state.cart);
+            }
+            if (state is NavigateToOutletList) {
+              Navigator.pushNamed(context, "/outletList");
+            }
+            if (state is SearchResultState) {
+              filteredMenuList = state.menuList;
+            }
+            if (state is FetchCart) {
+              cart = context.read<CartChangeProvider>().cart;
             }
           },
           builder: (context, state) {
@@ -152,10 +159,9 @@ class _OutletMenuState extends State<OutletMenu> {
                     children: [
                       InkWell(
                         onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            "/outletList",
-                          );
+                          context
+                              .read<OutletMenuBloc>()
+                              .add(OutletListClicked());
                         },
                         child: Row(
                           children: [
@@ -187,14 +193,19 @@ class _OutletMenuState extends State<OutletMenu> {
                       ? Row(
                           children: [
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                setState(() {
+                                  isSearchActive = false;
+                                });
+                              },
                               child: const Icon(Icons.arrow_back_ios_new),
                             ),
-                            SizedBox(
+                            Container(
                               width: 0.80278 * width,
                               height: 0.045 * height,
+                              alignment: Alignment.center,
                               child: TextField(
-                                textAlign: TextAlign.start,
+                                textAlignVertical: TextAlignVertical.center,
                                 controller: searchController,
                                 decoration: InputDecoration(
                                     fillColor: Colors.white,
@@ -205,7 +216,11 @@ class _OutletMenuState extends State<OutletMenu> {
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                                     suffixIcon: const Icon(Icons.search)),
-                                onChanged: (s) {},
+                                onChanged: (s) {
+                                  context
+                                      .read<OutletMenuBloc>()
+                                      .add(SearchQueryEvent(s, menuList));
+                                },
                               ),
                             )
                           ],
@@ -297,7 +312,7 @@ class _OutletMenuState extends State<OutletMenu> {
                             height: 0.13 * height,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: menuList.length,
+                              itemCount: filteredMenuList.length,
                               itemBuilder: (context, index) {
                                 // return const Text("Pending 1");
                                 return InkWell(
@@ -305,12 +320,12 @@ class _OutletMenuState extends State<OutletMenu> {
                                     setState(() {
                                       //TODO theek crow
                                       selectedCategory =
-                                          menuList[index].category;
+                                          filteredMenuList[index].category;
                                     });
                                   },
                                   child: Card(
                                     color: (selectedCategory ==
-                                            menuList[index].category)
+                                            filteredMenuList[index].category)
                                         ? const Color(0xFFA3C2B3)
                                         : Colors.white,
                                     shape: RoundedRectangleBorder(
@@ -325,23 +340,25 @@ class _OutletMenuState extends State<OutletMenu> {
                                               horizontal: 0.09166666667 * width,
                                               vertical: 0.02125 * height,
                                             ),
-                                            child: (menuList[index]
+                                            child: (filteredMenuList[index]
                                                     .iconUrl
                                                     .isEmpty)
                                                 ? Image.asset(
                                                     "assets/images/Fast food.png",
                                                   )
                                                 : Image.network(
-                                                    menuList[index].iconUrl,
+                                                    filteredMenuList[index]
+                                                        .iconUrl,
                                                     width: 35,
                                                     height: 35,
                                                   ),
                                           ),
                                           Text(
-                                            menuList[index].category,
+                                            filteredMenuList[index].category,
                                             style: TextStyle(
                                               color: (selectedCategory ==
-                                                      menuList[index].category)
+                                                      filteredMenuList[index]
+                                                          .category)
                                                   ? Colors.white
                                                   : Colors.black,
                                               fontSize: 15,
@@ -386,8 +403,8 @@ class _OutletMenuState extends State<OutletMenu> {
                             width: width,
                             height: height,
                             list: (selectedCategory == "All")
-                                ? menuList
-                                : menuList
+                                ? filteredMenuList
+                                : filteredMenuList
                                     .where((element) =>
                                         element.category == selectedCategory)
                                     .toList(),
@@ -410,17 +427,15 @@ class _OutletMenuState extends State<OutletMenu> {
                     items: [
                       GestureDetector(
                         onTap: () async {
-                          Navigator.of(context).push<Cart>(
+                          await Navigator.of(context).push<Cart>(
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  CartPage(list: menuList),
+                              builder: (context) => CartPage(list: menuList),
                             ),
                           );
-                          // if (newCart != null) {
-                          //   setState(() {
-                          //     cart = newCart;
-                          //   });
-                          // }
+                          log("fetch cart event");
+                          if(context.mounted){
+                            context.read<OutletMenuBloc>().add(UpdateCart());
+                          }
                         },
                         child: Card(
                           color: const Color(0xFFA3C2B3),

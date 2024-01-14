@@ -2,6 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart';
 
 class OtpApiProvider {
+  final Client client;
+
+  OtpApiProvider(this.client);
+
   Future<String> sendOTP(String email) async {
     try {
       final headers = {
@@ -10,7 +14,7 @@ class OtpApiProvider {
       final body = jsonEncode(
         {"key": email, "role": 0,},
       );
-      var response = await post(
+      var response = await client.post(
         Uri.parse("https://flavr.tech/mail/resendotp"),
         headers: headers,
         body: body,

@@ -55,15 +55,20 @@ class UpdatedCartState extends OutletMenuState{
 
 }
 
-// class SearchResultState extends OutletMenuState{
-//   final List<Categories> menuList;
-//
-//   const SearchResultState(this.menuList);
-//
-//   @override
-//   List<Object?> get props => [menuList, Random().nextInt(10000)];
-//
-// }
+class SearchResultState extends OutletMenuState{
+  final List<Categories> menuList;
+
+  const SearchResultState(this.menuList);
+
+  @override
+  List<Object?> get props => [menuList];
+
+}
+
+class FetchCart extends OutletMenuState{
+  @override
+  List<Object?> get props => [];
+}
 
 // class CartDataState extends OutletMenuState{
 //   final Cart cart;

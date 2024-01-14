@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:flavr/core/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../data/repository/splash_screen_repository.dart';
@@ -11,12 +12,14 @@ part 'splash_screen_state.dart';
 
 class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
   final SplashScreenRepository _splashScreenRepository;
-  SplashScreenBloc(this._splashScreenRepository) : super(SplashScreenInitial()) {
+  final Client client;
+  SplashScreenBloc(this._splashScreenRepository, this.client) : super(SplashScreenInitial()) {
     on<TimerTriggered>((event, emit) async {
       try {
         await Future.delayed(
           const Duration(seconds: 2),
           ()async {
+            final response = await client.get(Uri.parse(API_DOMAIN));
             final token = await _splashScreenRepository.getToken();
             if(token==null || JwtDecoder.isExpired(token)){
               return emit(SplashScreenNotSignedIn());

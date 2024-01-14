@@ -48,7 +48,6 @@ dependencies:
   slider_button: ^2.0.0
   flutter_otp_text_field: ^1.1.0+2
   slidable_button: ^3.0.0+1
-  socket_io_client: ^2.0.2
   firebase_core: ^2.14.0
   cloud_firestore: ^4.8.1
   google_sign_in: ^6.1.4

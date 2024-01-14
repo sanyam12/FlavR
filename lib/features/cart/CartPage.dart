@@ -58,37 +58,7 @@ class _CartPageState extends State<CartPage> {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(45),
-          child: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            centerTitle: true,
-            leading: BackButton(
-              color: Colors.black,
-              onPressed: () {
-                Navigator.pop(context, cart);
-              },
-            ),
-            title: const Text(
-              "Cart",
-              style: TextStyle(color: Colors.black),
-            ),
-            actions: [
-              IconButton(
-                alignment: Alignment.topRight,
-                icon: const Icon(
-                  Icons.person,
-                  size: 30,
-                  color: Colors.black,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, "/profile");
-                },
-              )
-            ],
-          ),
-        ),
+        appBar: _buildAppBar(),
         body: SafeArea(
           child: BlocConsumer<CartBloc, CartState>(
             listener: (context, state) {
@@ -126,15 +96,16 @@ class _CartPageState extends State<CartPage> {
                         children: [
                           for (var i in cart.items.entries)
                             for (var j in i.value)
-                              CartItems(
-                                width: width,
-                                height: height,
-                                product: i.key,
-                                cart: cart,
-                                variant: j,
-                                price: j.price,
-                                // list: list,
-                              ),
+                              if (j.quantity != 0)
+                                CartItems(
+                                  width: width,
+                                  height: height,
+                                  product: i.key,
+                                  cart: cart,
+                                  variant: j,
+                                  price: j.price,
+                                  list: list,
+                                ),
                           GrandTotal(
                             width: width,
                             height: height,
@@ -257,6 +228,40 @@ class _CartPageState extends State<CartPage> {
       ),
     );
   }
+
+  _buildAppBar() {
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(45),
+      child: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        leading: BackButton(
+          color: Colors.black,
+          onPressed: () {
+            Navigator.pop(context, cart);
+          },
+        ),
+        title: const Text(
+          "Cart",
+          style: TextStyle(color: Colors.black),
+        ),
+        actions: [
+          IconButton(
+            alignment: Alignment.topRight,
+            icon: const Icon(
+              Icons.person,
+              size: 30,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, "/profile");
+            },
+          )
+        ],
+      ),
+    );
+  }
 }
 
 class CartItems extends StatefulWidget {
@@ -268,20 +273,18 @@ class CartItems extends StatefulWidget {
     required this.cart,
     required this.variant,
     required this.price,
-    // required this.list,
+    required this.list,
   });
 
   final double width;
   final double height;
   final Product product;
   final Cart cart;
+  final List<Product> list;
 
   // final CartBloc bloc;
   final CartVariantData variant;
   final int price;
-
-  // final void Function() updateParentState;
-  // final List<Categories> list;
 
   @override
   State<CartItems> createState() => _CartItemsState();
@@ -353,16 +356,23 @@ class _CartItemsState extends State<CartItems> {
                                             const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
-                                      context.read<CartBloc>().add(
-                                            CartDecrementAmount(
-                                              widget.product,
-                                              widget.cart,
-                                              ProductVariantData(
-                                                widget.variant.variantName,
-                                                widget.variant.price,
-                                              ),
+                                      context.read<CartBloc>()
+                                        ..add(
+                                          CartDecrementAmount(
+                                            widget.product,
+                                            widget.cart,
+                                            ProductVariantData(
+                                              widget.variant.variantName,
+                                              widget.variant.price,
                                             ),
-                                          );
+                                          ),
+                                        )
+                                        ..add(
+                                          UpdateGrandTotal(
+                                            widget.cart,
+                                            widget.list,
+                                          ),
+                                        );
                                     },
                                     child: const Icon(
                                       Icons.remove,
@@ -380,16 +390,23 @@ class _CartItemsState extends State<CartItems> {
                                             const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
-                                      context.read<CartBloc>().add(
-                                            CartIncrementAmount(
-                                              widget.product,
-                                              widget.cart,
-                                              ProductVariantData(
-                                                  widget.variant.variantName,
-                                                  widget.variant.price,
-                                              ),
+                                      context.read<CartBloc>()
+                                        ..add(
+                                          CartIncrementAmount(
+                                            widget.product,
+                                            widget.cart,
+                                            ProductVariantData(
+                                              widget.variant.variantName,
+                                              widget.variant.price,
                                             ),
-                                          );
+                                          ),
+                                        )
+                                        ..add(
+                                          UpdateGrandTotal(
+                                            widget.cart,
+                                            widget.list,
+                                          ),
+                                        );
                                     },
                                     child: const Icon(
                                       Icons.add,
