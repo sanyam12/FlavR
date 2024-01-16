@@ -78,13 +78,19 @@ class _ProfilePageState extends State<ProfilePage> {
                             onPressed: () {},
                             icon: const Icon(
                               Icons.edit,
-                              color: Color(0xFFFDB703),
+                              color: Color(0xFF004932),
                             ),
                           )
                         ],
                       ),
                       CircleAvatar(
-                        radius: 0.165 * width,
+                        backgroundColor: const Color(0xff004932),
+                        radius: 50,
+                        child: Icon(
+                          Icons.person,
+                          color: const Color(0xffffffff),
+                          size: 0.0625*height,
+                        ),
                       ),
                       Text(
                         userName,
@@ -93,16 +99,230 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Row(
-                        children: [
-                          Text(
-                            "Recent Orders",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
+                      const Text(
+                        "sejal27bansal@gmail.com",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.0556*width, 0.0125*height,0, 0.0125*height),
+                        child: const Text(
+                          "Recent Orders",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                      Card(
+                          child: SizedBox(
+                            width: width * 0.886111,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const OrderDetails(orderId: '12')),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xffffffff),  // Background color
+                              ),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0.013889*width, 0.00625*height, 0.013889*width, 0.00625*height),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "11 Dec,2024",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff000000),
+                                        ),
+                                      ),
+                                      Text(
+                                        "NesCafe NITJ",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff000000),
+                                        ),
+                                      ),
+                                      Text(
+                                        "12:44 PM",
+                                        style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff000000),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0.013889*width, 0.00625*height, 0.013889*width, 0.00625*height),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Order #",
+                                            style:TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                              color: Color(0xff000000),
+                                            ),
+                                          ),
+                                          Text(
+                                            "52",
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xffff0000),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                      Row(
+                                        children: [
+                                        Icon(
+                                          Icons.currency_rupee,
+                                          color: Color(0xff004932),
+                                          size: 16,
+                                        ),
+                                          Text(
+                                            "160",
+                                            style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                              color: Color(0xff000000),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0.013889*width, 0.00625*height, 0.013889*width, 0.00625*height),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(0.0556*width, 0, 0.0556*width, 0),
+                                            child: CircleAvatar(
+                                              radius: 32,
+                                              child: ClipOval(child: Image.asset('assets/images/pasta.jpeg')),
+                                            )
+                                          ),
+                                          CircleAvatar(
+                                            radius: 32,
+                                            child: ClipOval(child: Image.asset('assets/images/pasta.jpeg')),
+                                          )
+                                        ],
+                                      ),
+                                      const Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "1 x Red Sauce Pasta",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              color: Color(0xff000000),
+                                            ),
+                                          ),
+                                          Text(
+                                            "2 x Veg Cheese Burger",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              color: Color(0xff000000),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                      const Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.currency_rupee,
+                                                size: 12,
+                                                color: Color(0xff004932),
+                                              ),
+                                              Text(
+                                                "180",
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Color(0xff000000),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.currency_rupee,
+                                                size: 12,
+                                                color: Color(0xff004932),
+                                              ),
+                                              Text(
+                                                "180",
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Color(0xff000000),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0.013889*width, 0.00625*height, 0.013889*width, 0.00625*height),
+                                  child: const Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Delivered Successfully",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff004932),
+                                        ),
+                                      ),
+                                      Text(
+                                        "7:00 PM",
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff004932),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
+                          ),
+                        ),
+
                       ),
                       StreamBuilder(
                           stream: list,
@@ -129,7 +349,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             }
                           }),
-                      ElevatedButton(
+                      /*ElevatedButton(
                           onPressed: ()async{
                             var service = const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
                             await service.delete(key: "token");
@@ -139,7 +359,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             }
                           },
                           child: const Text("Log Out")
-                      )
+                      )*/
                     ],
                   ),
           ),

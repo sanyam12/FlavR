@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '1.9.22'
     repositories {
         google()
         mavenCentral()
@@ -19,9 +19,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven{
-            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-snapshots"
-        }
     }
 }
 
