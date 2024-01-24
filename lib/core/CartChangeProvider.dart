@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../features/cart/Cart.dart';
+import '../features/cart/data/models/Cart.dart';
 
 class CartChangeProvider extends ChangeNotifier{
   Cart _cart = Cart();

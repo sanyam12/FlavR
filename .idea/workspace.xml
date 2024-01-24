@@ -4,12 +4,18 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cf438c3e-32a9-4cc5-9602-b76ba71e9cb8" name="Changes" comment="added bloc architecture to outlet menu and cart page">
+    <list default="true" id="cf438c3e-32a9-4cc5-9602-b76ba71e9cb8" name="Changes" comment="fixed multiple issues&#10;commit before changing cart data class">
+      <change afterPath="$PROJECT_DIR$/lib/core/data_provider/core_api_provider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/core/data_provider/core_storage_provider.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/core/repository/core_cart_repository.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/cart/presentation/widgets/add_more_items.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/cart/presentation/widgets/add_other_instructions.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/cart/presentation/widgets/add_special_instructions.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/cart/presentation/widgets/cart_items.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/cart/presentation/widgets/grand_total.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/features/cart/presentation/widgets/your_details.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
@@ -18,30 +24,21 @@
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/kotlin/com/example/flavr/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/kotlin/com/example/flavr/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/android/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/cart/Cart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/cart/Cart.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/cart/CartPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/cart/CartPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/login_page/data/data_provider/login_api_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/login_page/data/data_provider/login_api_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/otp_screen/data/data_provider/otp_api_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/otp_screen/data/data_provider/otp_api_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/otp_screen/presentation/screens/otp_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/otp_screen/presentation/screens/otp_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/core/CartChangeProvider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core/CartChangeProvider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/core/constants.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/core/constants.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/cart/Cart.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/cart/data/models/Cart.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/cart/CartItems.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/cart/CartPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/cart/presentation/screens/CartPage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/cart/CartVariantData.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/cart/data/models/CartVariantData.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/cart/bloc/cart_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/cart/bloc/cart_bloc.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/cart/cart_item.dart" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/features/outlet_menu/bloc/outlet_menu_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/outlet_menu/bloc/outlet_menu_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/outlet_menu/bloc/outlet_menu_event.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/outlet_menu/bloc/outlet_menu_event.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/outlet_menu/bloc/outlet_menu_state.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/outlet_menu/bloc/outlet_menu_state.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/features/outlet_menu/data/data_provider/outlet_menu_api_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/outlet_menu/data/data_provider/outlet_menu_api_provider.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/features/outlet_menu/data/repository/outlet_menu_repository.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/outlet_menu/data/repository/outlet_menu_repository.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/features/outlet_menu/presentation/screens/OutletMenu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/outlet_menu/presentation/screens/OutletMenu.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/features/outlet_menu/presentation/widgets/category_menu.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/outlet_menu/presentation/widgets/category_menu.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/outlets_list_page/data/data_provider/outlet_list_api_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/outlets_list_page/data/data_provider/outlet_list_api_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/signup/data/data_provider/signup_api_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/signup/data/data_provider/signup_api_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/features/splash_screen/bloc/splash_screen_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/features/splash_screen/bloc/splash_screen_bloc.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pages/ordernumber/order_number_bloc.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/ordernumber/order_number_bloc.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" afterPath="$PROJECT_DIR$/test/widget_test.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,11 +95,11 @@
       <recent name="$PROJECT_DIR$/assets/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/core/repository" />
+      <recent name="$PROJECT_DIR$/lib/features/cart/presentation/screens" />
+      <recent name="$PROJECT_DIR$/lib/features/cart/presentation/widgets" />
+      <recent name="$PROJECT_DIR$/lib/features/cart/data/models" />
       <recent name="$PROJECT_DIR$/lib/features" />
-      <recent name="$PROJECT_DIR$/lib/features/outlet_menu/data/models" />
-      <recent name="$PROJECT_DIR$/lib/features/outlet_menu/presentation/screens" />
-      <recent name="$PROJECT_DIR$/lib/features/outlet_menu" />
-      <recent name="$PROJECT_DIR$/lib/outlets_list_page/presentation/screens" />
     </key>
   </component>
   <component name="RunManager" selected="Flutter.main.dart">
@@ -232,7 +229,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704646856887</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="fixed multiple issues&#10;commit before changing cart data class">
+      <option name="closed" value="true" />
+      <created>1705234558449</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1705234558449</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -260,7 +265,8 @@
     <MESSAGE value="pre bloc pattern" />
     <MESSAGE value="pre outlet menu" />
     <MESSAGE value="added bloc architecture to outlet menu and cart page" />
-    <option name="LAST_COMMIT_MESSAGE" value="added bloc architecture to outlet menu and cart page" />
+    <MESSAGE value="fixed multiple issues&#10;commit before changing cart data class" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed multiple issues&#10;commit before changing cart data class" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -276,8 +282,8 @@
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/features/cart/CartPage.dart</url>
-          <line>186</line>
+          <url>file://$PROJECT_DIR$/lib/features/cart/presentation/screens/CartPage.dart</url>
+          <line>185</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>

@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart';
 import 'package:flavr/features/outlet_menu/data/models/Categories.dart';
 import 'package:flavr/features/outlet_menu/data/models/Outlet.dart';
-import '../../../../features/cart/Cart.dart';
+import 'package:flavr/features/outlet_menu/data/models/Product.dart';
+import '../../../cart/data/models/Cart.dart';
 import '../data_provider/outlet_menu_api_provider.dart';
 
 class OutletMenuRepository{
@@ -10,10 +12,6 @@ class OutletMenuRepository{
   final OutletMenuApiProvider _apiProvider;
 
   OutletMenuRepository(this._apiProvider, this._storageProvider);
-
-  Future<String> getToken()async{
-    return await _storageProvider.getToken();
-  }
 
   Future<String?> getOutletId()async{
       final name = await _storageProvider.getOutletName();
@@ -37,10 +35,13 @@ class OutletMenuRepository{
     return list;
   }
 
-  Future<Cart> getCart(String token)async{
+  Future<Cart> getCart(String token, List<Categories> list)async{
     final data =  await _apiProvider.getCart(token);
+    final json = jsonDecode(data);
+    // log(data);
+
     //TODO: Pending decode data to get saved cart data
-    return Cart();
+    return Cart.fromJson(json["cart"], list);
   }
   
 }

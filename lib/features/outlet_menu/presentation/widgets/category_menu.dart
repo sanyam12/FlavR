@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
-import 'package:flavr/features/cart/Cart.dart';
-import 'package:flavr/features/cart/CartVariantData.dart';
+import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../cart/data/models/CartVariantData.dart';
 import '../../data/models/Categories.dart';
 import '../../data/models/Product.dart';
 

@@ -2,6 +2,9 @@ import 'dart:ui';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flavr/core/CartChangeProvider.dart';
+import 'package:flavr/core/data_provider/core_api_provider.dart';
+import 'package:flavr/core/data_provider/core_storage_provider.dart';
+import 'package:flavr/core/repository/core_cart_repository.dart';
 import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_api_provider.dart';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart';
@@ -62,7 +65,6 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -99,6 +101,14 @@ class _MyAppState extends State<MyApp> {
         create: (context) => CartChangeProvider(),
         child: MultiRepositoryProvider(
           providers: [
+            RepositoryProvider(
+              create: (context) => CoreCartRepository(
+                CoreStorageProvider(),
+                CoreApiProvider(
+                  context.read<http.Client>(),
+                ),
+              ),
+            ),
             RepositoryProvider(create: (context) => SplashScreenRepository()),
             RepositoryProvider(
               create: (context) => LoginRepository(
@@ -123,7 +133,7 @@ class _MyAppState extends State<MyApp> {
                 OutletMenuApiProvider(context.read<http.Client>()),
                 OutletMenuStorageProvider(),
               ),
-            )
+            ),
           ],
           child: MultiBlocProvider(
             providers: [
@@ -152,10 +162,14 @@ class _MyAppState extends State<MyApp> {
               ),
               BlocProvider(
                 create: (context) => OutletMenuBloc(
-                  context.read<OutletMenuRepository>(),
-                ),
+                    context.read<OutletMenuRepository>(),
+                    context.read<CoreCartRepository>()),
               ),
-              BlocProvider(create: (context) => CartBloc())
+              BlocProvider(
+                create: (context) => CartBloc(
+                  context.read<CoreCartRepository>(),
+                ),
+              )
             ],
             child: MaterialApp(
               title: 'Flutter Demo',
