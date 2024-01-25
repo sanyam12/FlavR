@@ -1,3 +1,4 @@
+import 'package:flavr/core/constants.dart';
 import 'package:http/http.dart' as http;
 
 class LoginApiProvider{
@@ -10,7 +11,7 @@ class LoginApiProvider{
       "password": password
     };
     var response = await client.post(
-        Uri.https("flavr.tech", "/user/login"),
+        Uri.parse("${API_DOMAIN}user/login"),
         body: body
     );
     return response;

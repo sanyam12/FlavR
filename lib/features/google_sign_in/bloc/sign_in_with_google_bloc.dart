@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'package:flavr/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -29,7 +30,7 @@ class SignInWithGoogleBloc
               },
             );
             final response = await http.post(
-              Uri.parse("https://flavr.tech/user/googleAuth"),
+              Uri.parse("${API_DOMAIN}user/googleAuth"),
               body: body,
               headers: {"Content-Type": "application/json"},
             );

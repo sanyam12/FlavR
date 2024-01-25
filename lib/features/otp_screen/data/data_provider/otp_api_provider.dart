@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flavr/core/constants.dart';
 import 'package:http/http.dart';
 
 class OtpApiProvider {
@@ -15,7 +16,7 @@ class OtpApiProvider {
         {"key": email, "role": 0,},
       );
       var response = await client.post(
-        Uri.parse("https://flavr.tech/mail/resendotp"),
+        Uri.parse("${API_DOMAIN}mail/resendotp"),
         headers: headers,
         body: body,
       );

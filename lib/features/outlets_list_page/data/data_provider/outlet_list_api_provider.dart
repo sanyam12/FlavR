@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flavr/core/constants.dart';
 import 'package:http/http.dart';
 
 
@@ -9,19 +10,16 @@ class OutletListApiProvider {
 
   dynamic getAllOutlets() async {
     final response =
-        await get(Uri.https("flavr.tech", "/outlet/getAllOutlets"));
+        await get(Uri.parse("${API_DOMAIN}outlet/getAllOutlets"));
     return jsonDecode(response.body);
   }
 
   Future<List<String>> getSavedOutletList(String token, List<String> list) async {
     final List<String> outletLists = [];
     for (var id in list) {
-      final query = {"outletid": id};
       var response = await client.get(
-        Uri.https(
-          "flavr.tech",
-          "outlet/getOutlet",
-          query,
+        Uri.parse(
+          "${API_DOMAIN}outlet/getOutlet?outletid=$id"
         ),
         headers: {"Authorization": "Bearer $token"},
       );

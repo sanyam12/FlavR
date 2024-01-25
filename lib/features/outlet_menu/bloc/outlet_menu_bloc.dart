@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flavr/core/constants.dart';
 import 'package:flavr/core/repository/core_cart_repository.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -214,7 +215,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     );
     final token = await secure.read(key: "token");
     final response = await http.get(
-        Uri.parse("https://flavr.tech/orders/getincomporder"),
+        Uri.parse("${API_DOMAIN}orders/getincomporder"),
         headers: {"Authorization": "Bearer $token"});
     final json = jsonDecode(response.body);
     for (var i in json["orders"] as List) {
@@ -235,10 +236,8 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     } else {
       final query = {"outletid": id};
       var response = await http.get(
-        Uri.https(
-          "flavr.tech",
-          "outlet/getOutlet",
-          query,
+        Uri.parse(
+          "${API_DOMAIN}outlet/getOutlet?outletid=$id"
         ),
         headers: {"Authorization": "Bearer $token"},
       );
@@ -256,7 +255,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     list.add(Categories("All", [], ""));
     final response = await http.get(
       Uri.parse(
-          "https://flavr.tech/products/getProductsByCategory?categoryName=All&outletid=$id"),
+          "${API_DOMAIN}products/getProductsByCategory?categoryName=All&outletid=$id"),
     );
     final json = jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -272,7 +271,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     //
     // var queryParameters = {"outletid": id};
     // var response = await http.get(
-    //     Uri.https("flavr.tech", "products/getAllCategories", queryParameters));
+    //     Uri.parse("${API_DOMAIN}products/getAllCategories", queryParameters));
     //
     // var json = jsonDecode(response.body);
     // if(response.statusCode==200){
@@ -283,7 +282,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     //   for (var category in categoryList) {
     //     queryParameters = {"categoryName": category, "outletid": id};
     //     response = await http.get(Uri.https(
-    //         "flavr.tech", "/products/getProductsByCategory", queryParameters));
+    //         API_DOMAIN, "/products/getProductsByCategory", queryParameters));
     //     json = jsonDecode(response.body);
     //     final List<Product> productsList = [];
     //     for (var product in json["categoryArray"][0]["products"]) {
@@ -306,7 +305,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     var query = {"outletid": id};
 
     var a =
-        await http.get(Uri.https("flavr.tech", "/products/recommended", query));
+        await http.get(Uri.https(API_DOMAIN, "/products/recommended", query));
 
     var json = jsonDecode(a.body);
     for (var i in json["products"]) {

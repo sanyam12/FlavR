@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
+import 'dart:developer';
+import 'package:flavr/core/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -19,8 +20,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             aOptions: AndroidOptions(encryptedSharedPreferences: true)
         );
         final token = await secure.read(key: "token");
+        log(token.toString());
         http.Response response = await http.get(
-          Uri.parse("https://flavr.tech/user/userprofile"),
+          Uri.parse("${API_DOMAIN}user/userprofile"),
           headers: {
             "Authorization":"Bearer $token"
           }
@@ -42,7 +44,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<List<OrderData>> check(String token)async*{
     final List<OrderData> orderList = [];
     final response = await http.get(
-      Uri.parse("https://flavr.tech/orders/getorders"),
+      Uri.parse("${API_DOMAIN}orders/getorders"),
       headers: {
         "Authorization":"Bearer $token"
       }
@@ -60,7 +62,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   //   final List<OrderData> orderList = [];
   //   for(var orderId in orderIdList){
   //     final response = await http.get(
-  //         Uri.parse("https://flavr.tech/orders/getOrder?orderid=$orderId")
+  //         Uri.parse("${API_DOMAIN}orders/getOrder?orderid=$orderId")
   //     );
   //     log(response.body);
   //     orderList.add(OrderData.fromJson(jsonDecode(response.body)["order"][0]));

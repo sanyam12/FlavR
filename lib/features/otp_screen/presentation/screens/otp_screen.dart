@@ -152,7 +152,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           onPressed: () {
                             log(otp);
                             // var response = http.post(
-                            //   Uri.parse("https://flavr.tech/mail/verifyotp"),
+                            //   Uri.parse("${}mail/verifyotp"),
                             //   body: jsonEncode({
                             //     "key": widget.email,
                             //     "otp": 2650,

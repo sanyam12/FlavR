@@ -1,3 +1,4 @@
+import 'package:flavr/core/constants.dart';
 import 'package:http/http.dart';
 
 class SignupApiProvider {
@@ -16,9 +17,8 @@ class SignupApiProvider {
       "password": password,
     };
     return await client.post(
-      Uri.https(
-        "flavr.tech",
-        "/user/signup",
+      Uri.parse(
+        "${API_DOMAIN}user/signup",
       ),
       body: body,
     );

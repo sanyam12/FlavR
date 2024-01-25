@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flavr/core/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -36,7 +37,7 @@ class OtpScreenBloc extends Bloc<OtpScreenEvent, OtpScreenState> {
 
       final response = await post(
           Uri.parse(
-              "https://flavr.tech/mail/verifyotp"),
+              "${API_DOMAIN}mail/verifyotp"),
           body: body,
           headers: headers);
       final json = jsonDecode(response.body);

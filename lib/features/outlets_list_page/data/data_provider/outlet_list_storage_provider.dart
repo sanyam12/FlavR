@@ -1,3 +1,4 @@
+import 'package:flavr/core/constants.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +17,7 @@ class OutletListStorageProvider{
   Future<Response> getUsername()async{
     final token = await getToken();
     Response response = await get(
-        Uri.parse("https://flavr.tech/user/userprofile"),
+        Uri.parse("${API_DOMAIN}user/userprofile"),
         headers: {"Authorization": "Bearer $token"});
     return response;
   }
