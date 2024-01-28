@@ -77,7 +77,7 @@ class _OutletsListState extends State<OutletsList> {
             searchAllOutletList = state.list;
           });
         } else if (state is OutletSelected) {
-          Navigator.of(context).pushNamed("/outletMenu");
+          Navigator.of(context).pop(state.id);
         } else if (state is RefreshWidget) {
           setState(() {});
         } else if (state is GetSearchResultState) {

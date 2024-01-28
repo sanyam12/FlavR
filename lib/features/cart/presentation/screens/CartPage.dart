@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:developer';
 
 import 'package:flavr/core/CartChangeProvider.dart';
+import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
 import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flavr/features/cart/bloc/cart_bloc.dart';
@@ -82,6 +83,11 @@ class _CartPageState extends State<CartPage> {
               }
             },
             builder: (context, state) {
+              if (state is CartLoading) {
+                return const Center(
+                  child: CustomLoadingAnimation(),
+                );
+              }
               // if(isLoading){
               //   return const Center(
               //     child: CustomLoadingAnimation(),
@@ -185,6 +191,9 @@ class _CartPageState extends State<CartPage> {
                                   onChanged: (position) {
                                     if (position ==
                                         SlidableButtonPosition.end) {
+                                      context
+                                          .read<CartBloc>()
+                                          .add(ProceedToPay(cart));
                                       // setState(() {
                                       //   position =
                                       //       SlidableButtonPosition.start;

@@ -156,6 +156,7 @@ class _CategoryMenuState extends State<CategoryMenu> {
 
   @override
   Widget build(BuildContext context) {
+    // log("category menu rebuild: ${widget.cart.outletId}");
     List<Widget> children = [];
     bool check = (widget.list.length > 1);
     for (var i in widget.list) {

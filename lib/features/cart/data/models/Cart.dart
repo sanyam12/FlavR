@@ -21,7 +21,11 @@ class Cart{
     // cartTotalItems = totalItems;
   }
 
-  factory Cart.fromJson(Map<String, dynamic> json, List<Categories> list){
+  factory Cart.fromJson(Map<String, dynamic> json, List<Categories> list, String outletID){
+    final String jsonOutletID = json["outlet"] ?? "" ;
+    if(jsonOutletID.isEmpty || jsonOutletID!=outletID){
+      return Cart.fromParams(outletID, {});
+    }
     final tempList = <String, List<CartVariantData>>{};
     for(var i in (json["products"] as List)){
       // log(i["price"].toString());
@@ -39,7 +43,8 @@ class Cart{
         map[j] = tempList[j.id]??[];
       }
     }
-    return Cart.fromParams("", map);
+    //TODO: Add outlet id
+    return Cart.fromParams(json["outlet"].toString(), map);
   }
 
 }

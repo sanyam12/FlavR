@@ -117,7 +117,8 @@ class _OutletMenuState extends State<OutletMenu> {
       backgroundColor: const Color(0xFFF9FFFD),
       body: SafeArea(
         child: BlocConsumer<OutletMenuBloc, OutletMenuState>(
-          listener: (context, state) {
+          //TODO: remove async if not required
+          listener: (context, state) async{
             if (state is ShowSnackBar) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -134,16 +135,28 @@ class _OutletMenuState extends State<OutletMenu> {
               cart = state.cart;
               menuList = state.menuList;
               filteredMenuList = state.menuList;
+
               context.read<CartChangeProvider>().updateCart(state.cart);
+              // log("state cart: - ${state.cart.outletId}");
             }
             if (state is NavigateToOutletList) {
-              Navigator.pushNamed(context, "/outletList");
+              // log("utte");
+              //TODO: remove outletID if not required
+              final outletID = await Navigator.pushNamed(context, "/outletList");
+              if(context.mounted && outletID!=null){
+                // log("thlle $outletID");
+                context.read<OutletMenuBloc>().add(
+                  const RefreshMenuEvent(),
+                );
+              }
             }
             if (state is SearchResultState) {
               filteredMenuList = state.menuList;
             }
             if (state is FetchCart) {
-              cart = context.read<CartChangeProvider>().cart;
+              if(context.mounted){
+                cart = context.read<CartChangeProvider>().cart;
+              }
             }
           },
           builder: (context, state) {
@@ -433,7 +446,7 @@ class _OutletMenuState extends State<OutletMenu> {
                             ),
                           );
                           log("fetch cart event");
-                          if(context.mounted){
+                          if (context.mounted) {
                             context.read<OutletMenuBloc>().add(UpdateCart());
                           }
                         },

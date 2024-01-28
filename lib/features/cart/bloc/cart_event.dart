@@ -47,20 +47,20 @@ class CartDecrementAmount extends CartEvent {
   List<Object?> get props => [product, cart, variantData];
 }
 
+class ProceedToPay extends CartEvent{
+  final Cart cart;
+  const ProceedToPay(this.cart);
+  @override
+  List<Object?> get props => [];
+
+}
+
 // class GetCart extends CartEvent{
 //   final Cart cart;
 //   final List<Product> list;
 //   const GetCart(this.cart, this.list);
 //   @override
 //   List<Object?> get props => [cart, list];
-// }
-
-// class ProceedToPay extends CartEvent{
-//   final Cart cart;
-//   const ProceedToPay(this.cart);
-//   @override
-//   List<Object?> get props => [];
-//
 // }
 
 // class VerifyPayment extends CartEvent{

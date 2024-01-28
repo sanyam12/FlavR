@@ -158,7 +158,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       final token = await _coreCartRepository.getToken();
       final outlet = await _repository.getOutlet(token);
       final menu = await _repository.getOutletMenu(outlet.id);
-      final cart = await _repository.getCart(token, menu);
+      final cart = await _repository.getCart(token, menu, outlet.id);
       emit(RefreshedOutletData(outlet.outletName, menu, cart));
     } catch (e) {
       emit(ShowSnackBar(e.toString()));
@@ -169,8 +169,8 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     OutletListClicked event,
     Emitter<OutletMenuState> emit,
   ) {
-    emit(NavigateToOutletList());
     emit(OutletMenuLoading());
+    emit(NavigateToOutletList());
   }
 
   _onSearchEvent(
@@ -236,9 +236,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     } else {
       final query = {"outletid": id};
       var response = await http.get(
-        Uri.parse(
-          "${API_DOMAIN}outlet/getOutlet?outletid=$id"
-        ),
+        Uri.parse("${API_DOMAIN}outlet/getOutlet?outletid=$id"),
         headers: {"Authorization": "Bearer $token"},
       );
       final json = jsonDecode(response.body);

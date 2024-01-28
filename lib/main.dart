@@ -5,6 +5,8 @@ import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/core/data_provider/core_api_provider.dart';
 import 'package:flavr/core/data_provider/core_storage_provider.dart';
 import 'package:flavr/core/repository/core_cart_repository.dart';
+import 'package:flavr/features/cart/data/data_providers/cart_api_provider.dart';
+import 'package:flavr/features/cart/data/repository/cart_repository.dart';
 import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_api_provider.dart';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart';
@@ -109,7 +111,9 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
             ),
-            RepositoryProvider(create: (context) => SplashScreenRepository()),
+            RepositoryProvider(
+              create: (context) => SplashScreenRepository(),
+            ),
             RepositoryProvider(
               create: (context) => LoginRepository(
                 LoginApiProvider(context.read<http.Client>()),
@@ -132,6 +136,14 @@ class _MyAppState extends State<MyApp> {
               create: (context) => OutletMenuRepository(
                 OutletMenuApiProvider(context.read<http.Client>()),
                 OutletMenuStorageProvider(),
+              ),
+            ),
+            RepositoryProvider(
+              create: (context) => CartRepository(
+                context.read<CoreCartRepository>(),
+                CartApiProvider(
+                  context.read<Client>(),
+                ),
               ),
             ),
           ],
@@ -167,8 +179,8 @@ class _MyAppState extends State<MyApp> {
               ),
               BlocProvider(
                 create: (context) => CartBloc(
-                  context.read<CoreCartRepository>(),
-                ),
+                    context.read<CoreCartRepository>(),
+                    context.read<CartRepository>()),
               )
             ],
             child: MaterialApp(

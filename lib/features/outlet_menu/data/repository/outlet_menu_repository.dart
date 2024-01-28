@@ -35,13 +35,10 @@ class OutletMenuRepository{
     return list;
   }
 
-  Future<Cart> getCart(String token, List<Categories> list)async{
+  Future<Cart> getCart(String token, List<Categories> list, String outletID)async{
     final data =  await _apiProvider.getCart(token);
     final json = jsonDecode(data);
-    // log(data);
-
-    //TODO: Pending decode data to get saved cart data
-    return Cart.fromJson(json["cart"], list);
+    return Cart.fromJson(json["cart"], list, outletID);
   }
   
 }

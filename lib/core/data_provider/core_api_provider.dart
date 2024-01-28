@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart';
 
@@ -9,13 +10,15 @@ class CoreApiProvider {
 
   const CoreApiProvider(this.client);
 
-  Future<void> updateQuantity(
+  Future<String> updateQuantity(
     String productId,
     String variant,
     int quantity,
     String token,
+    String outletID,
   ) async {
     final body = jsonEncode({
+      "outletid": outletID,
       "productid": productId,
       "variant": variant,
       "quantity": quantity,
@@ -29,5 +32,16 @@ class CoreApiProvider {
       body: body,
       headers: headers,
     );
+    return (data.body);
+  }
+
+  Future<String> clearCart(String token)async{
+    final response = await client.patch(
+        Uri.parse("${API_DOMAIN}user/clearCart"),
+      headers: {
+          "Authorization":"Bearer $token"
+      }
+    );
+    return response.body;
   }
 }

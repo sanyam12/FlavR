@@ -1,8 +1,8 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flavr/core/data_provider/core_storage_provider.dart';
-import 'package:flavr/features/cart/bloc/cart_bloc.dart';
-import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../features/cart/data/models/Cart.dart';
 import '../../features/cart/data/models/CartVariantData.dart';
@@ -10,19 +10,47 @@ import '../../features/outlet_menu/data/models/Product.dart';
 import '../data_provider/core_api_provider.dart';
 
 class CoreCartRepository {
-
   final CoreStorageProvider _coreStorageProvider;
   final CoreApiProvider _coreApiProvider;
 
   CoreCartRepository(this._coreStorageProvider, this._coreApiProvider);
 
-  Future<String> getToken()async{
+  Future<String> getToken() async {
     return await _coreStorageProvider.getToken();
   }
 
-  Future<void> updateQuantity(String productId, String variant, int quantity) async{
+  Future<Cart> updateQuantity(
+    String productId,
+    String variant,
+    int quantity,
+    Cart cart,
+  ) async {
     final token = await _coreStorageProvider.getToken();
-    await _coreApiProvider.updateQuantity(productId, variant, quantity, token);
+    String response = await _coreApiProvider.updateQuantity(
+      productId,
+      variant,
+      quantity,
+      token,
+      cart.outletId,
+    );
+
+    if (jsonDecode(response)["message"] ==
+        "Cart items do not belong to this outlet") {
+      response = await _coreApiProvider.clearCart(token);
+      if (jsonDecode(response)["message"] == "Cleared cart") {
+        response = await _coreApiProvider.updateQuantity(
+          productId,
+          variant,
+          quantity,
+          token,
+          cart.outletId,
+        );
+        log("new added: $response");
+      } else {
+        throw Exception("Something Went Wrong While Resetting Cart");
+      }
+    }
+    return cart;
   }
 
   Future<Cart> incrementAmount(
@@ -48,17 +76,19 @@ class CoreCartRepository {
             variantData.price,
           ),
         );
-        updateQuantity(
+        cart = await updateQuantity(
           product.id,
           variantData.variantName,
           1,
+          cart,
         );
       } else {
         cartVariant.first.quantity++;
-        updateQuantity(
+        cart = await updateQuantity(
           product.id,
           variantData.variantName,
           cartVariant.first.quantity,
+          cart,
         );
       }
     } else {
@@ -70,10 +100,11 @@ class CoreCartRepository {
         )
       ];
       newCart.items[product] = items;
-      updateQuantity(
+      cart = await updateQuantity(
         product.id,
         variantData.variantName,
         1,
+        cart,
       );
     }
 
@@ -100,10 +131,11 @@ class CoreCartRepository {
         throw Exception("This Item is not added");
       }
       cartVariant.quantity--;
-      updateQuantity(
+      cart = await updateQuantity(
         product.id,
         variantData.variantName,
         cartVariant.quantity,
+        cart,
       );
       // newCart.items[product.id]?.totalItems--;
       return newCart;

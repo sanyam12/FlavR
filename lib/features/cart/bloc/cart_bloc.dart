@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:flavr/features/cart/data/repository/cart_repository.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../../core/repository/core_cart_repository.dart';
@@ -15,11 +17,29 @@ part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final CoreCartRepository _coreCartRepository;
+  final CartRepository _cartRepository;
 
-  CartBloc(this._coreCartRepository) : super(CartInitial()) {
+  CartBloc(this._coreCartRepository, this._cartRepository)
+      : super(CartInitial()) {
     on<UpdateGrandTotal>(_updateGrandTotal);
     on<CartIncrementAmount>(_incrementAmount);
     on<CartDecrementAmount>(_decrementAmount);
+    on<ProceedToPay>(_onProceedToPay);
+  }
+
+  _onProceedToPay(
+    ProceedToPay event,
+    Emitter<CartState> emit,
+  ) async {
+    try {
+      emit(CartLoading());
+      final response = await _cartRepository.placeOrder(
+        event.cart.outletId,
+      );
+      emit(ShowSnackbar(response));
+    } catch (e) {
+      emit(ShowSnackbar("Something went wrong $e"));
+    }
   }
 
   int _calculateGrandTotal(Cart cart) {

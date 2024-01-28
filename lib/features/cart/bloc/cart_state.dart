@@ -49,3 +49,8 @@ class NavigateToOrderNumber extends CartState{
   List<Object?> get props => [seed, orderNumber];
 
 }
+
+class CartLoading extends CartState{
+  @override
+  List<Object?> get props => [];
+}
