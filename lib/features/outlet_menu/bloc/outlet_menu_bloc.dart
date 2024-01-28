@@ -161,7 +161,12 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       final cart = await _repository.getCart(token, menu, outlet.id);
       emit(RefreshedOutletData(outlet.outletName, menu, cart));
     } catch (e) {
-      emit(ShowSnackBar(e.toString()));
+      log(e.toString());
+      if(e.toString()=="Exception: No Saved Outlet Found"){
+        emit(NavigateToOutletList());
+      }else{
+        emit(ShowSnackBar(e.toString()));
+      }
     }
   }
 

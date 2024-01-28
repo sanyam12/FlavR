@@ -4,6 +4,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flavr/components/loading.dart';
 import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/features/cart/presentation/screens/CartPage.dart';
+import 'package:flavr/pages/order_details/order_details_bloc.dart';
+import 'package:flavr/pages/ordernumber/OrderNumber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../cart/data/models/Cart.dart';
@@ -24,6 +26,7 @@ class _OutletMenuState extends State<OutletMenu> {
   late Cart cart;
   List<Categories> menuList = [];
   List<Categories> filteredMenuList = [];
+  List<OrderData> incompleteOrders = [];
   String selectedCategory = "All";
   bool isSearchActive = false;
 
@@ -67,7 +70,7 @@ class _OutletMenuState extends State<OutletMenu> {
     final height = queryData.size.height;
 
     //TODO: Add incomplete list
-    final List<Widget> stackList = []; // incompleteOrders
+    final List<Widget> stackList = [];//incompleteOrders
     // .map(
     //   (e) => GestureDetector(
     //     onTap: () {
@@ -111,7 +114,7 @@ class _OutletMenuState extends State<OutletMenu> {
       backgroundColor: const Color(0xFFF9FFFD),
       body: SafeArea(
         child: BlocConsumer<OutletMenuBloc, OutletMenuState>(
-          listener: (context, state){
+          listener: (context, state)async{
             if (state is ShowSnackBar) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -130,9 +133,9 @@ class _OutletMenuState extends State<OutletMenu> {
               filteredMenuList = state.menuList;
 
               context.read<CartChangeProvider>().updateCart(state.cart);
-              // log("state cart: - ${state.cart.outletId}");
             }
             if (state is NavigateToOutletList) {
+              await Navigator.of(context).pushNamed("/outletList");
               if(context.mounted){
                 context.read<OutletMenuBloc>().add(
                   const RefreshMenuEvent(),
