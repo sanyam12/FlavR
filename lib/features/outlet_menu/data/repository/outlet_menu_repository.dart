@@ -4,6 +4,7 @@ import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storag
 import 'package:flavr/features/outlet_menu/data/models/Categories.dart';
 import 'package:flavr/features/outlet_menu/data/models/Outlet.dart';
 import 'package:flavr/features/outlet_menu/data/models/Product.dart';
+import 'package:flavr/pages/profile_page/OrderData.dart';
 import '../../../cart/data/models/Cart.dart';
 import '../data_provider/outlet_menu_api_provider.dart';
 
@@ -39,6 +40,15 @@ class OutletMenuRepository{
     final data =  await _apiProvider.getCart(token);
     final json = jsonDecode(data);
     return Cart.fromJson(json["cart"], list, outletID);
+  }
+
+  Future<List<OrderData>> getIncompleteOrders(String token)async{
+    final response = await  _apiProvider.getIncompleteOrders(token);
+    final list = <OrderData>[];
+    for(var i in jsonDecode(response)["orders"] as List){
+      list.add(OrderData.fromJson(i));
+    }
+    return list;
   }
   
 }

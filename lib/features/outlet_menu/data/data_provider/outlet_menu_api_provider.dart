@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flavr/core/constants.dart';
+import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:http/http.dart';
 class OutletMenuApiProvider {
   final Client client;
   OutletMenuApiProvider(this.client);
+
   Future<String> getOutlet(
     String id,
     String token,
@@ -18,6 +20,7 @@ class OutletMenuApiProvider {
       throw Exception(e.toString());
     }
   }
+
   Future<String> getOutletMenu(String id) async {
     final response = await client.get(
       Uri.parse(
@@ -28,6 +31,7 @@ class OutletMenuApiProvider {
     }
     throw Exception("Something Went Wrong While Fetching Outlet Menu");
   }
+
   Future<String> getCart(String token) async {
     // return Cart();
     final response = await client.get(
@@ -38,5 +42,15 @@ class OutletMenuApiProvider {
       return response.body;
     }
     throw Exception("Something went wrong while fetching cart");
+  }
+
+  Future<String> getIncompleteOrders(String token)async{
+    final response = await client.get(
+        Uri.parse("${API_DOMAIN}orders/getincomporder"),
+      headers: {
+          "Authorization":"Bearer $token"
+      }
+    );
+    return response.body;
   }
 }

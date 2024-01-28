@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flavr/core/constants.dart';
 import 'package:flavr/core/repository/core_cart_repository.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
+import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -159,12 +160,18 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       final outlet = await _repository.getOutlet(token);
       final menu = await _repository.getOutletMenu(outlet.id);
       final cart = await _repository.getCart(token, menu, outlet.id);
-      emit(RefreshedOutletData(outlet.outletName, menu, cart));
+      final incompleteOrders = await _repository.getIncompleteOrders(token);
+      emit(RefreshedOutletData(
+        outlet.outletName,
+        menu,
+        cart,
+        incompleteOrders,
+      ));
     } catch (e) {
       log(e.toString());
-      if(e.toString()=="Exception: No Saved Outlet Found"){
+      if (e.toString() == "Exception: No Saved Outlet Found") {
         emit(NavigateToOutletList());
-      }else{
+      } else {
         emit(ShowSnackBar(e.toString()));
       }
     }

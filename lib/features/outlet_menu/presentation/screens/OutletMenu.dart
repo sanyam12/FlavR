@@ -4,8 +4,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flavr/components/loading.dart';
 import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/features/cart/presentation/screens/CartPage.dart';
-import 'package:flavr/pages/order_details/order_details_bloc.dart';
 import 'package:flavr/pages/ordernumber/OrderNumber.dart';
+import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../cart/data/models/Cart.dart';
@@ -69,47 +69,6 @@ class _OutletMenuState extends State<OutletMenu> {
     final width = queryData.size.width;
     final height = queryData.size.height;
 
-    //TODO: Add incomplete list
-    final List<Widget> stackList = [];//incompleteOrders
-    // .map(
-    //   (e) => GestureDetector(
-    //     onTap: () {
-    //       Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //           builder: (context) => OrderNumber(orderId: e.id),
-    //         ),
-    //       );
-    //     },
-    //     child: Card(
-    //         color: const Color(0xFFA3C2B3),
-    //         shape: RoundedRectangleBorder(
-    //           borderRadius: BorderRadius.circular(10),
-    //         ),
-    //         child: Padding(
-    //           padding: const EdgeInsets.symmetric(horizontal: 28.0),
-    //           child: Row(
-    //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //             children: [
-    //               Center(
-    //                   child: (e.orderNumber != null)
-    //                       ? Text(
-    //                           "Order Number:\n${e.orderNumber.toString()}",
-    //                           textAlign: TextAlign.center)
-    //                       : const Text("Order Number:\nNot Assigned",
-    //                           textAlign: TextAlign.center)),
-    //               Center(
-    //                   child: Text(
-    //                 "Price:\n${e.totalPrice.toString()}",
-    //                 textAlign: TextAlign.center,
-    //               )),
-    //             ],
-    //           ),
-    //         )),
-    //   ),
-    // )
-    // .toList();
-
     return Scaffold(
       backgroundColor: const Color(0xFFF9FFFD),
       body: SafeArea(
@@ -131,6 +90,7 @@ class _OutletMenuState extends State<OutletMenu> {
               cart = state.cart;
               menuList = state.menuList;
               filteredMenuList = state.menuList;
+              incompleteOrders = state.incompleteOrders;
 
               context.read<CartChangeProvider>().updateCart(state.cart);
             }
@@ -152,9 +112,49 @@ class _OutletMenuState extends State<OutletMenu> {
             }
           },
           builder: (context, state) {
+
             if (state is OutletMenuLoading || state is OutletMenuInitial) {
               return const Center(child: CustomLoadingAnimation());
             }
+            final List<Widget> stackList = incompleteOrders
+                .map(
+                  (e) => GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OrderNumber(orderId: e.id),
+                    ),
+                  );
+                },
+                child: Card(
+                    color: const Color(0xFFA3C2B3),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Center(
+                              child: (e.orderNumber != null)
+                                  ? Text(
+                                  "Order Number:\n${e.orderNumber.toString()}",
+                                  textAlign: TextAlign.center)
+                                  : const Text("Order Number:\nNot Assigned",
+                                  textAlign: TextAlign.center)),
+                          Center(
+                              child: Text(
+                                "Price:\n${e.totalPrice.toString()}",
+                                textAlign: TextAlign.center,
+                              )),
+                        ],
+                      ),
+                    )),
+              ),
+            )
+                .toList();
             return Column(
               children: [
                 Padding(
@@ -506,7 +506,8 @@ class _OutletMenuState extends State<OutletMenu> {
                             ],
                           ),
                         ),
-                      )
+                      ),
+                      ...stackList
                     ],
                     options: CarouselOptions(
                       height: 0.2665625 * height,
