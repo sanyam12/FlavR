@@ -43,7 +43,6 @@ class Cart{
         map[j] = tempList[j.id]??[];
       }
     }
-    //TODO: Add outlet id
     return Cart.fromParams(json["outlet"].toString(), map);
   }
 

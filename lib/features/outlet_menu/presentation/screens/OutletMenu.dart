@@ -107,18 +107,11 @@ class _OutletMenuState extends State<OutletMenu> {
     // )
     // .toList();
 
-    // TODO: Add current cart's total amount
-    // stackList.insert(
-    //   0,
-    //   ,
-    // );
-
     return Scaffold(
       backgroundColor: const Color(0xFFF9FFFD),
       body: SafeArea(
         child: BlocConsumer<OutletMenuBloc, OutletMenuState>(
-          //TODO: remove async if not required
-          listener: (context, state) async{
+          listener: (context, state){
             if (state is ShowSnackBar) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -140,11 +133,7 @@ class _OutletMenuState extends State<OutletMenu> {
               // log("state cart: - ${state.cart.outletId}");
             }
             if (state is NavigateToOutletList) {
-              // log("utte");
-              //TODO: remove outletID if not required
-              final outletID = await Navigator.pushNamed(context, "/outletList");
-              if(context.mounted && outletID!=null){
-                // log("thlle $outletID");
+              if(context.mounted){
                 context.read<OutletMenuBloc>().add(
                   const RefreshMenuEvent(),
                 );
@@ -331,7 +320,6 @@ class _OutletMenuState extends State<OutletMenu> {
                                 return InkWell(
                                   onTap: () {
                                     setState(() {
-                                      //TODO theek crow
                                       selectedCategory =
                                           filteredMenuList[index].category;
                                     });
