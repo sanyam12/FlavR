@@ -20,7 +20,14 @@ class CartApiProvider {
           'Content-Type': 'application/json'
         },
         body: json.encode({"outletid": outletID}));
-    log(response.body.toString());
+    return response.body;
+  }
+
+  Future<String> verifyPayment(String orderId)async{
+    final response = await client.get(
+        Uri.parse("${API_DOMAIN}orders/getOrder?orderid=$orderId"),
+    );
+    log(response.body);
     return response.body;
   }
 }

@@ -1,9 +1,13 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flavr/core/constants.dart';
 import 'package:flavr/features/cart/data/repository/cart_repository.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_cashfree_pg_sdk/api/cfpayment/cfdropcheckoutpayment.dart';
+import 'package:flutter_cashfree_pg_sdk/api/cfsession/cfsession.dart';
 import '../../../core/repository/core_cart_repository.dart';
 import '../../../features/outlet_menu/data/models/Categories.dart';
 import '../../../features/outlet_menu/data/models/Product.dart';
@@ -25,6 +29,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartIncrementAmount>(_incrementAmount);
     on<CartDecrementAmount>(_decrementAmount);
     on<ProceedToPay>(_onProceedToPay);
+    on<VerifyPayment>(_onVerifyPayment);
   }
 
   _onProceedToPay(
@@ -36,7 +41,22 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       final response = await _cartRepository.placeOrder(
         event.cart.outletId,
       );
-      emit(ShowSnackbar(response));
+      final json = jsonDecode(response);
+      final orderId = json["order_id"].toString();
+      final sessionId = json["payment_session_id"].toString();
+
+      final cfSession = CFSessionBuilder()
+          .setEnvironment(cfEnvironment)
+      .setOrderId(orderId)
+      .setPaymentSessionId(sessionId)
+      .build();
+
+      var cfDropCheckoutPayment = CFDropCheckoutPaymentBuilder()
+          .setSession(cfSession)
+          .setTheme(theme)
+          .build();
+
+      emit(StartCashFreeService(cfDropCheckoutPayment));
     } catch (e) {
       emit(ShowSnackbar("Something went wrong $e"));
     }
@@ -138,6 +158,21 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(RefreshUI(newCart, _calculateGrandTotal(newCart)));
     } catch (e) {
       emit(ShowSnackbar(e.toString()));
+    }
+  }
+
+  _onVerifyPayment(
+      VerifyPayment event,
+      Emitter<CartState> emit,
+  )async{
+    //TODO: verification method pending
+    emit(const ShowSnackbar("Verification not implemented"));
+    final orderDetails = await _cartRepository.verifyPayment(event.orderId);
+
+    if (orderDetails) {
+      emit(NavigateToOrderNumber(event.orderId));
+    } else {
+      emit(const ShowSnackbar("Payment Failed"));
     }
   }
 }

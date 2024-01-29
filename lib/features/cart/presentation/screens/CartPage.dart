@@ -40,15 +40,28 @@ class _CartPageState extends State<CartPage> {
   bool isLoading = true;
   int grandTotal = 0;
   late Cart cart;
+  var cfPaymentGatewayService = CFPaymentGatewayService();
 
   @override
   void initState() {
     super.initState();
+    cfPaymentGatewayService.setCallback(verifyPayment, onPaymentError);
     cart = context.read<CartChangeProvider>().cart;
     context.read<CartBloc>().add(UpdateGrandTotal(cart, list));
   }
 
-  void onPaymentError(CFErrorResponse errorResponse, String orderId) {}
+  void verifyPayment(String orderId) {
+    context.read<CartBloc>().add(VerifyPayment(orderId));
+  }
+
+  void onPaymentError(CFErrorResponse errorResponse, String orderId) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(
+        SnackBar(
+            content: Text("payment failed ${errorResponse.toString()}"),
+        ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +93,8 @@ class _CartPageState extends State<CartPage> {
                   ),
                 );
                 cart.items.clear();
+              } else if(state is StartCashFreeService){
+                cfPaymentGatewayService.doPayment(state.cfDropCheckoutPayment);
               }
             },
             builder: (context, state) {

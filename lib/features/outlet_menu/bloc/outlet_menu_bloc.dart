@@ -156,6 +156,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     Emitter<OutletMenuState> emit,
   ) async {
     try {
+      emit(OutletMenuLoading());
       final token = await _coreCartRepository.getToken();
       final outlet = await _repository.getOutlet(token);
       final menu = await _repository.getOutletMenu(outlet.id);

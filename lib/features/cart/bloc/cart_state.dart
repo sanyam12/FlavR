@@ -42,15 +42,24 @@ class NavigateToPaymentState extends CartState{
 }
 
 class NavigateToOrderNumber extends CartState{
-  final int seed;
   final String orderNumber;
-  const NavigateToOrderNumber(this.seed, this.orderNumber);
+  const NavigateToOrderNumber(this.orderNumber);
   @override
-  List<Object?> get props => [seed, orderNumber];
+  List<Object?> get props => [orderNumber];
 
 }
 
 class CartLoading extends CartState{
   @override
   List<Object?> get props => [];
+}
+
+class StartCashFreeService extends CartState{
+  final CFDropCheckoutPayment cfDropCheckoutPayment;
+
+  const StartCashFreeService(this.cfDropCheckoutPayment);
+
+  @override
+  List<Object?> get props => [];
+
 }
