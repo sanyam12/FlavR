@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:flavr/pages/order_details/OrderDetails.dart';
+import 'package:flavr/pages/profile_page/order_card.dart';
 import 'package:flavr/pages/profile_page/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../../components/loading.dart';
 import 'OrderData.dart';
 
@@ -46,7 +44,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   list = state.list;
                 });
               }
-
             },
             child: (isLoading)
                 ? const Center(
@@ -89,7 +86,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Icon(
                           Icons.person,
                           color: const Color(0xffffffff),
-                          size: 0.0625*height,
+                          size: 0.0625 * height,
                         ),
                       ),
                       Text(
@@ -107,7 +104,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0.0556*width, 0.0125*height,0, 0.0125*height),
+                        padding: EdgeInsets.fromLTRB(0.0556 * width,
+                            0.0125 * height, 0, 0.0125 * height),
                         child: const Text(
                           "Recent Orders",
                           style: TextStyle(
@@ -115,214 +113,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             fontSize: 24,
                           ),
                         ),
-                      ),
-                      Card(
-                          child: SizedBox(
-                            width: width * 0.886111,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const OrderDetails(orderId: '12')),
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xffffffff),  // Background color
-                              ),
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0.013889*width, 0.00625*height, 0.013889*width, 0.00625*height),
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "11 Dec,2024",
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff000000),
-                                        ),
-                                      ),
-                                      Text(
-                                        "NesCafe NITJ",
-                                        style: TextStyle(
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff000000),
-                                        ),
-                                      ),
-                                      Text(
-                                        "12:44 PM",
-                                        style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff000000),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0.013889*width, 0.00625*height, 0.013889*width, 0.00625*height),
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Order #",
-                                            style:TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                              color: Color(0xff000000),
-                                            ),
-                                          ),
-                                          Text(
-                                            "52",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xffff0000),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-
-                                      Row(
-                                        children: [
-                                        Icon(
-                                          Icons.currency_rupee,
-                                          color: Color(0xff004932),
-                                          size: 16,
-                                        ),
-                                          Text(
-                                            "160",
-                                            style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                              color: Color(0xff000000),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0.013889*width, 0.00625*height, 0.013889*width, 0.00625*height),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Stack(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.fromLTRB(0.0556*width, 0, 0.0556*width, 0),
-                                            child: CircleAvatar(
-                                              radius: 32,
-                                              child: ClipOval(child: Image.asset('assets/images/pasta.jpeg')),
-                                            )
-                                          ),
-                                          CircleAvatar(
-                                            radius: 32,
-                                            child: ClipOval(child: Image.asset('assets/images/pasta.jpeg')),
-                                          )
-                                        ],
-                                      ),
-                                      const Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "1 x Red Sauce Pasta",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color(0xff000000),
-                                            ),
-                                          ),
-                                          Text(
-                                            "2 x Veg Cheese Burger",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w700,
-                                              color: Color(0xff000000),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-
-                                      const Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.currency_rupee,
-                                                size: 12,
-                                                color: Color(0xff004932),
-                                              ),
-                                              Text(
-                                                "180",
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Color(0xff000000),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.currency_rupee,
-                                                size: 12,
-                                                color: Color(0xff004932),
-                                              ),
-                                              Text(
-                                                "180",
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: Color(0xff000000),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0.013889*width, 0.00625*height, 0.013889*width, 0.00625*height),
-                                  child: const Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Delivered Successfully",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff004932),
-                                        ),
-                                      ),
-                                      Text(
-                                        "7:00 PM",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff004932),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-
                       ),
                       StreamBuilder(
                           stream: list,
@@ -337,8 +127,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         OrderCard(
                                           width: width,
                                           height: height,
-                                          orderData: i,
-                                        )
+                                          data: i
+                                        ),
                                     ],
                                   ),
                                 ),
@@ -349,17 +139,20 @@ class _ProfilePageState extends State<ProfilePage> {
                               );
                             }
                           }),
-                      /*ElevatedButton(
-                          onPressed: ()async{
-                            var service = const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
+                      ElevatedButton(
+                          onPressed: () async {
+                            var service = const FlutterSecureStorage(
+                                aOptions: AndroidOptions(
+                                    encryptedSharedPreferences: true));
                             await service.delete(key: "token");
-                            if(context.mounted){
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Logged Out!")));
-                              Navigator.of(context).popAndPushNamed("/signInWithGoogle");
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text("Logged Out!")));
+                              Navigator.of(context)
+                                  .popAndPushNamed("/signInWithGoogle");
                             }
                           },
-                          child: const Text("Log Out")
-                      )*/
+                          child: const Text("Log Out"))
                     ],
                   ),
           ),
@@ -369,59 +162,59 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-class OrderCard extends StatelessWidget {
-  const OrderCard(
-      {super.key,
-      required this.width,
-      required this.height,
-      required this.orderData});
-
-  final double width;
-  final double height;
-  final OrderData orderData;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => OrderDetails(
-                      orderId: orderData.id,
-                    )));
-      },
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 0.02278 * width),
-        child: SizedBox(
-          width: width,
-          height: 0.13625 * height,
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "Red Sauce Pasta",
-                  ),
-                  Card(
-                    child: Container(
-                      alignment: AlignmentDirectional.center,
-                      width: 0.24166 * width,
-                      height: 0.06625 * height,
-                      child: const Text("₹100"),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class OrderCard extends StatelessWidget {
+//   const OrderCard(
+//       {super.key,
+//       required this.width,
+//       required this.height,
+//       required this.orderData});
+//
+//   final double width;
+//   final double height;
+//   final OrderData orderData;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return InkWell(
+//       onTap: () {
+//         Navigator.push(
+//             context,
+//             MaterialPageRoute(
+//                 builder: (context) => OrderDetails(
+//                       orderId: orderData.id,
+//                     )));
+//       },
+//       child: Padding(
+//         padding: EdgeInsets.symmetric(horizontal: 0.02278 * width),
+//         child: SizedBox(
+//           width: width,
+//           height: 0.13625 * height,
+//           child: Card(
+//             shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(20),
+//             ),
+//             child: Padding(
+//               padding: const EdgeInsets.all(8.0),
+//               child: Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   const Text(
+//                     "Red Sauce Pasta",
+//                   ),
+//                   Card(
+//                     child: Container(
+//                       alignment: AlignmentDirectional.center,
+//                       width: 0.24166 * width,
+//                       height: 0.06625 * height,
+//                       child: const Text("₹100"),
+//                     ),
+//                   )
+//                 ],
+//               ),
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
