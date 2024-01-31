@@ -12,7 +12,7 @@ class ProfileInitial extends ProfileState {
 class ProfileDataState extends ProfileState {
   final String userName;
   final String email;
-  final String? profilePicUrl;
+  final String profilePicUrl;
   final Stream<List<OrderData>> list;
 
   const ProfileDataState(

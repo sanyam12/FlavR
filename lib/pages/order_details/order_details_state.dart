@@ -19,11 +19,11 @@ class ShowSnackbar extends OrderDetailsState{
 
 }
 
-class OrderData extends OrderDetailsState{
+class OrderDataState extends OrderDetailsState{
   final String outletName;
   final String outletAddress;
   final String imageUrl;
-  const OrderData({required this.outletName,required this.outletAddress,required this.imageUrl});
+  const OrderDataState({required this.outletName,required this.outletAddress,required this.imageUrl});
 
   @override
   List<Object?> get props => [outletName, outletAddress, imageUrl];

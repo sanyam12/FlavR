@@ -18,7 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String userName = "initial";
   bool isLoading = true;
   String email = "initial";
-  String? profilePicUrl;
+  String profilePicUrl = "null";
   late Stream<List<OrderData>> list;
 
   @override
@@ -87,7 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       CircleAvatar(
                         backgroundColor: const Color(0xff004932),
                         radius: 50,
-                        child: (profilePicUrl!=null)?Image.network(profilePicUrl!)
+                        child: (profilePicUrl!="null")?Image.network(profilePicUrl)
                         :Icon(
                           Icons.person,
                           color: const Color(0xffffffff),

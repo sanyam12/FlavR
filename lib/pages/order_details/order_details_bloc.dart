@@ -34,7 +34,7 @@ class OrderDetailsBloc extends Bloc<OrderDetailsEvent, OrderDetailsState> {
             final outletDataJson = jsonDecode(outletResponse.body);
 
             emit(
-                OrderData(
+                OrderDataState(
                     outletName: outletDataJson["result"][0]["outletName"],
                     outletAddress: outletDataJson["result"][0]["address"]["addressLine1"],
                     imageUrl: outletDataJson["result"][0]["outletImage"]["url"],

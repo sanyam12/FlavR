@@ -30,7 +30,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           final userName = json["user"][0]["userName"];
           final email = json["user"][0]["email"];
           final profilePicUrl = json["user"][0]["userProfilePic"]["url"];
-          log(profilePicUrl.toString());
           Stream<List<OrderData>> stream = getOrders(token.toString());
 
           emit(ProfileDataState(userName, stream, email, profilePicUrl));

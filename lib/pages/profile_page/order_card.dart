@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flavr/pages/order_details/OrderDetails.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OrderCard extends StatelessWidget {
   final double width;
@@ -15,6 +16,15 @@ class OrderCard extends StatelessWidget {
       required this.height,
       required this.data});
 
+  String _formatDate(DateTime dateTime) {
+    final DateFormat formatter = DateFormat('dd MMM, yyyy');
+    return formatter.format(dateTime);
+  }
+  String _formatTime(DateTime dateTime) {
+    final DateFormat formatter = DateFormat('hh:mm a');
+    return formatter.format(dateTime);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,7 +36,7 @@ class OrderCard extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => OrderDetails(orderId: data.id),
+                builder: (context) => OrderDetails(orderData: data),
               ),
             );
           },
@@ -39,7 +49,7 @@ class OrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      data.createdAt.day.toString(),
+                      _formatDate(data.createdAt),
                       style: const TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
@@ -56,9 +66,9 @@ class OrderCard extends StatelessWidget {
                         color: Color(0xff000000),
                       ),
                     ),
-                    const Text(
-                      "time data.createdAt",
-                      style: TextStyle(
+                    Text(
+                      _formatTime(data.createdAt),
+                      style: const TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff000000),
@@ -260,9 +270,9 @@ class OrderCard extends StatelessWidget {
                         color: Color(0xff004932),
                       ),
                     ),
-                    const Text(
-                      "Last Updated: time",
-                      style: TextStyle(
+                    Text(
+                      _formatTime(data.createdAt),
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff004932),
