@@ -78,6 +78,27 @@ class FetchCart extends OutletMenuState {
   List<Object?> get props => [];
 }
 
+class VegFilterTriggered extends OutletMenuState{
+  final List<Categories> menuList;
+  final bool toggled;
+
+  const VegFilterTriggered(this.menuList, this.toggled);
+
+  @override
+  List<Object?> get props => [menuList, toggled];
+
+}
+class NonVegFilterTriggered extends OutletMenuState{
+  final List<Categories> menuList;
+  final bool toggled;
+
+  const NonVegFilterTriggered(this.menuList, this.toggled);
+
+  @override
+  List<Object?> get props => [menuList, toggled];
+
+}
+
 // class CartDataState extends OutletMenuState{
 //   final Cart cart;
 //   const CartDataState(this.cart);

@@ -35,6 +35,56 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     on<OutletListClicked>(_outletListClicked);
     on<SearchQueryEvent>(_onSearchEvent);
     on<UpdateCart>(_onUpdateCart);
+    on<OnVegClicked>(_onVegClicked);
+    on<OnNonVegClicked>(_onNonVegClicked);
+  }
+
+  _onNonVegClicked(
+      OnNonVegClicked event,
+      Emitter<OutletMenuState> emit,
+  ){
+    if (event.toggled) {
+      final list = <Categories>[Categories("All", [], "")];
+      for (var i in event.menuList) {
+        final category = Categories(
+          i.category,
+          i.products,
+          i.iconUrl,
+        );
+        category.products =
+            category.products.where((element) => element.veg == false).toList();
+        if (category.products.isNotEmpty) {
+          list.add(category);
+        }
+      }
+      emit(NonVegFilterTriggered(list, event.toggled));
+    } else {
+      emit(NonVegFilterTriggered(event.menuList, event.toggled));
+    }
+  }
+
+  _onVegClicked(
+    OnVegClicked event,
+    Emitter<OutletMenuState> emit,
+  ) {
+    if (event.toggled) {
+      final list = <Categories>[Categories("All", [], "")];
+      for (var i in event.menuList) {
+        final category = Categories(
+          i.category,
+          i.products,
+          i.iconUrl,
+        );
+        category.products =
+            category.products.where((element) => element.veg == true).toList();
+        if (category.products.isNotEmpty) {
+          list.add(category);
+        }
+      }
+      emit(VegFilterTriggered(list, event.toggled));
+    } else {
+      emit(VegFilterTriggered(event.menuList, event.toggled));
+    }
   }
 
   _onUpdateCart(

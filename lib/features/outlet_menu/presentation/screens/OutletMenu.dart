@@ -29,6 +29,8 @@ class _OutletMenuState extends State<OutletMenu> {
   List<OrderData> incompleteOrders = [];
   String selectedCategory = "All";
   bool isSearchActive = false;
+  bool isVegClicked = false;
+  bool isNonVegClicked = false;
 
   int _calculateTotalItems() {
     int cnt = 0;
@@ -108,6 +110,24 @@ class _OutletMenuState extends State<OutletMenu> {
             if (state is FetchCart) {
               if(context.mounted){
                 cart = context.read<CartChangeProvider>().cart;
+              }
+            }
+            if(state is VegFilterTriggered){
+                filteredMenuList = state.menuList;
+                if(state.toggled){
+                  isNonVegClicked = false;
+                  isVegClicked = true;
+                }else{
+                  isVegClicked = false;
+                }
+            }
+            if(state is NonVegFilterTriggered){
+              filteredMenuList = state.menuList;
+              if(state.toggled){
+                isVegClicked = false;
+                isNonVegClicked = true;
+              }else{
+                isNonVegClicked = false;
               }
             }
           },
@@ -236,52 +256,64 @@ class _OutletMenuState extends State<OutletMenu> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
-                                  child: SizedBox(
-                                    width: 0.175 * width,
-                                    height: 0.03 * height,
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          8.0, 0, 0, 0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Image.asset(
-                                            "assets/images/vegetarian48.png",
-                                          ),
-                                          // VegetarianSymbol(
-                                          //   color: Colors.green,
-                                          // ),
-                                          const Text("Veg")
-                                        ],
+                                GestureDetector(
+                                  onTap: (){
+                                    context.read<OutletMenuBloc>()
+                                        .add(OnVegClicked(menuList, !isVegClicked));
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(7),
+                                    ),
+                                    child: SizedBox(
+                                      width: 0.175 * width,
+                                      height: 0.03 * height,
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            8.0, 0, 0, 0),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Image.asset(
+                                              "assets/images/vegetarian48.png",
+                                            ),
+                                            // VegetarianSymbol(
+                                            //   color: Colors.green,
+                                            // ),
+                                            const Text("Veg")
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                Card(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
-                                  child: SizedBox(
-                                    width: 0.24444 * width,
-                                    height: 0.03 * height,
-                                    child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          8.0, 0, 0, 0),
-                                      child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          // VegetarianSymbol(
-                                          //     color: Colors.red),
-                                          Image.asset(
-                                              "assets/images/nonvegetarian48.png"),
-                                          const Text("Non-Veg"),
-                                        ],
+                                GestureDetector(
+                                  onTap: (){
+                                    context.read<OutletMenuBloc>()
+                                        .add(OnNonVegClicked(menuList, !isNonVegClicked));
+                                  },
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(7),
+                                    ),
+                                    child: SizedBox(
+                                      width: 0.24444 * width,
+                                      height: 0.03 * height,
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            8.0, 0, 0, 0),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            // VegetarianSymbol(
+                                            //     color: Colors.red),
+                                            Image.asset(
+                                                "assets/images/nonvegetarian48.png"),
+                                            const Text("Non-Veg"),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

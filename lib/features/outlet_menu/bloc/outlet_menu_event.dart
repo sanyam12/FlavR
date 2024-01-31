@@ -57,6 +57,26 @@ class UpdateCart extends OutletMenuEvent{
   List<Object?> get props => [];
 }
 
+class OnVegClicked extends OutletMenuEvent{
+  final List<Categories> menuList;
+  final bool toggled;
+  const OnVegClicked(this.menuList, this.toggled);
+
+  @override
+  List<Object?> get props => [menuList, toggled];
+
+}
+
+class OnNonVegClicked extends OutletMenuEvent{
+  final List<Categories> menuList;
+  final bool toggled;
+  const OnNonVegClicked(this.menuList, this.toggled);
+
+  @override
+  List<Object?> get props => [menuList, toggled];
+
+}
+
 // class UpdateCartEvent extends OutletMenuEvent{
 //   final Product product;
 //   final Cart cart;
