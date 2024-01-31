@@ -1,0 +1,96 @@
+{
+  "name": "FirebaseFirestore",
+  "version": "10.18.0",
+  "summary": "A replica Firebase Firestore podspec.",
+  "description": "A replica Firebase Firestore podspec that provides pre-compiled binaries/frameworks instead",
+  "homepage": "http://invertase.io",
+  "license": "Apache-2.0",
+  "source": {
+    "path": "."
+  },
+  "cocoapods_version": ">= 1.10.0",
+  "authors": "Invertase Limited",
+  "pod_target_xcconfig": {
+    "OTHER_LDFLAGS": "-lObjC"
+  },
+  "static_framework": true,
+  "ios": {
+    "frameworks": [
+      "SystemConfiguration",
+      "UIKit"
+    ]
+  },
+  "osx": {
+    "frameworks": "SystemConfiguration"
+  },
+  "tvos": {
+    "frameworks": [
+      "SystemConfiguration",
+      "UIKit"
+    ]
+  },
+  "libraries": "c++",
+  "platforms": {
+    "ios": "11.0",
+    "osx": "10.13",
+    "tvos": "11.0"
+  },
+  "default_subspecs": "AutodetectLeveldb",
+  "subspecs": [
+    {
+      "name": "Base",
+      "vendored_frameworks": [
+        "FirebaseFirestore/BoringSSL-GRPC.xcframework",
+        "FirebaseFirestore/FirebaseAppCheckInterop.xcframework",
+        "FirebaseFirestore/FirebaseCoreExtension.xcframework",
+        "FirebaseFirestore/FirebaseFirestore.xcframework",
+        "FirebaseFirestore/FirebaseFirestoreInternal.xcframework",
+        "FirebaseFirestore/FirebaseSharedSwift.xcframework",
+        "FirebaseFirestore/abseil.xcframework",
+        "FirebaseFirestore/gRPC-C++.xcframework",
+        "FirebaseFirestore/gRPC-Core.xcframework"
+      ],
+      "preserve_paths": [
+        "FirebaseFirestore/BoringSSL-GRPC.xcframework",
+        "FirebaseFirestore/FirebaseAppCheckInterop.xcframework",
+        "FirebaseFirestore/FirebaseCoreExtension.xcframework",
+        "FirebaseFirestore/FirebaseFirestore.xcframework",
+        "FirebaseFirestore/FirebaseFirestoreInternal.xcframework",
+        "FirebaseFirestore/FirebaseSharedSwift.xcframework",
+        "FirebaseFirestore/abseil.xcframework",
+        "FirebaseFirestore/gRPC-C++.xcframework",
+        "FirebaseFirestore/gRPC-Core.xcframework"
+      ],
+      "resources": "FirebaseFirestore/Resources/*.bundle"
+    },
+    {
+      "name": "AutodetectLeveldb",
+      "dependencies": {
+        "FirebaseFirestore/Base": [
+
+        ],
+        "FirebaseFirestore/WithLeveldb": [
+
+        ]
+      }
+    },
+    {
+      "name": "WithoutLeveldb",
+      "dependencies": {
+        "FirebaseFirestore/Base": [
+
+        ]
+      }
+    },
+    {
+      "name": "WithLeveldb",
+      "dependencies": {
+        "FirebaseFirestore/Base": [
+
+        ]
+      },
+      "vendored_frameworks": "FirebaseFirestore/*leveldb*",
+      "preserve_paths": "FirebaseFirestore/*leveldb*"
+    }
+  ]
+}
