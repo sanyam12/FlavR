@@ -9,20 +9,32 @@ class ProfileInitial extends ProfileState {
   List<Object> get props => [];
 }
 
-class ProfileDataState extends ProfileState{
+class ProfileDataState extends ProfileState {
   final String userName;
+  final String email;
+  final String? profilePicUrl;
   final Stream<List<OrderData>> list;
-  const ProfileDataState(this.userName, this.list);
-  @override
-  List<Object?> get props => [userName, list];
 
+  const ProfileDataState(
+    this.userName,
+    this.list,
+    this.email,
+    this.profilePicUrl,
+  );
+
+  @override
+  List<Object?> get props => [
+        userName,
+        list,
+        email,
+      ];
 }
 
-class ShowSnackbar extends ProfileState{
+class ShowSnackbar extends ProfileState {
   final String messsage;
+
   const ShowSnackbar(this.messsage);
 
   @override
   List<Object?> get props => [messsage];
-
 }

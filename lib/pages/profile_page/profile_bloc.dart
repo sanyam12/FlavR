@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -29,10 +28,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         if(response.statusCode==201){
           final json = jsonDecode(response.body);
           final userName = json["user"][0]["userName"];
+          final email = json["user"][0]["email"];
+          final profilePicUrl = json["user"][0]["userProfilePic"]["url"];
+          log(profilePicUrl.toString());
+          Stream<List<OrderData>> stream = getOrders(token.toString());
 
-          Stream<List<OrderData>> stream = check(token.toString());
-
-          emit(ProfileDataState(userName, stream));
+          emit(ProfileDataState(userName, stream, email, profilePicUrl));
         }else{
           emit(ShowSnackbar(response.body));
         }
@@ -40,7 +41,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     });
   }
 
-  Stream<List<OrderData>> check(String token)async*{
+  Stream<List<OrderData>> getOrders(String token)async*{
     final List<OrderData> orderList = [];
     final response = await http.get(
       Uri.parse("https://flavr.tech/orders/getorders"),
@@ -52,8 +53,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       final list = jsonDecode(response.body)["result"];
       for(var i in list){
         orderList.add(OrderData.fromJson(i));
+        yield orderList;
       }
-      yield orderList;
     }
   }
 

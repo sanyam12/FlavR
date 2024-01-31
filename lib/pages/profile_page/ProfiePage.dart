@@ -17,6 +17,8 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String userName = "initial";
   bool isLoading = true;
+  String email = "initial";
+  String? profilePicUrl;
   late Stream<List<OrderData>> list;
 
   @override
@@ -42,6 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   isLoading = false;
                   userName = state.userName;
                   list = state.list;
+                  email = state.email;
+                  profilePicUrl = state.profilePicUrl;
                 });
               }
             },
@@ -83,7 +87,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       CircleAvatar(
                         backgroundColor: const Color(0xff004932),
                         radius: 50,
-                        child: Icon(
+                        child: (profilePicUrl!=null)?Image.network(profilePicUrl!)
+                        :Icon(
                           Icons.person,
                           color: const Color(0xffffffff),
                           size: 0.0625 * height,
@@ -96,9 +101,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text(
-                        "sejal27bansal@gmail.com",
-                        style: TextStyle(
+                      Text(
+                        email,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
                         ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flavr/pages/order_details/OrderDetails.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter/material.dart';
@@ -33,33 +35,35 @@ class OrderCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(0.013889 * width, 0.00625 * height,
                     0.013889 * width, 0.00625 * height),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "11 Dec,2024",
-                      style: TextStyle(
+                      data.createdAt.day.toString(),
+                      style: const TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff000000),
                       ),
+                      overflow: TextOverflow.clip,
                     ),
-                    Text(
+                    const Text(
                       //TODO: Outlet name
-                      "Outlet Name",
+                      "data.outlet",
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff000000),
                       ),
                     ),
-                    Text(
-                      "12:44 PM",
+                    const Text(
+                      "time data.createdAt",
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff000000),
                       ),
+                      overflow: TextOverflow.clip,
                     ),
                   ],
                 ),
@@ -118,86 +122,125 @@ class OrderCard extends StatelessWidget {
                   0.00625 * height,
                 ),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Stack(
                       children: [
-                        Padding(
+                        if(data.products.length>=3)
+                          Padding(
                             padding: EdgeInsets.fromLTRB(
-                                0.0556 * width, 0, 0.0556 * width, 0,),
+                              0.1112 * width, 0, 0.0556 * width, 0,),
                             child: CircleAvatar(
+                              backgroundColor: Colors.white,
                               radius: 32,
                               child: ClipOval(
-                                  child:
-                                      Image.asset('assets/images/pasta.jpeg'),
+                                child:
+                                Image.network(data.products[2].imageUrl),
                               ),
                             ),
-                        ),
-                        CircleAvatar(
-                          radius: 32,
-                          child: ClipOval(
-                              child: Image.asset('assets/images/pasta.jpeg')),
-                        )
+                          ),
+                        if(data.products.length>=2)
+                          Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  0.0556 * width, 0, 0.0556 * width, 0,),
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                radius: 32,
+                                child: ClipOval(
+                                    child:
+                                        Image.network(data.products[1].imageUrl),
+                                ),
+                              ),
+                          ),
+                        if(data.products.isNotEmpty)
+                          CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 32,
+                            child: ClipOval(
+                                child: Image.network(
+                                    data.products[0].imageUrl,
+                                ),
+                            ),
+                          )
                       ],
                     ),
-                    const Column(
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "1 x Red Sauce Pasta",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xff000000),
+                        if(data.products.isNotEmpty)
+                          Text(
+                            "${data.products[0].quantity} x ${data.products[0].productName}",
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xff000000),
+                            ),
                           ),
-                        ),
-                        Text(
-                          "2 x Veg Cheese Burger",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xff000000),
+                        if(data.products.length>=2)
+                          Text(
+                            "${data.products[1].quantity} x ${data.products[1].productName}",
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xff000000),
+                            ),
                           ),
-                        ),
+                        // if(data.products.length>=3)
+
                       ],
                     ),
-                    const Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.currency_rupee,
-                              size: 12,
-                              color: Color(0xff004932),
-                            ),
-                            Text(
-                              "180",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xff000000),
+                        if(data.products.isNotEmpty)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const Icon(
+                                Icons.currency_rupee,
+                                size: 12,
+                                color: Color(0xff004932),
                               ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.currency_rupee,
-                              size: 12,
-                              color: Color(0xff004932),
-                            ),
-                            Text(
-                              "180",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xff000000),
+
+                                Text(
+                                  "${data.products[0].price}",
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xff000000),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        if(data.products.length>=2)
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.currency_rupee,
+                                size: 12,
+                                color: Color(0xff004932),
                               ),
+                              Text(
+                                "${data.products[1].price}",
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xff000000),
+                                ),
+                              ),
+                            ],
+                          ),
+                        if(data.products.length>=3)
+                          const Text(
+                            "And More...",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xff000000),
                             ),
-                          ],
-                        ),
+                          )
                       ],
                     )
                   ],
@@ -206,19 +249,19 @@ class OrderCard extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(0.013889 * width, 0.00625 * height,
                     0.013889 * width, 0.00625 * height),
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Delivered Successfully",
-                      style: TextStyle(
+                      data.status,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff004932),
                       ),
                     ),
-                    Text(
-                      "7:00 PM",
+                    const Text(
+                      "Last Updated: time",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
