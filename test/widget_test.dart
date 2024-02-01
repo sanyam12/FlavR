@@ -35,7 +35,6 @@ void main() {
 
   test("getCurrentWeather returns weather data on success", () async {
     // final provider = OutletMenuApiProvider();
-    // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbnlhbXJhdHJlamExOEBnbWFpbC5jb20iLCJ1c2VyaWQiOiI2NThlZjczNDBlNjFjNGM4ZjdhODYzN2EiLCJ1c2VybmFtZSI6InNhbnlhbSByYXRyZWphIiwiaWF0IjoxNzA0MDExMjkzLCJleHAiOjE3MDY2MDMyOTN9.jX9CbfTRCeF0D3l8pn7e5qod88Qvk1eYmCITHxWrzrs";
     // final client = Client();
     // String data = await provider.getOutletWithClient("646a5a0a51c3c24655b854e9", token, client);
     // log(data);
