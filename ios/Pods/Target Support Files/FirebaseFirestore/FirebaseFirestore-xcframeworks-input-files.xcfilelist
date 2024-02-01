@@ -1,9 +1,7 @@
 ${PODS_ROOT}/Target Support Files/FirebaseFirestore/FirebaseFirestore-xcframeworks.sh
 ${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/BoringSSL-GRPC.xcframework
-${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/FirebaseAppCheckInterop.xcframework
 ${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/FirebaseCoreExtension.xcframework
 ${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/FirebaseFirestore.xcframework
-${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/FirebaseFirestoreInternal.xcframework
 ${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/FirebaseSharedSwift.xcframework
 ${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/abseil.xcframework
 ${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/gRPC-C++.xcframework

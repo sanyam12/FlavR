@@ -23,11 +23,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/** @var kMissingRecaptchaTokenErrorPrefix
-    @brief The prefix of the error message of missing recaptcha token during authenticating.
- */
-static NSString *const kMissingRecaptchaTokenErrorPrefix = @"MISSING_RECAPTCHA_TOKEN";
-
 /** @class FIRAuthErrorUtils
     @brief Utility class used to construct @c NSError instances.
  */
@@ -514,13 +509,6 @@ static NSString *const kMissingRecaptchaTokenErrorPrefix = @"MISSING_RECAPTCHA_T
  */
 + (NSError *)missingClientIdentifierErrorWithMessage:(nullable NSString *)message;
 
-/** @fn missingClientTypeErrorWithMessage:
-    @brief Constructs an @c NSError with the @c FIRAuthErrorCodeMissingClientType code.
-    @param message Error message from the backend, if any.
-    @return The NSError instance associated with the given FIRAuthError.
- */
-+ (NSError *)missingClientTypeErrorWithMessage:(nullable NSString *)message;
-
 /** @fn captchaCheckFailedErrorWithMessage:
     @brief Constructs an @c NSError with the @c FIRAuthErrorCaptchaCheckFailed code.
     @param message Error message from the backend, if any.
@@ -619,12 +607,6 @@ static NSString *const kMissingRecaptchaTokenErrorPrefix = @"MISSING_RECAPTCHA_T
 + (NSError *)unsupportedTenantOperationError;
 
 + (NSError *)blockingCloudFunctionServerResponseWithMessage:(nullable NSString *)message;
-
-/** @fn recaptchaSDKNotLinkedError
-   @brief Constructs an @c NSError with the @c FIRAuthErrorCodeRecaptchaSDKNotLinked code.
-   @return The NSError instance associated with the given FIRAuthError.
- */
-+ (NSError *)recaptchaSDKNotLinkedError;
 
 @end
 

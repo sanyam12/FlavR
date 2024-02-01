@@ -37,8 +37,6 @@ NSString* FIRCLSApplicationGetSDKBundleID(void) {
       [@"com.google.firebase.crashlytics." stringByAppendingString:FIRCLSApplicationGetPlatform()];
 }
 
-// Legacy function, we use FIRCLSApplicationGetFirebasePlatform now for platform specification.
-// Can't clean the code since some endpoints setup depend on this function.
 NSString* FIRCLSApplicationGetPlatform(void) {
 #if defined(TARGET_OS_MACCATALYST) && TARGET_OS_MACCATALYST
   return @"mac";
@@ -49,9 +47,7 @@ NSString* FIRCLSApplicationGetPlatform(void) {
 #elif TARGET_OS_TV
   return @"tvos";
 #elif TARGET_OS_WATCH
-  return @"ios";
-#elif defined(TARGET_OS_VISION) && TARGET_OS_VISION
-  return @"ios";
+  return @"ios";  // TODO: temporarily use iOS until Firebase can add watchos to the backend
 #endif
 }
 

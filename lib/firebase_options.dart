@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -15,7 +16,7 @@ import 'package:flutter/foundation.dart'
 /// );
 /// ```
 class DefaultFirebaseOptions {
-  static FirebaseOptions get currentPlatform {
+  FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       return web;
     }
@@ -43,43 +44,43 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDQyr0XLZApjDzwlK7KJBCZqz9kk4kKQMQ',
-    appId: '1:504489315010:web:e19818dc9f899b4559095b',
-    messagingSenderId: '504489315010',
-    projectId: 'flavr-c527b',
-    authDomain: 'flavr-c527b.firebaseapp.com',
-    storageBucket: 'flavr-c527b.appspot.com',
-    measurementId: 'G-2C4RTNEP50',
+  FirebaseOptions web = FirebaseOptions(
+    apiKey: dotenv.env['WEB_API_KEY'].toString(),
+    appId: dotenv.env['WEB_APP_ID'].toString(),
+    messagingSenderId: dotenv.env['WEB_MESSAGING_SENDER_ID'].toString(),
+    projectId: dotenv.env['WEB_PROJECT_ID'].toString(),
+    authDomain: dotenv.env['WEB_AUTH_DOMAIN'].toString(),
+    storageBucket: dotenv.env['WEB_STORAGE_BUCKET'].toString(),
+    measurementId: dotenv.env['WEB_MEASUREMENT_ID'].toString(),
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDADWA3r8MvQ4WhfZyCt0vpHF6q0yWwCFY',
-    appId: '1:504489315010:android:74ba6e0c6a61db2e59095b',
-    messagingSenderId: '504489315010',
-    projectId: 'flavr-c527b',
-    storageBucket: 'flavr-c527b.appspot.com',
+  FirebaseOptions android = FirebaseOptions(
+    apiKey: dotenv.env['ANDROID_API_KEY'].toString(),
+    appId: dotenv.env['ANDROID_APP_ID'].toString(),
+    messagingSenderId: dotenv.env['ANDROID_MESSAGING_SENDER_ID'].toString(),
+    projectId: dotenv.env['ANDROID_PROJECT_ID'].toString(),
+    storageBucket: dotenv.env['ANDROID_STORAGE_BUCKET'].toString(),
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA27GiRGUFF4yNqejedOyI3zbpnhaPXJ0Q',
-    appId: '1:504489315010:ios:73120fd1512868f659095b',
-    messagingSenderId: '504489315010',
-    projectId: 'flavr-c527b',
-    storageBucket: 'flavr-c527b.appspot.com',
-    androidClientId: '504489315010-h6rh9b3405iliftjmp3l5fu6ipt25ma4.apps.googleusercontent.com',
-    iosClientId: '504489315010-t87tv0fkdof28tjsq6e5csgeesunh33i.apps.googleusercontent.com',
-    iosBundleId: 'com.example.flavr',
+  FirebaseOptions ios = FirebaseOptions(
+    apiKey: dotenv.env['IOS_API_KEY'].toString(),
+    appId: dotenv.env['IOS_APP_ID'].toString(),
+    messagingSenderId: dotenv.env['IOS_MESSAGING_SENDER_ID'].toString(),
+    projectId: dotenv.env['IOS_PROJECT_ID'].toString(),
+    storageBucket: dotenv.env['IOS_STORAGE_BUCKET'].toString(),
+    androidClientId: dotenv.env['IOS_ANDROID_CLIENT_ID'].toString(),
+    iosClientId: dotenv.env['IOS_IOS_CLIENT_ID'].toString(),
+    iosBundleId: dotenv.env['IOS_BUNDLE_ID'].toString(),
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBgsrncoSXgLw0TycjhGO4zzhyl2Y2akKU',
-    appId: '1:504489315010:ios:74e17afa68bd6ba559095b',
-    messagingSenderId: '504489315010',
-    projectId: 'flavr-c527b',
-    storageBucket: 'flavr-c527b.appspot.com',
-    androidClientId: '504489315010-h6rh9b3405iliftjmp3l5fu6ipt25ma4.apps.googleusercontent.com',
-    iosClientId: '504489315010-2m51cb97ritbdne2pi8vlqtfbmp9hhv6.apps.googleusercontent.com',
-    iosBundleId: 'com.example.flavr.RunnerTests',
+  FirebaseOptions macos = FirebaseOptions(
+    apiKey: dotenv.env['MACOS_API_KEY'].toString(),
+    appId: dotenv.env['MACOS_APP_ID'].toString(),
+    messagingSenderId: dotenv.env['MACOS_MESSAGING_SENDER_ID'].toString(),
+    projectId: dotenv.env['MACOS_PROJECTID'].toString(),
+    storageBucket: dotenv.env['MACOS_STORAGE_BUCKET'].toString(),
+    androidClientId: dotenv.env['MACOS_ANDROID_CLIENT_ID'].toString(),
+    iosClientId: dotenv.env['MACOS_IOS_CLIENT_ID'].toString(),
+    iosBundleId: dotenv.env['MACOS_IOS_BUNDLE_ID'].toString(),
   );
 }
