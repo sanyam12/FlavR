@@ -1,9 +1,8 @@
-import 'dart:developer';
-import 'package:flavr/pages/cart/CartPage.dart';
 import 'package:flavr/pages/order_history/OrderHistory.dart';
-import 'package:flavr/pages/outlet_menu/OutletMenu.dart';
 import 'package:flavr/pages/profile_page/ProfiePage.dart';
 import 'package:flutter/material.dart';
+
+import '../../features/outlet_menu/presentation/screens/OutletMenu.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -45,7 +44,6 @@ class _HomePageState extends State<HomePage> {
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
-            log(_selectedIndex.toString());
           });
         },
         showSelectedLabels: true,

@@ -15,14 +15,12 @@
  */
 
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIROAuthProvider.h"
-
-#import <FirebaseAppCheckInterop/FirebaseAppCheckInterop.h>
-
 #include <CommonCrypto/CommonCrypto.h>
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIRFacebookAuthProvider.h"
 #import "FirebaseAuth/Sources/Public/FirebaseAuth/FIROAuthCredential.h"
 #import "FirebaseCore/Extension/FirebaseCoreInternal.h"
 
+#import "FirebaseAppCheck/Interop/FIRAppCheckTokenResultInterop.h"
 #import "FirebaseAuth/Sources/Auth/FIRAuthGlobalWorkQueue.h"
 #import "FirebaseAuth/Sources/Auth/FIRAuth_Internal.h"
 #import "FirebaseAuth/Sources/AuthProvider/OAuth/FIROAuthCredential_Internal.h"
@@ -151,7 +149,7 @@ static NSString *const kCustomUrlSchemePrefix = @"app-";
   return [[self alloc] initWithProviderID:providerID auth:auth];
 }
 
-#if TARGET_OS_IOS && (!defined(TARGET_OS_VISION) || !TARGET_OS_VISION)
+#if TARGET_OS_IOS
 - (void)getCredentialWithUIDelegate:(nullable id<FIRAuthUIDelegate>)UIDelegate
                          completion:(nullable FIRAuthCredentialCallback)completion {
   if (![FIRAuthWebUtils isCallbackSchemeRegisteredForCustomURLScheme:self->_callbackScheme]) {
@@ -218,7 +216,7 @@ static NSString *const kCustomUrlSchemePrefix = @"app-";
                           }];
   });
 }
-#endif  // TARGET_OS_IOS && (!defined(TARGET_OS_VISION) || !TARGET_OS_VISION)
+#endif  // TARGET_OS_IOS
 
 #pragma mark - Internal Methods
 

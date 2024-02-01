@@ -25,13 +25,14 @@ static NSString *const kTenantIDKey = @"tenantId";
 
 @implementation FIRFinalizeMFASignInRequest
 
-- (nullable instancetype)initWithMFAPendingCredential:(NSString *)MFAPendingCredential
-                                     verificationInfo:(NSObject<FIRAuthProto> *)verificationInfo
-                                 requestConfiguration:
-                                     (FIRAuthRequestConfiguration *)requestConfiguration {
+- (nullable instancetype)
+    initWithMFAPendingCredential:(NSString *)MFAPendingCredential
+                verificationInfo:(FIRAuthProtoFinalizeMFAPhoneRequestInfo *)verificationInfo
+            requestConfiguration:(FIRAuthRequestConfiguration *)requestConfiguration {
   self = [super initWithEndpoint:kFinalizeMFASignInEndPoint
-            requestConfiguration:requestConfiguration];
-  self.useIdentityPlatform = YES;
+            requestConfiguration:requestConfiguration
+             useIdentityPlatform:YES
+                      useStaging:NO];
   if (self) {
     _MFAPendingCredential = MFAPendingCredential;
     _verificationInfo = verificationInfo;
@@ -47,14 +48,6 @@ static NSString *const kTenantIDKey = @"tenantId";
   if (_verificationInfo) {
     if ([_verificationInfo isKindOfClass:[FIRAuthProtoFinalizeMFAPhoneRequestInfo class]]) {
       postBody[@"phoneVerificationInfo"] = [_verificationInfo dictionary];
-    }
-    if ([_verificationInfo isKindOfClass:[FIRAuthProtoFinalizeMFATOTPSignInRequestInfo class]]) {
-      postBody[@"totpVerificationInfo"] = [_verificationInfo dictionary];
-      FIRAuthProtoFinalizeMFATOTPSignInRequestInfo *fIRAuthProtoFinalizeMFATotpSignInRequestInfo =
-          (FIRAuthProtoFinalizeMFATOTPSignInRequestInfo *)_verificationInfo;
-      // mfaEnrollmentID only required for TOTP
-      // https://source.corp.google.com/piper///depot/google3/google/cloud/identitytoolkit/v2/authentication_service.proto;l=139?q=symbol:google.cloud.identitytoolkit.v2.FinalizeMfaSignInRequest
-      postBody[@"mfaEnrollmentId"] = fIRAuthProtoFinalizeMFATotpSignInRequestInfo.mfaEnrollmentID;
     }
   }
   if (self.tenantID) {

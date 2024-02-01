@@ -27,7 +27,6 @@ static NSString *const kGetProjectConfigEndPoint = @"getProjectConfig";
 
 - (nullable instancetype)initWithRequestConfiguration:
     (FIRAuthRequestConfiguration *)requestConfiguration {
-  requestConfiguration.HTTPMethod = @"GET";
   return [super initWithEndpoint:kGetProjectConfigEndPoint
             requestConfiguration:requestConfiguration];
 }

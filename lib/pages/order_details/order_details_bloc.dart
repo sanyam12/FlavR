@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
+import 'package:flavr/core/constants.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +16,7 @@ class OrderDetailsBloc extends Bloc<OrderDetailsEvent, OrderDetailsState> {
         const secure = FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
         final token = (await secure.read(key: "token")).toString();
         final orderResponse = await http.get(
-          Uri.parse("https://flavr.tech/orders/getOrder?orderid=${event.orderId}"),
+          Uri.parse("${API_DOMAIN}orders/getOrder?orderid=${event.orderId}"),
         );
 
         if(orderResponse.statusCode==200){
@@ -25,7 +25,7 @@ class OrderDetailsBloc extends Bloc<OrderDetailsEvent, OrderDetailsState> {
           final outletID = orderDataJson["order"][0]["outlet"];
           // log(outletID.toString());
           final outletResponse = await http.get(
-            Uri.parse("https://flavr.tech/outlet/getOutlet?outletid=$outletID"),
+            Uri.parse("${API_DOMAIN}outlet/getOutlet?outletid=$outletID"),
             headers: {
               "Authorization":"Bearer $token"
             }

@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "MobileScannerPlugin.h"
 
 FOUNDATION_EXPORT double mobile_scannerVersionNumber;
 FOUNDATION_EXPORT const unsigned char mobile_scannerVersionString[];

@@ -57,13 +57,6 @@
 #include <arm/arch.h>
 #endif
 
-// VisionOS support
-#if defined(TARGET_OS_VISION) && TARGET_OS_VISION
-#define CLS_TARGET_OS_VISION 1
-#else
-#define CLS_TARGET_OS_VISION 0
-#endif
-
 #if defined(__arm__)
 #define CLS_CPU_ARM 1
 #endif

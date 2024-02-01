@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
+import 'package:flavr/core/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -15,12 +15,10 @@ class OrderNumberBloc extends Bloc<OrderNumberEvent, OrderNumberState> {
     on<OrderNumberEvent>((event, emit) async{
       if(event is GetOrderData){
         final response = await http.get(
-          Uri.parse("http://flavr.tech/orders/getOrder?orderid=${event.orderId}"),
+          Uri.parse("${API_DOMAIN}orders/getOrder?orderid=${event.orderId}"),
         );
 
-        log(response.body);
         final orderData = OrderData.fromJson(jsonDecode(response.body)["order"][0]);
-        log(orderData.toString());
         emit(OrderDataState(orderData));
       }
     });

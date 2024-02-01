@@ -18,35 +18,18 @@
   "public_header_files": "Classes/**/*.h",
   "module_map": "Classes/FLTGoogleSignInPlugin.modulemap",
   "dependencies": {
+    "Flutter": [
+
+    ],
     "GoogleSignIn": [
-      "~> 7.0"
+      "~> 6.2"
     ]
   },
   "static_framework": true,
-  "ios": {
-    "dependencies": {
-      "Flutter": [
-
-      ]
-    }
-  },
-  "osx": {
-    "dependencies": {
-      "FlutterMacOS": [
-
-      ]
-    }
-  },
   "platforms": {
-    "ios": "11.0",
-    "osx": "10.15"
+    "ios": "11.0"
   },
   "pod_target_xcconfig": {
     "DEFINES_MODULE": "YES"
-  },
-  "resource_bundles": {
-    "google_sign_in_ios_privacy": [
-      "Resources/PrivacyInfo.xcprivacy"
-    ]
   }
 }

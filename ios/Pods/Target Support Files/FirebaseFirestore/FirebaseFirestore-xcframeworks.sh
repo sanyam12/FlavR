@@ -35,24 +35,6 @@ variant_for_slice()
   "BoringSSL-GRPC.xcframework/tvos-arm64_x86_64-simulator")
     echo "simulator"
     ;;
-  "FirebaseAppCheckInterop.xcframework/ios-arm64")
-    echo ""
-    ;;
-  "FirebaseAppCheckInterop.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "maccatalyst"
-    ;;
-  "FirebaseAppCheckInterop.xcframework/ios-arm64_x86_64-simulator")
-    echo "simulator"
-    ;;
-  "FirebaseAppCheckInterop.xcframework/macos-arm64_x86_64")
-    echo ""
-    ;;
-  "FirebaseAppCheckInterop.xcframework/tvos-arm64")
-    echo ""
-    ;;
-  "FirebaseAppCheckInterop.xcframework/tvos-arm64_x86_64-simulator")
-    echo "simulator"
-    ;;
   "FirebaseCoreExtension.xcframework/ios-arm64")
     echo ""
     ;;
@@ -87,24 +69,6 @@ variant_for_slice()
     echo ""
     ;;
   "FirebaseFirestore.xcframework/tvos-arm64_x86_64-simulator")
-    echo "simulator"
-    ;;
-  "FirebaseFirestoreInternal.xcframework/ios-arm64")
-    echo ""
-    ;;
-  "FirebaseFirestoreInternal.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "maccatalyst"
-    ;;
-  "FirebaseFirestoreInternal.xcframework/ios-arm64_x86_64-simulator")
-    echo "simulator"
-    ;;
-  "FirebaseFirestoreInternal.xcframework/macos-arm64_x86_64")
-    echo ""
-    ;;
-  "FirebaseFirestoreInternal.xcframework/tvos-arm64")
-    echo ""
-    ;;
-  "FirebaseFirestoreInternal.xcframework/tvos-arm64_x86_64-simulator")
     echo "simulator"
     ;;
   "FirebaseSharedSwift.xcframework/ios-arm64")
@@ -221,24 +185,6 @@ archs_for_slice()
   "BoringSSL-GRPC.xcframework/tvos-arm64_x86_64-simulator")
     echo "arm64 x86_64"
     ;;
-  "FirebaseAppCheckInterop.xcframework/ios-arm64")
-    echo "arm64"
-    ;;
-  "FirebaseAppCheckInterop.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "arm64 x86_64"
-    ;;
-  "FirebaseAppCheckInterop.xcframework/ios-arm64_x86_64-simulator")
-    echo "arm64 x86_64"
-    ;;
-  "FirebaseAppCheckInterop.xcframework/macos-arm64_x86_64")
-    echo "arm64 x86_64"
-    ;;
-  "FirebaseAppCheckInterop.xcframework/tvos-arm64")
-    echo "arm64"
-    ;;
-  "FirebaseAppCheckInterop.xcframework/tvos-arm64_x86_64-simulator")
-    echo "arm64 x86_64"
-    ;;
   "FirebaseCoreExtension.xcframework/ios-arm64")
     echo "arm64"
     ;;
@@ -273,24 +219,6 @@ archs_for_slice()
     echo "arm64"
     ;;
   "FirebaseFirestore.xcframework/tvos-arm64_x86_64-simulator")
-    echo "arm64 x86_64"
-    ;;
-  "FirebaseFirestoreInternal.xcframework/ios-arm64")
-    echo "arm64"
-    ;;
-  "FirebaseFirestoreInternal.xcframework/ios-arm64_x86_64-maccatalyst")
-    echo "arm64 x86_64"
-    ;;
-  "FirebaseFirestoreInternal.xcframework/ios-arm64_x86_64-simulator")
-    echo "arm64 x86_64"
-    ;;
-  "FirebaseFirestoreInternal.xcframework/macos-arm64_x86_64")
-    echo "arm64 x86_64"
-    ;;
-  "FirebaseFirestoreInternal.xcframework/tvos-arm64")
-    echo "arm64"
-    ;;
-  "FirebaseFirestoreInternal.xcframework/tvos-arm64_x86_64-simulator")
     echo "arm64 x86_64"
     ;;
   "FirebaseSharedSwift.xcframework/ios-arm64")
@@ -466,10 +394,8 @@ install_xcframework() {
 }
 
 install_xcframework "${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/BoringSSL-GRPC.xcframework" "FirebaseFirestore/Base" "framework" "ios-arm64" "ios-arm64_x86_64-maccatalyst" "ios-arm64_x86_64-simulator"
-install_xcframework "${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/FirebaseAppCheckInterop.xcframework" "FirebaseFirestore/Base" "framework" "ios-arm64" "ios-arm64_x86_64-maccatalyst" "ios-arm64_x86_64-simulator"
 install_xcframework "${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/FirebaseCoreExtension.xcframework" "FirebaseFirestore/Base" "framework" "ios-arm64" "ios-arm64_x86_64-maccatalyst" "ios-arm64_x86_64-simulator"
 install_xcframework "${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/FirebaseFirestore.xcframework" "FirebaseFirestore/Base" "framework" "ios-arm64" "ios-arm64_x86_64-maccatalyst" "ios-arm64_x86_64-simulator"
-install_xcframework "${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/FirebaseFirestoreInternal.xcframework" "FirebaseFirestore/Base" "framework" "ios-arm64" "ios-arm64_x86_64-maccatalyst" "ios-arm64_x86_64-simulator"
 install_xcframework "${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/FirebaseSharedSwift.xcframework" "FirebaseFirestore/Base" "framework" "ios-arm64" "ios-arm64_x86_64-maccatalyst" "ios-arm64_x86_64-simulator"
 install_xcframework "${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/abseil.xcframework" "FirebaseFirestore/Base" "framework" "ios-arm64" "ios-arm64_x86_64-maccatalyst" "ios-arm64_x86_64-simulator"
 install_xcframework "${PODS_ROOT}/FirebaseFirestore/FirebaseFirestore/gRPC-C++.xcframework" "FirebaseFirestore/Base" "framework" "ios-arm64" "ios-arm64_x86_64-maccatalyst" "ios-arm64_x86_64-simulator"
