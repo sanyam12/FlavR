@@ -1,21 +1,11 @@
-import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
-import 'package:flavr/core/constants.dart';
 import 'package:flavr/core/repository/core_cart_repository.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import '../../cart/data/models/Cart.dart';
-import '../../../pages/profile_page/OrderData.dart' as OrderDataClass;
-import '../../cart/data/models/Cart.dart';
-import '../../cart/data/models/CartVariantData.dart';
 import '../data/models/Categories.dart';
-import '../data/models/Outlet.dart';
 import '../data/models/Product.dart';
 import '../data/repository/outlet_menu_repository.dart';
 
@@ -271,109 +261,4 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     return list;
   }
 
-  Future<List<OrderDataClass.OrderData>> fetchIncompleteOrders() async {
-    final List<OrderDataClass.OrderData> list = [];
-    const secure = FlutterSecureStorage(
-      aOptions: AndroidOptions(encryptedSharedPreferences: true),
-    );
-    final token = await secure.read(key: "token");
-    final response = await http.get(
-        Uri.parse("${API_DOMAIN}orders/getincomporder"),
-        headers: {"Authorization": "Bearer $token"});
-    final json = jsonDecode(response.body);
-    for (var i in json["orders"] as List) {
-      var temp = OrderDataClass.OrderData.fromJson(i);
-      list.add(temp);
-    }
-    return list;
-  }
-
-  Future<Outlet?> _fetchSelectedOutlet() async {
-    final pref = await SharedPreferences.getInstance();
-    final id = pref.getString("selectedOutlet");
-    const secureService = FlutterSecureStorage(
-        aOptions: AndroidOptions(encryptedSharedPreferences: true));
-    final token = await secureService.read(key: "token");
-    if (id == null) {
-      return null;
-    } else {
-      final query = {"outletid": id};
-      var response = await http.get(
-        Uri.parse("${API_DOMAIN}outlet/getOutlet?outletid=$id"),
-        headers: {"Authorization": "Bearer $token"},
-      );
-      final json = jsonDecode(response.body);
-      if (json["result"] != null && (json["result"] as List).isNotEmpty) {
-        return Outlet.fromJson(json["result"][0]);
-      } else {
-        return null;
-      }
-    }
-  }
-
-  Future<List<Categories>> _fetchMenuItems(String id) async {
-    final List<Categories> list = [];
-    list.add(Categories("All", [], ""));
-    final response = await http.get(
-      Uri.parse(
-          "${API_DOMAIN}products/getProductsByCategory?categoryName=All&outletid=$id"),
-    );
-    final json = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      for (var i in (json["categoryArray"] as List)) {
-        list.add(Categories.fromJson(i));
-      }
-      return list;
-    } else {
-      throw Exception("Something Went Wrong!!");
-    }
-    // List<String> categoryList = [];
-    // List<Categories> ans = [];
-    //
-    // var queryParameters = {"outletid": id};
-    // var response = await http.get(
-    //     Uri.parse("${API_DOMAIN}products/getAllCategories", queryParameters));
-    //
-    // var json = jsonDecode(response.body);
-    // if(response.statusCode==200){
-    //   for (var i in json["categories"]) {
-    //     categoryList.add(i["category"].toString());
-    //   }
-    //
-    //   for (var category in categoryList) {
-    //     queryParameters = {"categoryName": category, "outletid": id};
-    //     response = await http.get(Uri.https(
-    //         API_DOMAIN, "/products/getProductsByCategory", queryParameters));
-    //     json = jsonDecode(response.body);
-    //     final List<Product> productsList = [];
-    //     for (var product in json["categoryArray"][0]["products"]) {
-    //       productsList.add(Product.fromJson(product));
-    //     }
-    //     ans.add(
-    //       Categories(category, productsList),
-    //     );
-    //   }
-    //   ans.insert(0, Categories("All", []));
-    //   return ans;
-    // }else{
-    //   throw Exception("something went wrong: ${response.body}");
-    // }
-  }
-
-  Future<List<Product>> _fetchProducts(String id) async {
-    List<Product> list = [];
-
-    var query = {"outletid": id};
-
-    var a =
-        await http.get(Uri.https(API_DOMAIN, "/products/recommended", query));
-
-    var json = jsonDecode(a.body);
-    for (var i in json["products"]) {
-      list.add(Product.fromJson(i));
-    }
-
-    //log(a.body);
-    return list;
-  }
 }
