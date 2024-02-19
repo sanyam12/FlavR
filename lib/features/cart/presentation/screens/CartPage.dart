@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:developer';
 
 import 'package:flavr/core/CartChangeProvider.dart';
+import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
 import 'package:flavr/features/cart/data/models/Cart.dart';
@@ -16,7 +17,6 @@ import 'package:slidable_button/slidable_button.dart';
 // import 'package:lottie/lottie.dart';
 import 'package:slider_button/slider_button.dart';
 
-import '../../../../components/loading.dart';
 import '../../../outlet_menu/data/models/Categories.dart';
 import '../../../outlet_menu/data/models/Product.dart';
 import '../../data/models/CartVariantData.dart';

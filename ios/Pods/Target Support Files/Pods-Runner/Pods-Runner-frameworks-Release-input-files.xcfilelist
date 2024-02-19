@@ -19,6 +19,7 @@ ${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework
 ${BUILT_PRODUCTS_DIR}/flutter_cashfree_pg_sdk/flutter_cashfree_pg_sdk.framework
 ${BUILT_PRODUCTS_DIR}/flutter_secure_storage/flutter_secure_storage.framework
 ${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework
+${BUILT_PRODUCTS_DIR}/path_provider_foundation/path_provider_foundation.framework
 ${BUILT_PRODUCTS_DIR}/shared_preferences_foundation/shared_preferences_foundation.framework
 ${BUILT_PRODUCTS_DIR}/vibration/vibration.framework
 ${PODS_XCFRAMEWORKS_BUILD_DIR}/CFNetworkSDK/CFNetworkSDK.framework/CFNetworkSDK

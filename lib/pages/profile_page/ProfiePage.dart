@@ -1,10 +1,10 @@
+import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/pages/order_details/OrderDetails.dart';
 import 'package:flavr/pages/profile_page/order_card.dart';
 import 'package:flavr/pages/profile_page/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../../components/loading.dart';
 import 'OrderData.dart';
 
 class ProfilePage extends StatefulWidget {

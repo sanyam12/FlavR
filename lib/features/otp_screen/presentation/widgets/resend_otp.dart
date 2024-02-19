@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flavr/core/components/button.dart';
+import 'package:flavr/core/components/button_types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,8 +8,15 @@ import '../../bloc/otp_screen_bloc.dart';
 
 class ResendOTP extends StatefulWidget {
   final String mail;
+  final double width;
+  final double height;
 
-  const ResendOTP({super.key, required this.mail});
+  const ResendOTP({
+    super.key,
+    required this.mail,
+    required this.width,
+    required this.height,
+  });
 
   @override
   State<ResendOTP> createState() => _ResendOTPState();
@@ -48,35 +57,49 @@ class _ResendOTPState extends State<ResendOTP> {
         children: [
           const Text(
             "Request again in ",
-            style: TextStyle(color: Color(0xff004932), fontSize: 10),
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Text(
             seconds.toString(),
             style: const TextStyle(
-              color: Color(0xff004932),
-              fontSize: 10,
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],
       );
     } else {
-      return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff004932),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            )),
-        child: const Text(
-          "Resend Code",
-          style: TextStyle(
-            color: Colors.white,
-          ),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: ButtonComponent(
+          text: "Resend Code",
+          onPressed: () {
+            context.read<OtpScreenBloc>().add(OtpRequested(widget.mail));
+          },
+          width: widget.width,
+          height: widget.height,
+          type: ButtonType.ShortButton,
         ),
-        onPressed: () {
-          // sendOTP();
-          context.read<OtpScreenBloc>().add(OtpRequested(widget.mail));
-        },
       );
+      // return ElevatedButton(
+      //   style: ElevatedButton.styleFrom(
+      //       backgroundColor: const Color(0xff004932),
+      //       shape: RoundedRectangleBorder(
+      //         borderRadius: BorderRadius.circular(10),
+      //       )),
+      //   child: const Text(
+      //     "Resend Code",
+      //     style: TextStyle(
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      //   onPressed: () {
+      //     context.read<OtpScreenBloc>().add(OtpRequested(widget.mail));
+      //   },
+      // );
     }
   }
 }

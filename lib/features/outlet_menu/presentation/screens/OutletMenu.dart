@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flavr/components/loading.dart';
 import 'package:flavr/core/CartChangeProvider.dart';
+import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/features/cart/presentation/screens/CartPage.dart';
 import 'package:flavr/pages/ordernumber/OrderNumber.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';

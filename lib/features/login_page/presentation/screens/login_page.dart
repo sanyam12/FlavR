@@ -1,5 +1,10 @@
-import 'package:flavr/components/authentication_image_collection.dart';
-import 'package:flavr/components/loading.dart';
+import 'package:flavr/core/components/authentication_image_collection.dart';
+import 'package:flavr/core/components/button.dart';
+import 'package:flavr/core/components/button_types.dart';
+import 'package:flavr/core/components/heading.dart';
+import 'package:flavr/core/components/loading.dart';
+import 'package:flavr/core/components/text_field.dart';
+import 'package:flavr/features/login_page/presentation/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../otp_screen/presentation/screens/otp_screen.dart';
@@ -21,136 +26,175 @@ class _LoginPageState extends State<LoginPage> {
     final queryData = MediaQuery.of(context);
     final width = queryData.size.width;
     final height = queryData.size.height;
-    final loginPageBloc = context.read<LoginBloc>();
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
-      body: BlocConsumer<LoginBloc, LoginState>(
-        listener: (context, LoginState state) {
-          if (state is LoginSuccessful) {
-            Navigator.popAndPushNamed(context, "/outletMenu");
-          }
-          if (state is LoginFailed) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-              ),
-            );
-          }
-          if (state is VerificationPending) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return OtpScreen(email: mailController.text);
-                },
-              ),
-            );
-          }
-        },
-        builder: (context, state){
-          if(state is LoginLoading){
-            return const Center(
-              child: CustomLoadingAnimation(),
-            );
-          }
-          return SingleChildScrollView(
-            child: Stack(
+      body: SafeArea(
+        child: BlocConsumer<LoginBloc, LoginState>(
+          listener: (context, LoginState state) {
+            if (state is LoginSuccessful) {
+              Navigator.popAndPushNamed(context, "/outletMenu");
+            }
+            if (state is LoginFailed) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
+                ),
+              );
+            }
+            if (state is VerificationPending) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return OtpScreen(email: mailController.text);
+                  },
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is LoginLoading) {
+              return const Center(
+                child: CustomLoadingAnimation(),
+              );
+            }
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ...AuthenticationImageCollection.build(width, height),
-                Positioned(
-                  top: 0.675 * height,
-                  child: SizedBox(
+                Expanded(
+                  child: ImageComponent(
                     width: width,
-                    child: Column(
+                    height: height,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 0.02 * height,
+                    bottom: 0.02 * height,
+                  ),
+                  child: const Heading(text: "Log In"),
+                ),
+                SizedBox(
+                  width: 0.8694444444 * width,
+                  child: const Text(
+                    "Hit us up with your email and password, and we’ll log you in",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 0.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 0.0225 * height),
+                  child: TextFieldComponent(
+                    width: width,
+                    controller: mailController,
+                    hintText: "Enter your email",
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 0.01125 * height),
+                  child: TextFieldComponent(
+                    width: width,
+                    controller: passwordController,
+                    hintText: "Enter your password",
+                  ),
+                ),
+                ButtonComponent(
+                  text: "Log In",
+                  onPressed: () {
+                    context.read<LoginBloc>().add(
+                          LoginButtonPressed(
+                            email: mailController.text,
+                            password: passwordController.text,
+                          ),
+                        );
+                  },
+                  width: width,
+                  height: height,
+                  type: ButtonType.LongButton,
+                ),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.of(context).popAndPushNamed("/signUp");
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 0.0275 * height),
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 0.75 * width,
-                          child: TextField(
-                            controller: mailController,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: const Color(0xFFA3C2B3),
-                                hintText: "Enter Mail",
-                                hintStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                )),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                          EdgeInsets.fromLTRB(0, 0.0175 * height, 0, 0),
-                          child: SizedBox(
-                            width: 0.75 * width,
-                            child: TextField(
-                              controller: passwordController,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: const Color(0xFFA3C2B3),
-                                hintText: "Enter Password",
-                                hintStyle: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                              obscureText: true,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding:
-                          EdgeInsets.fromLTRB(0, 0.01625 * height, 0, 0),
-                          child: SizedBox(
-                            width: 0.4 * width,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF004932),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(15))),
-                              onPressed: () {
-                                loginPageBloc.add(
-                                  LoginButtonPressed(
-                                    email: mailController.text,
-                                    password: passwordController.text,
-                                  ),
-                                );
-                              },
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 11),
-                                child: Text("Login"),
-                              ),
-                            ),
-                          ),
+                        Text("Don’t have an account?"),
+                        Text(
+                          "Sign Up",
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         )
                       ],
                     ),
                   ),
-                )
+                ),
+                const Text(
+                  "Forgot Password?",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
+  }
+
+  _later(width, height) {
+    return [
+      Padding(
+        padding: EdgeInsets.fromLTRB(0, 0.0175 * height, 0, 0),
+        child: SizedBox(
+          width: 0.75 * width,
+          child: TextField(
+            controller: passwordController,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+            ),
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: const Color(0xFFA3C2B3),
+              hintText: "Enter Password",
+              hintStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            obscureText: true,
+          ),
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.fromLTRB(0, 0.01625 * height, 0, 0),
+        child: SizedBox(
+          width: 0.4 * width,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF004932),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15))),
+            onPressed: () {},
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 11),
+              child: Text("Login"),
+            ),
+          ),
+        ),
+      )
+    ];
   }
 }

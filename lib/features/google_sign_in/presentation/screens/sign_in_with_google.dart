@@ -1,12 +1,14 @@
-
+import 'package:flavr/core/components/button.dart';
+import 'package:flavr/core/components/button_types.dart';
+import 'package:flavr/core/components/heading.dart';
+import 'package:flavr/features/google_sign_in/presentation/widgets/google_button.dart';
+import 'package:flavr/features/google_sign_in/presentation/widgets/image_collection.dart';
+import 'package:flavr/features/google_sign_in/presentation/widgets/login_text.dart';
+import 'package:flavr/features/google_sign_in/presentation/widgets/or_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rive/rive.dart';
-
-import '../../../../components/authentication_image_collection.dart';
 import '../../bloc/sign_in_with_google_bloc.dart';
-
 
 class SignInWithGoogle extends StatefulWidget {
   const SignInWithGoogle({super.key});
@@ -16,28 +18,8 @@ class SignInWithGoogle extends StatefulWidget {
 }
 
 class _SignInWithGoogleState extends State<SignInWithGoogle> {
-  Artboard? _riveArtboard;
-  RiveAnimationController? _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    rootBundle.load("assets/rive/google.riv").then(
-      (value) async {
-        final file = RiveFile.import(value);
-        final artboard = file.mainArtboard;
-        artboard.addController(_controller = SimpleAnimation("idle"));
-        setState(() {
-          _riveArtboard = artboard;
-        });
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    final SignInWithGoogleBloc _signInWithGoogleBloc =
-        context.read<SignInWithGoogleBloc>();
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -63,109 +45,46 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
       },
       child: Scaffold(
         backgroundColor: const Color(0xFFFFFFFF),
-        body: Stack(
-          children: [
-            ...AuthenticationImageCollection.build(width, height),
-            Positioned(
-              top: 0.675 * height,
-              child: SizedBox(
-                width: width,
-                child: Column(
-                  children: [
-                    const Text(
-                      "Savor the flavors, indulge in delight",
-                      style:
-                          TextStyle(color: Color(0xFF004932), fontSize: 15),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0.02 * height, 0, 0),
-                      child: SizedBox(
-                        width: 0.4 * width,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            side: const BorderSide(width: 1),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                          onPressed: () async {
-                            _signInWithGoogleBloc.add(OnGoogleButtonClick());
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              _riveArtboard == null
-                                  ? const SizedBox()
-                                  : SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: Rive(
-                                        artboard: _riveArtboard!,
-                                      ),
-                                    ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 12),
-                                child: Text(
-                                  "Continue",
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0.01875 * height, 0, 0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF004932),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                        onPressed: () {
-                          _signInWithGoogleBloc.add(OnSignUpClick());
-                        },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 12),
-                          child: Text(
-                            "Sign up with email",
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0.02 * height, 0, 0),
-                      child: InkWell(
-                        onTap: () {
-                          _signInWithGoogleBloc.add(OnLoginClick());
-                        },
-                        child: RichText(
-                          text: const TextSpan(
-                            text: "Already a food lover? ",
-                            style: TextStyle(color: Color(0xFF004932)),
-                            children: [
-                              TextSpan(
-                                text: "Login",
-                                style: TextStyle(
-                                    color: Color(0xFF004932),
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ImageCollection(
+                  width: width,
+                  height: height,
                 ),
-              ),
-            )
-          ],
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 0.04375 * height),
+                  child: SizedBox(
+                    width: 0.75 * width,
+                    child: const FittedBox(
+                      child: Heading(text: "Good food is just a click away"),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 0.0375 * height),
+                  child: ButtonComponent(
+                    text: "Sign Up",
+                    onPressed: () {
+                      context.read<SignInWithGoogleBloc>().add(OnSignUpClick());
+                    },
+                    height: height,
+                    width: width,
+                    type: ButtonType.ShortButton,
+                  ),
+                ),
+                LoginText(
+                  height: height,
+                ),
+                OrComponent(
+                  width: width,
+                  height: height,
+                ),
+                const GoogleButton(),
+              ],
+            ),
+          ),
         ),
       ),
     );

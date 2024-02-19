@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/pages/ordernumber/order_number_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../components/loading.dart';
 import '../profile_page/OrderProductData.dart';
 
 class OrderNumber extends StatefulWidget {
