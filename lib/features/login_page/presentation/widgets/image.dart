@@ -16,7 +16,7 @@ class ImageComponent extends StatelessWidget {
       child: SizedBox(
         width: width,
         child: Image.asset(
-          "assets/images/login_page_image.png",
+          "assets/images/login_page_image.webp",
           fit: BoxFit.fitWidth,
         ),
       ),
