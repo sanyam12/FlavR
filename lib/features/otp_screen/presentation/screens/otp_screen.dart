@@ -168,7 +168,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       width: width,
                       height: height,
                       type: ButtonType.LongButton,
-                      trailing: const Icon(Icons.arrow_forward,),
+                      trailing: const Icon(Icons.arrow_circle_right, color: Colors.white,),
                     )
                   ],
                 ),

@@ -49,7 +49,7 @@ class ButtonComponent extends StatelessWidget {
             if(trailing!=null)
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: CircleAvatar(child: trailing!),
+                child: trailing!,
               )
           ],
         )
