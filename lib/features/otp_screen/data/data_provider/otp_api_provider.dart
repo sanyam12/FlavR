@@ -13,7 +13,10 @@ class OtpApiProvider {
         "Content-Type": "application/json",
       };
       final body = jsonEncode(
-        {"key": email, "role": 0,},
+        {
+          "key": email,
+          "role": 0,
+        },
       );
       var response = await client.post(
         Uri.parse("${API_DOMAIN}mail/resendotp"),
@@ -28,5 +31,23 @@ class OtpApiProvider {
     } catch (e) {
       throw e.toString();
     }
+  }
+
+  Future<String> verifyOTP(String email, String code) async {
+    int check = int.parse(code);
+    String body = jsonEncode({
+      "key": email,
+      "otp": check,
+      "role": 0,
+    });
+
+    final headers = {"Content-Type": "application/json"};
+
+    final response = await post(
+      Uri.parse("${API_DOMAIN}mail/verifyotp"),
+      body: body,
+      headers: headers,
+    );
+    return response.body;
   }
 }

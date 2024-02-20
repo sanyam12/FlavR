@@ -22,3 +22,8 @@ class OtpLoading extends OtpScreenState{
   List<Object?> get props => [];
 
 }
+
+class OTPSuccess extends OtpScreenState{
+  @override
+  List<Object?> get props => [];
+}

@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, LoginState state) {
             if (state is LoginSuccessful) {
-              Navigator.popAndPushNamed(context, "/outletMenu");
+              Navigator.of(context).pushNamedAndRemoveUntil("/outletMenu", (route) => false);
             }
             if (state is LoginFailed) {
               ScaffoldMessenger.of(context).showSnackBar(

@@ -36,6 +36,17 @@ class _SignUpState extends State<SignUp> {
     super.dispose();
   }
 
+  _navigateToOTP(){
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OtpScreen(
+          email: mailController.text,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final queryData = MediaQuery.of(context);
@@ -46,14 +57,7 @@ class _SignUpState extends State<SignUp> {
         child: BlocConsumer<SignupBloc, SignupState>(
           listener: (context, SignupState state) {
             if (state is SignupSuccessful) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OtpScreen(
-                    email: mailController.text,
-                  ),
-                ),
-              );
+              _navigateToOTP();
             }
             if (state is SignupFailed) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -63,16 +67,12 @@ class _SignUpState extends State<SignUp> {
               );
             }
             if (state is VerificationPending) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(state.message)));
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OtpScreen(
-                    email: mailController.text,
-                  ),
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.message),
                 ),
               );
+              _navigateToOTP();
             }
             if (state is UserAlreadyExists) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -93,7 +93,8 @@ class _SignUpState extends State<SignUp> {
               key: _formKey,
               child: Column(
                 children: [
-                  Expanded(child: ImageCollection(width: width, height: height)),
+                  Expanded(
+                      child: ImageCollection(width: width, height: height)),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 0.0175 * height),
                     child: const Heading(text: "Sign Up"),
@@ -115,8 +116,8 @@ class _SignUpState extends State<SignUp> {
                     width: width,
                     controller: nameController,
                     hintText: "Enter your full name",
-                    validator: (value){
-                      if(value==null || value.isEmpty){
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         return "Please enter your Name";
                       }
                       return null;
@@ -127,8 +128,8 @@ class _SignUpState extends State<SignUp> {
                     width: width,
                     controller: mailController,
                     hintText: "Enter your email",
-                    validator: (value){
-                      if(value==null || value.isEmpty){
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         return "Please enter your email";
                       }
                       return null;
@@ -140,11 +141,12 @@ class _SignUpState extends State<SignUp> {
                     controller: passwordController,
                     hintText: "Enter your password",
                     obsecureText: true,
-                    validator: (value){
-                      if(value==null || value.isEmpty){
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         return "Please enter your password";
                       }
-                      if(passwordController.text!=confirmPasswordController.text){
+                      if (passwordController.text !=
+                          confirmPasswordController.text) {
                         return "Password doesn't match";
                       }
                       return null;
@@ -156,11 +158,12 @@ class _SignUpState extends State<SignUp> {
                     controller: confirmPasswordController,
                     hintText: "Confirm Password",
                     obsecureText: true,
-                    validator: (value){
-                      if(value==null || value.isEmpty){
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
                         return "Please enter your password";
                       }
-                      if(passwordController.text!=confirmPasswordController.text){
+                      if (passwordController.text !=
+                          confirmPasswordController.text) {
                         return "Password doesn't match";
                       }
                       return null;
@@ -188,8 +191,8 @@ class _SignUpState extends State<SignUp> {
                             children: [
                               TextSpan(
                                 text: "Terms of Use",
-                                style:
-                                    const TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     _showLegal(
@@ -201,8 +204,8 @@ class _SignUpState extends State<SignUp> {
                               const TextSpan(text: " and "),
                               TextSpan(
                                 text: "Privacy Policy",
-                                style:
-                                    const TextStyle(fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     _showLegal(
@@ -221,14 +224,14 @@ class _SignUpState extends State<SignUp> {
                   ButtonComponent(
                     text: "Sign Up",
                     onPressed: () {
-                      if(_formKey.currentState!.validate()){
+                      if (_formKey.currentState!.validate()) {
                         context.read<SignupBloc>().add(
-                          SignupButtonPressed(
-                            name: nameController.text,
-                            email: mailController.text,
-                            password: passwordController.text,
-                          ),
-                        );
+                              SignupButtonPressed(
+                                name: nameController.text,
+                                email: mailController.text,
+                                password: passwordController.text,
+                              ),
+                            );
                       }
                     },
                     width: width,
@@ -375,8 +378,7 @@ class _SignUpState extends State<SignUp> {
                 borderRadius: BorderRadius.circular(15),
               ),
             ),
-            onPressed: () {
-            },
+            onPressed: () {},
             child: const Padding(
               padding: EdgeInsets.symmetric(vertical: 11),
               child: Text(

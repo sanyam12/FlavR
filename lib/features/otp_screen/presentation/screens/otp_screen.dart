@@ -1,8 +1,9 @@
+import 'dart:developer';
+
 import 'package:flavr/core/components/button.dart';
 import 'package:flavr/core/components/button_types.dart';
 import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/loading.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:otp_text_field/otp_text_field.dart';
@@ -43,6 +44,9 @@ class _OtpScreenState extends State<OtpScreen> {
                   content: Text(state.message),
                 ),
               );
+            }
+            if (state is OTPSuccess) {
+              Navigator.popAndPushNamed(context, "/login");
             }
           },
           builder: (context, state) {
@@ -116,14 +120,17 @@ class _OtpScreenState extends State<OtpScreen> {
                         textFieldAlignment: MainAxisAlignment.spaceAround,
                         //TODO: Pending
                         // showFieldAsBox: true,
-                        // onSubmit: (String verificationCode) async {
-                        //   context.read<OtpScreenBloc>().add(
-                        //         OtpSubmitted(
-                        //           widget.email,
-                        //           verificationCode,
-                        //         ),
-                        //       );
-                        // },
+                        onCompleted: (String verificationCode) async {
+                          context.read<OtpScreenBloc>().add(
+                                OtpSubmitted(
+                                  widget.email,
+                                  verificationCode,
+                                ),
+                              );
+                        },
+                        onChanged: (value){
+                          otp = value;
+                        },
                         keyboardType: TextInputType.number,
                       ),
                     ),
@@ -135,7 +142,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           const Text(
                             "Didn't receive the OTP?",
                             style: TextStyle(
-                                fontSize: 13,
+                              fontSize: 13,
                             ),
                           ),
                           ResendOTP(
@@ -156,19 +163,20 @@ class _OtpScreenState extends State<OtpScreen> {
                             content: Text("Implementation Pending"),
                           ),
                         );
-                        // var response = http.post(
-                        //   Uri.parse("${}mail/verifyotp"),
-                        //   body: jsonEncode({
-                        //     "key": widget.email,
-                        //     "otp": 2650,
-                        //     "role": 1
-                        //   })
-                        // );
+                        context.read<OtpScreenBloc>().add(
+                          OtpSubmitted(
+                              widget.email,
+                              otp,
+                          ),
+                        );
                       },
                       width: width,
                       height: height,
                       type: ButtonType.LongButton,
-                      trailing: const Icon(Icons.arrow_circle_right, color: Colors.white,),
+                      trailing: const Icon(
+                        Icons.arrow_circle_right,
+                        color: Colors.white,
+                      ),
                     )
                   ],
                 ),

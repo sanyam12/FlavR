@@ -35,7 +35,6 @@ class AddMoreItems extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/outletMenu");
                   },
                   icon: const Icon(Icons.arrow_forward_ios),
                   iconSize: 15,
