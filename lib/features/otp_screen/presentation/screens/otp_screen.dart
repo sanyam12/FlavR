@@ -6,6 +6,7 @@ import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 import '../../bloc/otp_screen_bloc.dart';
@@ -89,17 +90,20 @@ class _OtpScreenState extends State<OtpScreen> {
                               children: [
                                 TextSpan(
                                   text: widget.email,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
+                                    fontFamily: GoogleFonts.poppins().fontFamily,
                                   ),
                                 ),
                               ],
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.black,
-                              )),
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                              ),
+                          ),
                         ),
                       ),
                     ),
@@ -139,10 +143,11 @@ class _OtpScreenState extends State<OtpScreen> {
                       padding: EdgeInsets.fromLTRB(0, 0.02 * height, 0, 0),
                       child: Column(
                         children: [
-                          const Text(
+                          Text(
                             "Didn't receive the OTP?",
                             style: TextStyle(
                               fontSize: 13,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
                             ),
                           ),
                           ResendOTP(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class TextFieldComponent extends StatelessWidget {
   final double width;
@@ -28,18 +29,20 @@ class TextFieldComponent extends StatelessWidget {
         width: 0.7861 * width,
         child: TextFormField(
           controller: controller,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.bold,
+            fontFamily: GoogleFonts.poppins().fontFamily,
           ),
           decoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,
               hintText: hintText,
-              hintStyle: const TextStyle(
+              hintStyle: TextStyle(
                 color: Colors.grey,
                 fontSize: 17,
                 fontWeight: FontWeight.bold,
+                fontFamily: GoogleFonts.poppins().fontFamily,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),

@@ -1,5 +1,6 @@
 import 'package:flavr/core/components/button_types.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ButtonComponent extends StatelessWidget {
   final void Function() onPressed;
@@ -40,10 +41,11 @@ class ButtonComponent extends StatelessWidget {
           children: [
             Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w700,
                 fontSize: 15,
+                fontFamily: GoogleFonts.poppins().fontFamily,
               ),
             ),
             if(trailing!=null)

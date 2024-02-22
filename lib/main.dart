@@ -185,9 +185,11 @@ class _MyAppState extends State<MyApp> {
               )
             ],
             child: MaterialApp(
-              title: 'Flutter Demo',
+              title: 'FlavR',
               theme: ThemeData(
-                textTheme: GoogleFonts.poppinsTextTheme()
+                //TODO: Text Theme not working
+                textTheme: GoogleFonts.poppinsTextTheme(),
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.white)
               ),
               debugShowCheckedModeBanner: false,
               initialRoute: "/splashscreen",

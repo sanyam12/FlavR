@@ -7,6 +7,7 @@ import 'package:flavr/core/components/text_field.dart';
 import 'package:flavr/features/login_page/presentation/widgets/image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../otp_screen/presentation/screens/otp_screen.dart';
 import '../../bloc/login_bloc.dart';
 
@@ -33,7 +34,8 @@ class _LoginPageState extends State<LoginPage> {
         child: BlocConsumer<LoginBloc, LoginState>(
           listener: (context, LoginState state) {
             if (state is LoginSuccessful) {
-              Navigator.of(context).pushNamedAndRemoveUntil("/outletMenu", (route) => false);
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil("/outletMenu", (route) => false);
             }
             if (state is LoginFailed) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -77,12 +79,13 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(
                   width: 0.8694444444 * width,
-                  child: const Text(
+                  child: Text(
                     "Hit us up with your email and password, and we’ll log you in",
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w300,
                       letterSpacing: 0.5,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -118,27 +121,31 @@ class _LoginPageState extends State<LoginPage> {
                   type: ButtonType.LongButton,
                 ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.of(context).popAndPushNamed("/signUp");
                   },
                   child: Padding(
                     padding: EdgeInsets.only(top: 0.0275 * height),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don’t have an account?"),
+                        const Text("Don’t have an account?"),
                         Text(
                           "Sign Up",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                          ),
                         )
                       ],
                     ),
                   ),
                 ),
-                const Text(
+                Text(
                   "Forgot Password?",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
                   ),
                 ),
               ],
@@ -157,19 +164,22 @@ class _LoginPageState extends State<LoginPage> {
           width: 0.75 * width,
           child: TextField(
             controller: passwordController,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.white,
               fontSize: 17,
               fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.poppins().fontFamily,
             ),
             decoration: InputDecoration(
               filled: true,
               fillColor: const Color(0xFFA3C2B3),
               hintText: "Enter Password",
-              hintStyle: const TextStyle(
+              hintStyle: TextStyle(
                   color: Colors.white,
                   fontSize: 17,
-                  fontWeight: FontWeight.bold),
+                  fontWeight: FontWeight.bold,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15),
               ),

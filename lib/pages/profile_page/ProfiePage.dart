@@ -5,6 +5,7 @@ import 'package:flavr/pages/profile_page/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'OrderData.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -66,11 +67,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                 },
                                 icon: const Icon(Icons.arrow_back_ios),
                               ),
-                              const Text(
+                              Text(
                                 "My Profile",
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
                                 ),
                               )
                             ],
@@ -96,26 +98,29 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Text(
                         userName,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
                         ),
                       ),
                       Text(
                         email,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
+                          fontFamily: GoogleFonts.poppins().fontFamily,
                         ),
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(0.0556 * width,
                             0.0125 * height, 0, 0.0125 * height),
-                        child: const Text(
+                        child: Text(
                           "Recent Orders",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 24,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
                           ),
                         ),
                       ),

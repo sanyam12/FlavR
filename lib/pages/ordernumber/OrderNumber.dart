@@ -5,6 +5,7 @@ import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/pages/ordernumber/order_number_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
 import '../profile_page/OrderProductData.dart';
@@ -23,8 +24,10 @@ class _OrderNumberState extends State<OrderNumber> {
   int grandTotal = 0;
   List<OrderProductData> productsList = [];
 
-  late final StreamSubscription<DocumentSnapshot<Map<String, dynamic>>> firebaseListener;
-  late final StreamController<DocumentSnapshot<Map<String, dynamic>>> listener = StreamController();
+  late final StreamSubscription<DocumentSnapshot<Map<String, dynamic>>>
+      firebaseListener;
+  late final StreamController<DocumentSnapshot<Map<String, dynamic>>> listener =
+      StreamController();
 
   @override
   void initState() {
@@ -33,15 +36,13 @@ class _OrderNumberState extends State<OrderNumber> {
         .collection("Order")
         .doc(widget.orderId)
         .snapshots()
-        .listen(
-            (event) {
-              listener.add(event);
-            },
-        onError:(error){
-              log(error.toString());
-        }
-    );
+        .listen((event) {
+      listener.add(event);
+    }, onError: (error) {
+      log(error.toString());
+    });
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -125,8 +126,10 @@ class _OrderNumberState extends State<OrderNumber> {
                                     0, 0.0575 * height, 0, 0),
                                 child: Text(
                                   title,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 30,
+                                    fontFamily:
+                                        GoogleFonts.poppins().fontFamily,
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
@@ -151,29 +154,35 @@ class _OrderNumberState extends State<OrderNumber> {
                                   (orderNo != 0)
                                       ? "Order number: $orderNo"
                                       : "Order number: Not Assigned",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 25,
                                     fontWeight: FontWeight.bold,
+                                    fontFamily:
+                                        GoogleFonts.poppins().fontFamily,
                                   ),
                                 ),
                               ),
                               Padding(
                                 padding:
                                     EdgeInsets.fromLTRB(0, 0.02 * height, 0, 0),
-                                child: const Text(
+                                child: Text(
                                   "Current order number: 22",
                                   style: TextStyle(
                                     fontSize: 15,
+                                    fontFamily:
+                                        GoogleFonts.poppins().fontFamily,
                                   ),
                                 ),
                               ),
                               Padding(
                                 padding:
                                     EdgeInsets.fromLTRB(0, 0.02 * height, 0, 0),
-                                child: const Text(
+                                child: Text(
                                   "13:01:25  Wednesday, 06-06-2023",
                                   style: TextStyle(
                                     fontSize: 15,
+                                    fontFamily:
+                                        GoogleFonts.poppins().fontFamily,
                                   ),
                                 ),
                               ),
@@ -198,11 +207,14 @@ class _OrderNumberState extends State<OrderNumber> {
                                           child: Container(
                                             alignment: AlignmentDirectional
                                                 .centerStart,
-                                            child: const Text(
+                                            child: Text(
                                               "Order Details",
                                               style: TextStyle(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
+                                                fontFamily:
+                                                    GoogleFonts.poppins()
+                                                        .fontFamily,
                                               ),
                                             ),
                                           ),
@@ -214,8 +226,7 @@ class _OrderNumberState extends State<OrderNumber> {
                                               name: i.productName,
                                               quantity: i.quantity,
                                               price: i.price,
-                                              veg: i.veg
-                                          ),
+                                              veg: i.veg),
                                         Padding(
                                           padding: EdgeInsets.fromLTRB(
                                               0.0416 * width,
@@ -229,11 +240,14 @@ class _OrderNumberState extends State<OrderNumber> {
                                               Container(
                                                 alignment: AlignmentDirectional
                                                     .centerStart,
-                                                child: const Text(
+                                                child: Text(
                                                   "Grand Total",
                                                   style: TextStyle(
                                                     fontSize: 20,
                                                     fontWeight: FontWeight.bold,
+                                                    fontFamily:
+                                                        GoogleFonts.poppins()
+                                                            .fontFamily,
                                                   ),
                                                 ),
                                               ),
@@ -249,12 +263,15 @@ class _OrderNumberState extends State<OrderNumber> {
                                                     ),
                                                     Text(
                                                       grandTotal.toString(),
-                                                      style: const TextStyle(
+                                                      style: TextStyle(
                                                         fontSize: 15,
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        color:
-                                                            Color(0xff004932),
+                                                        color: const Color(
+                                                            0xff004932),
+                                                        fontFamily: GoogleFonts
+                                                                .poppins()
+                                                            .fontFamily,
                                                       ),
                                                     ),
                                                   ],
@@ -285,11 +302,12 @@ class _OrderNumberState extends State<OrderNumber> {
                                         child: Container(
                                           alignment:
                                               AlignmentDirectional.centerStart,
-                                          child: const Text(
+                                          child: Text(
                                             "Special Instructions",
                                             style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold,
+                                              fontFamily: GoogleFonts.poppins().fontFamily,
                                             ),
                                           ),
                                         ),
@@ -427,22 +445,23 @@ class _OrderNumberState extends State<OrderNumber> {
 
 class Instructions extends StatelessWidget {
   const Instructions({super.key, required this.height});
+
   final double height;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.fromLTRB(
-          0, 0.0075 * height, 0, 0),
-      child: const Row(
-        mainAxisAlignment:
-        MainAxisAlignment.spaceEvenly,
+      padding: EdgeInsets.fromLTRB(0, 0.0075 * height, 0, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(Icons.circle,
-              color: Colors.black, size: 10),
+          const Icon(Icons.circle, color: Colors.black, size: 10),
           Text(
             "Don’t add cheese to one medium shillong shezwan maggi",
-            style: TextStyle(fontSize: 10),
+            style: TextStyle(
+              fontSize: 10,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+            ),
           ),
         ],
       ),
@@ -473,7 +492,7 @@ class OrderItem extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(0.045 * width, 0.01875 * height, 0, 0),
       child: Row(
         children: [
-          if(veg)
+          if (veg)
             const VegIcon(color: Colors.green)
           else
             const VegIcon(color: Colors.red),
@@ -482,8 +501,13 @@ class OrderItem extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(0.030 * width, 0, 0, 0),
-                child: Text("$name x$quantity ",
-                    style: const TextStyle(fontSize: 15)),
+                child: Text(
+                  "$name x$quantity ",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
+                  ),
+                ),
               ),
               Row(
                 children: [
@@ -494,10 +518,11 @@ class OrderItem extends StatelessWidget {
                   ),
                   Text(
                     "${quantity * price}",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xff004932),
+                      color: const Color(0xff004932),
+                      fontFamily: GoogleFonts.poppins().fontFamily,
                     ),
                   ),
                 ],
@@ -512,6 +537,7 @@ class OrderItem extends StatelessWidget {
 
 class VegIcon extends StatelessWidget {
   const VegIcon({super.key, required this.color});
+
   final Color color;
 
   @override

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddOtherInstructions extends StatelessWidget {
   const AddOtherInstructions(
       {super.key,
-        required this.width,
-        required this.height,
-        required this.valuefirst,
-        required this.onChanged});
+      required this.width,
+      required this.height,
+      required this.valuefirst,
+      required this.onChanged});
 
   final double width;
   final double height;
@@ -33,11 +34,12 @@ class AddOtherInstructions extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(
                       0.025 * width, 0.01125 * height, 0, 0),
-                  child: const Text(
+                  child: Text(
                     "Add Order Instructions",
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
                     ),
                   ),
                 ),
@@ -58,10 +60,13 @@ class AddOtherInstructions extends StatelessWidget {
                         children: [
                           Padding(
                             padding:
-                            EdgeInsets.fromLTRB(0, 0.01 * height, 0, 0),
-                            child: const Text(
+                                EdgeInsets.fromLTRB(0, 0.01 * height, 0, 0),
+                            child: Text(
                               "Pack the order",
-                              style: TextStyle(fontSize: 12),
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: GoogleFonts.poppins().fontFamily,
+                              ),
                             ),
                           ),
                           Row(

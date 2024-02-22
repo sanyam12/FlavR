@@ -5,6 +5,7 @@ import 'package:flavr/pages/order_details/order_details_bloc.dart';
 import 'package:flavr/pages/profile_page/OrderProductData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../profile_page/OrderData.dart';
@@ -114,11 +115,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           0.004 * height,
                                           0,
                                           0),
-                                      child: const Text(
+                                      child: Text(
                                         'Nescafe',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20,
+                                          fontFamily: GoogleFonts.poppins().fontFamily
                                         ),
                                       ),
                                     ),
@@ -142,12 +144,13 @@ class _OrderDetailsState extends State<OrderDetails> {
                         Padding(
                           padding:
                               EdgeInsets.fromLTRB(0.013889 * width, 0, 0, 0),
-                          child: const Text(
+                          child: Text(
                             'Nit Jalandhar, Grand trunk road, Barnala-Amritsar Bypass',
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
-                              color: Color(0xff000000),
+                              color: const Color(0xff000000),
                               fontSize: 10,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
                             ),
                           ),
                         )
@@ -162,26 +165,29 @@ class _OrderDetailsState extends State<OrderDetails> {
                         children: [
                           Text(
                             'Date : ${_formatDate(widget.orderData.createdAt)}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xff000000),
+                              color: const Color(0xff000000),
+                              fontFamily: GoogleFonts.poppins().fontFamily,
                             ),
                           ),
                           Text(
                             'Order Placed : ${_formatTime(widget.orderData.createdAt)}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                               color: Color(0xff000000),
+                              fontFamily: GoogleFonts.poppins().fontFamily,
                             ),
                           ),
                           Text(
                             'Last Updated : ${_formatTime(widget.orderData.updatedAt)}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xff000000),
+                              color: const Color(0xff000000),
+                              fontFamily: GoogleFonts.poppins().fontFamily,
                             ),
                           ),
                           Padding(
@@ -219,13 +225,14 @@ class _OrderDetailsState extends State<OrderDetails> {
                           ),
                         )
                       },
-                      child: const Text(
+                      child: Text(
                         'Re Order',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
                           backgroundColor: Color(0xff004932),
                           color: Color(0xffffffff),
+                          fontFamily: GoogleFonts.poppins().fontFamily,
                         ),
                       ),
                     ),
@@ -296,10 +303,11 @@ class ItemCard extends StatelessWidget {
                       ),
                       Text(
                         data.productName,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xff000000),
+                          color: const Color(0xff000000),
+                          fontFamily: GoogleFonts.poppins().fontFamily,
                         ),
                       )
                     ],
@@ -313,28 +321,31 @@ class ItemCard extends StatelessWidget {
                       ),
                       Text(
                         data.price.toString(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
-                          color: Color(0xff004932),
+                          color: const Color(0xff004932),
+                          fontFamily: GoogleFonts.poppins().fontFamily,
                         ),
                       ),
                       Text(
                         data.variant,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
                           color: Color(0xff000000),
+                          fontFamily: GoogleFonts.poppins().fontFamily,
                         ),
                       )
                     ],
                   ),
                   Text(
                     data.description,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Color(0xff8A8888),
                       fontSize: 12,
                       fontWeight: FontWeight.normal,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
                     ),
                   )
                 ],

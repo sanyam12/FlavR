@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cfpaymentgateway/cfpaymentgatewayservice.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:slidable_button/slidable_button.dart';
 
 // import 'package:lottie/lottie.dart';
@@ -55,11 +56,10 @@ class _CartPageState extends State<CartPage> {
   }
 
   void onPaymentError(CFErrorResponse errorResponse, String orderId) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(
-        SnackBar(
-            content: Text("payment failed ${errorResponse.toString()}"),
-        ),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("payment failed ${errorResponse.toString()}"),
+      ),
     );
   }
 
@@ -93,7 +93,7 @@ class _CartPageState extends State<CartPage> {
                   ),
                 );
                 cart.items.clear();
-              } else if(state is StartCashFreeService){
+              } else if (state is StartCashFreeService) {
                 cfPaymentGatewayService.doPayment(state.cfDropCheckoutPayment);
               }
             },
@@ -164,20 +164,22 @@ class _CartPageState extends State<CartPage> {
                                     ),
                                     Text(
                                       grandTotal.toString(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         color: Colors.black,
-                                        fontFamily: "inter",
                                         fontSize: 20,
+                                        fontFamily:
+                                            GoogleFonts.poppins().fontFamily,
                                       ),
                                     ),
                                   ],
                                 ),
-                                const Text(
+                                Text(
                                   "Total",
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 15,
-                                    fontFamily: "inter",
+                                    fontFamily:
+                                        GoogleFonts.poppins().fontFamily,
                                   ),
                                 ),
                               ],
@@ -219,19 +221,19 @@ class _CartPageState extends State<CartPage> {
                                   },
                                   child: Container(
                                     alignment: Alignment.centerLeft,
-                                    child: const Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                        63,
-                                        0,
-                                        0,
-                                        0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 63,
                                       ),
                                       child: Text(
                                         "Swipe to Pay",
                                         style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily:
+                                              GoogleFonts.poppins().fontFamily,
+                                        ),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -266,9 +268,12 @@ class _CartPageState extends State<CartPage> {
             Navigator.pop(context, cart);
           },
         ),
-        title: const Text(
+        title: Text(
           "Cart",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+            color: Colors.black,
+            fontFamily: GoogleFonts.poppins().fontFamily,
+          ),
         ),
         actions: [
           IconButton(

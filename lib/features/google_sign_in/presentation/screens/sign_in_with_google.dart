@@ -4,7 +4,7 @@ import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/features/google_sign_in/presentation/widgets/google_button.dart';
 import 'package:flavr/features/google_sign_in/presentation/widgets/image_collection.dart';
 import 'package:flavr/features/google_sign_in/presentation/widgets/login_text.dart';
-import 'package:flavr/features/google_sign_in/presentation/widgets/or_component.dart';
+import 'package:flavr/core/components/rule_text_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,9 +77,12 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
                 LoginText(
                   height: height,
                 ),
-                OrComponent(
+                RuleTextComponent(
                   width: width,
                   height: height,
+                  text: "OR",
+                  horizontalPadding: 0.125*width,
+                  verticalPadding: 0.02125 * height,
                 ),
                 const GoogleButton(),
               ],

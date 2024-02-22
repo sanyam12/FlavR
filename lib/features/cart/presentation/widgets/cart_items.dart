@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../outlet_menu/data/models/Product.dart';
 import '../../../outlet_menu/data/models/ProductVariantData.dart';
@@ -71,8 +72,8 @@ class _CartItemsState extends State<CartItems> {
                         child: (widget.product.productImage != "null")
                             ? Image.network(widget.product.productImage)
                             : const Image(
-                          image: AssetImage("assets/images/pizza.jpg"),
-                        ),
+                                image: AssetImage("assets/images/pizza.jpg"),
+                              ),
                       ),
                     ),
                     Align(
@@ -96,7 +97,7 @@ class _CartItemsState extends State<CartItems> {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor:
-                                        const Color(0xFFD6EAE1),
+                                            const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
                                       context.read<CartBloc>()
@@ -130,7 +131,7 @@ class _CartItemsState extends State<CartItems> {
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor:
-                                        const Color(0xFFD6EAE1),
+                                            const Color(0xFFD6EAE1),
                                         padding: EdgeInsets.zero),
                                     onPressed: () {
                                       context.read<CartBloc>()
@@ -187,8 +188,11 @@ class _CartItemsState extends State<CartItems> {
                   children: [
                     Text(
                       widget.product.name,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                      ),
                       overflow: TextOverflow.ellipsis,
                     ),
                     Row(
@@ -199,8 +203,11 @@ class _CartItemsState extends State<CartItems> {
                         ),
                         Text(
                           widget.price.toString(),
-                          style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: GoogleFonts.poppins().fontFamily,
+                          ),
                         ),
                         Text((widget.variant.variantName != "Default")
                             ? widget.variant.variantName
@@ -209,7 +216,10 @@ class _CartItemsState extends State<CartItems> {
                     ),
                     Text(
                       widget.product.description,
-                      style: const TextStyle(fontSize: 12),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                      ),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                     )

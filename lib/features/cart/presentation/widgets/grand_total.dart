@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class GrandTotal extends StatelessWidget {
   const GrandTotal(
       {super.key,
-        required this.width,
-        required this.height,
-        required this.grandTotal});
+      required this.width,
+      required this.height,
+      required this.grandTotal});
 
   final double width;
   final double height;
@@ -19,8 +20,14 @@ class GrandTotal extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text("Grand Total",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+          Text(
+            "Grand Total",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+            ),
+          ),
           Row(
             children: [
               const Icon(
@@ -30,10 +37,11 @@ class GrandTotal extends StatelessWidget {
               ),
               Text(
                 grandTotal.toString(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Color(0xff004932),
+                  fontFamily: GoogleFonts.poppins().fontFamily,
                 ),
               ),
             ],

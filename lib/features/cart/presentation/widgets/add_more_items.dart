@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AddMoreItems extends StatelessWidget {
   const AddMoreItems(
@@ -26,11 +27,11 @@ class AddMoreItems extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   "Add more items",
                   style: TextStyle(
                     fontSize: 17,
-                    fontFamily: "inter",
+                    fontFamily: GoogleFonts.poppins().fontFamily,
                   ),
                 ),
                 IconButton(

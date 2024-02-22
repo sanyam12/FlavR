@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flavr/pages/order_details/OrderDetails.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class OrderCard extends StatelessWidget {
@@ -20,6 +21,7 @@ class OrderCard extends StatelessWidget {
     final DateFormat formatter = DateFormat('dd MMM, yyyy');
     return formatter.format(dateTime);
   }
+
   String _formatTime(DateTime dateTime) {
     final DateFormat formatter = DateFormat('hh:mm a');
     return formatter.format(dateTime);
@@ -50,28 +52,31 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Text(
                       _formatDate(data.createdAt),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xff000000),
+                        color: const Color(0xff000000),
+                        fontFamily: GoogleFonts.poppins().fontFamily,
                       ),
                       overflow: TextOverflow.clip,
                     ),
-                    const Text(
+                    Text(
                       //TODO: Outlet name
                       "data.outlet",
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xff000000),
+                        color: const Color(0xff000000),
+                        fontFamily: GoogleFonts.poppins().fontFamily,
                       ),
                     ),
                     Text(
                       _formatTime(data.createdAt),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xff000000),
+                        color: const Color(0xff000000),
+                        fontFamily: GoogleFonts.poppins().fontFamily,
                       ),
                       overflow: TextOverflow.clip,
                     ),
@@ -86,20 +91,22 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Text(
+                        Text(
                           "Order #",
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xff000000),
+                            color: const Color(0xff000000),
+                            fontFamily: GoogleFonts.poppins().fontFamily,
                           ),
                         ),
                         Text(
                           data.orderNumber?.toString() ?? "NA",
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xffff0000),
+                            color: const Color(0xffff0000),
+                            fontFamily: GoogleFonts.poppins().fontFamily,
                           ),
                         ),
                       ],
@@ -113,10 +120,11 @@ class OrderCard extends StatelessWidget {
                         ),
                         Text(
                           data.totalPrice.toString(),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Color(0xff000000),
+                            fontFamily: GoogleFonts.poppins().fontFamily,
                           ),
                         ),
                       ],
@@ -137,40 +145,46 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Stack(
                       children: [
-                        if(data.products.length>=3)
+                        if (data.products.length >= 3)
                           Padding(
                             padding: EdgeInsets.fromLTRB(
-                              0.1112 * width, 0, 0.0556 * width, 0,),
+                              0.1112 * width,
+                              0,
+                              0.0556 * width,
+                              0,
+                            ),
                             child: CircleAvatar(
                               backgroundColor: Colors.white,
                               radius: 32,
                               child: ClipOval(
-                                child:
-                                Image.network(data.products[2].imageUrl),
+                                child: Image.network(data.products[2].imageUrl),
                               ),
                             ),
                           ),
-                        if(data.products.length>=2)
+                        if (data.products.length >= 2)
                           Padding(
-                              padding: EdgeInsets.fromLTRB(
-                                  0.0556 * width, 0, 0.0556 * width, 0,),
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 32,
-                                child: ClipOval(
-                                    child:
-                                        Image.network(data.products[1].imageUrl),
-                                ),
+                            padding: EdgeInsets.fromLTRB(
+                              0.0556 * width,
+                              0,
+                              0.0556 * width,
+                              0,
+                            ),
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 32,
+                              child: ClipOval(
+                                child: Image.network(data.products[1].imageUrl),
                               ),
+                            ),
                           ),
-                        if(data.products.isNotEmpty)
+                        if (data.products.isNotEmpty)
                           CircleAvatar(
                             backgroundColor: Colors.white,
                             radius: 32,
                             child: ClipOval(
-                                child: Image.network(
-                                    data.products[0].imageUrl,
-                                ),
+                              child: Image.network(
+                                data.products[0].imageUrl,
+                              ),
                             ),
                           )
                       ],
@@ -178,33 +192,34 @@ class OrderCard extends StatelessWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        if(data.products.isNotEmpty)
+                        if (data.products.isNotEmpty)
                           Text(
                             "${data.products[0].quantity} x ${data.products[0].productName}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xff000000),
+                              color: const Color(0xff000000),
+                              fontFamily: GoogleFonts.poppins().fontFamily,
                             ),
                           ),
-                        if(data.products.length>=2)
+                        if (data.products.length >= 2)
                           Text(
                             "${data.products[1].quantity} x ${data.products[1].productName}",
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
                               color: Color(0xff000000),
+                              fontFamily: GoogleFonts.poppins().fontFamily,
                             ),
                           ),
                         // if(data.products.length>=3)
-
                       ],
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        if(data.products.isNotEmpty)
+                        if (data.products.isNotEmpty)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -213,18 +228,18 @@ class OrderCard extends StatelessWidget {
                                 size: 12,
                                 color: Color(0xff004932),
                               ),
-
-                                Text(
-                                  "${data.products[0].price}",
-                                  style: const TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w700,
-                                    color: Color(0xff000000),
-                                  ),
+                              Text(
+                                "${data.products[0].price}",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xff000000),
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
                                 ),
+                              ),
                             ],
                           ),
-                        if(data.products.length>=2)
+                        if (data.products.length >= 2)
                           Row(
                             children: [
                               const Icon(
@@ -234,21 +249,23 @@ class OrderCard extends StatelessWidget {
                               ),
                               Text(
                                 "${data.products[1].price}",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700,
                                   color: Color(0xff000000),
+                                  fontFamily: GoogleFonts.poppins().fontFamily,
                                 ),
                               ),
                             ],
                           ),
-                        if(data.products.length>=3)
-                          const Text(
+                        if (data.products.length >= 3)
+                          Text(
                             "And More...",
                             style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
                               color: Color(0xff000000),
+                              fontFamily: GoogleFonts.poppins().fontFamily,
                             ),
                           )
                       ],
@@ -264,18 +281,20 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Text(
                       data.status,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff004932),
+                        fontFamily: GoogleFonts.poppins().fontFamily,
                       ),
                     ),
                     Text(
                       _formatTime(data.createdAt),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Color(0xff004932),
+                        fontFamily: GoogleFonts.poppins().fontFamily,
                       ),
                     ),
                   ],

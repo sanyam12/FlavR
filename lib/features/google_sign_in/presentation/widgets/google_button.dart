@@ -2,6 +2,7 @@ import 'package:flavr/features/google_sign_in/bloc/sign_in_with_google_bloc.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
 
@@ -30,24 +31,27 @@ class _GoogleButtonState extends State<GoogleButton> {
         alignment: WrapAlignment.center,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12),
-              child: Text(
-                "Continue with",
-                style: TextStyle(color: Colors.black),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              "Continue with",
+              style: TextStyle(
+                color: Colors.black,
+                fontFamily: GoogleFonts.poppins().fontFamily,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: SizedBox(
-                width: 20,
-                height: 20,
-                child: Image.asset(
-                  "assets/images/google_logo.png",
-                ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: SizedBox(
+              width: 20,
+              height: 20,
+              child: Image.asset(
+                "assets/images/google_logo.png",
               ),
             ),
-          ],
+          ),
+        ],
       ),
     );
   }

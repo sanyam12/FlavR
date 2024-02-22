@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class YourDetails extends StatelessWidget {
   const YourDetails({super.key, required this.width, required this.height});
@@ -24,11 +25,12 @@ class YourDetails extends StatelessWidget {
               child: Padding(
                 padding:
                 EdgeInsets.fromLTRB(0.033 * width, 0.01125 * height, 0, 0),
-                child: const Text(
+                child: Text(
                   "Your details",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 15,
+                    fontFamily: GoogleFonts.poppins().fontFamily,
                   ),
                 ),
               ),

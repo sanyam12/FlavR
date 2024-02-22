@@ -3,6 +3,7 @@ import 'package:flavr/core/components/button.dart';
 import 'package:flavr/core/components/button_types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../bloc/otp_screen_bloc.dart';
 
@@ -55,18 +56,20 @@ class _ResendOTPState extends State<ResendOTP> {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             "Request again in ",
             style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.poppins().fontFamily,
             ),
           ),
           Text(
             seconds.toString(),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 13,
               fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.poppins().fontFamily,
             ),
           ),
         ],

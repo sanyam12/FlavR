@@ -8,6 +8,7 @@ import 'package:flavr/features/signup/presentation/widgets/image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../otp_screen/presentation/screens/otp_screen.dart';
 import '../../bloc/signup_bloc.dart';
 
@@ -379,14 +380,16 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             onPressed: () {},
-            child: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 11),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 11),
               child: Text(
                 "Sign Up",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 17,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                ),
               ),
             ),
           ),

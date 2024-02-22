@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../bloc/splash_screen_bloc.dart';
 
@@ -23,13 +24,13 @@ class _SplashScreenState extends State<SplashScreen> {
     final height = MediaQuery.of(context).size.height;
     return BlocListener<SplashScreenBloc, SplashScreenState>(
       listener: (context, state) {
-        if(state is SplashScreenSignedIn){
+        if (state is SplashScreenSignedIn) {
           Navigator.popAndPushNamed(context, "/outletMenu");
         }
-        if(state is SplashScreenNotSignedIn){
+        if (state is SplashScreenNotSignedIn) {
           Navigator.popAndPushNamed(context, "/signInWithGoogle");
         }
-        if(state is SplashScreenErrorOccurred){
+        if (state is SplashScreenErrorOccurred) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Decoding failed")),
           );
@@ -53,10 +54,12 @@ class _SplashScreenState extends State<SplashScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // Text("By"),
-                    const Text(
+                    Text(
                       "Made with ❤️ in India By",
                       style: TextStyle(
-                          fontFamily: "Poppins", fontWeight: FontWeight.w400),
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                     SizedBox(
                       width: 0.2444 * width,
