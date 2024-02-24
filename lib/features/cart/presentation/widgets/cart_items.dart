@@ -61,6 +61,7 @@ class _CartItemsState extends State<CartItems> {
           child: Padding(
             padding: EdgeInsets.fromLTRB(0.03*widget.width, 0, 0.02*widget.width, 0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 0.007*widget.height, 0, 0.007*widget.height),
@@ -90,54 +91,186 @@ class _CartItemsState extends State<CartItems> {
                 //     ],
                 //   ),
                 // ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.product.name,
-                          style: const TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Stack(
-                              alignment: AlignmentDirectional.center,
-                              children: [
-                                Icon(
-                                  Icons.crop_square_sharp,
-                                  color: Colors.green,
-                                  size: 25,
+                Expanded(
+                  child: Container(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0.03*widget.width,0.01*widget.height,0.03*widget.width,0.01*widget.height),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                widget.product.name,
+                                style: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const Stack(
+                                    alignment: AlignmentDirectional.center,
+                                    children: [
+                                      Icon(
+                                        Icons.crop_square_sharp,
+                                        color: Colors.green,
+                                        size: 25,
+                                      ),
+                                      Icon(Icons.circle, color: Colors.green, size: 10),
+                                    ],
+                                  ),
+                            ],
+                          ),
+                          // Row(
+                          //   children: [
+                          //     const Icon(
+                          //       Icons.currency_rupee,
+                          //       size: 15,
+                          //     ),
+                          //     Text(
+                          //       widget.price.toString(),
+                          //       style: const TextStyle(
+                          //           fontSize: 12, fontWeight: FontWeight.bold),
+                          //     ),
+                          //     Text((widget.variant.variantName != "Default")
+                          //         ? widget.variant.variantName
+                          //         : ""),
+                          //   ],
+                          // ),
+                          Text(
+                            widget.product.description,
+                            style: const TextStyle(fontSize: 10),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0.01*widget.height, 0, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children:[
+                                SizedBox(
+                                  height:0.03875*widget.height,
+                                  width:0.130556*widget.width,
+                                  child: Card(
+                                    color: Color(0xfff2f1f1),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
+
+
+                                      ),
+                                      child:Padding(
+                                        padding: EdgeInsets.fromLTRB(0.01*widget.width, 0, 0, 0),
+                                        child: const Row(
+                                          children: [
+                                            Icon(
+                                              Icons.currency_rupee,
+                                              color:
+                                              Color(0xff000000),
+                                              size: 12,
+                                            ),
+                                            Text(
+                                              "150",
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight:
+                                                FontWeight.w800,
+                                                color:
+                                                Color(0xff000000),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      width: 0.069444 * widget.width,
+                                      height: 0.03125 * widget.height,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                            const Color(0xFFF2F1F1),
+                                            padding: EdgeInsets.zero,
+                                            shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),),
+                                        onPressed: () {
+                                          context.read<CartBloc>()
+                                            ..add(
+                                              CartDecrementAmount(
+                                                widget.product,
+                                                widget.cart,
+                                                ProductVariantData(
+                                                  widget.variant.variantName,
+                                                  widget.variant.price,
+                                                ),
+                                              ),
+                                            )
+                                            ..add(
+                                              UpdateGrandTotal(
+                                                widget.cart,
+                                                widget.list,
+                                              ),
+                                            );
+                                        },
+                                        child: const Icon(
+                                          Icons.remove,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(0.01*widget.width,0,0.01*widget.width,0),
+                                      child: Text(_items().toString()),
+                                    ),
+                                    SizedBox(
+                                      width: 0.069444 * widget.width,
+                                      height: 0.03125 * widget.height,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                            const Color(0xFFF2F1F1),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
+                                            padding: EdgeInsets.zero),
+                                        onPressed: () {
+                                          context.read<CartBloc>()
+                                            ..add(
+                                              CartIncrementAmount(
+                                                widget.product,
+                                                widget.cart,
+                                                ProductVariantData(
+                                                  widget.variant.variantName,
+                                                  widget.variant.price,
+                                                ),
+                                              ),
+                                            )
+                                            ..add(
+                                              UpdateGrandTotal(
+                                                widget.cart,
+                                                widget.list,
+                                              ),
+                                            );
+                                        },
+                                        child: const Icon(
+                                          Icons.add,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Icon(Icons.circle, color: Colors.green, size: 10),
+
                               ],
                             ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.currency_rupee,
-                          size: 15,
-                        ),
-                        Text(
-                          widget.price.toString(),
-                          style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.bold),
-                        ),
-                        Text((widget.variant.variantName != "Default")
-                            ? widget.variant.variantName
-                            : ""),
-                      ],
-                    ),
-                    Text(
-                      widget.product.description,
-                      style: const TextStyle(fontSize: 12),
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    )
-                  ],
+                  ),
                 )
               ],
             ),

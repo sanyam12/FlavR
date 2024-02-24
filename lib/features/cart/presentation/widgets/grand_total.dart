@@ -15,7 +15,7 @@ class GrandTotal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(
-          0.06 * width, 0.0175 * height, 0.05277 * width, 0),
+          0, 0.0175 * height, 0, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -25,13 +25,13 @@ class GrandTotal extends StatelessWidget {
             children: [
               const Icon(
                 Icons.currency_rupee,
-                size: 22,
+                size: 17,
                 color: Color(0xff004932),
               ),
               Text(
                 grandTotal.toString(),
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 17,
                   fontWeight: FontWeight.bold,
                   color: Color(0xff004932),
                 ),
