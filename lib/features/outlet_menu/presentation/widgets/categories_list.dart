@@ -55,7 +55,7 @@ class _CategoriesListState extends State<CategoriesList> {
                   borderRadius: BorderRadius.circular(10),
                   child: Container(
                     color: (widget.selectedCategory ==
-                        widget.filteredMenuList[index].category)
+                            widget.filteredMenuList[index].category)
                         ? Colors.black
                         : Colors.white,
                     height: double.infinity,
@@ -66,15 +66,20 @@ class _CategoriesListState extends State<CategoriesList> {
                             horizontal: 0.09166666667 * widget.width,
                             vertical: 0.02125 * widget.height,
                           ),
-                          child: (widget.filteredMenuList[index].iconUrl.isEmpty)
-                              ? Image.asset(
-                                  "assets/images/Fast food.png",
-                                )
-                              : Image.network(
-                                  widget.filteredMenuList[index].iconUrl,
-                                  width: 35,
-                                  height: 35,
-                                ),
+                          child:
+                              (widget.filteredMenuList[index].iconUrl.isEmpty)
+                                  ? Image.asset(
+                                      "assets/images/Fast food.png",
+                                      width: 45,
+                                      height: 45,
+                                      fit: BoxFit.fill,
+                                    )
+                                  : Image.network(
+                                      widget.filteredMenuList[index].iconUrl,
+                                      width: 45,
+                                      height: 45,
+                                      fit: BoxFit.fill,
+                                    ),
                         ),
                         Text(
                           widget.filteredMenuList[index].category,

@@ -195,7 +195,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     RefreshMenuEvent event,
     Emitter<OutletMenuState> emit,
   ) async {
-    try {
       emit(OutletMenuLoading());
       final token = await _coreCartRepository.getToken();
       final outlet = await _repository.getOutlet(token);
@@ -208,14 +207,14 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
         cart,
         incompleteOrders,
       ));
-    } catch (e) {
-      log(e.toString());
-      if (e.toString() == "Exception: No Saved Outlet Found") {
-        emit(NavigateToOutletList());
-      } else {
-        emit(ShowSnackBar(e.toString()));
-      }
-    }
+    // } catch (e) {
+    //   log(e.toString());
+    //   if (e.toString() == "Exception: No Saved Outlet Found") {
+    //     emit(NavigateToOutletList());
+    //   } else {
+    //     emit(ShowSnackBar(e.toString()));
+    //   }
+    // }
   }
 
   _outletListClicked(

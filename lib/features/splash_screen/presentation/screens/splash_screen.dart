@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocListener<SplashScreenBloc, SplashScreenState>(
       listener: (context, state) {
         if (state is SplashScreenSignedIn) {
-          Navigator.popAndPushNamed(context, "/outletMenu");
+          Navigator.popAndPushNamed(context, "/outletList");
         }
         if (state is SplashScreenNotSignedIn) {
           Navigator.popAndPushNamed(context, "/signInWithGoogle");

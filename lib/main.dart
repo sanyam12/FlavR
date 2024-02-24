@@ -7,6 +7,8 @@ import 'package:flavr/core/data_provider/core_storage_provider.dart';
 import 'package:flavr/core/repository/core_cart_repository.dart';
 import 'package:flavr/features/cart/data/data_providers/cart_api_provider.dart';
 import 'package:flavr/features/cart/data/repository/cart_repository.dart';
+import 'package:flavr/features/orders_list/bloc/orders_list_bloc.dart';
+import 'package:flavr/features/orders_list/presentation/screens/orders_list.dart';
 import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_api_provider.dart';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart';
@@ -182,15 +184,17 @@ class _MyAppState extends State<MyApp> {
                 create: (context) => CartBloc(
                     context.read<CoreCartRepository>(),
                     context.read<CartRepository>()),
-              )
+              ),
+              BlocProvider(
+                create: (context) => OrdersListBloc(),
+              ),
             ],
             child: MaterialApp(
               title: 'FlavR',
               theme: ThemeData(
-                //TODO: Text Theme not working
-                textTheme: GoogleFonts.poppinsTextTheme(),
-                colorScheme: ColorScheme.fromSeed(seedColor: Colors.white)
-              ),
+                  //TODO: Text Theme not working
+                  textTheme: GoogleFonts.poppinsTextTheme(),
+                  colorScheme: ColorScheme.fromSeed(seedColor: Colors.white)),
               debugShowCheckedModeBanner: false,
               initialRoute: "/splashscreen",
               routes: {
@@ -204,6 +208,7 @@ class _MyAppState extends State<MyApp> {
                 "/profile": (context) => const ProfilePage(),
                 "/payment": (context) => const Payment(),
                 "/edit_profile": (context) => const EditProfile(),
+                "/order_list": (context) => const OrdersList(),
               },
             ),
           ),

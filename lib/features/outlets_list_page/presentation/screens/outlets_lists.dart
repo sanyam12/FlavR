@@ -2,10 +2,8 @@ import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/search_bar.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/button_row.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/image_slider.dart';
-import 'package:flavr/features/outlets_list_page/presentation/widgets/tab_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../outlet_menu/data/models/Outlet.dart';
 import '../../bloc/outlet_list_bloc.dart';
@@ -66,7 +64,7 @@ class _OutletsListState extends State<OutletsList> {
             searchAllOutletList = state.list;
           });
         } else if (state is OutletSelected) {
-          Navigator.of(context).pop(state.id);
+          Navigator.pushNamed(context, "/outletMenu");
         } else if (state is RefreshWidget) {
           setState(() {});
         } else if (state is GetSearchResultState) {

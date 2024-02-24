@@ -32,7 +32,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           final userName = json["user"][0]["userName"];
           final email = json["user"][0]["email"];
           final profilePicUrl = json["user"][0]["userProfilePic"]["url"];
-          Stream<List<OrderData>> stream = getOrders(token.toString());
+          List<OrderData> stream = await getOrders(token.toString());
 
           emit(ProfileDataState(userName, stream, email, profilePicUrl));
         }else{
@@ -42,7 +42,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     });
   }
 
-  Stream<List<OrderData>> getOrders(String token)async*{
+  Future<List<OrderData>> getOrders(String token)async{
     final List<OrderData> orderList = [];
     final response = await http.get(
       Uri.parse("${API_DOMAIN}orders/getorders"),
@@ -54,9 +54,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       final list = jsonDecode(response.body)["result"];
       for(var i in list){
         orderList.add(OrderData.fromJson(i));
-        yield orderList;
       }
     }
+    return orderList;
   }
 
   // Stream<List<OrderData>> check(List<dynamic> orderIdList)async*{

@@ -1,11 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flavr/core/components/loading.dart';
-import 'package:flavr/pages/order_details/OrderDetails.dart';
 import 'package:flavr/pages/profile_page/order_card.dart';
 import 'package:flavr/pages/profile_page/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../core/components/heading.dart';
 import 'OrderData.dart';
 
@@ -21,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isLoading = true;
   String email = "initial";
   String profilePicUrl = "null";
-  late Stream<List<OrderData>> list;
+  List<OrderData> list = [];
 
   @override
   Widget build(BuildContext context) {
@@ -156,29 +154,42 @@ class _ProfilePageState extends State<ProfilePage> {
                                       Expanded(
                                         child: Card(
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+                                            borderRadius: BorderRadius.vertical(
+                                                top: Radius.circular(20.0)),
                                           ),
                                           child: Column(
                                             children: [
                                               SingleChildScrollView(
                                                 child: Padding(
                                                   padding: EdgeInsets.fromLTRB(
-                                                      0.07 * width, 0, 0.07 * width, 0),
+                                                      0.07 * width,
+                                                      0,
+                                                      0.07 * width,
+                                                      0),
                                                   child: Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Padding(
-                                                        padding: EdgeInsets.fromLTRB(
-                                                            0, 0.03125 * height, 0, 0),
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0,
+                                                                0.03125 *
+                                                                    height,
+                                                                0,
+                                                                0),
                                                         child: Container(
-                                                          height: 0.23625 * height,
+                                                          height:
+                                                              0.23625 * height,
                                                           width: 0.98 * width,
-                                                          color: Color(0x00000000),
+                                                          color:
+                                                              Color(0x00000000),
                                                           child: ClipRRect(
                                                             borderRadius:
-                                                                BorderRadius.circular(
-                                                                    10.0),
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
                                                             child: Image.asset(
                                                               'assets/images/discount.webp',
                                                               //width:0.96*width,
@@ -188,8 +199,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                                         ),
                                                       ),
                                                       Padding(
-                                                        padding: EdgeInsets.fromLTRB(
-                                                            0, 0.02 * height, 0, 0),
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0,
+                                                                0.02 * height,
+                                                                0,
+                                                                0),
                                                         child: const Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -200,9 +215,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               style: TextStyle(
                                                                 fontSize: 16,
                                                                 fontWeight:
-                                                                    FontWeight.bold,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Color(
+                                                                    0xff000000),
                                                               ),
                                                             ),
                                                             Text(
@@ -210,17 +226,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               style: TextStyle(
                                                                 fontSize: 13,
                                                                 fontWeight:
-                                                                    FontWeight.w800,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                    FontWeight
+                                                                        .w800,
+                                                                color: Color(
+                                                                    0xff000000),
                                                               ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
                                                       Padding(
-                                                        padding: EdgeInsets.fromLTRB(
-                                                            0, 0.007 * height, 0, 0),
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0,
+                                                                0.007 * height,
+                                                                0,
+                                                                0),
                                                         child: const Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -230,20 +251,26 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               children: [
                                                                 Text(
                                                                   "Order #",
-                                                                  style: TextStyle(
-                                                                    fontSize: 14,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        14,
                                                                     fontWeight:
-                                                                        FontWeight.w800,
+                                                                        FontWeight
+                                                                            .w800,
                                                                     color: Color(
                                                                         0xff000000),
                                                                   ),
                                                                 ),
                                                                 Text(
                                                                   "52",
-                                                                  style: TextStyle(
-                                                                    fontSize: 14,
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        14,
                                                                     fontWeight:
-                                                                        FontWeight.w800,
+                                                                        FontWeight
+                                                                            .w800,
                                                                     color: Color(
                                                                         0xffff3c3c),
                                                                   ),
@@ -255,23 +282,30 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               style: TextStyle(
                                                                 fontSize: 13,
                                                                 fontWeight:
-                                                                    FontWeight.w800,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                    FontWeight
+                                                                        .w800,
+                                                                color: Color(
+                                                                    0xff000000),
                                                               ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
                                                       Padding(
-                                                        padding: EdgeInsets.fromLTRB(
-                                                            0, 0.02 * height, 0, 0),
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0,
+                                                                0.02 * height,
+                                                                0,
+                                                                0),
                                                         child: const Text(
                                                           "Items",
                                                           style: TextStyle(
                                                             fontSize: 14,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Color(0xff000000),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Color(
+                                                                0xff000000),
                                                           ),
                                                         ),
                                                       ),
@@ -285,26 +319,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Color(0xff000000),
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Color(
+                                                                  0xff000000),
                                                             ),
                                                           ),
                                                           Row(
                                                             children: [
                                                               Icon(
-                                                                Icons.currency_rupee,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                Icons
+                                                                    .currency_rupee,
+                                                                color: Color(
+                                                                    0xff000000),
                                                                 size: 12,
                                                               ),
                                                               Text(
                                                                 "150",
-                                                                style: TextStyle(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 12,
                                                                   fontWeight:
-                                                                      FontWeight.w400,
-                                                                  color:
-                                                                      Color(0xff000000),
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Color(
+                                                                      0xff000000),
                                                                 ),
                                                               ),
                                                             ],
@@ -321,26 +360,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Color(0xff000000),
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Color(
+                                                                  0xff000000),
                                                             ),
                                                           ),
                                                           Row(
                                                             children: [
                                                               Icon(
-                                                                Icons.currency_rupee,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                Icons
+                                                                    .currency_rupee,
+                                                                color: Color(
+                                                                    0xff000000),
                                                                 size: 12,
                                                               ),
                                                               Text(
                                                                 "150",
-                                                                style: TextStyle(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 12,
                                                                   fontWeight:
-                                                                      FontWeight.w400,
-                                                                  color:
-                                                                      Color(0xff000000),
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Color(
+                                                                      0xff000000),
                                                                 ),
                                                               ),
                                                             ],
@@ -357,26 +401,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Color(0xff000000),
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Color(
+                                                                  0xff000000),
                                                             ),
                                                           ),
                                                           Row(
                                                             children: [
                                                               Icon(
-                                                                Icons.currency_rupee,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                Icons
+                                                                    .currency_rupee,
+                                                                color: Color(
+                                                                    0xff000000),
                                                                 size: 12,
                                                               ),
                                                               Text(
                                                                 "150",
-                                                                style: TextStyle(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 12,
                                                                   fontWeight:
-                                                                      FontWeight.w400,
-                                                                  color:
-                                                                      Color(0xff000000),
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Color(
+                                                                      0xff000000),
                                                                 ),
                                                               ),
                                                             ],
@@ -393,26 +442,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Color(0xff000000),
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Color(
+                                                                  0xff000000),
                                                             ),
                                                           ),
                                                           Row(
                                                             children: [
                                                               Icon(
-                                                                Icons.currency_rupee,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                Icons
+                                                                    .currency_rupee,
+                                                                color: Color(
+                                                                    0xff000000),
                                                                 size: 12,
                                                               ),
                                                               Text(
                                                                 "150",
-                                                                style: TextStyle(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 12,
                                                                   fontWeight:
-                                                                      FontWeight.w400,
-                                                                  color:
-                                                                      Color(0xff000000),
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Color(
+                                                                      0xff000000),
                                                                 ),
                                                               ),
                                                             ],
@@ -420,14 +474,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                                         ],
                                                       ),
                                                       Padding(
-                                                        padding: EdgeInsets.fromLTRB(
-                                                            0, 0.02 * height, 0, 0),
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0,
+                                                                0.02 * height,
+                                                                0,
+                                                                0),
                                                         child: const Text(
                                                           "Breakdown",
                                                           style: TextStyle(
                                                             fontSize: 14,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Color(0xff000000),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Color(
+                                                                0xff000000),
                                                           ),
                                                         ),
                                                       ),
@@ -441,26 +501,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Color(0xff000000),
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Color(
+                                                                  0xff000000),
                                                             ),
                                                           ),
                                                           Row(
                                                             children: [
                                                               Icon(
-                                                                Icons.currency_rupee,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                Icons
+                                                                    .currency_rupee,
+                                                                color: Color(
+                                                                    0xff000000),
                                                                 size: 12,
                                                               ),
                                                               Text(
                                                                 "600",
-                                                                style: TextStyle(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 12,
                                                                   fontWeight:
-                                                                      FontWeight.w400,
-                                                                  color:
-                                                                      Color(0xff000000),
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Color(
+                                                                      0xff000000),
                                                                 ),
                                                               ),
                                                             ],
@@ -477,26 +542,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Color(0xff000000),
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Color(
+                                                                  0xff000000),
                                                             ),
                                                           ),
                                                           Row(
                                                             children: [
                                                               Icon(
-                                                                Icons.currency_rupee,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                Icons
+                                                                    .currency_rupee,
+                                                                color: Color(
+                                                                    0xff000000),
                                                                 size: 12,
                                                               ),
                                                               Text(
                                                                 "54",
-                                                                style: TextStyle(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 12,
                                                                   fontWeight:
-                                                                      FontWeight.w400,
-                                                                  color:
-                                                                      Color(0xff000000),
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Color(
+                                                                      0xff000000),
                                                                 ),
                                                               ),
                                                             ],
@@ -513,26 +583,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Color(0xff000000),
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Color(
+                                                                  0xff000000),
                                                             ),
                                                           ),
                                                           Row(
                                                             children: [
                                                               Icon(
-                                                                Icons.currency_rupee,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                Icons
+                                                                    .currency_rupee,
+                                                                color: Color(
+                                                                    0xff000000),
                                                                 size: 12,
                                                               ),
                                                               Text(
                                                                 "54",
-                                                                style: TextStyle(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 12,
                                                                   fontWeight:
-                                                                      FontWeight.w400,
-                                                                  color:
-                                                                      Color(0xff000000),
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Color(
+                                                                      0xff000000),
                                                                 ),
                                                               ),
                                                             ],
@@ -549,26 +624,31 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             style: TextStyle(
                                                               fontSize: 12,
                                                               fontWeight:
-                                                                  FontWeight.w400,
-                                                              color: Color(0xff000000),
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Color(
+                                                                  0xff000000),
                                                             ),
                                                           ),
                                                           Row(
                                                             children: [
                                                               Icon(
-                                                                Icons.currency_rupee,
-                                                                color:
-                                                                    Color(0xff000000),
+                                                                Icons
+                                                                    .currency_rupee,
+                                                                color: Color(
+                                                                    0xff000000),
                                                                 size: 12,
                                                               ),
                                                               Text(
                                                                 "708",
-                                                                style: TextStyle(
+                                                                style:
+                                                                    TextStyle(
                                                                   fontSize: 12,
                                                                   fontWeight:
-                                                                      FontWeight.w400,
-                                                                  color:
-                                                                      Color(0xff000000),
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Color(
+                                                                      0xff000000),
                                                                 ),
                                                               ),
                                                             ],
@@ -576,14 +656,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                                         ],
                                                       ),
                                                       Padding(
-                                                        padding: EdgeInsets.fromLTRB(
-                                                            0, 0.02 * height, 0, 0),
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0,
+                                                                0.02 * height,
+                                                                0,
+                                                                0),
                                                         child: const Text(
                                                           "Instructions",
                                                           style: TextStyle(
                                                             fontSize: 14,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Color(0xff000000),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Color(
+                                                                0xff000000),
                                                           ),
                                                         ),
                                                       ),
@@ -591,19 +677,27 @@ class _ProfilePageState extends State<ProfilePage> {
                                                         "Please add extra cheese in burger",
                                                         style: TextStyle(
                                                           fontSize: 12,
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Color(0xff000000),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color:
+                                                              Color(0xff000000),
                                                         ),
                                                       ),
                                                       Padding(
-                                                        padding: EdgeInsets.fromLTRB(
-                                                            0, 0.02 * height, 0, 0),
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0,
+                                                                0.02 * height,
+                                                                0,
+                                                                0),
                                                         child: const Text(
                                                           "Payment Details",
                                                           style: TextStyle(
                                                             fontSize: 14,
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Color(0xff000000),
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Color(
+                                                                0xff000000),
                                                           ),
                                                         ),
                                                       ),
@@ -611,64 +705,76 @@ class _ProfilePageState extends State<ProfilePage> {
                                                         "Method : UPI",
                                                         style: TextStyle(
                                                           fontSize: 12,
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Color(0xff000000),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color:
+                                                              Color(0xff000000),
                                                         ),
                                                       ),
                                                       const Text(
                                                         "Provider : CRED",
                                                         style: TextStyle(
                                                           fontSize: 12,
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Color(0xff000000),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color:
+                                                              Color(0xff000000),
                                                         ),
                                                       ),
                                                       const Text(
                                                         "Transaction ID: #324721340912831",
                                                         style: TextStyle(
                                                           fontSize: 12,
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Color(0xff000000),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color:
+                                                              Color(0xff000000),
                                                         ),
                                                       ),
                                                       const Text(
                                                         "Time : 24 Feb, 2024 17:34PM",
                                                         style: TextStyle(
                                                           fontSize: 12,
-                                                          fontWeight: FontWeight.w400,
-                                                          color: Color(0xff000000),
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          color:
+                                                              Color(0xff000000),
                                                         ),
                                                       ),
                                                       Padding(
-                                                        padding: EdgeInsets.fromLTRB(
-                                                            0,
-                                                            0.02 * height,
-                                                            0,
-                                                            0.02 * height),
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0,
+                                                                0.02 * height,
+                                                                0,
+                                                                0.02 * height),
                                                         child: SizedBox(
-                                                          width: 0.902778 * width,
+                                                          width:
+                                                              0.902778 * width,
                                                           height: 0.05 * height,
                                                           child: ElevatedButton(
                                                             onPressed: () {},
-                                                            style: ElevatedButton
-                                                                .styleFrom(
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
                                                               backgroundColor:
-                                                                  Color(0xff000000),
+                                                                  Color(
+                                                                      0xff000000),
                                                               shape:
                                                                   RoundedRectangleBorder(
                                                                       //to set border radius to button
                                                                       borderRadius:
-                                                                          BorderRadius
-                                                                              .circular(
-                                                                                  10)),
+                                                                          BorderRadius.circular(
+                                                                              10)),
                                                             ),
                                                             child: const Text(
                                                               'Download Invoice',
                                                               style: TextStyle(
-                                                                color:
-                                                                    Color(0xffffffff),
+                                                                color: Color(
+                                                                    0xffffffff),
                                                                 fontWeight:
-                                                                    FontWeight.bold,
+                                                                    FontWeight
+                                                                        .bold,
                                                               ),
                                                             ),
                                                           ),
@@ -1065,30 +1171,28 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
-                      StreamBuilder(
-                          stream: list,
-                          builder: (context,
-                              AsyncSnapshot<List<OrderData>> snapshot) {
-                            if (snapshot.hasData) {
-                              return Expanded(
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    children: [
-                                      for (var i in snapshot.data!)
-                                        OrderCard(
-                                            width: width,
-                                            height: height,
-                                            data: i),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            } else {
-                              return const Center(
-                                child: CustomLoadingAnimation(),
-                              );
-                            }
-                          }),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              for (var i in list)
+                                OrderCard(
+                                    width: width,
+                                    height: height,
+                                    data: i),
+                            ],
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.of(context).pushNamedAndRemoveUntil("/signInWithGoogle", (route) => false);
+                        },
+                        child: const Text(
+                          "Log Out",
+                        ),
+                      ),
                     ],
                   ),
           ),

@@ -3,6 +3,7 @@ import 'package:flavr/core/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/repository/splash_screen_repository.dart';
 
@@ -19,7 +20,8 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
         await Future.delayed(
           const Duration(seconds: 2),
           ()async {
-            final response = await client.get(Uri.parse(API_DOMAIN));
+            // final SharedPreferences prefs = await SharedPreferences.getInstance();
+            // await prefs.remove("savedOutlets");
             final token = await _splashScreenRepository.getToken();
             if(token==null || JwtDecoder.isExpired(token)){
               return emit(SplashScreenNotSignedIn());

@@ -40,7 +40,7 @@ class _SignInWithGoogleState extends State<SignInWithGoogle> {
               .showSnackBar(SnackBar(content: Text(state.message)));
         }
         if (state is GoogleLoginSuccess) {
-          Navigator.of(context).pushNamedAndRemoveUntil("/outletMenu", (route)=>false);
+          Navigator.of(context).pushNamedAndRemoveUntil("/outletList", (route)=>false);
         }
       },
       child: Scaffold(

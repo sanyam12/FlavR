@@ -25,7 +25,8 @@ class OutletMenuRepository{
       throw Exception("No Saved Outlet Found");
     }
     final outletData = await _apiProvider.getOutlet(id, token);
-    return Outlet.fromJson(jsonDecode(outletData)["result"][0]);
+    log(outletData);
+    return Outlet.fromJson(jsonDecode(outletData)["result"]?[0]);
   }
 
   Future<List<Categories>> getOutletMenu(String id) async{

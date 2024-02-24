@@ -1,4 +1,3 @@
-import 'package:flavr/core/components/authentication_image_collection.dart';
 import 'package:flavr/core/components/button.dart';
 import 'package:flavr/core/components/button_types.dart';
 import 'package:flavr/core/components/heading.dart';
@@ -35,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
           listener: (context, LoginState state) {
             if (state is LoginSuccessful) {
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil("/outletMenu", (route) => false);
+                  .pushNamedAndRemoveUntil("/outletList", (route) => false);
             }
             if (state is LoginFailed) {
               ScaffoldMessenger.of(context).showSnackBar(

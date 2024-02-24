@@ -22,6 +22,8 @@ import '../../data/models/Categories.dart';
 import '../../bloc/outlet_menu_bloc.dart';
 import '../widgets/category_menu.dart';
 
+
+//TODO price filters business logic pending
 class OutletMenu extends StatefulWidget {
   const OutletMenu({Key? key}) : super(key: key);
 
@@ -190,193 +192,192 @@ class _OutletMenuState extends State<OutletMenu> {
                 .toList();
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TopRow(
-                    width: width,
-                    outletName: outletName,
-                  ),
-                  MenuSearchBar(
-                    width: width,
-                    height: height,
-                    controller: searchController,
-                    menuList: menuList,
-                  ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const ClampingScrollPhysics(),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          MenuDiscountSlider(
-                            width: width,
-                            height: height,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 6.0),
-                            child: Heading(text: "Categories"),
-                          ),
-                          CategoriesList(
-                            width: width,
-                            height: height,
-                            filteredMenuList: filteredMenuList,
-                            selectedCategory: selectedCategory,
-                            onTap: (index) {
-                              setState(() {
-                                selectedCategory =
-                                    filteredMenuList[index].category;
-                              });
-                            },
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 5.0),
-                            child: Heading(text: "Products"),
-                          ),
-                          VegSelector(width: width,
-                            height: height,
-                            menuList: menuList,
-                            isNonVegClicked: isNonVegClicked,
-                            isVegClicked: isVegClicked,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: 0.01125 * height,
-                            ),
-                            child: CategoryMenu(
-                              key: UniqueKey(),
-                              width: width,
-                              height: height,
-                              list: (selectedCategory == "All")
-                                  ? filteredMenuList
-                                  : filteredMenuList
-                                  .where((element) =>
-                              element.category ==
-                                  selectedCategory)
-                                  .toList(),
-                              cart: cart,
-                              // productList: productList.data!,
-                              // updateParentState: () {
-                              //   setState(() {});
-                              // },
-                              amount: _calculateCartAmount(),
-                            ),
-                          ),
-                        ],
+              child: Stack(
+                children:[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TopRow(
+                        width: width,
+                        outletName: outletName,
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 0.8888888889 * width,
-                    height: 0.08625 * height,
-                    child: CarouselSlider(
-                      items: [
-                        GestureDetector(
-                          onTap: () async {
-                            await Navigator.of(context).push<Cart>(
-                              MaterialPageRoute(
-                                builder: (context) => CartPage(list: menuList),
+                      MenuSearchBar(
+                        width: width,
+                        height: height,
+                        controller: searchController,
+                        menuList: menuList,
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          physics: const ClampingScrollPhysics(),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              MenuDiscountSlider(
+                                width: width,
+                                height: height,
                               ),
-                            );
-                            log("fetch cart event");
-                            if (context.mounted) {
-                              context.read<OutletMenuBloc>().add(UpdateCart());
-                            }
-                          },
-                          child: Card(
-                            color: const Color(0xFFA3C2B3),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          0.03333 * width,
-                                          0,
-                                          0.02778 * width,
-                                          0),
-                                      child: const Icon(
-                                        Icons.shopping_cart,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      "${_calculateTotalItems()} Items Added",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontFamily:
-                                        GoogleFonts
-                                            .poppins()
-                                            .fontFamily,
-                                      ),
-                                    ),
-                                  ],
+                              const Padding(
+                                padding: EdgeInsets.only(top: 6.0),
+                                child: Heading(text: "Categories"),
+                              ),
+                              CategoriesList(
+                                width: width,
+                                height: height,
+                                filteredMenuList: filteredMenuList,
+                                selectedCategory: selectedCategory,
+                                onTap: (index) {
+                                  setState(() {
+                                    selectedCategory =
+                                        filteredMenuList[index].category;
+                                  });
+                                },
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(top: 5.0),
+                                child: Heading(text: "Products"),
+                              ),
+                              VegSelector(width: width,
+                                height: height,
+                                menuList: menuList,
+                                isNonVegClicked: isNonVegClicked,
+                                isVegClicked: isVegClicked,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 0.01125 * height,
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      0, 5, 0.038889 * width, 5),
-                                  child: Card(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    color: Colors.white,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                child: CategoryMenu(
+                                  key: UniqueKey(),
+                                  width: width,
+                                  height: height,
+                                  list: (selectedCategory == "All")
+                                      ? filteredMenuList
+                                      : filteredMenuList
+                                      .where((element) =>
+                                  element.category ==
+                                      selectedCategory)
+                                      .toList(),
+                                  cart: cart,
+                                  // productList: productList.data!,
+                                  // updateParentState: () {
+                                  //   setState(() {});
+                                  // },
+                                  amount: _calculateCartAmount(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 0.01625*width),
+                      child: SizedBox(
+                        height: 0.08*height,
+                        child: CarouselSlider(
+                          items: [
+                            GestureDetector(
+                              onTap: () async {
+                                await Navigator.of(context).push<Cart>(
+                                  MaterialPageRoute(
+                                    builder: (context) => CartPage(list: menuList),
+                                  ),
+                                );
+                                log("fetch cart event");
+                                if (context.mounted) {
+                                  context.read<OutletMenuBloc>().add(UpdateCart());
+                                }
+                              },
+                              child: Card(
+                                color: Colors.black,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
                                       children: [
-                                        Row(
-                                          children: [
-                                            const Icon(
-                                              Icons.currency_rupee,
-                                              size: 14,
-                                            ),
-                                            Text(
-                                              "${_calculateCartAmount()}",
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily:
-                                                GoogleFonts
-                                                    .poppins()
-                                                    .fontFamily,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ],
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              0.03333 * width,
+                                              0,
+                                              0.02778 * width,
+                                              0),
+                                          child: const Icon(
+                                            Icons.shopping_cart,
+                                            color: Colors.white,
+                                          ),
                                         ),
                                         Text(
-                                          "Total Amount",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.grey,
-                                            fontFamily: GoogleFonts
-                                                .poppins()
-                                                .fontFamily,
+                                          "${_calculateTotalItems()} Items Added",
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontSize: 16,
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          0, 5, 0.038889 * width, 5),
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        color: Colors.white,
+                                        child: ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                            minWidth: 0.2166666667*width,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(vertical: 7.0),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                const Icon(
+                                                  Icons.currency_rupee,
+                                                  size: 14,
+                                                ),
+                                                Text(
+                                                  "${_calculateCartAmount()}",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily:
+                                                    GoogleFonts
+                                                        .poppins()
+                                                        .fontFamily,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
+                            ...stackList
+                          ],
+                          options: CarouselOptions(
+                            height: 0.2665625 * height,
+                            viewportFraction: 1,
+                            enlargeCenterPage: true,
+                            autoPlay: false,
+                            autoPlayInterval: const Duration(seconds: 2),
+                            enableInfiniteScroll: false,
+                            reverse: false,
                           ),
                         ),
-                        ...stackList
-                      ],
-                      options: CarouselOptions(
-                        height: 0.2665625 * height,
-                        viewportFraction: 1,
-                        enlargeCenterPage: true,
-                        autoPlay: false,
-                        autoPlayInterval: const Duration(seconds: 2),
-                        enableInfiniteScroll: false,
-                        reverse: false,
                       ),
                     ),
                   ),

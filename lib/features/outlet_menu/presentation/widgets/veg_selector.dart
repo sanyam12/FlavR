@@ -39,7 +39,7 @@ class VegSelector extends StatelessWidget {
                 color: isVegClicked ? const Color(0xFFF2EFEF) : Colors.white,
                 border: Border.all(
                   width: 1,
-                  color: Colors.black,
+                  color: Colors.grey,
                 ),
                 borderRadius: borderRadius,
               ),
@@ -83,7 +83,7 @@ class VegSelector extends StatelessWidget {
                   color: isNonVegClicked ? const Color(0xFFF2EFEF) : Colors.white,
                   border: Border.all(
                     width: 1,
-                    color: Colors.black,
+                    color: Colors.grey,
                   ),
                   borderRadius: borderRadius,
                 ),
@@ -121,7 +121,7 @@ class VegSelector extends StatelessWidget {
                   color: isNonVegClicked ? const Color(0xFFF2EFEF) : Colors.white,
                   border: Border.all(
                     width: 1,
-                    color: Colors.black,
+                    color: Colors.grey,
                   ),
                   borderRadius: borderRadius,
                 ),
@@ -158,7 +158,7 @@ class VegSelector extends StatelessWidget {
                   color: isNonVegClicked ? const Color(0xFFF2EFEF) : Colors.white,
                   border: Border.all(
                     width: 1,
-                    color: Colors.black,
+                    color: Colors.grey,
                   ),
                   borderRadius: borderRadius,
                 ),
