@@ -17,6 +17,7 @@ import 'package:slidable_button/slidable_button.dart';
 // import 'package:lottie/lottie.dart';
 import 'package:slider_button/slider_button.dart';
 
+import '../../../../core/components/heading.dart';
 import '../../../outlet_menu/data/models/Categories.dart';
 import '../../../outlet_menu/data/models/Product.dart';
 import '../../data/models/CartVariantData.dart';
@@ -107,37 +108,55 @@ class _CartPageState extends State<CartPage> {
               //   );
               // }
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          for (var i in cart.items.entries)
-                            for (var j in i.value)
-                              if (j.quantity != 0)
-                                CartItems(
-                                  width: width,
-                                  height: height,
-                                  product: i.key,
-                                  cart: cart,
-                                  variant: j,
-                                  price: j.price,
-                                  list: list,
-                                ),
-                          GrandTotal(
-                            width: width,
-                            height: height,
-                            grandTotal: grandTotal,
-                          ),
-                          AddMoreItems(
-                            width: width,
-                            height: height,
-                            onTap: () {
-                              Navigator.pop(context, cart);
-                            },
-                          ),
-                        ],
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0.06*width,0,0.04*width,0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Check your picks, settle the bill, and we'll whip up",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                              ),
+                            ),
+                            const Text(
+                              "your order in no time!",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                              ),
+                            ),
+                            for (var i in cart.items.entries)
+                              for (var j in i.value)
+                                if (j.quantity != 0)
+                                  CartItems(
+                                    width: width,
+                                    height: height,
+                                    product: i.key,
+                                    cart: cart,
+                                    variant: j,
+                                    price: j.price,
+                                    list: list,
+                                  ),
+                            GrandTotal(
+                              width: width,
+                              height: height,
+                              grandTotal: grandTotal,
+                            ),
+                            AddMoreItems(
+                              width: width,
+                              height: height,
+                              onTap: () {
+                                Navigator.pop(context, cart);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -264,9 +283,8 @@ class _CartPageState extends State<CartPage> {
             Navigator.pop(context, cart);
           },
         ),
-        title: const Text(
-          "Cart",
-          style: TextStyle(color: Colors.black),
+        title:Heading(
+          text:"Cart",
         ),
         actions: [
           IconButton(

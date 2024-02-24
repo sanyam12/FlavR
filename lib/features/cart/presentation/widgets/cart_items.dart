@@ -49,147 +49,71 @@ class _CartItemsState extends State<CartItems> {
       padding: EdgeInsets.fromLTRB(0, 0.0125 * widget.height, 0, 0),
       // padding: EdgeInsets.symmetric(horizontal: 0.07778 * width),
       child: SizedBox(
-        width: 0.888 * widget.width,
+        width: 0.9083 * widget.width,
+        height: 0.145* widget.height,
         child: Card(
-          elevation: 3,
+          elevation: 1,
+
           shadowColor: Colors.black,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(20),
           ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 0.2861 * widget.width,
-                height: 0.1275 * widget.height,
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: SizedBox(
-                        height: 0.2 * widget.height,
-                        width: 0.3 * widget.width,
-                        child: (widget.product.productImage != "null")
-                            ? Image.network(widget.product.productImage)
-                            : const Image(
-                          image: AssetImage("assets/images/pizza.jpg"),
-                        ),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0.03*widget.width, 0, 0.02*widget.width, 0),
+            child: Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0.007*widget.height, 0, 0.007*widget.height),
+                  child: SizedBox(
+                    height: 0.1125*widget.height,
+                    width: 0.23*widget.width,
+                    child: ClipRRect(
+                      child: Image.asset(
+                        'assets/images/burger.jpg',
+                        fit: BoxFit.cover,
                       ),
+                        borderRadius: BorderRadius.circular(15.0),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: SizedBox(
-                        width: 0.205556 * widget.width,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(
-                                color: Color(0xFF004932), width: 1),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: 0.06777 * widget.width,
-                                  height: 0.03125 * widget.height,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                        const Color(0xFFD6EAE1),
-                                        padding: EdgeInsets.zero),
-                                    onPressed: () {
-                                      context.read<CartBloc>()
-                                        ..add(
-                                          CartDecrementAmount(
-                                            widget.product,
-                                            widget.cart,
-                                            ProductVariantData(
-                                              widget.variant.variantName,
-                                              widget.variant.price,
-                                            ),
-                                          ),
-                                        )
-                                        ..add(
-                                          UpdateGrandTotal(
-                                            widget.cart,
-                                            widget.list,
-                                          ),
-                                        );
-                                    },
-                                    child: const Icon(
-                                      Icons.remove,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Text(_items().toString()),
-                                SizedBox(
-                                  width: 0.06777 * widget.width,
-                                  height: 0.03125 * widget.height,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor:
-                                        const Color(0xFFD6EAE1),
-                                        padding: EdgeInsets.zero),
-                                    onPressed: () {
-                                      context.read<CartBloc>()
-                                        ..add(
-                                          CartIncrementAmount(
-                                            widget.product,
-                                            widget.cart,
-                                            ProductVariantData(
-                                              widget.variant.variantName,
-                                              widget.variant.price,
-                                            ),
-                                          ),
-                                        )
-                                        ..add(
-                                          UpdateGrandTotal(
-                                            widget.cart,
-                                            widget.list,
-                                          ),
-                                        );
-                                    },
-                                    child: const Icon(
-                                      Icons.add,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0.0618 * widget.width, 0, 0, 0),
-                child: const Stack(
-                  alignment: AlignmentDirectional.center,
-                  children: [
-                    Icon(
-                      Icons.crop_square_sharp,
-                      color: Colors.green,
-                      size: 25,
-                    ),
-                    Icon(Icons.circle, color: Colors.green, size: 10),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0.02 * widget.width, 0, 0, 0),
-                child: Column(
+                // Padding(
+                //   padding: EdgeInsets.fromLTRB(0.0618 * widget.width, 0, 0, 0),
+                //   child: const Stack(
+                //     alignment: AlignmentDirectional.center,
+                //     children: [
+                //       Icon(
+                //         Icons.crop_square_sharp,
+                //         color: Colors.green,
+                //         size: 25,
+                //       ),
+                //       Icon(Icons.circle, color: Colors.green, size: 10),
+                //     ],
+                //   ),
+                // ),
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.product.name,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w600),
-                      overflow: TextOverflow.ellipsis,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.product.name,
+                          style: const TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.bold),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                Icon(
+                                  Icons.crop_square_sharp,
+                                  color: Colors.green,
+                                  size: 25,
+                                ),
+                                Icon(Icons.circle, color: Colors.green, size: 10),
+                              ],
+                            ),
+                      ],
                     ),
                     Row(
                       children: [
@@ -214,9 +138,9 @@ class _CartItemsState extends State<CartItems> {
                       overflow: TextOverflow.ellipsis,
                     )
                   ],
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
