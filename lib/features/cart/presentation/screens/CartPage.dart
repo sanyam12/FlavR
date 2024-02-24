@@ -68,9 +68,7 @@ class _CartPageState extends State<CartPage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    return PopScope(
-      canPop: true,
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.white,
         appBar: _buildAppBar(),
         body: SafeArea(
@@ -249,8 +247,8 @@ class _CartPageState extends State<CartPage> {
             },
           ),
         ),
-      ),
-    );
+      );
+
   }
 
   _buildAppBar() {
