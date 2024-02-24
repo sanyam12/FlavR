@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:flavr/components/loading.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -64,6 +66,20 @@ class _OutletsListState extends State<OutletsList> {
 
     return BlocListener<OutletListBloc, OutletListState>(
       listener: (context, state) {
+        // if (state is OutletListInitial) {
+        //   log(
+        //     "OutletMenuLoading or OutletMenuInitial state detected."
+        //   );
+          // showDialog(
+          //   context: context,
+          //   builder: (context) {
+          //     return const Center(
+          //       child: CustomLoadingAnimation(),
+          //
+          //     );
+          //   },
+          // );
+        // }
         if (state is NavigateToProfile) {
           Navigator.pushNamed(context, "/profile");
         } else if (state is GetSavedOutletListState) {
@@ -97,10 +113,21 @@ class _OutletsListState extends State<OutletsList> {
           );
         }
       },
+      
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Column(
+          child: BlocBuilder<OutletListBloc, OutletListState>(
+              builder: (context, state) {
+                if (state is OutletListLoading || state is OutletListInitial) {
+                  log("hello there");
+                  return const Center(
+                    // child: Text("youoyuoyiu")
+
+                      child: CustomLoadingAnimation()
+                  );
+                }
+            return Column(
             children: [
               if (isExpanded)
                 SizedBox(
@@ -301,7 +328,9 @@ class _OutletsListState extends State<OutletsList> {
                 ),
               ),
             ],
-          ),
+          );
+  },
+),
         ),
       ),
     );

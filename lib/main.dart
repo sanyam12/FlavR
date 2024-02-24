@@ -7,6 +7,8 @@ import 'package:flavr/core/data_provider/core_storage_provider.dart';
 import 'package:flavr/core/repository/core_cart_repository.dart';
 import 'package:flavr/features/cart/data/data_providers/cart_api_provider.dart';
 import 'package:flavr/features/cart/data/repository/cart_repository.dart';
+import 'package:flavr/features/new_ui/edit_profile.dart';
+import 'package:flavr/features/new_ui/profile.dart';
 import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_api_provider.dart';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart';
@@ -194,7 +196,7 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
               debugShowCheckedModeBanner: false,
-              initialRoute: "/splashscreen",
+              initialRoute: "/edit_profile",
               routes: {
                 "/splashscreen": (context) => const SplashScreen(),
                 "/signInWithGoogle": (context) => const SignInWithGoogle(),
@@ -203,9 +205,11 @@ class _MyAppState extends State<MyApp> {
                 "/outletList": (context) => const OutletsList(),
                 "/outletMenu": (context) => const OutletMenu(),
                 "/homePage": (context) => const HomePage(),
-                "/profile": (context) => const ProfilePage(),
+                "/profile": (context) => const Profile(),
+                "/edit_profile": (context) => const Profile(),
+                // "/profile": (context) => const ProfilePage(),
                 "/payment": (context) => const Payment(),
-                "/edit_profile": (context) => const EditProfile(),
+                "/edit_profile": (context) => const EdittProfile(),
               },
             ),
           ),

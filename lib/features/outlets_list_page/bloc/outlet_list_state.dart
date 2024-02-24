@@ -9,6 +9,11 @@ class OutletListInitial extends OutletListState {
   List<Object> get props => [];
 }
 
+class OutletListLoading extends OutletListState {
+  @override
+  List<Object> get props => [];
+}
+
 class GetAllOutletsListState extends OutletListState{
   final List<Outlet> list;
   const GetAllOutletsListState({required this.list});
@@ -41,6 +46,7 @@ class NavigateToProfile extends OutletListState{
   @override
   List<Object?> get props => [];
 }
+
 
 class OutletSelected extends OutletListState{
   final String id;
