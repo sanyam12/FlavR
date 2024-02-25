@@ -12,7 +12,7 @@ class _OrderDetailsOverlayState extends State<OrderDetailsOverlay> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    return Container(
+    return SizedBox(
       height: 0.875 * height,
       child: Column(
         children: [

@@ -26,6 +26,7 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
             if(token==null || JwtDecoder.isExpired(token)){
               return emit(SplashScreenNotSignedIn());
             }
+
             return emit(SplashScreenSignedIn());
           },
         );
