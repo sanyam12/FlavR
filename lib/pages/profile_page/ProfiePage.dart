@@ -45,7 +45,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   list = state.list;
                 });
               }
-
             },
             child: (isLoading)
                 ? const Center(

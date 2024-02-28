@@ -25,7 +25,7 @@ class _Profile extends State<Profile> {
                       size: 30,
                     ),
                   ),
-                  // Add some space between the icon and text
+                  // TODO: Add some space between the icon and text
                   Center(
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(50,0,0,0),
@@ -245,7 +245,8 @@ class _Profile extends State<Profile> {
                     color: Color(0xff8B8B8B)
                 ),),
         ],
-      )),
+      ),
+      ),
     );
   }
 }
