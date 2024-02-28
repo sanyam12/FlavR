@@ -274,25 +274,25 @@ class _AddItemsOverlayState extends State<AddItemsOverlay> {
                                   ),
                                 ],
                               ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  minimumSize:
-                                      Size(0.4722222222 * widget.width, 50),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  backgroundColor: Colors.black,
-                                ),
-                                onPressed: () {},
-                                child: Text(
-                                  "Add Item ₹50",
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              )
+                              // ElevatedButton(
+                              //   style: ElevatedButton.styleFrom(
+                              //     minimumSize:
+                              //         Size(0.4722222222 * widget.width, 50),
+                              //     shape: RoundedRectangleBorder(
+                              //       borderRadius: BorderRadius.circular(10),
+                              //     ),
+                              //     backgroundColor: Colors.black,
+                              //   ),
+                              //   onPressed: () {},
+                              //   child: Text(
+                              //     "Add Item ₹50",
+                              //     style: GoogleFonts.poppins(
+                              //       color: Colors.white,
+                              //       fontWeight: FontWeight.bold,
+                              //       fontSize: 14,
+                              //     ),
+                              //   ),
+                              // )
                             ],
                           ),
                         )

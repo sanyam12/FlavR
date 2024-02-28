@@ -1,8 +1,5 @@
-import 'dart:developer';
 import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/search_bar.dart';
-import 'package:flavr/core/constants.dart';
-import 'package:flavr/core/data_provider/core_storage_provider.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/button_row.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../outlet_menu/data/models/Outlet.dart';
 import '../../bloc/outlet_list_bloc.dart';
 import '../widgets/outlet_card.dart';
-import 'package:http/http.dart';
 
 class OutletsList extends StatefulWidget {
   const OutletsList({Key? key}) : super(key: key);
@@ -35,15 +31,8 @@ class _OutletsListState extends State<OutletsList> {
   bool selectedTab = false;
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    CoreStorageProvider().getToken().then((value)async{
-      await patch(Uri.parse("${API_DOMAIN}user/updatefcm"), headers: {
-        "Authorization":"Bearer $value"
-      });
-      log("testing patch request");
-    });
-
     context.read<OutletListBloc>().add(GetSavedOutletList());
     context.read<OutletListBloc>().add(GetAllOutletsList());
     context.read<OutletListBloc>().add(UsernameRequested());

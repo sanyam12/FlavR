@@ -34,27 +34,27 @@ class ButtonComponent extends StatelessWidget {
       ),
       onPressed: disabled??true ?onPressed:null,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 15,
-                fontFamily: GoogleFonts.poppins().fontFamily,
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  fontFamily: GoogleFonts.poppins().fontFamily,
+                ),
               ),
-            ),
-            if(trailing!=null)
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: trailing!,
-              )
-          ],
-        )
+              if(trailing!=null)
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: trailing!,
+                )
+            ],
+          )
       ),
     );
   }

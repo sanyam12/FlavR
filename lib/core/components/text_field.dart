@@ -27,6 +27,7 @@ class TextFieldComponent extends StatelessWidget {
       padding: padding ?? EdgeInsets.zero,
       child: SizedBox(
         width: 0.7861 * width,
+        height: 50,
         child: TextFormField(
           controller: controller,
           style: TextStyle(
@@ -34,13 +35,14 @@ class TextFieldComponent extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontFamily: GoogleFonts.poppins().fontFamily,
           ),
+          textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
               filled: true,
               fillColor: Colors.white,
               hintText: hintText,
               hintStyle: TextStyle(
                 color: Colors.grey,
-                fontSize: 17,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
                 fontFamily: GoogleFonts.poppins().fontFamily,
               ),

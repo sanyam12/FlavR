@@ -4,6 +4,7 @@ import 'package:flavr/pages/profile_page/order_card.dart';
 import 'package:flavr/pages/profile_page/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/components/heading.dart';
 import 'OrderData.dart';
 
@@ -49,1152 +50,236 @@ class _ProfilePageState extends State<ProfilePage> {
                 });
               }
             },
-            child: (isLoading)
-                ? const Center(
-                    child: CustomLoadingAnimation(),
-                  )
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0.0225 * height, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: const Icon(Icons.arrow_back_ios),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      0.18 * width, 0, 0, 0),
-                                  child: const Heading(
-                                    text: "Live Orders",
-                                  ),
-                                ),
-                              ],
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.person_2_rounded,
-                                color: Color(0xFF004932),
-                                size: 32,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            0.05 * width, 0.00875 * height, 0, 0),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Almost there! We're whipping up your favorites",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Text(
-                              "with a dash of joy...",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            0.05 * width, 0.00875 * height, 0, 0),
-                        child: const Text(
-                          "Pending Order : 5",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              isScrollControlled: true,
-                              builder: (context) {
-                                return Container(
-                                  height: 0.875 * height,
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: 9.0,
-                                        ),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const CircleAvatar(
-                                            backgroundColor: Color(0xFFF2F1F1),
-                                            child: Icon(
-                                              Icons.close,
-                                              size: 20,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(20.0)),
-                                          ),
-                                          child: Column(
-                                            children: [
-                                              SingleChildScrollView(
-                                                child: Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      0.07 * width,
-                                                      0,
-                                                      0.07 * width,
-                                                      0),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                0,
-                                                                0.03125 *
-                                                                    height,
-                                                                0,
-                                                                0),
-                                                        child: Container(
-                                                          height:
-                                                              0.23625 * height,
-                                                          width: 0.98 * width,
-                                                          color:
-                                                              Color(0x00000000),
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                            child: Image.asset(
-                                                              'assets/images/discount.webp',
-                                                              //width:0.96*width,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                0,
-                                                                0.02 * height,
-                                                                0,
-                                                                0),
-                                                        child: const Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              "Nescafe NITJ",
-                                                              style: TextStyle(
-                                                                fontSize: 16,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              "24 Feb, 2024",
-                                                              style: TextStyle(
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                0,
-                                                                0.007 * height,
-                                                                0,
-                                                                0),
-                                                        child: const Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  "Order #",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800,
-                                                                    color: Color(
-                                                                        0xff000000),
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  "52",
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w800,
-                                                                    color: Color(
-                                                                        0xffff3c3c),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Text(
-                                                              "06:53",
-                                                              style: TextStyle(
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w800,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                0,
-                                                                0.02 * height,
-                                                                0,
-                                                                0),
-                                                        child: const Text(
-                                                          "Items",
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Color(
-                                                                0xff000000),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "1x Red Sauce Pasta (Small)",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .currency_rupee,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                                size: 12,
-                                                              ),
-                                                              Text(
-                                                                "150",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "1x Veg Cheese Burger",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .currency_rupee,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                                size: 12,
-                                                              ),
-                                                              Text(
-                                                                "150",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "1x Red Sauce Pasta (Small)",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .currency_rupee,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                                size: 12,
-                                                              ),
-                                                              Text(
-                                                                "150",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "1x Veg Cheese Burger",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .currency_rupee,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                                size: 12,
-                                                              ),
-                                                              Text(
-                                                                "150",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                0,
-                                                                0.02 * height,
-                                                                0,
-                                                                0),
-                                                        child: const Text(
-                                                          "Breakdown",
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Color(
-                                                                0xff000000),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "Total Bill",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .currency_rupee,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                                size: 12,
-                                                              ),
-                                                              Text(
-                                                                "600",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "SGST (9%)",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .currency_rupee,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                                size: 12,
-                                                              ),
-                                                              Text(
-                                                                "54",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "CGST",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .currency_rupee,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                                size: 12,
-                                                              ),
-                                                              Text(
-                                                                "54",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "Total Amount",
-                                                            style: TextStyle(
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .currency_rupee,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                                size: 12,
-                                                              ),
-                                                              Text(
-                                                                "708",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                0,
-                                                                0.02 * height,
-                                                                0,
-                                                                0),
-                                                        child: const Text(
-                                                          "Instructions",
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Color(
-                                                                0xff000000),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Text(
-                                                        "Please add extra cheese in burger",
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color:
-                                                              Color(0xff000000),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                0,
-                                                                0.02 * height,
-                                                                0,
-                                                                0),
-                                                        child: const Text(
-                                                          "Payment Details",
-                                                          style: TextStyle(
-                                                            fontSize: 14,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Color(
-                                                                0xff000000),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Text(
-                                                        "Method : UPI",
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color:
-                                                              Color(0xff000000),
-                                                        ),
-                                                      ),
-                                                      const Text(
-                                                        "Provider : CRED",
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color:
-                                                              Color(0xff000000),
-                                                        ),
-                                                      ),
-                                                      const Text(
-                                                        "Transaction ID: #324721340912831",
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color:
-                                                              Color(0xff000000),
-                                                        ),
-                                                      ),
-                                                      const Text(
-                                                        "Time : 24 Feb, 2024 17:34PM",
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          color:
-                                                              Color(0xff000000),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                0,
-                                                                0.02 * height,
-                                                                0,
-                                                                0.02 * height),
-                                                        child: SizedBox(
-                                                          width:
-                                                              0.902778 * width,
-                                                          height: 0.05 * height,
-                                                          child: ElevatedButton(
-                                                            onPressed: () {},
-                                                            style:
-                                                                ElevatedButton
-                                                                    .styleFrom(
-                                                              backgroundColor:
-                                                                  Color(
-                                                                      0xff000000),
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                      //to set border radius to button
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              10)),
-                                                            ),
-                                                            child: const Text(
-                                                              'Download Invoice',
-                                                              style: TextStyle(
-                                                                color: Color(
-                                                                    0xffffffff),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 0, 40, 0),
+                      child: IconButton(
+                        onPressed: (){
+                          Navigator.pop(context);
                         },
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              0.04722 * width, 0.02125 * height, 0, 0),
-                          child: SizedBox(
-                            height: 0.25 * height,
-                            width: 0.9027778 * width,
-                            child: Card(
-                              margin: EdgeInsets.zero,
-                              color: const Color(0xff000000),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        0.013889 * width,
-                                        0.00625 * height,
-                                        0.013889 * width,
-                                        0.00625 * height),
-                                    child: const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          "24 Feb, 2024",
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xffffffff),
-                                          ),
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                        Text(
-                                          "Nescafe NITJ",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xffffffff),
-                                          ),
-                                        ),
-                                        Text(
-                                          "13:40",
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontWeight: FontWeight.w400,
-                                            color: Color(0xffffffff),
-                                          ),
-                                          overflow: TextOverflow.clip,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Card(
-                                      margin: EdgeInsets.zero,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      color: const Color(0xffffffff),
-                                      child: Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            0.04 * width, 0, 0.04 * width, 0),
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0,
-                                                  0.00625 * height,
-                                                  0,
-                                                  0.00625 * height),
-                                              child: Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    0.02 * width,
-                                                    0.01 * height,
-                                                    0.02 * width,
-                                                    0),
-                                                child: const Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          "Order #",
-                                                          style: TextStyle(
-                                                            fontSize: 13,
-                                                            fontWeight:
-                                                                FontWeight.w800,
-                                                            color: Color(
-                                                                0xff000000),
-                                                          ),
-                                                        ),
-                                                        Text(
-                                                          "52",
-                                                          style: TextStyle(
-                                                            fontSize: 13,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Color(
-                                                                0xffff0000),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          "Amount : ",
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w800,
-                                                          ),
-                                                        ),
-                                                        Icon(
-                                                          Icons.currency_rupee,
-                                                          color:
-                                                              Color(0xff000000),
-                                                          size: 12,
-                                                        ),
-                                                        Text(
-                                                          "150",
-                                                          style: TextStyle(
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            color: Color(
-                                                                0xff000000),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                0,
-                                                0.01 * height,
-                                                0,
-                                                0.00625 * height,
-                                              ),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  SizedBox(
-                                                    width: 0.2778 * width,
-                                                    child: Stack(
-                                                      children: [
-                                                        // Padding(
-                                                        //   padding: EdgeInsets.fromLTRB(
-                                                        //     0.1112 * width, 0, 0.0556 * width, 0,),
-                                                        //   child: CircleAvatar(
-                                                        //     backgroundColor: Colors.white,
-                                                        //     radius: 32,
-                                                        //     child: ClipOval(
-                                                        //       child:
-                                                        //       Image.network(data.products[2].imageUrl),
-                                                        //     ),
-                                                        //   ),
-                                                        // ),
-
-                                                        Padding(
-                                                          padding: EdgeInsets
-                                                              .fromLTRB(
-                                                            0.0556 * width,
-                                                            0,
-                                                            0.0556 * width,
-                                                            0,
-                                                          ),
-                                                          child:
-                                                              const CircleAvatar(
-                                                            backgroundColor:
-                                                                Colors.white,
-                                                            radius: 32,
-                                                            child: ClipOval(
-                                                              child: Image(
-                                                                image: AssetImage(
-                                                                    'assets/images/pasta.jpeg'),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-
-                                                        const CircleAvatar(
-                                                          backgroundColor:
-                                                              Colors.white,
-                                                          radius: 32,
-                                                          child: ClipOval(
-                                                            child: Image(
-                                                              image: AssetImage(
-                                                                  'assets/images/pasta.jpeg'),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              0,
-                                                              0,
-                                                              0.02 * width,
-                                                              0),
-                                                      child: const Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            "Items",
-                                                            style: TextStyle(
-                                                              fontSize: 13,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w900,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                "1x Red Sauce Pasta",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                              Row(
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .currency_rupee,
-                                                                    size: 12,
-                                                                    color: Color(
-                                                                        0xff004932),
-                                                                  ),
-                                                                  Text(
-                                                                    "150",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          12,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700,
-                                                                      color: Color(
-                                                                          0xff000000),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          //if(data.products.length>=2)
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                "1x Veg Cheese Burger",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                              Row(
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .currency_rupee,
-                                                                    size: 12,
-                                                                    color: Color(
-                                                                        0xff004932),
-                                                                  ),
-                                                                  Text(
-                                                                    "150",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontSize:
-                                                                          12,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700,
-                                                                      color: Color(
-                                                                          0xff000000),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Text(
-                                                            "+ 2 more items...",
-                                                            style: TextStyle(
-                                                              fontSize: 11,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              color: Color(
-                                                                  0xff004932),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0,
-                                                  0.01 * height,
-                                                  0,
-                                                  0.00625 * height),
-                                              child: const Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "Waiting for confirmation...",
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Color(0xff000000),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    "14:17 PM",
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Color(0xff000000),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.black,
+                          size: 30,
+                        ),
+                      ),
+                    ),
+                    // Add some space between the icon and text
+                    Center(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
+                        child: Text(
+                          "Profile",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: "inter",
+                            fontSize: 32,
                           ),
                         ),
                       ),
-                      Expanded(
-                        child: SingleChildScrollView(
+                    ),
+                  ],
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+                      child: SizedBox(
+                        height: 170,
+                        width: 324,
+                        child: Card(
+                          color: Color(0xFFF8F8F8),
                           child: Column(
                             children: [
-                              for (var i in list)
-                                OrderCard(
-                                    width: width,
-                                    height: height,
-                                    data: i),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 20, 0, 4),
+                                child: Icon(
+                                  Icons.person_outline_rounded,
+                                  size: 75,
+                                ),
+                              ),
+                              Text(
+                                "Sanyam Ratreja",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.fromLTRB(0, 4, 0, 20),
+                                child: Text("sanyamratreja18@gmail.com"),
+                              )
                             ],
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.of(context).pushNamedAndRemoveUntil("/signInWithGoogle", (route) => false);
-                        },
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.shopping_cart),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
                         child: const Text(
-                          "Log Out",
+                          "Orders",
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.5 * width, 0, 0, 0),
+                        child: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20,
+                        ),
+                      )
                     ],
                   ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.person_outline_rounded),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
+                        child: const Text(
+                          "Personal information",
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.25 * width, 0, 0, 0),
+                        child: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.phone),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
+                        child: const Text(
+                          "Contact Us",
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.43 * width, 0, 0, 0),
+                        child: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.home_filled),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
+                        child: const Text(
+                          "About Us",
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0.47 * width, 0, 0, 0),
+                        child: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 20,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0.2025 * height, 0, 0),
+                  child: SizedBox(
+                    width: 0.83 * width,
+                    height: 0.0675 * height,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          "/signInWithGoogle",
+                          (route) => false,
+                        );
+                        final SharedPreferences prefs = await SharedPreferences.getInstance();
+                        await prefs.remove("savedOutlets");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 11),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.power_settings_new, color: Colors.white,),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(6, 0, 0, 0),
+                              child: Text(
+                                "Log Out",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                  child: Divider(
+                    color: Color(0xff8B8B8B),
+                    thickness: 1,
+                    indent: 30, // Adjust the left indentation as needed
+                    endIndent: 30, // Adjust the right indentation as needed
+                  ),
+                ),
+                const Text(
+                  "v1.0.0",
+                  style: TextStyle(color: Color(0xff8B8B8B)),
+                ),
+                const Text(
+                  "Made with 🖤 in India",
+                  style: TextStyle(color: Color(0xff8B8B8B)),
+                ),
+                const Text(
+                  "by Bistroverse",
+                  style: TextStyle(color: Color(0xff8B8B8B)),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flavr/core/repository/core_cart_repository.dart';
 import 'package:flavr/features/cart/data/data_providers/cart_api_provider.dart';
@@ -19,6 +20,7 @@ class CartRepository {
 
   Future<bool> verifyPayment(String orderId)async{
     final response = await _cartApiProvider.verifyPayment(orderId);
+    log(jsonDecode(response)["order"][0]["payment"].toString());
     return jsonDecode(response)["order"][0]["payment"]==true;
   }
 }

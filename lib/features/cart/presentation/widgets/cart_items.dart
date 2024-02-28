@@ -1,8 +1,6 @@
 import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../../../outlet_menu/data/models/Product.dart';
 import '../../../outlet_menu/data/models/ProductVariantData.dart';
 import '../../bloc/cart_bloc.dart';
@@ -70,11 +68,11 @@ class _CartItemsState extends State<CartItems> {
                     height: 0.1125*widget.height,
                     width: 0.23*widget.width,
                     child: ClipRRect(
-                      child: Image.asset(
+                      borderRadius: BorderRadius.circular(15.0),
+                      child: widget.product.productImage.isEmpty?Image.asset(
                         'assets/images/burger.jpg',
                         fit: BoxFit.cover,
-                      ),
-                        borderRadius: BorderRadius.circular(15.0),
+                      ):Image.network(widget.product.productImage),
                     ),
                   ),
                 ),
@@ -152,7 +150,7 @@ class _CartItemsState extends State<CartItems> {
                                   height:0.03875*widget.height,
                                   width:0.130556*widget.width,
                                   child: Card(
-                                    color: Color(0xfff2f1f1),
+                                    color: const Color(0xfff2f1f1),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30.0),
 
@@ -160,17 +158,17 @@ class _CartItemsState extends State<CartItems> {
                                       ),
                                       child:Padding(
                                         padding: EdgeInsets.fromLTRB(0.01*widget.width, 0, 0, 0),
-                                        child: const Row(
+                                        child: Row(
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               Icons.currency_rupee,
                                               color:
                                               Color(0xff000000),
                                               size: 12,
                                             ),
                                             Text(
-                                              "150",
-                                              style: TextStyle(
+                                              widget.variant.price.toString(),
+                                              style: const TextStyle(
                                                 fontSize: 12,
                                                 fontWeight:
                                                 FontWeight.w800,

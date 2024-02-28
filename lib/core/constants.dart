@@ -8,4 +8,3 @@ final theme = CFThemeBuilder()
     .setPrimaryFont("Menlo")
     .setSecondaryFont("Futura")
     .build();
-// const API_DOMAIN = "http://localhost:3001/";
