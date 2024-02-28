@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/search_bar.dart';
 import 'package:flavr/core/constants.dart';
@@ -8,7 +7,6 @@ import 'package:flavr/features/outlets_list_page/presentation/widgets/button_row
 import 'package:flavr/features/outlets_list_page/presentation/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../outlet_menu/data/models/Outlet.dart';
 import '../../bloc/outlet_list_bloc.dart';
