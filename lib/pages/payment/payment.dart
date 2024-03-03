@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cfpayment/cfdropcheckoutpayment.dart';
-import 'package:flutter_cashfree_pg_sdk/api/cfpaymentcomponents/cfpaymentcomponent.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cfpaymentgateway/cfpaymentgatewayservice.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cfsession/cfsession.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cftheme/cftheme.dart';
@@ -82,11 +81,6 @@ class _PaymentState extends State<Payment> {
                     .setOrderId(orderIDController.text)
                     .setPaymentSessionId(sessionIDController.text)
                     .build();
-                // List<CFPaymentModes> components = <CFPaymentModes>[];
-                // components.add(CFPaymentModes.UPI);
-                // components.add(CFPaymentModes.CARD);
-                // components.add(CFPaymentModes.WALLET);
-                // var paymentComponent = CFPaymentComponentBuilder().setComponents(components).build();
 
                 var theme = CFThemeBuilder().setNavigationBarBackgroundColorColor("#FF0000").setPrimaryFont("Menlo").setSecondaryFont("Futura").build();
                 var cfDropCheckoutPayment = CFDropCheckoutPaymentBuilder()

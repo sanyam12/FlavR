@@ -1,11 +1,5 @@
-import 'dart:collection';
-import 'dart:developer';
-
 import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/core/components/loading.dart';
-import 'package:flavr/core/components/text_field.dart';
-import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
-import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
 import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flavr/features/cart/bloc/cart_bloc.dart';
 import 'package:flavr/pages/ordernumber/OrderNumber.dart';
@@ -35,7 +29,8 @@ class _CartPageState extends State<CartPage> {
   int grandTotal = 0;
   late Cart cart;
   var cfPaymentGatewayService = CFPaymentGatewayService();
-  final TextEditingController controller = TextEditingController();
+  final instructionController = TextEditingController();
+  final couponController = TextEditingController();
 
   @override
   void initState() {
@@ -52,16 +47,17 @@ class _CartPageState extends State<CartPage> {
   void onPaymentError(CFErrorResponse errorResponse, String orderId) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text("payment failed ${errorResponse.getMessage().toString()}"),
+        content:
+            Text("payment failed ${errorResponse.getMessage().toString()}"),
       ),
     );
   }
 
-  int _totalAmount(){
+  int _totalAmount() {
     int total = 0;
-    for(var i in cart.items.entries){
-      for(var j in i.value){
-        total += j.quantity*j.price;
+    for (var i in cart.items.entries) {
+      for (var j in i.value) {
+        total += j.quantity * j.price;
       }
     }
     return total;
@@ -116,8 +112,8 @@ class _CartPageState extends State<CartPage> {
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          0.06 * width, 0, 0.04 * width, 0),
+                      padding:
+                          EdgeInsets.fromLTRB(0.06 * width, 0, 0.04 * width, 0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -173,8 +169,7 @@ class _CartPageState extends State<CartPage> {
                             ),
                           ),
                           Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Padding(
                                 padding: EdgeInsets.fromLTRB(
@@ -182,7 +177,7 @@ class _CartPageState extends State<CartPage> {
                                 child: SizedBox(
                                   width: 0.563889 * width,
                                   child: TextFormField(
-                                    controller: controller,
+                                    controller: couponController,
                                     style: const TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold,
@@ -197,8 +192,7 @@ class _CartPageState extends State<CartPage> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                       border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15),
+                                        borderRadius: BorderRadius.circular(15),
                                       ),
                                     ),
                                     obscureText: false,
@@ -213,8 +207,7 @@ class _CartPageState extends State<CartPage> {
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Color(0xff000000),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15),
+                                        borderRadius: BorderRadius.circular(15),
                                       ),
                                     ),
                                     child: const Text(
@@ -254,12 +247,12 @@ class _CartPageState extends State<CartPage> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                0, 0.015 * height, 0, 0),
+                            padding:
+                                EdgeInsets.fromLTRB(0, 0.015 * height, 0, 0),
                             child: SizedBox(
                               width: 0.875 * width,
                               child: TextFormField(
-                                controller: controller,
+                                controller: instructionController,
                                 style: const TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
@@ -360,7 +353,9 @@ class _CartPageState extends State<CartPage> {
                                         size: 12,
                                       ),
                                       Text(
-                                        (_totalAmount()*0.05).toInt().toString(),
+                                        (_totalAmount() * 0.05)
+                                            .toInt()
+                                            .toString(),
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w400,
@@ -391,7 +386,9 @@ class _CartPageState extends State<CartPage> {
                                         size: 12,
                                       ),
                                       Text(
-                                        (_totalAmount()*0.05).toInt().toString(),
+                                        (_totalAmount() * 0.05)
+                                            .toInt()
+                                            .toString(),
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w400,
@@ -422,7 +419,9 @@ class _CartPageState extends State<CartPage> {
                                         size: 12,
                                       ),
                                       Text(
-                                        (_totalAmount()*1.1).toInt().toString(),
+                                        (_totalAmount() * 1.1)
+                                            .toInt()
+                                            .toString(),
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w400,
@@ -457,7 +456,12 @@ class _CartPageState extends State<CartPage> {
                   width: 0.90833 * width,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.read<CartBloc>().add(ProceedToPay(cart));
+                      context.read<CartBloc>().add(
+                            ProceedToPay(
+                              cart,
+                              instructionController.text,
+                            ),
+                          );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff000000),
@@ -495,7 +499,7 @@ class _CartPageState extends State<CartPage> {
                                   size: 15,
                                 ),
                                 Text(
-                                  (_totalAmount()*1.1).toInt().toString(),
+                                  (_totalAmount() * 1.1).toInt().toString(),
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w800,

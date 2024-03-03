@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flavr/core/components/heading.dart';
+import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/features/orders_list/bloc/orders_list_bloc.dart';
-import 'package:flavr/features/orders_list/presentation/widgets/order_details_overlay.dart';
-import 'package:flavr/features/outlets_list_page/bloc/outlet_list_bloc.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flavr/pages/profile_page/order_card.dart';
 import 'package:flutter/material.dart';
@@ -17,10 +15,6 @@ class OrdersList extends StatefulWidget {
 
 class _OrdersListState extends State<OrdersList> {
   List<OrderData> list = [];
-  String userName = "initial";
-  bool isLoading = true;
-  String email = "initial";
-  String profilePicUrl = "null";
 
   @override
   void initState() {
@@ -34,113 +28,114 @@ class _OrdersListState extends State<OrdersList> {
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
-        child: BlocListener<OrdersListBloc, OrdersListState>(
-  listener: (context, state) {
-    if (state is ShowSnackbar) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(state.messsage)));
-    } else if (state is ProfileDataState) {
-      setState(() {
-        isLoading = false;
-        userName = state.userName;
-        list = state.list;
-        email = state.email;
-        profilePicUrl = state.profilePicUrl;
-      });
-    }
-  },
-  child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 0.0225 * height, 0, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+        child: BlocConsumer<OrdersListBloc, OrdersListState>(
+          listener: (context, state) {
+            if (state is ShowSnackbar) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.messsage)));
+            }
+            if (state is ProfileDataState) {
+              list = state.list;
+            }
+          },
+          builder: (context, state) {
+            if (state is OrdersListInitial) {
+              return const Center(
+                child: CustomLoadingAnimation(),
+              );
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 0.0225 * height, 0, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(Icons.arrow_back_ios),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(0.18 * width, 0, 0, 0),
+                            child: const Heading(
+                              text: "Live Orders",
+                            ),
+                          ),
+                        ],
+                      ),
                       IconButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pushNamed(context, "/profile");
                         },
-                        icon: const Icon(Icons.arrow_back_ios),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            0.18 * width, 0, 0, 0),
-                        child: const Heading(
-                          text: "Live Orders",
+                        icon: const Icon(
+                          Icons.person_2_rounded,
+                          color: Color(0xFF004932),
+                          size: 32,
                         ),
-                      ),
+                      )
                     ],
                   ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/profile");
-                    },
-                    icon: const Icon(
-                      Icons.person_2_rounded,
-                      color: Color(0xFF004932),
-                      size: 32,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  0.05 * width, 0.00875 * height, 0, 0),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Almost there! We're whipping up your favorites",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    "with a dash of joy...",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                  0.05 * width, 0.00875 * height, 0, 0),
-              child: Text(
-                "Pending Order : ${list.length}",
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
                 ),
-              ),
-            ),
-            Expanded(
-              child: SizedBox(
-                width: width,
-                child: SingleChildScrollView(
-                  child: Column(
+                Padding(
+                  padding:
+                      EdgeInsets.fromLTRB(0.05 * width, 0.00875 * height, 0, 0),
+                  child: const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      for (var i in list)
-                        OrderCard(
-                            width: width,
-                            height: height,
-                            data: i,
+                      Text(
+                        "Almost there! We're whipping up your favorites",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                         ),
+                      ),
+                      Text(
+                        "with a dash of joy...",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ),
-            ),
-          ],
+                Padding(
+                  padding:
+                      EdgeInsets.fromLTRB(0.05 * width, 0.00875 * height, 0, 0),
+                  child: Text(
+                    "Pending Order : ${list.length}",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox(
+                    width: width,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          for (var i in list)
+                            OrderCard(
+                              width: width,
+                              height: height,
+                              data: i,
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
-),
       ),
     );
   }

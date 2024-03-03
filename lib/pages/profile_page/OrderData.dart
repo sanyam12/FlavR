@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'OrderProductData.dart';
 
 class OrderData {
@@ -12,6 +10,7 @@ class OrderData {
   final int? orderNumber;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final String instruction;
 
   List<OrderProductData> _getProductList(List<dynamic> list) {
     final List<OrderProductData> ans = [];
@@ -31,6 +30,7 @@ class OrderData {
     this.orderNumber,
     this.createdAt,
     this.updatedAt,
+    this.instruction,
   );
 
   OrderData.fromJson(Map<String, dynamic> json)
@@ -44,5 +44,6 @@ class OrderData {
             .toList(),
         orderNumber = json["orderNumber"],
         createdAt = DateTime.parse(json["createdAt"].toString()),
-        updatedAt = DateTime.parse(json["updatedAt"].toString());
+        updatedAt = DateTime.parse(json["updatedAt"].toString()),
+  instruction = json["instructions"]["message"];
 }

@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:flavr/core/constants.dart';
 import 'package:flavr/features/cart/data/repository/cart_repository.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cfpayment/cfdropcheckoutpayment.dart';
@@ -13,7 +12,6 @@ import '../../../features/outlet_menu/data/models/Categories.dart';
 import '../../../features/outlet_menu/data/models/Product.dart';
 import '../../../features/outlet_menu/data/models/ProductVariantData.dart';
 import '../data/models/Cart.dart';
-import '../data/models/CartVariantData.dart';
 
 part 'cart_event.dart';
 
@@ -40,6 +38,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(CartLoading());
       final response = await _cartRepository.placeOrder(
         event.cart.outletId,
+        event.instruction,
       );
       final json = jsonDecode(response);
       final orderId = json["order_id"].toString();
@@ -165,12 +164,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       VerifyPayment event,
       Emitter<CartState> emit,
   )async{
-    //TODO: verification method pending
-    emit(const ShowSnackbar("Verification not implemented"));
     final orderDetails = await _cartRepository.verifyPayment(event.orderId);
 
-    if (orderDetails) {
+    if (orderDetails=="PAID") {
       emit(NavigateToOrderNumber(event.orderId));
+    } else if(orderDetails=="ACTIVE"){
+      emit(const ShowSnackbar("Payment still not completed, you can retry"));
     } else {
       emit(const ShowSnackbar("Payment Failed"));
     }

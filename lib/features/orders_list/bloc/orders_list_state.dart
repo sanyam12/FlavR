@@ -10,24 +10,14 @@ class OrdersListInitial extends OrdersListState {
 }
 
 class ProfileDataState extends OrdersListState {
-  final String userName;
-  final String email;
-  final String profilePicUrl;
   final List<OrderData> list;
 
   const ProfileDataState(
-      this.userName,
-      this.list,
-      this.email,
-      this.profilePicUrl,
-      );
+    this.list,
+  );
 
   @override
-  List<Object?> get props => [
-    userName,
-    list,
-    email,
-  ];
+  List<Object?> get props => [list];
 }
 
 class ShowSnackbar extends OrdersListState {
@@ -38,4 +28,3 @@ class ShowSnackbar extends OrdersListState {
   @override
   List<Object?> get props => [messsage];
 }
-

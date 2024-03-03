@@ -1,15 +1,7 @@
-import 'dart:developer';
-
 import 'package:flavr/core/components/rule_text_component.dart';
-import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
-import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
 import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/menu_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import '../../../cart/data/models/CartVariantData.dart';
 import '../../data/models/Categories.dart';
 import '../../data/models/Product.dart';
 
@@ -46,10 +38,6 @@ class _CategoryMenuState extends State<CategoryMenu> {
   //   });
   //   return count.toString();
   // }
-
-
-
-
 
   _showBottomSheet({
     required String title,
@@ -90,9 +78,8 @@ class _CategoryMenuState extends State<CategoryMenu> {
   Widget build(BuildContext context) {
     // log("category menu rebuild: ${widget.cart.outletId}");
     List<Widget> children = [];
-    bool check = (widget.list.length > 1);
     for (var i in widget.list) {
-      if (check && i.category != "All") {
+      if (i.products.isNotEmpty && i.category != "All") {
         children.add(
           RuleTextComponent(
             width: widget.width,

@@ -1,14 +1,10 @@
 import 'dart:ui';
 
 import 'package:flavr/features/cart/data/models/Cart.dart';
-import 'package:flavr/features/cart/data/models/CartVariantData.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/overlay.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../bloc/outlet_menu_bloc.dart';
 import '../../data/models/Product.dart';
-import '../../data/models/ProductVariantData.dart';
 
 class MenuItem extends StatefulWidget {
   const MenuItem({

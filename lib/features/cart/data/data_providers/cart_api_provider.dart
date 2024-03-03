@@ -12,6 +12,7 @@ class CartApiProvider {
   Future<String> placeOrder({
     required String token,
     required String outletID,
+    required String instruction,
   }) async {
     final response = await client.post(
         Uri.parse("${API_DOMAIN}orders/placeOrder"),
@@ -19,15 +20,19 @@ class CartApiProvider {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json'
         },
-        body: json.encode({"outletid": outletID}));
+        body: json.encode({
+          "outletid": outletID,
+          "instructions":{
+            "message": instruction
+          }
+        }));
     return response.body;
   }
 
   Future<String> verifyPayment(String orderId)async{
     final response = await client.get(
-        Uri.parse("${API_DOMAIN}orders/getOrder?orderid=$orderId"),
+        Uri.parse("${API_DOMAIN}orders/payments/verify/$orderId"),
     );
-    log(response.body);
     return response.body;
   }
 }

@@ -2,7 +2,6 @@ import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/models/Categories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class VegSelector extends StatelessWidget {
   final double width;

@@ -55,10 +55,10 @@
               "client_type": 3
             },
             {
-              "client_id": "504489315010-t87tv0fkdof28tjsq6e5csgeesunh33i.apps.googleusercontent.com",
+              "client_id": "504489315010-2m51cb97ritbdne2pi8vlqtfbmp9hhv6.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.flavr"
+                "bundle_id": "com.example.flavr.RunnerTests"
               }
             }
           ]

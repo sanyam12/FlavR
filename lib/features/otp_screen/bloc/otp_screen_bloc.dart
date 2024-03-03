@@ -1,11 +1,7 @@
-import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
-import 'package:flavr/core/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart';
 import '../data/repository/otp_repository.dart';
 
 part 'otp_screen_event.dart';

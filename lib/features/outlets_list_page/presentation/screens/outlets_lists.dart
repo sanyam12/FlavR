@@ -1,4 +1,5 @@
 import 'package:flavr/core/components/heading.dart';
+import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/core/components/search_bar.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/button_row.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/image_slider.dart';
@@ -142,7 +143,7 @@ class _OutletsListState extends State<OutletsList> {
                   if (selectedTab)
                     _savedOutletList(width, height)
                   else
-                    ..._allList(width, height),
+                    _allList(width, height),
                 ],
               ),
             ),
@@ -178,26 +179,30 @@ class _OutletsListState extends State<OutletsList> {
   }
 
   _allList(width, height) {
-    return [
-      for (var i in searchAllOutletList)
-        OutletCard(
-          width: width,
-          height: height,
-          outlet: i,
-          selectOutlet: () {
-            context.read<OutletListBloc>().add(OnOutletSelection(i.id));
-          },
-          addToFav: (id) {
-            context.read<OutletListBloc>().add(
-                  OnAddToFav(
-                    id,
-                    savedOutletList,
-                    allOutletList,
-                  ),
-                );
-          },
-        ),
-    ];
+    return Column(
+      children: [
+        if(searchAllOutletList.isEmpty)
+          const Center(child: CustomLoadingAnimation()),
+        for (var i in searchAllOutletList)
+          OutletCard(
+            width: width,
+            height: height,
+            outlet: i,
+            selectOutlet: () {
+              context.read<OutletListBloc>().add(OnOutletSelection(i.id));
+            },
+            addToFav: (id) {
+              context.read<OutletListBloc>().add(
+                OnAddToFav(
+                  id,
+                  savedOutletList,
+                  allOutletList,
+                ),
+              );
+            },
+          ),
+      ],
+    );
   }
 
   _getHeadRow() {

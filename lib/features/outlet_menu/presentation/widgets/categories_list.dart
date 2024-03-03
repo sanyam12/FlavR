@@ -31,7 +31,7 @@ class _CategoriesListState extends State<CategoriesList> {
       ),
       child: SizedBox(
         width: widget.width,
-        height: 0.13 * widget.height,
+        height: 120,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: widget.filteredMenuList.length,
@@ -53,47 +53,46 @@ class _CategoriesListState extends State<CategoriesList> {
                 shadowColor: Colors.grey,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Container(
-                    color: (widget.selectedCategory ==
-                            widget.filteredMenuList[index].category)
-                        ? Colors.black
-                        : Colors.white,
-                    height: double.infinity,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 0.09166666667 * widget.width,
-                            vertical: 0.02125 * widget.height,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minWidth: 90
+                    ),
+                    child: Container(
+                      color: (widget.selectedCategory ==
+                          widget.filteredMenuList[index].category)
+                          ? Colors.black
+                          : Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          (widget.filteredMenuList[index].iconUrl.isEmpty)
+                              ? Image.asset(
+                                  "assets/images/Fast food.png",
+                                  width: 45,
+                                  height: 45,
+                                  fit: BoxFit.fill,
+                                )
+                              : Image.network(
+                                  widget.filteredMenuList[index].iconUrl,
+                                  width: 45,
+                                  height: 45,
+                                  fit: BoxFit.fill,
+                                ),
+                          Text(
+                            widget.filteredMenuList[index].category,
+                            style: TextStyle(
+                              color: (widget.selectedCategory ==
+                                      widget.filteredMenuList[index].category)
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: GoogleFonts.poppins().fontFamily,
+                            ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          child:
-                              (widget.filteredMenuList[index].iconUrl.isEmpty)
-                                  ? Image.asset(
-                                      "assets/images/Fast food.png",
-                                      width: 45,
-                                      height: 45,
-                                      fit: BoxFit.fill,
-                                    )
-                                  : Image.network(
-                                      widget.filteredMenuList[index].iconUrl,
-                                      width: 45,
-                                      height: 45,
-                                      fit: BoxFit.fill,
-                                    ),
-                        ),
-                        Text(
-                          widget.filteredMenuList[index].category,
-                          style: TextStyle(
-                            color: (widget.selectedCategory ==
-                                    widget.filteredMenuList[index].category)
-                                ? Colors.white
-                                : Colors.black,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: GoogleFonts.poppins().fontFamily,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

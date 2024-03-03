@@ -1,5 +1,3 @@
-import 'dart:collection';
-import 'dart:developer';
 import 'package:flavr/features/outlet_menu/data/models/Categories.dart';
 import 'package:flavr/features/outlet_menu/data/models/Product.dart';
 import 'CartVariantData.dart';

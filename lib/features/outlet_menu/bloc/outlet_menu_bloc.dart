@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flavr/core/repository/core_cart_repository.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
@@ -23,8 +22,8 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     on<IncrementAmount>(_incrementAmount);
     on<DecrementAmount>(_decrementAmount);
     on<OutletListClicked>(_outletListClicked);
-    on<SearchQueryEvent>(_onSearchEvent);
     on<UpdateCart>(_onUpdateCart);
+    on<SearchQueryEvent>(_onSearchEvent);
     on<OnVegClicked>(_onVegClicked);
     on<OnNonVegClicked>(_onNonVegClicked);
   }
@@ -75,6 +74,41 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     } else {
       emit(VegFilterTriggered(event.menuList, event.toggled));
     }
+  }
+
+  _onSearchEvent(
+      SearchQueryEvent event,
+      Emitter<OutletMenuState> emit,
+      ) {
+    try {
+      emit(
+        SearchResultState(
+          _searchResult(event.query, event.categoriesList),
+        ),
+      );
+    } catch (e) {
+      emit(ShowSnackBar(e.toString()));
+    }
+  }
+
+  List<Categories> _searchResult(
+      String query,
+      List<Categories> categoriesList,
+      ) {
+    List<Categories> list = [Categories("All", [], "")];
+    for (var i in categoriesList) {
+      var temp = Categories(
+          i.category,
+          i.products
+              .where((element) =>
+              element.name.toLowerCase().contains(query.toLowerCase()))
+              .toList(),
+          i.iconUrl);
+      if (temp.products.isNotEmpty) {
+        list.add(temp);
+      }
+    }
+    return list;
   }
 
   _onUpdateCart(
@@ -223,41 +257,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
   ) {
     emit(OutletMenuLoading());
     emit(NavigateToOutletList());
-  }
-
-  _onSearchEvent(
-    SearchQueryEvent event,
-    Emitter<OutletMenuState> emit,
-  ) {
-    try {
-      emit(
-        SearchResultState(
-          _searchResult(event.query, event.categoriesList),
-        ),
-      );
-    } catch (e) {
-      emit(ShowSnackBar(e.toString()));
-    }
-  }
-
-  List<Categories> _searchResult(
-    String query,
-    List<Categories> categoriesList,
-  ) {
-    List<Categories> list = [Categories("All", [], "")];
-    for (var i in categoriesList) {
-      var temp = Categories(
-          i.category,
-          i.products
-              .where((element) =>
-                  element.name.toLowerCase().contains(query.toLowerCase()))
-              .toList(),
-          i.iconUrl);
-      if (temp.products.isNotEmpty) {
-        list.add(temp);
-      }
-    }
-    return list;
   }
 
 }

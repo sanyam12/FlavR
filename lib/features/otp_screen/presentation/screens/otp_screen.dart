@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flavr/core/components/button.dart';
 import 'package:flavr/core/components/button_types.dart';
 import 'package:flavr/core/components/heading.dart';

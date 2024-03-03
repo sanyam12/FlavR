@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:flavr/core/constants.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

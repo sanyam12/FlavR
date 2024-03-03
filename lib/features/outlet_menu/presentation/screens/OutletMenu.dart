@@ -1,21 +1,15 @@
-import 'dart:developer';
-
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/loading.dart';
-import 'package:flavr/core/components/search_bar.dart';
 import 'package:flavr/features/cart/presentation/screens/CartPage.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/categories_list.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/menu_discount_slider.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/menu_search_bar.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/top_row.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/veg_selector.dart';
-import 'package:flavr/pages/ordernumber/OrderNumber.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../cart/data/models/Cart.dart';
 import '../../data/models/Categories.dart';
@@ -149,47 +143,6 @@ class _OutletMenuState extends State<OutletMenu> {
             if (state is OutletMenuLoading || state is OutletMenuInitial) {
               return const Center(child: CustomLoadingAnimation());
             }
-            final List<Widget> stackList = incompleteOrders
-                .map((e) =>
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => OrderNumber(orderId: e.id),
-                      ),
-                    );
-                  },
-                  child: Card(
-                      color: const Color(0xFFA3C2B3),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 28.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Center(
-                                child: (e.orderNumber != null)
-                                    ? Text(
-                                    "Order Number:\n${e.orderNumber
-                                        .toString()}",
-                                    textAlign: TextAlign.center)
-                                    : const Text(
-                                    "Order Number:\nNot Assigned",
-                                    textAlign: TextAlign.center)),
-                            Center(
-                                child: Text(
-                                  "Price:\n${e.totalPrice.toString()}",
-                                  textAlign: TextAlign.center,
-                                )),
-                          ],
-                        ),
-                      )),
-                ))
-                .toList();
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: Stack(
@@ -278,104 +231,89 @@ class _OutletMenuState extends State<OutletMenu> {
                       padding: EdgeInsets.only(bottom: 0.01625*width),
                       child: SizedBox(
                         height: 0.08*height,
-                        child: CarouselSlider(
-                          items: [
-                            GestureDetector(
-                              onTap: () async {
-                                await Navigator.of(context).push<Cart>(
-                                  MaterialPageRoute(
-                                    builder: (context) => CartPage(list: menuList),
-                                  ),
-                                );
-                                log("fetch cart event");
-                                if (context.mounted) {
-                                  context.read<OutletMenuBloc>().add(UpdateCart());
-                                }
-                              },
-                              child: Card(
-                                color: Colors.black,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: GestureDetector(
+                          onTap: () async {
+                            await Navigator.of(context).push<Cart>(
+                              MaterialPageRoute(
+                                builder: (context) => CartPage(list: menuList),
+                              ),
+                            );
+                            if (context.mounted) {
+                              context.read<OutletMenuBloc>().add(UpdateCart());
+                            }
+                          },
+                          child: Card(
+                            color: Colors.black,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              0.03333 * width,
-                                              0,
-                                              0.02778 * width,
-                                              0),
-                                          child: const Icon(
-                                            Icons.shopping_cart,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        Text(
-                                          "${_calculateTotalItems()} Items Added",
-                                          style: GoogleFonts.poppins(
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(
-                                          0, 5, 0.038889 * width, 5),
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
+                                          0.03333 * width,
+                                          0,
+                                          0.02778 * width,
+                                          0),
+                                      child: const Icon(
+                                        Icons.shopping_cart,
                                         color: Colors.white,
-                                        child: ConstrainedBox(
-                                          constraints: BoxConstraints(
-                                            minWidth: 0.2166666667*width,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 7.0),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                const Icon(
-                                                  Icons.currency_rupee,
-                                                  size: 14,
-                                                ),
-                                                Text(
-                                                  "${_calculateCartAmount()}",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontFamily:
-                                                    GoogleFonts
-                                                        .poppins()
-                                                        .fontFamily,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      "${_calculateTotalItems()} Items Added",
+                                      style: GoogleFonts.poppins(
+                                        color: Colors.white,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      0, 5, 0.038889 * width, 5),
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    color: Colors.white,
+                                    child: ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                        minWidth: 0.2166666667*width,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 7.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.currency_rupee,
+                                              size: 14,
+                                            ),
+                                            Text(
+                                              "${_calculateCartAmount()}",
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily:
+                                                GoogleFonts
+                                                    .poppins()
+                                                    .fontFamily,
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            ...stackList
-                          ],
-                          options: CarouselOptions(
-                            height: 0.2665625 * height,
-                            viewportFraction: 1,
-                            enlargeCenterPage: true,
-                            autoPlay: false,
-                            autoPlayInterval: const Duration(seconds: 2),
-                            enableInfiniteScroll: false,
-                            reverse: false,
                           ),
                         ),
                       ),

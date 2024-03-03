@@ -1,9 +1,7 @@
 import 'package:equatable/equatable.dart';
-import 'package:flavr/core/constants.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/repository/splash_screen_repository.dart';
 

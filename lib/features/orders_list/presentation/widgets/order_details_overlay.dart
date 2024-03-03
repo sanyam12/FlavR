@@ -335,9 +335,9 @@ class _OrderDetailsOverlayState extends State<OrderDetailsOverlay> {
                           ),
                         ),
                       ),
-                      const Text(
-                        "Please add extra cheese in burger",
-                        style: TextStyle(
+                      Text(
+                        widget.data.instruction,
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                           color: Color(0xff000000),

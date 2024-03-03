@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flavr/features/outlets_list_page/presentation/widgets/image_slider.dart';
 import 'package:flutter/material.dart';
 
 class MenuDiscountSlider extends StatelessWidget {

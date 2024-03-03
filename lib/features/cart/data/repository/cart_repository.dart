@@ -10,17 +10,20 @@ class CartRepository {
 
   CartRepository(this._coreCartRepository, this._cartApiProvider);
 
-  Future<String> placeOrder(String outletID) async {
+  Future<String> placeOrder(
+    String outletID,
+    String instruction,
+  ) async {
     final token = await _coreCartRepository.getToken();
     return await _cartApiProvider.placeOrder(
       token: token,
       outletID: outletID,
+      instruction: instruction,
     );
   }
 
-  Future<bool> verifyPayment(String orderId)async{
+  Future<String> verifyPayment(String orderId) async {
     final response = await _cartApiProvider.verifyPayment(orderId);
-    log(jsonDecode(response)["order"][0]["payment"].toString());
-    return jsonDecode(response)["order"][0]["payment"]==true;
+    return jsonDecode(response)["message"]["order_status"].toString();
   }
 }

@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flavr/features/orders_list/presentation/widgets/order_details_overlay.dart';
-import 'package:flavr/pages/order_details/OrderDetails.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
