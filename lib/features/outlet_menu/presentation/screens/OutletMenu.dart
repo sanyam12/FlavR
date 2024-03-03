@@ -33,8 +33,7 @@ class _OutletMenuState extends State<OutletMenu> {
   List<Categories> filteredMenuList = [];
   List<OrderData> incompleteOrders = [];
   String selectedCategory = "All";
-  bool isVegClicked = false;
-  bool isNonVegClicked = false;
+  String vegSelection = "normal";
 
   int _calculateTotalItems() {
     int cnt = 0;
@@ -122,21 +121,15 @@ class _OutletMenuState extends State<OutletMenu> {
             }
             if (state is VegFilterTriggered) {
               filteredMenuList = state.menuList;
-              if (state.toggled) {
-                isNonVegClicked = false;
-                isVegClicked = true;
-              } else {
-                isVegClicked = false;
-              }
+              vegSelection = state.vegSelection;
             }
             if (state is NonVegFilterTriggered) {
               filteredMenuList = state.menuList;
-              if (state.toggled) {
-                isVegClicked = false;
-                isNonVegClicked = true;
-              } else {
-                isNonVegClicked = false;
-              }
+              vegSelection = state.vegSelection;
+            }
+            if(state is FilterResultState){
+              filteredMenuList = state.menuList;
+              vegSelection = state.vegSelection;
             }
           },
           builder: (context, state) {
@@ -159,6 +152,7 @@ class _OutletMenuState extends State<OutletMenu> {
                         height: height,
                         controller: searchController,
                         menuList: menuList,
+                        vegSelection: vegSelection,
                       ),
                       Expanded(
                         child: SingleChildScrollView(
@@ -193,8 +187,8 @@ class _OutletMenuState extends State<OutletMenu> {
                               VegSelector(width: width,
                                 height: height,
                                 menuList: menuList,
-                                isNonVegClicked: isNonVegClicked,
-                                isVegClicked: isVegClicked,
+                                vegSelection: vegSelection,
+                                query: searchController.text,
                               ),
                               Padding(
                                 padding: EdgeInsets.only(

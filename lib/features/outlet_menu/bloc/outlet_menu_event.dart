@@ -13,9 +13,14 @@ class RefreshMenuEvent extends OutletMenuEvent {
 
 class SearchQueryEvent extends OutletMenuEvent {
   final String query;
+  final String vegSelection;
   final List<Categories> categoriesList;
 
-  const SearchQueryEvent(this.query, this.categoriesList);
+  const SearchQueryEvent(
+    this.categoriesList,
+    this.vegSelection,
+    this.query,
+  );
 
   @override
   List<Object?> get props => [query, categoriesList];
@@ -47,34 +52,44 @@ class DecrementAmount extends OutletMenuEvent {
   List<Object?> get props => [];
 }
 
-class OutletListClicked extends OutletMenuEvent{
+class OutletListClicked extends OutletMenuEvent {
   @override
   List<Object?> get props => [];
 }
 
-class UpdateCart extends OutletMenuEvent{
+class UpdateCart extends OutletMenuEvent {
   @override
   List<Object?> get props => [];
 }
 
-class OnVegClicked extends OutletMenuEvent{
+class OnVegClicked extends OutletMenuEvent {
   final List<Categories> menuList;
-  final bool toggled;
-  const OnVegClicked(this.menuList, this.toggled);
+  final String vegSelection;
+  final String query;
+
+  const OnVegClicked(
+    this.menuList,
+    this.vegSelection,
+    this.query,
+  );
 
   @override
-  List<Object?> get props => [menuList, toggled];
-
+  List<Object?> get props => [menuList, vegSelection];
 }
 
-class OnNonVegClicked extends OutletMenuEvent{
+class OnNonVegClicked extends OutletMenuEvent {
   final List<Categories> menuList;
-  final bool toggled;
-  const OnNonVegClicked(this.menuList, this.toggled);
+  final String vegSelection;
+  final String query;
+
+  const OnNonVegClicked(
+    this.menuList,
+    this.vegSelection,
+    this.query,
+  );
 
   @override
-  List<Object?> get props => [menuList, toggled];
-
+  List<Object?> get props => [menuList, vegSelection, query];
 }
 
 // class UpdateCartEvent extends OutletMenuEvent{

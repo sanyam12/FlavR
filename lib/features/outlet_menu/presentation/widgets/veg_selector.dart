@@ -7,20 +7,23 @@ class VegSelector extends StatelessWidget {
   final double width;
   final double height;
   final List<Categories> menuList;
-  final bool isVegClicked;
-  final bool isNonVegClicked;
+  final String vegSelection;
+  final String query;
 
   const VegSelector({
     super.key,
     required this.width,
     required this.height,
     required this.menuList,
-    required this.isNonVegClicked,
-    required this.isVegClicked,
+    required this.vegSelection,
+    required this.query,
   });
 
   @override
   Widget build(BuildContext context) {
+    final isVegClicked = vegSelection=="veg";
+    final isNonVegClicked = vegSelection=="non-veg";
+
     final borderRadius = BorderRadius.circular(10);
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -31,7 +34,7 @@ class VegSelector extends StatelessWidget {
             onTap: () {
               context
                   .read<OutletMenuBloc>()
-                  .add(OnVegClicked(menuList, !isVegClicked));
+                  .add(OnVegClicked(menuList, vegSelection, query));
             },
             child: Container(
               decoration: BoxDecoration(
@@ -75,7 +78,7 @@ class VegSelector extends StatelessWidget {
               onTap: () {
                 context
                     .read<OutletMenuBloc>()
-                    .add(OnNonVegClicked(menuList, !isNonVegClicked));
+                    .add(OnNonVegClicked(menuList, vegSelection, query));
               },
               child: Container(
                 decoration: BoxDecoration(

@@ -10,6 +10,8 @@ import '../data/repository/outlet_menu_repository.dart';
 
 part 'outlet_menu_event.dart';
 
+part 'outlet_menu_filters.dart';
+
 part 'outlet_menu_state.dart';
 
 class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
@@ -29,86 +31,64 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
   }
 
   _onNonVegClicked(
-      OnNonVegClicked event,
-      Emitter<OutletMenuState> emit,
-  ){
-    if (event.toggled) {
-      final list = <Categories>[Categories("All", [], "")];
-      for (var i in event.menuList) {
-        final category = Categories(
-          i.category,
-          i.products,
-          i.iconUrl,
-        );
-        category.products =
-            category.products.where((element) => element.veg == false).toList();
-        if (category.products.isNotEmpty) {
-          list.add(category);
-        }
-      }
-      emit(NonVegFilterTriggered(list, event.toggled));
-    } else {
-      emit(NonVegFilterTriggered(event.menuList, event.toggled));
+    OnNonVegClicked event,
+    Emitter<OutletMenuState> emit,
+  ) {
+    String newVegSelection = "non-veg";
+    if (event.vegSelection == "non-veg") {
+      newVegSelection = "normal";
     }
+
+    emit(
+      NonVegFilterTriggered(
+        _filter(
+          event.menuList,
+          newVegSelection,
+          event.query,
+        ),
+        newVegSelection,
+      ),
+    );
   }
 
   _onVegClicked(
     OnVegClicked event,
     Emitter<OutletMenuState> emit,
   ) {
-    if (event.toggled) {
-      final list = <Categories>[Categories("All", [], "")];
-      for (var i in event.menuList) {
-        final category = Categories(
-          i.category,
-          i.products,
-          i.iconUrl,
-        );
-        category.products =
-            category.products.where((element) => element.veg == true).toList();
-        if (category.products.isNotEmpty) {
-          list.add(category);
-        }
-      }
-      emit(VegFilterTriggered(list, event.toggled));
-    } else {
-      emit(VegFilterTriggered(event.menuList, event.toggled));
+    String newVegSelection = "veg";
+    if (event.vegSelection == "veg") {
+      newVegSelection = "normal";
     }
+
+    emit(
+      VegFilterTriggered(
+        _filter(
+          event.menuList,
+          newVegSelection,
+          event.query,
+        ),
+        newVegSelection,
+      ),
+    );
   }
 
   _onSearchEvent(
-      SearchQueryEvent event,
-      Emitter<OutletMenuState> emit,
-      ) {
+    SearchQueryEvent event,
+    Emitter<OutletMenuState> emit,
+  ) {
     try {
       emit(
         SearchResultState(
-          _searchResult(event.query, event.categoriesList),
+          _filter(
+            event.categoriesList,
+            event.vegSelection,
+            event.query,
+          ),
         ),
       );
     } catch (e) {
       emit(ShowSnackBar(e.toString()));
     }
-  }
-
-  List<Categories> _searchResult(
-      String query,
-      List<Categories> categoriesList,
-      ) {
-    List<Categories> list = [Categories("All", [], "")];
-    for (var i in categoriesList) {
-      var temp = Categories(
-          i.category,
-          i.products
-              .where((element) =>
-              element.name.toLowerCase().contains(query.toLowerCase()))
-              .toList(),
-          i.iconUrl);
-      if (temp.products.isNotEmpty) {
-        list.add(temp);
-      }
-    }
-    return list;
   }
 
   _onUpdateCart(
@@ -229,18 +209,18 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     RefreshMenuEvent event,
     Emitter<OutletMenuState> emit,
   ) async {
-      emit(OutletMenuLoading());
-      final token = await _coreCartRepository.getToken();
-      final outlet = await _repository.getOutlet(token);
-      final menu = await _repository.getOutletMenu(outlet.id);
-      final cart = await _repository.getCart(token, menu, outlet.id);
-      final incompleteOrders = await _repository.getIncompleteOrders(token);
-      emit(RefreshedOutletData(
-        outlet.outletName,
-        menu,
-        cart,
-        incompleteOrders,
-      ));
+    emit(OutletMenuLoading());
+    final token = await _coreCartRepository.getToken();
+    final outlet = await _repository.getOutlet(token);
+    final menu = await _repository.getOutletMenu(outlet.id);
+    final cart = await _repository.getCart(token, menu, outlet.id);
+    final incompleteOrders = await _repository.getIncompleteOrders(token);
+    emit(RefreshedOutletData(
+      outlet.outletName,
+      menu,
+      cart,
+      incompleteOrders,
+    ));
     // } catch (e) {
     //   log(e.toString());
     //   if (e.toString() == "Exception: No Saved Outlet Found") {
@@ -258,5 +238,4 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     emit(OutletMenuLoading());
     emit(NavigateToOutletList());
   }
-
 }

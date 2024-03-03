@@ -10,6 +10,7 @@ class MenuSearchBar extends StatelessWidget {
   final double height;
   final TextEditingController controller;
   final List<Categories> menuList;
+  final String vegSelection;
 
   const MenuSearchBar({
     super.key,
@@ -17,6 +18,7 @@ class MenuSearchBar extends StatelessWidget {
     required this.height,
     required this.controller,
     required this.menuList,
+    required this.vegSelection,
   });
 
   @override
@@ -26,7 +28,11 @@ class MenuSearchBar extends StatelessWidget {
       height: height,
       controller: controller,
       onChanged: (s) {
-        context.read<OutletMenuBloc>().add(SearchQueryEvent(s, menuList));
+        context.read<OutletMenuBloc>().add(SearchQueryEvent(
+              menuList,
+              vegSelection,
+              s,
+            ));
       },
     );
   }
