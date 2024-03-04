@@ -1,8 +1,11 @@
 import 'package:flavr/core/components/heading.dart';
-import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/core/components/search_bar.dart';
+import 'package:flavr/core/components/shimmer.dart';
+import 'package:flavr/core/components/shimmer_loading.dart';
+import 'package:flavr/core/constants.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/button_row.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/image_slider.dart';
+import 'package:flavr/features/outlets_list_page/presentation/widgets/shimmer_outlet_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -87,64 +90,67 @@ class _OutletsListState extends State<OutletsList> {
       },
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 19.0),
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  _getHeadRow(),
-                  RichText(
-                    text: TextSpan(
-                      text:
-                          "What are you waiting for? Select an outlet to order delicious food from...",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: GoogleFonts.poppins().fontFamily),
+        body: Shimmer(
+          linearGradient: shimmerGradient,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 19.0),
+              child: SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Column(
+                  children: [
+                    _getHeadRow(),
+                    RichText(
+                      text: TextSpan(
+                        text:
+                            "What are you waiting for? Select an outlet to order delicious food from...",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: GoogleFonts.poppins().fontFamily),
+                      ),
                     ),
-                  ),
-                  ImageSlider(
-                    width: width,
-                    height: height,
-                    list: list,
-                  ),
-                  // _getButtonRow(width, height, ),
-                  ButtonRow(
+                    ImageSlider(
                       width: width,
                       height: height,
-                      selectedTab: selectedTab,
-                      onFirstPressed: () {
-                        setState(() {
-                          selectedTab = false;
-                        });
+                      list: list,
+                    ),
+                    // _getButtonRow(width, height, ),
+                    ButtonRow(
+                        width: width,
+                        height: height,
+                        selectedTab: selectedTab,
+                        onFirstPressed: () {
+                          setState(() {
+                            selectedTab = false;
+                          });
+                        },
+                        onSecondPressed: () {
+                          setState(() {
+                            selectedTab = true;
+                          });
+                        }),
+                    CustomSearchBar(
+                      width: width,
+                      height: height,
+                      controller: controller,
+                      onChanged: (value) {
+                        context.read<OutletListBloc>().add(
+                              OnSearchEvent(
+                                query: value,
+                                savedOutlets: savedOutletList,
+                                allOutlets: allOutletList,
+                              ),
+                            );
                       },
-                      onSecondPressed: () {
-                        setState(() {
-                          selectedTab = true;
-                        });
-                      }),
-                  CustomSearchBar(
-                    width: width,
-                    height: height,
-                    controller: controller,
-                    onChanged: (value) {
-                      context.read<OutletListBloc>().add(
-                            OnSearchEvent(
-                              query: value,
-                              savedOutlets: savedOutletList,
-                              allOutlets: allOutletList,
-                            ),
-                          );
-                    },
-                  ),
-                  if (selectedTab)
-                    _savedOutletList(width, height)
-                  else
-                    _allList(width, height),
-                ],
+                    ),
+                    if (selectedTab)
+                      _savedOutletList(width, height)
+                    else
+                      _allList(width, height),
+                  ],
+                ),
               ),
             ),
           ),
@@ -181,8 +187,15 @@ class _OutletsListState extends State<OutletsList> {
   _allList(width, height) {
     return Column(
       children: [
-        if(searchAllOutletList.isEmpty)
-          const Center(child: CustomLoadingAnimation()),
+        if (searchAllOutletList.isEmpty)
+          for(int i=0; i<3; i++)
+            ShimmerLoading(
+              isLoading: true,
+              child: ShimmerOutletCard(
+                width: width,
+                height: height,
+              ),
+            ),
         for (var i in searchAllOutletList)
           OutletCard(
             width: width,
@@ -193,12 +206,12 @@ class _OutletsListState extends State<OutletsList> {
             },
             addToFav: (id) {
               context.read<OutletListBloc>().add(
-                OnAddToFav(
-                  id,
-                  savedOutletList,
-                  allOutletList,
-                ),
-              );
+                    OnAddToFav(
+                      id,
+                      savedOutletList,
+                      allOutletList,
+                    ),
+                  );
             },
           ),
       ],
@@ -221,19 +234,6 @@ class _OutletsListState extends State<OutletsList> {
           ),
         ),
       ],
-    );
-  }
-
-  _profileIconButton() {
-    return IconButton(
-      onPressed: () {
-        context.read<OutletListBloc>().add(const OnProfileButtonClicked());
-      },
-      icon: const Icon(
-        Icons.person,
-        color: Color(0xff004932),
-        size: 30,
-      ),
     );
   }
 }

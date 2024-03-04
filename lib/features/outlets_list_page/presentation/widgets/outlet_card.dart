@@ -49,7 +49,7 @@ class OutletCard extends StatelessWidget {
                       width: width,
                       height: 0.2375 * height,
                       child:
-                          (outlet.imageUrl != null && outlet.imageUrl != 'null')
+                          (outlet.imageUrl != null && outlet.imageUrl != 'null' && outlet.imageUrl!="")
                               ? Image.network(
                                   outlet.imageUrl!,
                                   fit: BoxFit.fill,

@@ -103,55 +103,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     Emitter<OutletMenuState> emit,
   ) async {
     try {
-      // final newCart = Cart.fromParams(
-      //   event.cart.outletId,
-      //   event.cart.items,
-      //   // event.cart.amount + event.variantData.price,
-      //   // event.cart.cartTotalItems+1
-      // );
-      // if (newCart.items[event.product] != null) {
-      //   final cartVariant = newCart.items[event.product]!.where(
-      //     (element) => element.variantName == event.variantData.variantName,
-      //   );
-      //   if (cartVariant.isEmpty) {
-      //     newCart.items[event.product]?.add(
-      //       CartVariantData(
-      //         event.variantData.variantName,
-      //         1,
-      //         event.variantData.price,
-      //       ),
-      //     );
-      //     _updateQuantityOnServer(
-      //       event.product.id,
-      //       event.variantData.variantName,
-      //       1,
-      //     );
-      //   } else {
-      //     cartVariant.first.quantity++;
-      //     _updateQuantityOnServer(
-      //       event.product.id,
-      //       event.variantData.variantName,
-      //       cartVariant.first.quantity,
-      //     );
-      //   }
-      // }
-      // else {
-      //   final items = [
-      //     CartVariantData(
-      //       event.variantData.variantName,
-      //       1,
-      //       event.variantData.price,
-      //     )
-      //   ];
-      //   newCart.items[event.product] = items;
-      //   _updateQuantityOnServer(
-      //     event.product.id,
-      //     event.variantData.variantName,
-      //     1,
-      //   );
-      // }
-      //
-      // // newCart.items[event.product.id]?.totalItems++;
       final newCart = await _coreCartRepository.incrementAmount(
         event.cart,
         event.product,
@@ -168,32 +119,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     Emitter<OutletMenuState> emit,
   ) async {
     try {
-      // if (event.cart.items[event.product] != null) {
-      //   final newCart = Cart.fromParams(
-      //     event.cart.outletId,
-      //     event.cart.items,
-      //     // event.cart.amount - event.variantData.price,
-      //     // event.cart.cartTotalItems-1,
-      //   );
-      //   final cartVariant = newCart.items[event.product]?.firstWhere(
-      //     (element) => element.variantName == event.variantData.variantName,
-      //   );
-      //   if (cartVariant?.quantity == null || cartVariant!.quantity <= 0) {
-      //     throw Exception("This Item is not added");
-      //   }
-      //   cartVariant.quantity--;
-      //   _updateQuantityOnServer(
-      //     event.product.id,
-      //     event.variantData.variantName,
-      //     cartVariant.quantity,
-      //   );
-      //   // newCart.items[event.product.id]?.totalItems--;
-      //
-      //   emit(UpdatedCartState(newCart));
-      // }
-      // else {
-      //   throw Exception("This Item is not added");
-      // }
       final newCart = await _coreCartRepository.decrementAmount(
         event.cart,
         event.product,
@@ -221,14 +146,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       cart,
       incompleteOrders,
     ));
-    // } catch (e) {
-    //   log(e.toString());
-    //   if (e.toString() == "Exception: No Saved Outlet Found") {
-    //     emit(NavigateToOutletList());
-    //   } else {
-    //     emit(ShowSnackBar(e.toString()));
-    //   }
-    // }
   }
 
   _outletListClicked(

@@ -35,7 +35,7 @@ import 'features/login_page/presentation/screens/login_page.dart';
 import 'features/otp_screen/bloc/otp_screen_bloc.dart';
 import 'features/otp_screen/data/data_provider/otp_api_provider.dart';
 import 'features/otp_screen/data/repository/otp_repository.dart';
-import 'features/outlet_menu/presentation/screens/OutletMenu.dart';
+import 'features/outlet_menu/presentation/screens/outlet_menu.dart';
 import 'features/outlets_list_page/bloc/outlet_list_bloc.dart';
 import 'features/outlets_list_page/data/data_provider/outlet_list_api_provider.dart';
 import 'features/outlets_list_page/data/data_provider/outlet_list_storage_provider.dart';
@@ -93,6 +93,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent, // transparent status bar
@@ -100,6 +101,7 @@ class _MyAppState extends State<MyApp> {
         statusBarBrightness: Brightness.light,
       ),
     );
+
     return Provider<http.Client>(
       create: (context) => client,
       child: ChangeNotifierProvider(
@@ -178,12 +180,14 @@ class _MyAppState extends State<MyApp> {
               BlocProvider(
                 create: (context) => OutletMenuBloc(
                     context.read<OutletMenuRepository>(),
-                    context.read<CoreCartRepository>()),
+                    context.read<CoreCartRepository>(),
+                ),
               ),
               BlocProvider(
                 create: (context) => CartBloc(
                     context.read<CoreCartRepository>(),
-                    context.read<CartRepository>()),
+                    context.read<CartRepository>(),
+                ),
               ),
               BlocProvider(
                 create: (context) => OrdersListBloc(),

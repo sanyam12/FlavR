@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart';
 import 'package:flavr/features/outlet_menu/data/models/Categories.dart';
 import 'package:flavr/features/outlet_menu/data/models/Outlet.dart';
@@ -24,7 +23,6 @@ class OutletMenuRepository{
       throw Exception("No Saved Outlet Found");
     }
     final outletData = await _apiProvider.getOutlet(id, token);
-    log(outletData);
     return Outlet.fromJson(jsonDecode(outletData)["result"]?[0]);
   }
 

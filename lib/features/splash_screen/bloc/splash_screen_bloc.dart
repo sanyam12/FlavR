@@ -16,10 +16,8 @@ class SplashScreenBloc extends Bloc<SplashScreenEvent, SplashScreenState> {
     on<TimerTriggered>((event, emit) async {
       try {
         await Future.delayed(
-          const Duration(seconds: 2),
+          const Duration(milliseconds:500,),
           ()async {
-            // final SharedPreferences prefs = await SharedPreferences.getInstance();
-            // await prefs.remove("savedOutlets");
             final token = await _splashScreenRepository.getToken();
             if(token==null || JwtDecoder.isExpired(token)){
               return emit(SplashScreenNotSignedIn());

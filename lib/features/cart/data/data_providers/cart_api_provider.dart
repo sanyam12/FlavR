@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flavr/core/constants.dart';
 import 'package:http/http.dart';
 
