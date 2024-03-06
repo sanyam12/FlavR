@@ -19,7 +19,7 @@ class CoreCartRepository {
     return await _coreStorageProvider.getToken();
   }
 
-  Future<Cart> updateQuantity(
+  Future<Cart> updateQuantityOnServer(
     String productId,
     String variant,
     int quantity,
@@ -61,8 +61,6 @@ class CoreCartRepository {
     final newCart = Cart.fromParams(
       cart.outletId,
       cart.items,
-      // cart.amount + variantData.price,
-      // cart.cartTotalItems+1
     );
     if (newCart.items[product] != null) {
       final cartVariant = newCart.items[product]!.where(
@@ -76,7 +74,7 @@ class CoreCartRepository {
             variantData.price,
           ),
         );
-        cart = await updateQuantity(
+        cart = await updateQuantityOnServer(
           product.id,
           variantData.variantName,
           1,
@@ -84,7 +82,7 @@ class CoreCartRepository {
         );
       } else {
         cartVariant.first.quantity++;
-        cart = await updateQuantity(
+        cart = await updateQuantityOnServer(
           product.id,
           variantData.variantName,
           cartVariant.first.quantity,
@@ -100,7 +98,7 @@ class CoreCartRepository {
         )
       ];
       newCart.items[product] = items;
-      cart = await updateQuantity(
+      cart = await updateQuantityOnServer(
         product.id,
         variantData.variantName,
         1,
@@ -121,8 +119,6 @@ class CoreCartRepository {
       final newCart = Cart.fromParams(
         cart.outletId,
         cart.items,
-        // cart.amount - variantData.price,
-        // cart.cartTotalItems-1,
       );
       final cartVariant = newCart.items[product]?.firstWhere(
         (element) => element.variantName == variantData.variantName,
@@ -131,13 +127,40 @@ class CoreCartRepository {
         throw Exception("This Item is not added");
       }
       cartVariant.quantity--;
-      cart = await updateQuantity(
+      cart = await updateQuantityOnServer(
         product.id,
         variantData.variantName,
         cartVariant.quantity,
         cart,
       );
       // newCart.items[product.id]?.totalItems--;
+      return newCart;
+    } else {
+      throw Exception("This Item is not added");
+    }
+  }
+
+  Future<Cart> updateQuantity(
+    Cart cart,
+    Product product,
+    ProductVariantData variantData,
+    int newAmount,
+  ) async {
+    if (cart.items[product] != null) {
+      final newCart = Cart.fromParams(cart.outletId, cart.items);
+      final cartVariant = newCart.items[product]?.firstWhere(
+        (element) => element.variantName == variantData.variantName,
+      );
+      if (cartVariant == null) {
+        throw Exception("Variant not found");
+      }
+      cartVariant.quantity = newAmount;
+      cart = await updateQuantityOnServer(
+        product.id,
+        variantData.variantName,
+        newAmount,
+        cart,
+      );
       return newCart;
     } else {
       throw Exception("This Item is not added");

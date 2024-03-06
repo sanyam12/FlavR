@@ -1,4 +1,5 @@
 import 'package:flavr/core/components/shimmer_loading.dart';
+import 'package:flavr/core/constants.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/shimmer_menu_item.dart';
 import 'package:flutter/material.dart';
 
@@ -21,14 +22,16 @@ class _ShimmerCategoryMenuState extends State<ShimmerCategoryMenu> {
   Widget build(BuildContext context) {
     return ShimmerLoading(
       isLoading: true,
-      child: Column(
-        children: [
-          for (int i = 0; i < 6; i++)
-            ShimmerMenuItem(
-              width: widget.width,
-              height: widget.height,
-            ),
-        ],
+      child: Container(
+        child: Column(
+          children: [
+            for (int i = 0; i < 6; i++)
+              ShimmerMenuItem(
+                width: widget.width,
+                height: widget.height,
+              ),
+          ],
+        ),
       ),
     );
   }

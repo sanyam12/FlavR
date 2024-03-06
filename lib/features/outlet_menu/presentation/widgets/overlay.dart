@@ -2,6 +2,7 @@ import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flavr/features/cart/data/models/CartVariantData.dart';
 import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
+import 'package:flavr/features/outlet_menu/bloc/variant_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/variant_card.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,12 @@ class AddItemsOverlay extends StatefulWidget {
 }
 
 class _AddItemsOverlayState extends State<AddItemsOverlay> {
+  late ProductVariantData selectedVariant = ProductVariantData(
+    "default",
+    widget.product.price,
+  );
+  int currentCount = 0;
+
   int _calculateTotalProductItems(Product product, Cart cart) {
     int count = 0;
     for (var i in cart.items[product] ?? <CartVariantData>[]) {
@@ -102,209 +109,227 @@ class _AddItemsOverlayState extends State<AddItemsOverlay> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    context.read<VariantBloc>().add(
+          SelectedVariantUpdated(selectedVariant),
+        );
+  }
+
+  @override
   Widget build(BuildContext context) {
     final cart = context.read<CartChangeProvider>().cart;
-    return SizedBox(
-        height: 0.7875 * widget.height,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 9.0,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const CircleAvatar(
-                  backgroundColor: Color(0xFFF2F1F1),
-                  child: Icon(
-                    Icons.close,
-                    size: 20,
+
+    if (widget.product.variantList.isNotEmpty) {
+      selectedVariant = widget.product.variantList[0];
+      context.read<VariantBloc>().add(SelectedVariantUpdated(selectedVariant));
+    }
+    currentCount = _calculateTotalProductItems(
+      widget.product,
+      cart,
+    );
+    return BlocConsumer<VariantBloc, VariantState>(
+      listener: (context, state) {
+        if (state is VariantUpdate) {
+          selectedVariant = state.selectedVariant;
+        }
+        if (state is VariantAmountUpdate) {
+          currentCount = state.amount;
+        }
+      },
+      builder: (context, state) {
+        return SizedBox(
+          height: 0.7875 * widget.height,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 9.0,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const CircleAvatar(
+                    backgroundColor: Color(0xFFF2F1F1),
+                    child: Icon(
+                      Icons.close,
+                      size: 20,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              child: SizedBox(
-                width: widget.width,
-                child: Card(
-                  margin: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      25,
+              Expanded(
+                child: SizedBox(
+                  width: widget.width,
+                  child: Card(
+                    margin: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        25,
+                      ),
                     ),
-                  ),
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 17.0,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 18.0),
-                              child: SizedBox(
-                                width: 0.9027777778 * widget.width,
-                                height: 0.25625 * widget.height,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: _getImage(
-                                    width: 0.3555555556 * widget.width,
-                                    height: 0.16625 * widget.height,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 18,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    widget.product.name,
-                                    style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 17.0,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 18.0),
+                                child: SizedBox(
+                                  width: 0.9027777778 * widget.width,
+                                  height: 0.25625 * widget.height,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: _getImage(
+                                      width: 0.3555555556 * widget.width,
+                                      height: 0.16625 * widget.height,
                                     ),
                                   ),
-                                  Image.asset("assets/images/veg_icon.png"),
-                                ],
-                              ),
-                            ),
-                            RichText(
-                              text: TextSpan(
-                                text: widget.product.description,
-                                style: GoogleFonts.poppins(
-                                  color: Colors.black,
                                 ),
                               ),
-                            ),
-                            if (widget.product.variantList.isNotEmpty)
-                              Text(
-                                "Variants",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 18,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      widget.product.name,
+                                      style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Image.asset("assets/images/veg_icon.png"),
+                                  ],
                                 ),
                               ),
-                            SizedBox(
-                              width: widget.width,
-                              height: 0.115 * widget.height,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: widget.product.variantList.length,
-                                itemBuilder: (context, it) {
-                                  final check = widget.product.variantList[it];
-                                  return VariantCard(
-                                    width: widget.width,
-                                    height: widget.height,
-                                    variantData: check,
-                                  );
-                                },
+                              RichText(
+                                text: TextSpan(
+                                  text: widget.product.description,
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.black,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 26.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  _customButton(
-                                    const Icon(Icons.remove),
-                                    () {
-                                      var variantData = ProductVariantData(
-                                        "default",
-                                        widget.product.price,
-                                      );
-                                      if (widget.product.variantList.isNotEmpty) {
-                                        variantData = ProductVariantData(
-                                          widget.product.name,
-                                          widget.product.price,
-                                        );
-                                      }
-                                      setState(() {
-                                        sendEvent(DecrementAmount(
-                                          widget.product,
-                                          cart,
-                                          variantData,
-                                        ));
-                                      });
-                                    },
+                              if (widget.product.variantList.isNotEmpty)
+                                Text(
+                                  "Variants",
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 14.0),
-                                    child: Text(_calculateTotalProductItems(
-                                      widget.product,
-                                      cart,
-                                    ).toString()),
-                                  ),
-                                  _customButton(
-                                    const Icon(Icons.add),
-                                    () {
-                                      var variantData = ProductVariantData(
-                                        "default",
-                                        widget.product.price,
-                                      );
-                                      if (widget.product.variantList.isNotEmpty) {
-                                        variantData = ProductVariantData(
-                                          widget.product.name,
-                                          widget.product.price,
-                                        );
-                                      }
-                                      setState(() {
-                                        sendEvent(IncrementAmount(
-                                          widget.product,
-                                          cart,
-                                          variantData,
-                                        ));
-                                      });
-                                    },
-                                  ),
-                                ],
+                                ),
+                              SizedBox(
+                                width: widget.width,
+                                height: 0.115 * widget.height,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: widget.product.variantList.length,
+                                  itemBuilder: (context, it) {
+                                    final check =
+                                        widget.product.variantList[it];
+                                    return VariantCard(
+                                      width: widget.width,
+                                      height: widget.height,
+                                      variantData: check,
+                                      selectedVariant: selectedVariant,
+                                    );
+                                  },
+                                ),
                               ),
-                              // ElevatedButton(
-                              //   style: ElevatedButton.styleFrom(
-                              //     minimumSize:
-                              //         Size(0.4722222222 * widget.width, 50),
-                              //     shape: RoundedRectangleBorder(
-                              //       borderRadius: BorderRadius.circular(10),
-                              //     ),
-                              //     backgroundColor: Colors.black,
-                              //   ),
-                              //   onPressed: () {},
-                              //   child: Text(
-                              //     "Add Item ₹50",
-                              //     style: GoogleFonts.poppins(
-                              //       color: Colors.white,
-                              //       fontWeight: FontWeight.bold,
-                              //       fontSize: 14,
-                              //     ),
-                              //   ),
-                              // )
                             ],
                           ),
-                        )
-                      ],
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 26.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    _customButton(
+                                      const Icon(Icons.remove),
+                                      () {
+                                        if (currentCount > 0) {
+                                          context.read<VariantBloc>().add(
+                                                AmountUpdated(
+                                                  currentCount - 1,
+                                                ),
+                                              );
+                                        }
+                                      },
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 14.0,
+                                      ),
+                                      child: Text(currentCount.toString()),
+                                    ),
+                                    _customButton(
+                                      const Icon(Icons.add),
+                                      () {
+                                        context.read<VariantBloc>().add(
+                                              AmountUpdated(
+                                                currentCount + 1,
+                                              ),
+                                            );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize:
+                                        Size(0.4722222222 * widget.width, 50),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    backgroundColor: Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    context.read<OutletMenuBloc>().add(
+                                          UpdateAmount(
+                                            widget.product,
+                                            cart,
+                                            selectedVariant,
+                                            currentCount,
+                                          ),
+                                        );
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    "Add Item ₹50",
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            )
-          ],
-        ),
-      );
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 
   _getImage({required double width, required double height}) {

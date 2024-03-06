@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flavr/core/data_provider/core_storage_provider.dart';
 import 'package:flavr/pages/profile_page/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'OrderData.dart';
 
@@ -216,13 +219,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 0.0675 * height,
                     child: ElevatedButton(
                       onPressed: () async {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          "/signInWithGoogle",
-                          (route) => false,
-                        );
                         final SharedPreferences prefs = await SharedPreferences.getInstance();
                         await prefs.remove("savedOutlets");
+                        await FirebaseAuth.instance.signOut();
+                        await CoreStorageProvider().removeToken();
+                        if(context.mounted){
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            "/signInWithGoogle",
+                                (route) => false,
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,

@@ -101,3 +101,20 @@ class OnNonVegClicked extends OutletMenuEvent {
 //   @override
 //   List<Object?> get props => [product, cart, list];
 // }
+
+class UpdateAmount extends OutletMenuEvent {
+  final Product product;
+  final Cart cart;
+  final ProductVariantData variantData;
+  final int newAmount;
+
+  UpdateAmount(
+    this.product,
+    this.cart,
+    this.variantData,
+    this.newAmount,
+  );
+
+  @override
+  List<Object?> get props => [];
+}

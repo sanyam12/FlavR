@@ -1,7 +1,12 @@
- import 'dart:ui';
+import 'dart:developer';
+import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flavr/core/CartChangeProvider.dart';
+import 'package:flavr/core/components/shimmer.dart';
+import 'package:flavr/core/constants.dart';
 import 'package:flavr/core/data_provider/core_api_provider.dart';
 import 'package:flavr/core/data_provider/core_storage_provider.dart';
 import 'package:flavr/core/repository/core_cart_repository.dart';
@@ -10,6 +15,7 @@ import 'package:flavr/features/cart/data/repository/cart_repository.dart';
 import 'package:flavr/features/orders_list/bloc/orders_list_bloc.dart';
 import 'package:flavr/features/orders_list/presentation/screens/orders_list.dart';
 import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
+import 'package:flavr/features/outlet_menu/bloc/variant_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_api_provider.dart';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart';
 import 'package:flavr/features/outlet_menu/data/repository/outlet_menu_repository.dart';
@@ -29,7 +35,6 @@ import 'features/google_sign_in/bloc/sign_in_with_google_bloc.dart';
 import 'features/google_sign_in/presentation/screens/sign_in_with_google.dart';
 import 'features/login_page/bloc/login_bloc.dart';
 import 'features/login_page/data/data_provider/login_api_provider.dart';
-import 'features/login_page/data/data_provider/login_secure_storage_provider.dart';
 import 'features/login_page/data/repository/login_repository.dart';
 import 'features/login_page/presentation/screens/login_page.dart';
 import 'features/otp_screen/bloc/otp_screen_bloc.dart';
@@ -45,10 +50,17 @@ import 'features/signup/bloc/signup_bloc.dart';
 import 'features/signup/data/data_provider/signup_api_provider.dart';
 import 'features/signup/presentation/screens/sign_up.dart';
 import 'features/splash_screen/bloc/splash_screen_bloc.dart';
-import 'features/splash_screen/data/repository/splash_screen_repository.dart';
 import 'features/splash_screen/presentation/screens/splash_screen.dart';
 import 'firebase_options.dart';
 import 'package:http/http.dart' as http;
+
+@pragma("vm:entry-point")
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions().currentPlatform,
+  );
+  log("Handling a background message: ${message.messageId}");
+}
 
 void main() async {
   await dotenv.load();
@@ -56,6 +68,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions().currentPlatform,
   );
+
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  // TODO: Request permission
+  // TODO: Register with FCM
+  // TODO: Set up foreground message handler
+  // TODO: Set up background message handler
 
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
@@ -65,6 +83,8 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(const MyApp());
 }
@@ -93,7 +113,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent, // transparent status bar
@@ -117,13 +136,9 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             RepositoryProvider(
-              create: (context) => SplashScreenRepository(),
-            ),
-            RepositoryProvider(
               create: (context) => LoginRepository(
-                LoginApiProvider(context.read<http.Client>()),
-                LoginSecureStorageProvider(),
-              ),
+                  LoginApiProvider(context.read<http.Client>()),
+                  CoreStorageProvider()),
             ),
             RepositoryProvider(
                 create: (context) =>
@@ -133,7 +148,7 @@ class _MyAppState extends State<MyApp> {
                     OtpRepository(OtpApiProvider(context.read<http.Client>()))),
             RepositoryProvider(
               create: (context) => OutletListRepository(
-                OutletListStorageProvider(),
+                OutletListStorageProvider(CoreStorageProvider()),
                 OutletListApiProvider(context.read<http.Client>()),
               ),
             ),
@@ -156,10 +171,15 @@ class _MyAppState extends State<MyApp> {
             providers: [
               BlocProvider(
                 create: (context) => SplashScreenBloc(
-                    context.read<SplashScreenRepository>(),
-                    context.read<http.Client>()),
+                  CoreStorageProvider(),
+                  context.read<http.Client>(),
+                ),
               ),
-              BlocProvider(create: (context) => SignInWithGoogleBloc()),
+              BlocProvider(
+                create: (context) => SignInWithGoogleBloc(
+                  CoreStorageProvider(),
+                ),
+              ),
               BlocProvider(
                 create: (context) => LoginBloc(context.read<LoginRepository>()),
               ),
@@ -179,18 +199,23 @@ class _MyAppState extends State<MyApp> {
               ),
               BlocProvider(
                 create: (context) => OutletMenuBloc(
-                    context.read<OutletMenuRepository>(),
-                    context.read<CoreCartRepository>(),
+                  context.read<OutletMenuRepository>(),
+                  context.read<CoreCartRepository>(),
                 ),
               ),
               BlocProvider(
                 create: (context) => CartBloc(
-                    context.read<CoreCartRepository>(),
-                    context.read<CartRepository>(),
+                  context.read<CoreCartRepository>(),
+                  context.read<CartRepository>(),
                 ),
               ),
               BlocProvider(
-                create: (context) => OrdersListBloc(),
+                create: (context) => OrdersListBloc(
+                  CoreStorageProvider(),
+                ),
+              ),
+              BlocProvider(
+                create: (context) => VariantBloc(),
               ),
             ],
             child: MaterialApp(
