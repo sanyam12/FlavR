@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flavr/core/repository/core_cart_repository.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
@@ -130,6 +132,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       );
       emit(UpdatedCartState(newCart));
     } catch(e){
+      log("here is the error");
       emit(ShowSnackBar(e.toString()));
       emit(PostShowSnackBar());
 

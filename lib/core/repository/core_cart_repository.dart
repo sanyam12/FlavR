@@ -146,24 +146,27 @@ class CoreCartRepository {
     ProductVariantData variantData,
     int newAmount,
   ) async {
+    Cart newCart = Cart.fromParams(cart.outletId, cart.items);
+    CartVariantData? cartVariant = CartVariantData(
+      variantData.variantName,
+      newAmount,
+      variantData.price,
+    );
     if (cart.items[product] != null) {
-      final newCart = Cart.fromParams(cart.outletId, cart.items);
-      final cartVariant = newCart.items[product]?.firstWhere(
+      cartVariant = newCart.items[product]?.firstWhere(
         (element) => element.variantName == variantData.variantName,
       );
       if (cartVariant == null) {
         throw Exception("Variant not found");
       }
       cartVariant.quantity = newAmount;
-      cart = await updateQuantityOnServer(
-        product.id,
-        variantData.variantName,
-        newAmount,
-        cart,
-      );
-      return newCart;
-    } else {
-      throw Exception("This Item is not added");
     }
+    cart = await updateQuantityOnServer(
+      product.id,
+      variantData.variantName,
+      newAmount,
+      cart,
+    );
+    return newCart;
   }
 }
