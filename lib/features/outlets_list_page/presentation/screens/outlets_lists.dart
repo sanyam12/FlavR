@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/search_bar.dart';
 import 'package:flavr/core/components/shimmer.dart';
@@ -37,9 +39,11 @@ class _OutletsListState extends State<OutletsList> {
   @override
   void initState() {
     super.initState();
+    //check1
     context.read<OutletListBloc>().add(GetSavedOutletList());
     context.read<OutletListBloc>().add(GetAllOutletsList());
     context.read<OutletListBloc>().add(UsernameRequested());
+    //check2
   }
 
   @override

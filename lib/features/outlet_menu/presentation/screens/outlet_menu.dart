@@ -102,11 +102,10 @@ class _OutletMenuState extends State<OutletMenu> {
               context.read<CartChangeProvider>().updateCart(state.cart);
             }
             if (state is NavigateToOutletList) {
-              await Navigator.of(context).pushNamed("/outletList");
-              if (context.mounted) {
-                context.read<OutletMenuBloc>().add(
-                      const RefreshMenuEvent(),
-                    );
+              if(Navigator.of(context).canPop()){
+                Navigator.of(context).pop();
+              }else{
+                Navigator.of(context).popAndPushNamed("/outletList");
               }
             }
             if (state is SearchResultState) {

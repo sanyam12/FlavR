@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flavr/features/outlet_menu/bloc/variant_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

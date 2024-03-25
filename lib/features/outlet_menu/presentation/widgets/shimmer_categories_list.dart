@@ -1,5 +1,4 @@
 import 'package:flavr/core/components/shimmer_loading.dart';
-import 'package:flavr/core/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

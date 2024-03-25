@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';

@@ -1,5 +1,4 @@
 import 'package:flavr/core/components/shimmer_loading.dart';
-import 'package:flavr/core/constants.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/shimmer_menu_item.dart';
 import 'package:flutter/material.dart';
 
