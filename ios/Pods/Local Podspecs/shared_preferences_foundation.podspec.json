@@ -31,7 +31,7 @@
   },
   "platforms": {
     "ios": "11.0",
-    "osx": "10.11"
+    "osx": "10.14"
   },
   "pod_target_xcconfig": {
     "DEFINES_MODULE": "YES"
@@ -41,5 +41,10 @@
     "LD_RUNPATH_SEARCH_PATHS": "/usr/lib/swift"
   },
   "swift_versions": "5.0",
+  "resource_bundles": {
+    "shared_preferences_foundation_privacy": [
+      "Resources/PrivacyInfo.xcprivacy"
+    ]
+  },
   "swift_version": "5.0"
 }

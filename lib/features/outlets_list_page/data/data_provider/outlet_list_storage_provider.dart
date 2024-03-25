@@ -1,17 +1,22 @@
 import 'package:flavr/core/constants.dart';
+import 'package:flavr/core/data_provider/core_storage_provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OutletListStorageProvider{
+  final CoreStorageProvider _coreStorageProvider;
+
+  OutletListStorageProvider(this._coreStorageProvider);
+
   Future<String> getToken()async{
-    const secure = FlutterSecureStorage(
-        aOptions: AndroidOptions(encryptedSharedPreferences: true));
-    final token = await secure.read(key: "token");
-    if(token!=null){
+    try{
+      final token = await _coreStorageProvider.getToken();
       return token;
+    }catch (e){
+      rethrow;
     }
-    throw Exception("Auth Token Not Found");
+
   }
 
   Future<Response> getUsername()async{

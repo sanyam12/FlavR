@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flavr/core/constants.dart';
+import 'package:flavr/core/data_provider/core_storage_provider.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -14,13 +15,11 @@ part 'orders_list_event.dart';
 part 'orders_list_state.dart';
 
 class OrdersListBloc extends Bloc<OrdersListEvent, OrdersListState> {
-  OrdersListBloc() : super(OrdersListInitial()) {
+  final CoreStorageProvider _coreStorageProvider;
+  OrdersListBloc(this._coreStorageProvider) : super(OrdersListInitial()) {
     on<OrdersListEvent>((event, emit) async {
       if (event is GetProfileData) {
-        const secure = FlutterSecureStorage(
-          aOptions: AndroidOptions(encryptedSharedPreferences: true),
-        );
-        final token = await secure.read(key: "token");
+        final token = await _coreStorageProvider.getToken();
         List<OrderData> stream = await getOrders(token.toString());
         emit(ProfileDataState(stream));
       }

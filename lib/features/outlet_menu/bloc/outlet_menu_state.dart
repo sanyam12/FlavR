@@ -110,6 +110,12 @@ class FilterResultState extends OutletMenuState{
 
 }
 
+class PostShowSnackBar extends OutletMenuState{
+  @override
+  List<Object?> get props => [];
+
+}
+
 // class CartDataState extends OutletMenuState{
 //   final Cart cart;
 //   const CartDataState(this.cart);
