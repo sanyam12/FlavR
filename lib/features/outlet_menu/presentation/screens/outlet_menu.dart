@@ -78,26 +78,28 @@ class _OutletMenuState extends State<OutletMenu> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: BlocConsumer<OutletMenuBloc, OutletMenuState>(
-          listener: (context, state) async {
-            if (state is ShowSnackBar) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.message),
-                ),
-              );
-            }
-            if (state is UpdatedCartState) {
-              cart = state.cart;
-              context.read<CartChangeProvider>().updateCart(state.cart);
-            }
-            if (state is RefreshedOutletData) {
-              outletName = state.outletName;
-              cart = state.cart;
-              menuList = state.menuList;
-              filteredMenuList = state.menuList;
-              incompleteOrders = state.incompleteOrders;
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0.005*height),
+        child: SafeArea(
+          child: BlocConsumer<OutletMenuBloc, OutletMenuState>(
+            listener: (context, state) async {
+              if (state is ShowSnackBar) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                  ),
+                );
+              }
+              if (state is UpdatedCartState) {
+                cart = state.cart;
+                context.read<CartChangeProvider>().updateCart(state.cart);
+              }
+              if (state is RefreshedOutletData) {
+                outletName = state.outletName;
+                cart = state.cart;
+                menuList = state.menuList;
+                filteredMenuList = state.menuList;
+                incompleteOrders = state.incompleteOrders;
 
               context.read<CartChangeProvider>().updateCart(state.cart);
             }
