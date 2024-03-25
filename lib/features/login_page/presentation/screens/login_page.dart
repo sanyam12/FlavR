@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.of(context).popAndPushNamed("/signUp");
                   },
                   child: Padding(
-                    padding: EdgeInsets.only(top: 0.0275 * height),
+                    padding: EdgeInsets.only(top: 0.0125 * height),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -140,11 +140,14 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                Text(
-                  "Forgot Password?",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: GoogleFonts.poppins().fontFamily,
+                Padding(
+                  padding: EdgeInsets.only(bottom: 0.02*height),
+                  child: Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: GoogleFonts.poppins().fontFamily,
+                    ),
                   ),
                 ),
               ],

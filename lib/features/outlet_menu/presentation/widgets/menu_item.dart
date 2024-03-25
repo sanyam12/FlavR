@@ -63,6 +63,7 @@ class _MenuItemState extends State<MenuItem> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,7 +95,7 @@ class _MenuItemState extends State<MenuItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Card(
-                              color: const Color(0xFFF2F1F1),
+                              color: Colors.white,
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 10.0,

@@ -10,14 +10,14 @@ class ImageComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(200),
-          bottomRight: Radius.circular(100)
+          bottomLeft: Radius.circular(230),
+          bottomRight: Radius.circular(130)
       ),
       child: SizedBox(
         width: width,
         child: Image.asset(
           "assets/images/login_page_image.webp",
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fill,
         ),
       ),
     );

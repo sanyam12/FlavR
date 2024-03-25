@@ -37,6 +37,7 @@ class _OutletsListState extends State<OutletsList> {
   @override
   void initState() {
     super.initState();
+
     context.read<OutletListBloc>().add(GetSavedOutletList());
     context.read<OutletListBloc>().add(GetAllOutletsList());
     context.read<OutletListBloc>().add(UsernameRequested());

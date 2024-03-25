@@ -189,6 +189,7 @@ class _OutletMenuState extends State<OutletMenu> {
                         ),
                       ],
                     ),
+                    if(_calculateTotalItems()!=0)
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
@@ -209,7 +210,10 @@ class _OutletMenuState extends State<OutletMenu> {
                                     .add(UpdateCart());
                               }
                             },
-                            child: Card(
+
+
+
+                            child :Card(
                               color: Colors.black,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -284,6 +288,7 @@ class _OutletMenuState extends State<OutletMenu> {
                                 ],
                               ),
                             ),
+
                           ),
                         ),
                       ),
