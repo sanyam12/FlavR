@@ -4,7 +4,8 @@ import 'package:flavr/core/components/shimmer.dart';
 import 'package:flavr/core/components/shimmer_loading.dart';
 import 'package:flavr/core/constants.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/button_row.dart';
-import 'package:flavr/features/outlets_list_page/presentation/widgets/image_slider.dart';
+// import 'package:flavr/features/outlets_list_page/presentation/widgets/image_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/shimmer_outlet_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,9 +23,9 @@ class OutletsList extends StatefulWidget {
 
 class _OutletsListState extends State<OutletsList> {
   final controller = TextEditingController();
-  final List<String> list = [
-    "assets/images/Scene-43.jpg",
-    "assets/images/Scene-27.jpg",
+  static const List<String> list = [
+    "assets/images/Scene-43.webp",
+    "assets/images/Scene-27.webp",
   ];
   List<Outlet> savedOutletList = [];
   List<Outlet> allOutletList = [];
@@ -50,6 +51,7 @@ class _OutletsListState extends State<OutletsList> {
 
   @override
   Widget build(BuildContext context) {
+    final border = BorderRadius.circular(15);
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
@@ -94,7 +96,7 @@ class _OutletsListState extends State<OutletsList> {
           linearGradient: shimmerGradient,
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 19.0),
+              padding: EdgeInsets.symmetric(horizontal: 19.0 , vertical: 0.005*height),
               child: SingleChildScrollView(
                 physics: const ClampingScrollPhysics(),
                 child: Column(
@@ -111,41 +113,73 @@ class _OutletsListState extends State<OutletsList> {
                             fontFamily: GoogleFonts.poppins().fontFamily),
                       ),
                     ),
-                    ImageSlider(
-                      width: width,
-                      height: height,
-                      list: list,
+                  ClipRRect(
+                      borderRadius: border,
+                    child: CarouselSlider(
+                        options: CarouselOptions(
+                          height: 0.24 * height,
+                          viewportFraction: 1,
+                          enlargeCenterPage: true,
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 2),
+                          enableInfiniteScroll: false,
+                          reverse: true,
+                        ),
+                        items: list.map((i) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Card(
+                                margin: EdgeInsets.zero,
+                                clipBehavior: Clip.antiAlias,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: border,
+                                ),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  child: Image.asset(
+                                    i,
+                                    fit: BoxFit.fitWidth,
+                                    width: 0.9027777778 * width,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }).toList(),
                     ),
-                    // _getButtonRow(width, height, ),
-                    ButtonRow(
+                  ),
+
+                      // _getButtonRow(width, height, ),
+                      ButtonRow(
+                          width: width,
+                          height: height,
+                          selectedTab: selectedTab,
+                          onFirstPressed: () {
+                            setState(() {
+                              selectedTab = false;
+                            });
+                          },
+                          onSecondPressed: () {
+                            setState(() {
+                              selectedTab = true;
+                            });
+                          }),
+                      CustomSearchBar(
                         width: width,
                         height: height,
-                        selectedTab: selectedTab,
-                        onFirstPressed: () {
-                          setState(() {
-                            selectedTab = false;
-                          });
+                        controller: controller,
+                        onChanged: (value) {
+                          context.read<OutletListBloc>().add(
+                                OnSearchEvent(
+                                  query: value,
+                                  savedOutlets: savedOutletList,
+                                  allOutlets: allOutletList,
+                                ),
+                              );
                         },
-                        onSecondPressed: () {
-                          setState(() {
-                            selectedTab = true;
-                          });
-                        }),
-                    CustomSearchBar(
-                      width: width,
-                      height: height,
-                      controller: controller,
-                      onChanged: (value) {
-                        context.read<OutletListBloc>().add(
-                              OnSearchEvent(
-                                query: value,
-                                savedOutlets: savedOutletList,
-                                allOutlets: allOutletList,
-                              ),
-                            );
-                      },
-                    ),
-                    if (selectedTab)
+                      ),
+
+                  if (selectedTab)
                       _savedOutletList(width, height)
                     else
                       _allList(width, height),
