@@ -5,6 +5,8 @@ import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flavr/pages/profile_page/order_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class OrdersList extends StatefulWidget {
   const OrdersList({super.key});
@@ -121,6 +123,7 @@ class _OrdersListState extends State<OrdersList> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
+
                           for (var i in list)
                             OrderCard(
                               width: width,

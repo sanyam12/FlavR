@@ -1,13 +1,13 @@
 import 'dart:developer';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/search_bar.dart';
 import 'package:flavr/core/components/shimmer.dart';
 import 'package:flavr/core/components/shimmer_loading.dart';
 import 'package:flavr/core/constants.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/button_row.dart';
-// import 'package:flavr/features/outlets_list_page/presentation/widgets/image_slider.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flavr/features/outlets_list_page/presentation/widgets/image_slider.dart';
 import 'package:flavr/features/outlets_list_page/presentation/widgets/shimmer_outlet_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,11 +40,9 @@ class _OutletsListState extends State<OutletsList> {
   @override
   void initState() {
     super.initState();
-    //check1
     context.read<OutletListBloc>().add(GetSavedOutletList());
     context.read<OutletListBloc>().add(GetAllOutletsList());
     context.read<OutletListBloc>().add(UsernameRequested());
-    //check2
   }
 
   @override
