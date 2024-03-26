@@ -190,7 +190,9 @@ class _OutletMenuState extends State<OutletMenu> {
                         ),
                       ],
                     ),
-                    Align(
+                    Visibility(
+                      visible: _calculateTotalItems()!=0,
+                      child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 0.01625 * width),
@@ -218,7 +220,7 @@ class _OutletMenuState extends State<OutletMenu> {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -259,7 +261,7 @@ class _OutletMenuState extends State<OutletMenu> {
                                               vertical: 7.0),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               const Icon(
                                                 Icons.currency_rupee,
@@ -271,8 +273,8 @@ class _OutletMenuState extends State<OutletMenu> {
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.bold,
                                                   fontFamily:
-                                                      GoogleFonts.poppins()
-                                                          .fontFamily,
+                                                  GoogleFonts.poppins()
+                                                      .fontFamily,
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
@@ -289,6 +291,7 @@ class _OutletMenuState extends State<OutletMenu> {
                         ),
                       ),
                     ),
+                    )
                   ],
                 ),
               ),
@@ -296,7 +299,7 @@ class _OutletMenuState extends State<OutletMenu> {
           },
         ),
       ),
-    );
+    ));
   }
 
   _getCategoryMenu(state, width, height) {
