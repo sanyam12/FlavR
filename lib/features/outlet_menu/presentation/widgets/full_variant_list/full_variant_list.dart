@@ -1,21 +1,44 @@
 import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flavr/features/cart/data/models/CartVariantData.dart';
-import 'package:flavr/features/outlet_menu/bloc/outlet_menu_bloc.dart';
-import 'package:flavr/features/outlet_menu/bloc/variant_bloc.dart';
+import 'package:flavr/features/outlet_menu/bloc/menu_screen/outlet_menu_bloc.dart';
+import 'package:flavr/features/outlet_menu/bloc/full_variant_list/variant_bloc.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
-import 'package:flavr/features/outlet_menu/presentation/widgets/variant_card.dart';
+import 'package:flavr/features/outlet_menu/presentation/widgets/menu_screen/variant_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../data/models/Product.dart';
+import '../../../data/models/Product.dart';
 
-class AddItemsOverlay extends StatefulWidget {
+void showFullVariantsList({
+  required BuildContext context,
+  required double width,
+  required double height,
+  required Product product,
+}) {
+  showModalBottomSheet(
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    context: context,
+    builder: (context) {
+      return SizedBox(
+        height: 0.84875 * height,
+        child: FullVariantsList(
+          width: width,
+          height: height,
+          product: product,
+        ),
+      );
+    },
+  );
+}
+
+class FullVariantsList extends StatefulWidget {
   final double width;
   final double height;
   final Product product;
 
-  const AddItemsOverlay({
+  const FullVariantsList({
     super.key,
     required this.width,
     required this.height,
@@ -23,10 +46,10 @@ class AddItemsOverlay extends StatefulWidget {
   });
 
   @override
-  State<AddItemsOverlay> createState() => _AddItemsOverlayState();
+  State<FullVariantsList> createState() => _FullVariantsListState();
 }
 
-class _AddItemsOverlayState extends State<AddItemsOverlay> {
+class _FullVariantsListState extends State<FullVariantsList> {
   late ProductVariantData selectedVariant = ProductVariantData(
     "default",
     widget.product.price,
@@ -124,10 +147,6 @@ class _AddItemsOverlayState extends State<AddItemsOverlay> {
       selectedVariant = widget.product.variantList[0];
       context.read<VariantBloc>().add(SelectedVariantUpdated(selectedVariant));
     }
-    currentCount = _calculateTotalProductItems(
-      widget.product,
-      cart,
-    );
     return BlocConsumer<VariantBloc, VariantState>(
       listener: (context, state) {
         if (state is VariantUpdate) {
@@ -298,7 +317,7 @@ class _AddItemsOverlayState extends State<AddItemsOverlay> {
                                   ),
                                   onPressed: () {
                                     context.read<OutletMenuBloc>().add(
-                                          UpdateAmount(
+                                          AddToExistingCart(
                                             widget.product,
                                             cart,
                                             selectedVariant,

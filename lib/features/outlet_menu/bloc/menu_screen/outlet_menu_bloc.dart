@@ -1,14 +1,14 @@
 import 'dart:developer';
-
 import 'package:flavr/core/repository/core_cart_repository.dart';
+import 'package:flavr/features/cart/data/models/CartVariantData.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../cart/data/models/Cart.dart';
-import '../data/models/Categories.dart';
-import '../data/models/Product.dart';
-import '../data/repository/outlet_menu_repository.dart';
+import '../../../cart/data/models/Cart.dart';
+import '../../data/models/Categories.dart';
+import '../../data/models/Product.dart';
+import '../../data/repository/outlet_menu_repository.dart';
 
 part 'outlet_menu_event.dart';
 
@@ -31,6 +31,56 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     on<OnVegClicked>(_onVegClicked);
     on<OnNonVegClicked>(_onNonVegClicked);
     on<UpdateAmount>(_onUpdateAmount);
+    on<AddClicked>(_onAddClicked);
+    on<RemoveClicked>(_onRemoveClicked);
+    on<AddToExistingCart>(_addToExistingCart);
+  }
+
+  _onRemoveClicked(
+      RemoveClicked event,
+      Emitter<OutletMenuState> emit,
+  ) async {
+    if (event.product.variantList.isEmpty) {
+      final newCart = await _coreCartRepository.decrementAmount(
+        event.cart,
+        event.product,
+        ProductVariantData(
+          "default",
+          event.product.price,
+        ),
+      );
+      emit(UpdatedCartState(newCart));
+    } else {
+        emit(ShowCustomizationList(event.product, event.cart, false));
+        emit(NeutralOutletMenu());
+    }
+  }
+
+  _onAddClicked(
+    AddClicked event,
+    Emitter<OutletMenuState> emit,
+  ) async {
+    if (event.product.variantList.isEmpty) {
+      final newCart = await _coreCartRepository.incrementAmount(
+        event.cart,
+        event.product,
+        ProductVariantData(
+          "default",
+          event.product.price,
+        ),
+      );
+      emit(UpdatedCartState(newCart));
+    } else {
+      final ordersList = event.cart.items[event.product];
+      if (ordersList == null || ordersList.isEmpty) {
+        emit(ShowAllVariantsList(event.product));
+        emit(NeutralOutletMenu());
+      } else {
+        log("show customisation modal");
+        emit(ShowCustomizationList(event.product, event.cart, true));
+        emit(NeutralOutletMenu());
+      }
+    }
   }
 
   _onNonVegClicked(
@@ -91,7 +141,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       );
     } catch (e) {
       emit(ShowSnackBar(e.toString()));
-      emit(PostShowSnackBar());
+      emit(NeutralOutletMenu());
     }
   }
 
@@ -100,6 +150,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     Emitter<OutletMenuState> emit,
   ) {
     emit(FetchCart());
+    emit(NeutralOutletMenu());
   }
 
   _incrementAmount(
@@ -115,15 +166,15 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       emit(UpdatedCartState(newCart));
     } catch (e) {
       emit(ShowSnackBar(e.toString()));
-      emit(PostShowSnackBar());
+      emit(NeutralOutletMenu());
     }
   }
 
   _onUpdateAmount(
-      UpdateAmount event,
-      Emitter<OutletMenuState> emit,
-  )async {
-    try{
+    UpdateAmount event,
+    Emitter<OutletMenuState> emit,
+  ) async {
+    try {
       final newCart = await _coreCartRepository.updateQuantity(
         event.cart,
         event.product,
@@ -131,11 +182,35 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
         event.newAmount,
       );
       emit(UpdatedCartState(newCart));
-    } catch(e){
-      log("here is the error");
+    } catch (e) {
       emit(ShowSnackBar(e.toString()));
-      emit(PostShowSnackBar());
+      emit(NeutralOutletMenu());
+    }
+  }
 
+  _addToExistingCart(
+    AddToExistingCart event,
+    Emitter<OutletMenuState> emit,
+  ) async {
+    try {
+      int count = 0;
+      if (event.cart.items[event.product] != null) {
+        final variant = event.cart.items[event.product]?.firstWhere(
+            (element) => element.variantName == event.variantData.variantName,
+            orElse: () => CartVariantData("default", 0, 0));
+        if (variant != null) {
+          count = variant.quantity;
+        }
+      }
+      final newCart = await _coreCartRepository.updateQuantity(
+        event.cart,
+        event.product,
+        event.variantData,
+        event.newAmount + count,
+      );
+      emit(UpdatedCartState(newCart));
+    } on Exception catch (e) {
+      emit(ShowSnackBar(e.toString()));
     }
   }
 
@@ -152,7 +227,7 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
       emit(UpdatedCartState(newCart));
     } catch (e) {
       emit(ShowSnackBar(e.toString()));
-      emit(PostShowSnackBar());
+      emit(NeutralOutletMenu());
     }
   }
 

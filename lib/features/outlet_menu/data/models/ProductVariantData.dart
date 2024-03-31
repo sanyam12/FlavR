@@ -1,3 +1,5 @@
+import 'package:flavr/features/cart/data/models/CartVariantData.dart';
+
 class ProductVariantData{
   final String variantName;
   final int price;
@@ -8,4 +10,7 @@ class ProductVariantData{
     : variantName = json["variantName"],
       price = json["price"];
 
+  ProductVariantData.fromCartVariantData(CartVariantData variantData)
+    : variantName = variantData.variantName,
+      price = variantData.price;
 }

@@ -1,10 +1,12 @@
 import 'dart:ui';
 
 import 'package:flavr/features/cart/data/models/Cart.dart';
-import 'package:flavr/features/outlet_menu/presentation/widgets/overlay.dart';
+import 'package:flavr/features/outlet_menu/bloc/menu_screen/outlet_menu_bloc.dart';
+import 'package:flavr/features/outlet_menu/presentation/widgets/full_variant_list/full_variant_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../data/models/Product.dart';
+import '../../../data/models/Product.dart';
 
 class MenuItem extends StatefulWidget {
   const MenuItem({
@@ -25,6 +27,18 @@ class MenuItem extends StatefulWidget {
 }
 
 class _MenuItemState extends State<MenuItem> {
+  String _calculateTotalItem() {
+    int ans = 0;
+    final list = widget.cart.items[widget.product];
+    if (list != null) {
+      for (var i in list) {
+        ans += i.quantity;
+      }
+      return ans.toString();
+    } else {
+      return "0";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,39 +118,7 @@ class _MenuItemState extends State<MenuItem> {
                                 child: Text("₹ ${widget.product.price}"),
                               ),
                             ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(7),
-                                  )),
-                              onPressed: () {
-                                showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  context: context,
-                                  builder: (context) {
-                                    return SizedBox(
-                                      height: 0.84875 * widget.height,
-                                      child: AddItemsOverlay(
-                                        width: widget.width,
-                                        height: widget.height,
-                                        product: widget.product,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                              child: RichText(
-                                text: TextSpan(
-                                  text: "Add",
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            _getButtons()
                           ],
                         )
                       ],
@@ -149,6 +131,57 @@ class _MenuItemState extends State<MenuItem> {
         ),
       ),
     );
+  }
+
+  Widget _getButtons() {
+    final list = widget.cart.items[widget.product];
+    if (list != null && list.isNotEmpty) {
+      return Row(
+        children: [
+          ElevatedButton(
+              onPressed: () {
+                context.read<OutletMenuBloc>().add(RemoveClicked(
+                      widget.product,
+                      widget.cart,
+                    ));
+              },
+              child: const Icon(Icons.remove)),
+          Text(_calculateTotalItem()),
+          ElevatedButton(
+            onPressed: () {
+              context.read<OutletMenuBloc>().add(AddClicked(
+                    widget.product,
+                    widget.cart,
+                  ));
+            },
+            child: const Icon(Icons.add),
+          ),
+        ],
+      );
+    } else {
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(7),
+            )),
+        onPressed: () {
+          context.read<OutletMenuBloc>().add(AddClicked(
+                widget.product,
+                widget.cart,
+              ));
+        },
+        child: RichText(
+          text: TextSpan(
+            text: "Add",
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   _getImage({required double width, required double height}) {
