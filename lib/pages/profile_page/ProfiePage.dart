@@ -51,63 +51,69 @@ class _ProfilePageState extends State<ProfilePage> {
             },
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(15, 0, 40, 0),
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                      ),
-                    ),
-                    // Add some space between the icon and text
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(50, 0, 0, 0),
-                        child: Text(
-                          "Profile",
-                          style: TextStyle(
+                Padding(
+                  padding: EdgeInsets.only(top: 0.02*height),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding:EdgeInsets.fromLTRB(0.041667*width, 0, 0.111*width, 0),
+                        child: IconButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back,
                             color: Colors.black,
-                            fontFamily: "inter",
-                            fontSize: 32,
+                            size: 30,
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      // Add some space between the icon and text
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.fromLTRB(0.1389*width, 0, 0, 0),
+                          child: const Text(
+                            "Profile",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: "inter",
+                              fontSize: 32,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.fromLTRB(0, 24, 0, 0),
+                      padding: EdgeInsets.fromLTRB(0, 0.03*height, 0, 0),
                       child: SizedBox(
-                        height: 170,
-                        width: 324,
+                        height: 0.2025*height,
+                        width: 0.9*width,
                         child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
                           color: Color(0xFFF8F8F8),
                           child: Column(
                             children: [
                               Padding(
-                                padding: EdgeInsets.fromLTRB(0, 20, 0, 4),
-                                child: Icon(
+                                padding: EdgeInsets.fromLTRB(0, 0.025*height, 0, 4),
+                                child: const Icon(
                                   Icons.person_outline_rounded,
                                   size: 75,
                                 ),
                               ),
-                              Text(
+                              const Text(
                                 "Sanyam Ratreja",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Padding(
-                                padding: EdgeInsets.fromLTRB(0, 4, 0, 20),
-                                child: Text("sanyamratreja18@gmail.com"),
+                                padding: EdgeInsets.fromLTRB(0, 0, 0, 0.01*height),
+                                child: const Text("sanyamratreja18@gmail.com"),
                               )
                             ],
                           ),
@@ -119,8 +125,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Icon(Icons.shopping_cart),
+                      Row(
+                        children: [
+                          const Icon(Icons.shopping_cart),
+
                       Padding(
                         padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
                         child: const Text(
@@ -130,8 +140,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
+                        ],
+                      ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0.5 * width, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
                         child: const Icon(
                           Icons.arrow_forward_ios,
                           size: 20,
@@ -143,8 +155,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Icon(Icons.person_outline_rounded),
+                      Row(
+                        children: [
+                          const Icon(Icons.person_outline_rounded),
+
                       Padding(
                         padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
                         child: const Text(
@@ -154,8 +170,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
+                        ],
+                      ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0.25 * width, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
                         child: const Icon(
                           Icons.arrow_forward_ios,
                           size: 20,
@@ -167,8 +185,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Icon(Icons.phone),
+                      Row(
+                        children: [
+                          const Icon(Icons.phone),
+
                       Padding(
                         padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
                         child: const Text(
@@ -178,8 +200,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
+                        ],
+                      ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0.43 * width, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
                         child: const Icon(
                           Icons.arrow_forward_ios,
                           size: 20,
@@ -191,8 +215,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Icon(Icons.home_filled),
+                      Row(
+                        children: [
+                          const Icon(Icons.home_filled),
+
                       Padding(
                         padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
                         child: const Text(
@@ -202,8 +230,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
+                        ],
+                      ),
                       Padding(
-                        padding: EdgeInsets.fromLTRB(0.47 * width, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
                         child: const Icon(
                           Icons.arrow_forward_ios,
                           size: 20,

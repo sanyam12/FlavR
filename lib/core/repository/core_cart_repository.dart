@@ -116,24 +116,25 @@ class CoreCartRepository {
     ProductVariantData variantData,
   ) async {
     if (cart.items[product] != null) {
-      final newCart = Cart.fromParams(
-        cart.outletId,
-        cart.items,
-      );
-      final cartVariant = newCart.items[product]?.firstWhere(
+      final cartVariant = cart.items[product]!.firstWhere(
         (element) => element.variantName == variantData.variantName,
+        orElse: () =>
+            CartVariantData(variantData.variantName, 0, variantData.price),
       );
-      if (cartVariant?.quantity == null || cartVariant!.quantity <= 0) {
-        throw Exception("This Item is not added");
-      }
       cartVariant.quantity--;
+      if (cartVariant.quantity <= 0) {
+        cart.items[product]?.remove(cartVariant);
+      }
       cart = await updateQuantityOnServer(
         product.id,
         variantData.variantName,
         cartVariant.quantity,
         cart,
       );
-      // newCart.items[product.id]?.totalItems--;
+      final newCart = Cart.fromParams(
+        cart.outletId,
+        cart.items,
+      );
       return newCart;
     } else {
       throw Exception("This Item is not added");
@@ -146,20 +147,26 @@ class CoreCartRepository {
     ProductVariantData variantData,
     int newAmount,
   ) async {
-    Cart newCart = Cart.fromParams(cart.outletId, cart.items);
-    CartVariantData? cartVariant = CartVariantData(
-      variantData.variantName,
-      newAmount,
-      variantData.price,
-    );
-    if (cart.items[product] != null) {
-      cartVariant = newCart.items[product]?.firstWhere(
-        (element) => element.variantName == variantData.variantName,
+    if (newAmount <= 0 && cart.items[product] != null) {
+      cart.items[product]!.removeWhere(
+          (element) => element.variantName == variantData.variantName);
+    } else {
+      CartVariantData cartVariant = CartVariantData(
+        variantData.variantName,
+        newAmount,
+        variantData.price,
       );
-      if (cartVariant == null) {
-        throw Exception("Variant not found");
+      if (cart.items[product] != null && cart.items[product]!.isNotEmpty) {
+        cartVariant = cart.items[product]!.firstWhere(
+            (element) => element.variantName == variantData.variantName,
+            orElse: () {
+          cart.items[product]!.add(cartVariant);
+          return cartVariant;
+        });
+        cartVariant.quantity = newAmount;
+      } else {
+        cart.items[product] = [cartVariant];
       }
-      cartVariant.quantity = newAmount;
     }
     cart = await updateQuantityOnServer(
       product.id,
@@ -167,6 +174,7 @@ class CoreCartRepository {
       newAmount,
       cart,
     );
+    Cart newCart = Cart.fromParams(cart.outletId, cart.items);
     return newCart;
   }
 }
