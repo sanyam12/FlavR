@@ -19,9 +19,15 @@ class OrdersListBloc extends Bloc<OrdersListEvent, OrdersListState> {
   OrdersListBloc(this._coreStorageProvider) : super(OrdersListInitial()) {
     on<OrdersListEvent>((event, emit) async {
       if (event is GetProfileData) {
-        final token = await _coreStorageProvider.getToken();
-        List<OrderData> stream = await getOrders(token.toString());
-        emit(ProfileDataState(stream));
+        try{
+          final token = await _coreStorageProvider.getToken();
+          List<OrderData> stream = await getOrders(token.toString());
+          throw Exception("message");
+          emit(ProfileDataState(stream));
+        }catch(e){
+          emit(ShowSnackbar(e.toString()));
+        }
+
       }
     });
   }
