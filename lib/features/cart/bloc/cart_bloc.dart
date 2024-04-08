@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flavr/core/constants.dart';
 import 'package:flavr/features/cart/data/repository/cart_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,6 +48,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       .setOrderId(orderId)
       .setPaymentSessionId(sessionId)
       .build();
+
 
       var cfDropCheckoutPayment = CFDropCheckoutPaymentBuilder()
           .setSession(cfSession)
