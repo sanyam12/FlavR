@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../about_us/AboutUs.dart';
+import '../contact_us/ContactUs.dart';
 import 'OrderData.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -123,13 +125,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0.1 * width, 0.01*height, 0, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.shopping_cart),
+                          const Icon(Icons.shopping_cart_outlined),
 
                       Padding(
                         padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
@@ -142,18 +144,23 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
-                        child: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 20,
+                      IconButton(
+                        icon : Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
+                          child: const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                          ),
                         ),
-                      )
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs()),);
+                        },
+                      ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0.1 * width, 0.01*height, 0, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -172,24 +179,29 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
-                        child: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 20,
+                      IconButton(
+                        icon : Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
+                          child: const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                          ),
                         ),
-                      )
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs()),);
+                        },
+                      ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0.1 * width, 0.01*height, 0, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.phone),
+                          const Icon(Icons.local_phone_outlined),
 
                       Padding(
                         padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
@@ -202,24 +214,30 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
-                        child: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 20,
-                        ),
-                      )
+
+                      IconButton(
+                          icon : Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
+                            child: const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                                                      ),
+                          ),
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => ContactUs()),);
+                        },
+                      ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0.1 * width, 36, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0.1 * width, 0.01*height, 0, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.home_filled),
+                          const Icon(Icons.home_outlined),
 
                       Padding(
                         padding: EdgeInsets.fromLTRB(0.03 * width, 0, 0, 0),
@@ -232,13 +250,19 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                         ],
                       ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
-                        child: const Icon(
-                          Icons.arrow_forward_ios,
-                          size: 20,
+                      IconButton(
+                        icon : Padding(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0.12 * width, 0),
+                          child: const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 20,
+                          ),
                         ),
-                      )
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUs()),);
+                        },
+                      ),
+
                     ],
                   ),
                 ),
