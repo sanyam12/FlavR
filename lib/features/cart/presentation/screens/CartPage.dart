@@ -459,7 +459,7 @@ class _CartPageState extends State<CartPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       log(instructionController.text);
-                      print(cart);
+                      log(cart.toString());
                       context.read<CartBloc>().add(
 
                             ProceedToPay(
