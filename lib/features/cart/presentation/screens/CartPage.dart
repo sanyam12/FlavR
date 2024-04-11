@@ -18,7 +18,7 @@ class CartPage extends StatefulWidget {
   // final Cart initialCart;
   final List<Categories> list;
 
-  const CartPage({Key? key, required this.list}) : super(key: key);
+  const CartPage({super.key, required this.list});
 
   @override
   State<CartPage> createState() => _CartPageState();

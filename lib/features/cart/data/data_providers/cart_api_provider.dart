@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flavr/core/constants.dart';
 import 'package:http/http.dart';
 
@@ -24,7 +25,11 @@ class CartApiProvider {
             "message": instruction
           }
         }));
-    return response.body;
+    log(response.statusCode.toString());
+    if(response.statusCode==201){
+      return response.body;
+    }
+    throw Exception(response.body);
   }
 
   Future<String> verifyPayment(String orderId)async{
