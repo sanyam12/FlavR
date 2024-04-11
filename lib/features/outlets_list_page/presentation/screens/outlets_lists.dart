@@ -238,6 +238,7 @@ class _OutletsListState extends State<OutletsList> {
             height: height,
             outlet: i,
             selectOutlet: () {
+              log("on card click");
               context.read<OutletListBloc>().add(OnOutletSelection(i.id));
             },
             addToFav: (id) {
