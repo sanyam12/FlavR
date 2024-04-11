@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/features/cart/data/models/Cart.dart';
@@ -456,7 +458,10 @@ class _CartPageState extends State<CartPage> {
                   width: 0.90833 * width,
                   child: ElevatedButton(
                     onPressed: () {
+                      log(instructionController.text);
+                      print(cart);
                       context.read<CartBloc>().add(
+
                             ProceedToPay(
                               cart,
                               instructionController.text,
