@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../bloc/outlet_menu_bloc.dart';
+import '../../../bloc/menu_screen/outlet_menu_bloc.dart';
 
 class TopRow extends StatelessWidget {
   final double width;

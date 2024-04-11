@@ -92,23 +92,13 @@ class OnNonVegClicked extends OutletMenuEvent {
   List<Object?> get props => [menuList, vegSelection, query];
 }
 
-// class UpdateCartEvent extends OutletMenuEvent{
-//   final Product product;
-//   final Cart cart;
-//   final List<Product> list;
-//   const UpdateCartEvent(this.product, this.cart, this.list);
-//
-//   @override
-//   List<Object?> get props => [product, cart, list];
-// }
-
 class UpdateAmount extends OutletMenuEvent {
   final Product product;
   final Cart cart;
   final ProductVariantData variantData;
   final int newAmount;
 
-  UpdateAmount(
+  const UpdateAmount(
     this.product,
     this.cart,
     this.variantData,
@@ -116,5 +106,44 @@ class UpdateAmount extends OutletMenuEvent {
   );
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [product, cart, variantData, newAmount];
+}
+
+class AddClicked extends OutletMenuEvent {
+  final Product product;
+  final Cart cart;
+
+  const AddClicked(this.product, this.cart);
+
+  @override
+  List<Object?> get props => [product, cart];
+
+}
+
+class RemoveClicked extends OutletMenuEvent {
+  final Product product;
+  final Cart cart;
+
+  const RemoveClicked(this.product, this.cart);
+
+  @override
+  List<Object?> get props => [product, cart];
+
+}
+
+class AddToExistingCart extends OutletMenuEvent {
+  final Product product;
+  final Cart cart;
+  final ProductVariantData variantData;
+  final int newAmount;
+
+  const AddToExistingCart(
+      this.product,
+      this.cart,
+      this.variantData,
+      this.newAmount,
+      );
+
+  @override
+  List<Object?> get props => [product, variantData, cart, newAmount];
 }

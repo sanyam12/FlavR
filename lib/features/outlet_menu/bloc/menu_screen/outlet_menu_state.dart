@@ -4,6 +4,18 @@ abstract class OutletMenuState extends Equatable {
   const OutletMenuState();
 }
 
+//loading
+class OutletMenuInitial extends OutletMenuState {
+  @override
+  List<Object> get props => [];
+}
+
+//loading
+class OutletMenuLoading extends OutletMenuState {
+  @override
+  List<Object?> get props => [];
+}
+
 //listener
 class ShowSnackBar extends OutletMenuState {
   final String message;
@@ -16,18 +28,6 @@ class ShowSnackBar extends OutletMenuState {
 
 //listener
 class NavigateToOutletList extends OutletMenuState {
-  @override
-  List<Object?> get props => [];
-}
-
-//loading
-class OutletMenuInitial extends OutletMenuState {
-  @override
-  List<Object> get props => [];
-}
-
-//loading
-class OutletMenuLoading extends OutletMenuState {
   @override
   List<Object?> get props => [];
 }
@@ -103,49 +103,33 @@ class FilterResultState extends OutletMenuState{
   final List<Categories> menuList;
   final String vegSelection;
 
-  FilterResultState({required this.menuList, required this.vegSelection});
+  const FilterResultState({required this.menuList, required this.vegSelection});
 
   @override
   List<Object?> get props => [menuList, vegSelection];
 
 }
 
-class PostShowSnackBar extends OutletMenuState{
+class NeutralOutletMenu extends OutletMenuState{
   @override
   List<Object?> get props => [];
-
 }
 
-// class CartDataState extends OutletMenuState{
-//   final Cart cart;
-//   const CartDataState(this.cart);
-//
-//   @override
-//   List<Object?> get props => [cart];
-// }
+class ShowAllVariantsList extends OutletMenuState{
+  final Product product;
 
-// class AmountUpdatedState extends OutletMenuState{
-//   final int amount;
-//   final int seed;
-//   const AmountUpdatedState(this.amount, this.seed);
-//
-//   @override
-//   List<Object?> get props => [amount, seed];
-//
-// }
+  const ShowAllVariantsList(this.product);
+  @override
+  List<Object?> get props => [product];
+}
 
-// class CartState extends OutletMenuState{
-//   final Cart cart;
-//   const CartState(this.cart);
-//
-//   @override
-//   List<Object?> get props => [cart];
-// }
-//
-// class IncompleteOrdersState extends OutletMenuState{
-//   final List<OrderDataClass.OrderData> list;
-//   const IncompleteOrdersState(this.list);
-//
-//   @override
-//   List<Object?> get props => [list];
-// }
+class ShowCustomizationList extends OutletMenuState{
+  final bool allowNewVariant;
+  final Product product;
+  final Cart cart;
+
+  const ShowCustomizationList(this.product, this.cart, this.allowNewVariant);
+
+  @override
+  List<Object?> get props => [];
+}

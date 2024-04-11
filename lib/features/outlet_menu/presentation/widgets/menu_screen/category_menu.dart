@@ -1,8 +1,8 @@
 import 'package:flavr/core/components/rule_text_component.dart';
 import 'package:flavr/features/cart/data/models/Cart.dart';
-import 'package:flavr/features/outlet_menu/presentation/widgets/menu_item.dart';
+import 'package:flavr/features/outlet_menu/presentation/widgets/menu_screen/menu_item.dart';
 import 'package:flutter/material.dart';
-import '../../data/models/Categories.dart';
+import '../../../data/models/Categories.dart';
 
 class CategoryMenu extends StatefulWidget {
   const CategoryMenu({

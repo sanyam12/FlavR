@@ -1,16 +1,16 @@
-import 'package:flavr/features/outlet_menu/bloc/variant_bloc.dart';
+import 'package:flavr/features/outlet_menu/bloc/full_variant_list/variant_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/ProductVariantData.dart';
+import '../../../data/models/ProductVariantData.dart';
 
 class VariantCard extends StatelessWidget {
   final double width;
   final double height;
   final ProductVariantData variantData;
-  ProductVariantData selectedVariant;
+  final ProductVariantData selectedVariant;
 
-  VariantCard({
+  const VariantCard({
     super.key,
     required this.width,
     required this.height,
@@ -22,9 +22,6 @@ class VariantCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<VariantBloc, VariantState>(
       builder: (context, state) {
-        if(state is VariantUpdate){
-          selectedVariant = state.selectedVariant;
-        }
         return GestureDetector(
           onTap: () {
             context.read<VariantBloc>().add(
