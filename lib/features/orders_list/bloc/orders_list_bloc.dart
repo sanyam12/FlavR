@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flavr/core/constants.dart';
 import 'package:flavr/core/data_provider/core_storage_provider.dart';
@@ -21,7 +20,7 @@ class OrdersListBloc extends Bloc<OrdersListEvent, OrdersListState> {
         try{
           final token = await _coreStorageProvider.getToken();
           List<OrderData> stream = await getOrders(token.toString());
-          throw Exception("message");
+          // throw Exception("message");
           emit(ProfileDataState(stream));
         }catch(e){
           emit(ShowSnackbar(e.toString()));
@@ -37,12 +36,35 @@ class OrdersListBloc extends Bloc<OrdersListEvent, OrdersListState> {
         headers: {"Authorization": "Bearer $token"});
     log(response.body);
     if (response.statusCode == 200) {
-      final list = jsonDecode(response.body)["result"];
-      for (var i in list) {
+      log("yoi");
+      Map<String, dynamic> data = jsonDecode(response.body);
+      var result = data['result'];
+      // log(result);
+      // final list = jsonDecode(response.body)["result"];
+      // log(list);
+      for (var i in result) {
         final temp = OrderData.fromJson(i);
         orderList.add(temp);
       }
+      // final decodedJson = jsonDecode(response.body);
+      // log(decodedJson);
+      // log("yo");
+      // if (decodedJson.containsKey("result")) {
+      //   final List<dynamic> list = decodedJson["result"];
+      //   print(list);
+      //   for (var i in list) {
+      //     final temp = OrderData.fromJson(i);
+      //     orderList.add(temp);
+      //   }
+      // } else {
+      //   log("Error: 'result' key not found in the JSON response.");
+      // }
     }
+    else
+      {
+        log("error");
+      }
+    // print(orderList);
     return orderList;
   }
 }
