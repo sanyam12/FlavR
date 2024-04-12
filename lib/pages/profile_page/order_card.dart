@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flavr/features/orders_list/presentation/widgets/order_details_overlay.dart';
 import 'package:flavr/pages/profile_page/OrderData.dart';
 import 'package:flutter/material.dart';
@@ -207,7 +209,7 @@ class OrderCard extends StatelessWidget {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                if (data.products.isNotEmpty)
+                                if (data.products.isNotEmpty && data.products[0].quantity != 0)
                                   Text(
                                     "${data.products[0].quantity} x ${data.products[0].productName}",
                                     style: TextStyle(
@@ -218,7 +220,7 @@ class OrderCard extends StatelessWidget {
                                           GoogleFonts.poppins().fontFamily,
                                     ),
                                   ),
-                                if (data.products.length >= 2)
+                                if (data.products.length >= 2 && data.products[1].quantity != 0)
                                   Text(
                                     "${data.products[1].quantity} x ${data.products[1].productName}",
                                     style: TextStyle(

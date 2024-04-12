@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/features/orders_list/bloc/orders_list_bloc.dart';
@@ -22,6 +24,7 @@ class _OrdersListState extends State<OrdersList> {
   void initState() {
     super.initState();
     context.read<OrdersListBloc>().add(GetProfileData());
+
   }
 
   @override
@@ -38,6 +41,7 @@ class _OrdersListState extends State<OrdersList> {
             }
             if (state is ProfileDataState) {
               list = state.list;
+              log(list.toString());
             }
           },
           builder: (context, state) {
@@ -123,7 +127,6 @@ class _OrdersListState extends State<OrdersList> {
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-
                           for (var i in list)
                             OrderCard(
                               width: width,

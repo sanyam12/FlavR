@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +32,9 @@ class _OrderDetailsOverlayState extends State<OrderDetailsOverlay> {
 
   @override
   Widget build(BuildContext context) {
+
+    // log(widget.data.products.toString());
+    int total_price = 0;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return SizedBox(
@@ -160,36 +166,40 @@ class _OrderDetailsOverlayState extends State<OrderDetailsOverlay> {
                           ),
                         ),
                       ),
+                      // "${data.products[0].quantity} x ${data.products[0].productName}",
                       for(var i in widget.data.products)
+                        if (i.quantity != 0)
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "${i.productName} (${i.variant})",
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.currency_rupee,
-                                  color: Color(0xff000000),
-                                  size: 12,
-                                ),
+
                                 Text(
-                                  "150",
-                                  style: TextStyle(
+                                  "${i.quantity} ${i.productName} (${i
+                                      .variant})",
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                     color: Color(0xff000000),
                                   ),
                                 ),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.currency_rupee,
+                                      color: Color(0xff000000),
+                                      size: 12,
+                                    ),
+                                    Text(
+                                      widget.data.totalPrice.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff000000),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
-                            ),
-                          ],
                         ),
                       Padding(
                         padding:

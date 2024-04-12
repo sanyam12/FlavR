@@ -4,6 +4,7 @@ import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flavr/features/cart/bloc/cart_bloc.dart';
+import 'package:flavr/features/orders_list/presentation/screens/orders_list.dart';
 import 'package:flavr/pages/ordernumber/OrderNumber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,14 +85,7 @@ class _CartPageState extends State<CartPage> {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.message)));
             } else if (state is NavigateToOrderNumber) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OrderNumber(
-                    orderId: state.orderNumber,
-                  ),
-                ),
-              );
+              Navigator.of(context).pushNamed("/order_list");
               cart.items.clear();
             } else if (state is StartCashFreeService) {
               cfPaymentGatewayService.doPayment(state.cfDropCheckoutPayment);
@@ -458,7 +452,10 @@ class _CartPageState extends State<CartPage> {
                   width: 0.90833 * width,
                   child: ElevatedButton(
                     onPressed: () {
+                      log(instructionController.text);
+                      log(cart.toString());
                       context.read<CartBloc>().add(
+
                             ProceedToPay(
                               cart,
                               instructionController.text,
