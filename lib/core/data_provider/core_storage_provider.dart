@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CoreStorageProvider {
@@ -17,7 +19,9 @@ class CoreStorageProvider {
 
   updateToken(token )async{
     try{
+      log("pre write token");
       await service.write(key: "token", value: token);
+      log("post write token");
     } catch(e){
       rethrow;
     }

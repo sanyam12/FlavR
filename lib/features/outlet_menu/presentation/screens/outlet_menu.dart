@@ -14,7 +14,7 @@ import 'package:flavr/features/outlet_menu/presentation/widgets/menu_screen/shim
 import 'package:flavr/features/outlet_menu/presentation/widgets/menu_screen/shimmer_cateogry_menu.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/menu_screen/top_row.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/menu_screen/veg_selector.dart';
-import 'package:flavr/pages/profile_page/OrderData.dart';
+import 'package:flavr/pages/profile_page/data/models/OrderData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';

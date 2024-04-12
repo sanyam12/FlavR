@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/core/components/shimmer.dart';
 import 'package:flavr/core/constants.dart';
@@ -23,7 +22,8 @@ import 'package:flavr/features/cart/bloc/cart_bloc.dart';
 import 'package:flavr/pages/edit_profile/EditProfile.dart';
 import 'package:flavr/pages/home_page/HomePage.dart';
 import 'package:flavr/pages/payment/payment.dart';
-import 'package:flavr/pages/profile_page/ProfiePage.dart';
+import 'package:flavr/pages/profile_page/bloc/profile_bloc.dart';
+import 'package:flavr/pages/profile_page/presentation/screens/ProfiePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,13 +54,13 @@ import 'features/splash_screen/presentation/screens/splash_screen.dart';
 import 'firebase_options.dart';
 import 'package:http/http.dart' as http;
 
-@pragma("vm:entry-point")
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions().currentPlatform,
-  );
-  log("Handling a background message: ${message.messageId}");
-}
+// @pragma("vm:entry-point")
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions().currentPlatform,
+//   );
+//   log("Handling a background message: ${message.messageId}");
+// }
 
 void main() async {
   await dotenv.load();
@@ -69,7 +69,7 @@ void main() async {
     options: DefaultFirebaseOptions().currentPlatform,
   );
 
-  final fcmToken = await FirebaseMessaging.instance.getToken();
+  // final fcmToken = await FirebaseMessaging.instance.getToken();
   // TODO: Request permission
   // TODO: Register with FCM
   // TODO: Set up foreground message handler
@@ -84,7 +84,7 @@ void main() async {
     return true;
   };
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(const MyApp());
 }
@@ -217,6 +217,9 @@ class _MyAppState extends State<MyApp> {
               BlocProvider(
                 create: (context) => VariantBloc(),
               ),
+              BlocProvider(
+                create: (context) => ProfileBloc(),
+              )
             ],
             child: MaterialApp(
               title: 'FlavR',

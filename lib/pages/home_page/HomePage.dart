@@ -1,5 +1,5 @@
 import 'package:flavr/pages/order_history/OrderHistory.dart';
-import 'package:flavr/pages/profile_page/ProfiePage.dart';
+import 'package:flavr/pages/profile_page/presentation/screens/ProfiePage.dart';
 import 'package:flutter/material.dart';
 
 import '../../features/outlet_menu/presentation/screens/outlet_menu.dart';

@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flavr/features/outlet_menu/bloc/menu_screen/outlet_menu_bloc.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/full_variant_list/full_variant_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../data/models/Product.dart';
@@ -82,8 +84,7 @@ class _MenuItemState extends State<MenuItem> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  width: 0.38 * widget.width,
+                                Flexible(
                                   child: Text(
                                     widget.product.name,
                                     overflow: TextOverflow.ellipsis,
@@ -134,37 +135,66 @@ class _MenuItemState extends State<MenuItem> {
   }
 
   Widget _getButtons() {
+    final buttonSize = 36.0;
+    final buttonStyle = ElevatedButton.styleFrom(
+      backgroundColor: const Color(0xFFF2F1F1),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      padding: EdgeInsets.zero,
+    );
     final list = widget.cart.items[widget.product];
     if (list != null && list.isNotEmpty) {
       return Row(
         children: [
-          ElevatedButton(
+          SizedBox(
+            width: buttonSize,
+            height: buttonSize,
+            child: ElevatedButton(
+              style: buttonStyle,
               onPressed: () {
                 context.read<OutletMenuBloc>().add(RemoveClicked(
                       widget.product,
                       widget.cart,
                     ));
               },
-              child: const Icon(Icons.remove)),
+              child: const Icon(
+                Icons.remove,
+                size: 14,
+              ),
+            ),
+          ),
+          const SizedBox(width: 8,),
           Text(_calculateTotalItem()),
-          ElevatedButton(
-            onPressed: () {
-              context.read<OutletMenuBloc>().add(AddClicked(
-                    widget.product,
-                    widget.cart,
-                  ));
-            },
-            child: const Icon(Icons.add),
+          const SizedBox(width: 8,),
+          SizedBox(
+            width: buttonSize,
+            height: buttonSize,
+            child: ElevatedButton(
+              style: buttonStyle,
+              onPressed: () {
+                context.read<OutletMenuBloc>().add(AddClicked(
+                      widget.product,
+                      widget.cart,
+                    ));
+              },
+              child: const Icon(
+                Icons.add,
+                size: 14,
+              ),
+            ),
           ),
         ],
       );
-    } else {
+    }
+    else {
       return ElevatedButton(
         style: ElevatedButton.styleFrom(
             backgroundColor: Colors.black,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7),
-            )),
+            ),
+        ),
         onPressed: () {
           context.read<OutletMenuBloc>().add(AddClicked(
                 widget.product,

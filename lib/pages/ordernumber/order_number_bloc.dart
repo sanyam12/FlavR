@@ -3,7 +3,7 @@ import 'package:flavr/core/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../profile_page/OrderData.dart';
+import '../profile_page/data/models/OrderData.dart';
 
 
 part 'order_number_event.dart';

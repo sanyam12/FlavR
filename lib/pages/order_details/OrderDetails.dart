@@ -2,13 +2,13 @@
 import 'dart:developer';
 
 import 'package:flavr/pages/order_details/order_details_bloc.dart';
-import 'package:flavr/pages/profile_page/OrderProductData.dart';
+import 'package:flavr/pages/profile_page/data/models/OrderProductData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-import '../profile_page/OrderData.dart';
+import '../profile_page/data/models/OrderData.dart';
 
 class OrderDetails extends StatefulWidget {
   final OrderData orderData;
