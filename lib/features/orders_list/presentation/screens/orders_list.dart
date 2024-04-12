@@ -1,11 +1,10 @@
 import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/features/orders_list/bloc/orders_list_bloc.dart';
-import 'package:flavr/pages/profile_page/OrderData.dart';
-import 'package:flavr/pages/profile_page/order_card.dart';
+import 'package:flavr/pages/profile_page/data/models/OrderData.dart';
+import 'package:flavr/pages/profile_page/presentation/widgets/order_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 
 class OrdersList extends StatefulWidget {

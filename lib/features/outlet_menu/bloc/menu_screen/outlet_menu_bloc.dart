@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:flavr/core/repository/core_cart_repository.dart';
 import 'package:flavr/features/cart/data/models/CartVariantData.dart';
 import 'package:flavr/features/outlet_menu/data/models/ProductVariantData.dart';
-import 'package:flavr/pages/profile_page/OrderData.dart';
+import 'package:flavr/pages/profile_page/data/models/OrderData.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../../cart/data/models/Cart.dart';

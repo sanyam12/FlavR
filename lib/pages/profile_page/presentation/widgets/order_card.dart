@@ -1,5 +1,5 @@
 import 'package:flavr/features/orders_list/presentation/widgets/order_details_overlay.dart';
-import 'package:flavr/pages/profile_page/OrderData.dart';
+import 'package:flavr/pages/profile_page/data/models/OrderData.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -135,7 +135,7 @@ class OrderCard extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xff000000),
+                                    color: const Color(0xff000000),
                                     fontFamily:
                                         GoogleFonts.poppins().fontFamily,
                                   ),
@@ -224,7 +224,7 @@ class OrderCard extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w700,
-                                      color: Color(0xff000000),
+                                      color: const Color(0xff000000),
                                       fontFamily:
                                           GoogleFonts.poppins().fontFamily,
                                     ),

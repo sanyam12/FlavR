@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../data/repository/login_repository.dart';
@@ -21,6 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         var json = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
+          log("bloc save token called");
           _loginRepository.saveToken(json["token"]);
           emit(LoginSuccessful());
         } else if (json["message"] ==

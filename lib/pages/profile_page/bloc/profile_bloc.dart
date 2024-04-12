@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'OrderData.dart';
+import '../data/models/OrderData.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -36,7 +36,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
           emit(ProfileDataState(userName, stream, email, profilePicUrl));
         }else{
-          emit(ShowSnackbar(response.body));
+          emit(ShowSnackBar(response.body));
         }
       }
     });

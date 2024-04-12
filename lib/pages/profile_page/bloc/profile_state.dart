@@ -30,11 +30,11 @@ class ProfileDataState extends ProfileState {
       ];
 }
 
-class ShowSnackbar extends ProfileState {
-  final String messsage;
+class ShowSnackBar extends ProfileState {
+  final String message;
 
-  const ShowSnackbar(this.messsage);
+  const ShowSnackBar(this.message);
 
   @override
-  List<Object?> get props => [messsage];
+  List<Object?> get props => [message];
 }

@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-import '../profile_page/OrderProductData.dart';
+import '../profile_page/data/models/OrderProductData.dart';
 
 class OrderNumber extends StatefulWidget {
   final String orderId;

@@ -23,7 +23,8 @@ import 'package:flavr/features/cart/bloc/cart_bloc.dart';
 import 'package:flavr/pages/edit_profile/EditProfile.dart';
 import 'package:flavr/pages/home_page/HomePage.dart';
 import 'package:flavr/pages/payment/payment.dart';
-import 'package:flavr/pages/profile_page/ProfiePage.dart';
+import 'package:flavr/pages/profile_page/bloc/profile_bloc.dart';
+import 'package:flavr/pages/profile_page/presentation/screens/ProfiePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -217,6 +218,9 @@ class _MyAppState extends State<MyApp> {
               BlocProvider(
                 create: (context) => VariantBloc(),
               ),
+              BlocProvider(
+                create: (context) => ProfileBloc(),
+              )
             ],
             child: MaterialApp(
               title: 'FlavR',

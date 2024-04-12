@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../pages/profile_page/OrderData.dart';
+import '../../../../pages/profile_page/data/models/OrderData.dart';
 
 class OrderDetailsOverlay extends StatefulWidget {
   final OrderData data;
