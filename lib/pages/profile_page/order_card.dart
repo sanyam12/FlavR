@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
-class OrderCard extends StatelessWidget {
+class OrderCard extends StatefulWidget {
   final double width;
   final double height;
   final OrderData data;
@@ -16,6 +16,13 @@ class OrderCard extends StatelessWidget {
       required this.width,
       required this.height,
       required this.data});
+
+  @override
+  State<OrderCard> createState() => _OrderCardState();
+}
+
+class _OrderCardState extends State<OrderCard> {
+  bool isShowMoreRequired = false;
 
   String _formatDate(DateTime dateTime) {
     final DateFormat formatter = DateFormat('dd MMM, yyyy');
@@ -27,6 +34,49 @@ class OrderCard extends StatelessWidget {
     return formatter.format(dateTime);
   }
 
+  List<Widget> checklist(){
+
+    int count =0;
+    List <Widget> list = [];
+    for(var i in widget.data.products)
+      {
+        if(count < 2 && i.quantity != 0)
+          {
+            count++;
+            list.add(
+                Text(
+                  "${widget.data.products[0].quantity} x ${widget.data.products[0].productName}",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xff000000),
+                    fontFamily:
+                    GoogleFonts.poppins().fontFamily,
+                  ),
+                )
+            );
+          }
+        if(count >= 2)
+          {
+            isShowMoreRequired = true;
+          }
+      }
+    return list;
+    // if (data.products.isNotEmpty)
+    //
+    // if (data.products.length >= 2)
+    //   Text(
+    // "${data.products[1].quantity} x ${data.products[1].productName}",
+    // style: TextStyle(
+    // fontSize: 12,
+    // fontWeight: FontWeight.w700,
+    // color: Color(0xff000000),
+    // fontFamily:
+    // GoogleFonts.poppins().fontFamily,
+    // ),
+    // ),
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -34,7 +84,7 @@ class OrderCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Container(
-          width: width * 0.886111,
+          width: widget.width * 0.886111,
           color: Colors.black,
           child: GestureDetector(
             onTap: () {
@@ -43,20 +93,20 @@ class OrderCard extends StatelessWidget {
                 backgroundColor: Colors.transparent,
                 context: context,
                 builder: (context) {
-                  return OrderDetailsOverlay(data:data);
+                  return OrderDetailsOverlay(data:widget.data);
                 },
               );
             },
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0.013889 * width,
-                      0.00625 * height, 0.013889 * width, 0.00625 * height),
+                  padding: EdgeInsets.fromLTRB(0.013889 * widget.width,
+                      0.00625 * widget.height, 0.013889 * widget.width, 0.00625 * widget.height),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        _formatDate(data.createdAt),
+                        _formatDate(widget.data.createdAt),
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -76,7 +126,7 @@ class OrderCard extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        _formatTime(data.createdAt),
+                        _formatTime(widget.data.createdAt),
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -94,10 +144,10 @@ class OrderCard extends StatelessWidget {
                     children: [
                       Padding(
                         padding: EdgeInsets.fromLTRB(
-                            0.013889 * width,
-                            0.00625 * height,
-                            0.013889 * width,
-                            0.00625 * height),
+                            0.013889 * widget.width,
+                            0.00625 * widget.height,
+                            0.013889 * widget.width,
+                            0.00625 * widget.height),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -114,7 +164,7 @@ class OrderCard extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  data.orderNumber?.toString() ?? "NA",
+                                  widget.data.orderNumber?.toString() ?? "NA",
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -133,7 +183,7 @@ class OrderCard extends StatelessWidget {
                                   size: 16,
                                 ),
                                 Text(
-                                  data.totalPrice.toString(),
+                                  widget.data.totalPrice.toString(),
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -149,10 +199,10 @@ class OrderCard extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(
-                          0.013889 * width,
-                          0.00625 * height,
-                          0.013889 * width,
-                          0.00625 * height,
+                          0.013889 * widget.width,
+                          0.00625 * widget.height,
+                          0.013889 * widget.width,
+                          0.00625 * widget.height,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,12 +210,12 @@ class OrderCard extends StatelessWidget {
                           children: [
                             Stack(
                               children: [
-                                if (data.products.length >= 3)
+                                if (widget.data.products.length >= 3)
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                      0.1112 * width,
+                                      0.1112 * widget.width,
                                       0,
-                                      0.0556 * width,
+                                      0.0556 * widget.width,
                                       0,
                                     ),
                                     child: CircleAvatar(
@@ -173,16 +223,16 @@ class OrderCard extends StatelessWidget {
                                       radius: 32,
                                       child: ClipOval(
                                         child: Image.network(
-                                            data.products[2].imageUrl),
+                                            widget.data.products[2].imageUrl),
                                       ),
                                     ),
                                   ),
-                                if (data.products.length >= 2)
+                                if (widget.data.products.length >= 2)
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(
-                                      0.0556 * width,
+                                      0.0556 * widget.width,
                                       0,
-                                      0.0556 * width,
+                                      0.0556 * widget.width,
                                       0,
                                     ),
                                     child: CircleAvatar(
@@ -190,17 +240,17 @@ class OrderCard extends StatelessWidget {
                                       radius: 32,
                                       child: ClipOval(
                                         child: Image.network(
-                                            data.products[1].imageUrl),
+                                            widget.data.products[1].imageUrl),
                                       ),
                                     ),
                                   ),
-                                if (data.products.isNotEmpty)
+                                if (widget.data.products.isNotEmpty)
                                   CircleAvatar(
                                     backgroundColor: Colors.white,
                                     radius: 32,
                                     child: ClipOval(
                                       child: Image.network(
-                                        data.products[0].imageUrl,
+                                        widget.data.products[0].imageUrl,
                                       ),
                                     ),
                                   )
@@ -208,37 +258,15 @@ class OrderCard extends StatelessWidget {
                             ),
                             Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                if (data.products.isNotEmpty && data.products[0].quantity != 0)
-                                  Text(
-                                    "${data.products[0].quantity} x ${data.products[0].productName}",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xff000000),
-                                      fontFamily:
-                                          GoogleFonts.poppins().fontFamily,
-                                    ),
-                                  ),
-                                if (data.products.length >= 2 && data.products[1].quantity != 0)
-                                  Text(
-                                    "${data.products[1].quantity} x ${data.products[1].productName}",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w700,
-                                      color: Color(0xff000000),
-                                      fontFamily:
-                                          GoogleFonts.poppins().fontFamily,
-                                    ),
-                                  ),
-                                // if(data.products.length>=3)
-                              ],
+                              children:
+                               checklist()
+
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                if (data.products.isNotEmpty)
+                                if (widget.data.products.isNotEmpty)
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
@@ -248,7 +276,7 @@ class OrderCard extends StatelessWidget {
                                         color: Color(0xff004932),
                                       ),
                                       Text(
-                                        "${data.products[0].price}",
+                                        "${widget.data.products[0].price}",
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
@@ -259,7 +287,7 @@ class OrderCard extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                if (data.products.length >= 2)
+                                if (widget.data.products.length >= 2)
                                   Row(
                                     children: [
                                       const Icon(
@@ -268,7 +296,7 @@ class OrderCard extends StatelessWidget {
                                         color: Color(0xff004932),
                                       ),
                                       Text(
-                                        "${data.products[1].price}",
+                                        "${widget.data.products[1].price}",
                                         style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w700,
@@ -279,7 +307,7 @@ class OrderCard extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                if (data.products.length >= 3)
+                                if (isShowMoreRequired == true)
                                   Text(
                                     "And More...",
                                     style: TextStyle(
@@ -297,15 +325,15 @@ class OrderCard extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(
-                            0.013889 * width,
-                            0.00625 * height,
-                            0.013889 * width,
-                            0.00625 * height),
+                            0.013889 * widget.width,
+                            0.00625 * widget.height,
+                            0.013889 * widget.width,
+                            0.00625 * widget.height),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              data.status,
+                              widget.data.status,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -314,7 +342,7 @@ class OrderCard extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              _formatTime(data.createdAt),
+                              _formatTime(widget.data.createdAt),
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
