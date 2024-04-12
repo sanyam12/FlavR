@@ -64,6 +64,7 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
     try {
       await _repository.setSelectedOutlet(event.id);
       emit(OutletSelected(event.id));
+      emit(OutletListNeutral());
     } catch (e) {
       emit(ErrorOccurred(e.toString()));
     }

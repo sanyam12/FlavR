@@ -77,3 +77,8 @@ class ErrorOccurred extends OutletListState{
   List<Object?> get props => [message];
 
 }
+
+class OutletListNeutral extends OutletListState {
+  @override
+  List<Object?> get props => [];
+}
