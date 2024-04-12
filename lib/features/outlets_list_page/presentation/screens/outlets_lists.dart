@@ -17,7 +17,7 @@ import '../../bloc/outlet_list_bloc.dart';
 import '../widgets/outlet_card.dart';
 
 class OutletsList extends StatefulWidget {
-  const OutletsList({Key? key}) : super(key: key);
+  const OutletsList({super.key});
 
   @override
   State<OutletsList> createState() => _OutletsListState();

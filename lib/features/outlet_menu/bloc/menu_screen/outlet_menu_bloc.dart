@@ -255,5 +255,6 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
   ) {
     emit(OutletMenuLoading());
     emit(NavigateToOutletList());
+    emit(NeutralOutletMenu());
   }
 }

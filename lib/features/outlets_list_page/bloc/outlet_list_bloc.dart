@@ -38,6 +38,7 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
       throw Exception("Response ${response.statusCode}");
     } catch (e) {
       emit(ErrorOccurred("Couldn't fetch username ${e.toString()}"));
+      emit(OutletListInitial());
     }
   }
 
@@ -64,8 +65,10 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
     try {
       await _repository.setSelectedOutlet(event.id);
       emit(OutletSelected(event.id));
+      emit(OutletListInitial());
     } catch (e) {
       emit(ErrorOccurred(e.toString()));
+      emit(OutletListInitial());
     }
   }
 
@@ -78,7 +81,7 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
       final idList = await _repository.getSavedOutletsID();
       final responseList = await _repository.getSavedOutletList(token, idList);
       final List<Outlet> outletLists = [];
-      for(var i in responseList){
+      for (var i in responseList) {
         final json = jsonDecode(i);
         if (json["result"] != null && (json["result"] as List).isNotEmpty) {
           outletLists.add(Outlet.fromJson(json["result"][0]));
@@ -90,6 +93,7 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
       emit(GetSavedOutletListState(list: outletLists));
     } catch (e) {
       emit(ErrorOccurred(e.toString()));
+      emit(OutletListInitial());
     }
   }
 
@@ -134,8 +138,10 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
         .toList();
 
     emit(GetSearchResultState(
-        allOutletList: allOutlets,
-        savedOutletList: savedOutlets,
-        query: event.query));
+      allOutletList: allOutlets,
+      savedOutletList: savedOutlets,
+      query: event.query,
+    ));
+    emit(OutletListInitial());
   }
 }
