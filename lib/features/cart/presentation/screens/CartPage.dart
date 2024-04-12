@@ -4,8 +4,6 @@ import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/core/components/loading.dart';
 import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flavr/features/cart/bloc/cart_bloc.dart';
-import 'package:flavr/features/orders_list/presentation/screens/orders_list.dart';
-import 'package:flavr/pages/ordernumber/OrderNumber.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';

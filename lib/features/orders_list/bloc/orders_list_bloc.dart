@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flavr/core/constants.dart';
 import 'package:flavr/core/data_provider/core_storage_provider.dart';
-import 'package:flavr/pages/profile_page/data/models/OrderData.dart';
+import 'package:flavr/features/profile_page/data/models/OrderData.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 

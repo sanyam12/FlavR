@@ -19,11 +19,10 @@ import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_api_pr
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart';
 import 'package:flavr/features/outlet_menu/data/repository/outlet_menu_repository.dart';
 import 'package:flavr/features/cart/bloc/cart_bloc.dart';
+import 'package:flavr/features/profile_page/bloc/profile_bloc.dart';
+import 'package:flavr/features/profile_page/presentation/screens/ProfiePage.dart';
 import 'package:flavr/pages/edit_profile/EditProfile.dart';
-import 'package:flavr/pages/home_page/HomePage.dart';
 import 'package:flavr/pages/payment/payment.dart';
-import 'package:flavr/pages/profile_page/bloc/profile_bloc.dart';
-import 'package:flavr/pages/profile_page/presentation/screens/ProfiePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -236,7 +235,6 @@ class _MyAppState extends State<MyApp> {
                 "/signUp": (context) => const SignUp(),
                 "/outletList": (context) => const OutletsList(),
                 "/outletMenu": (context) => const OutletMenu(),
-                "/homePage": (context) => const HomePage(),
                 "/profile": (context) => const ProfilePage(),
                 "/payment": (context) => const Payment(),
                 "/edit_profile": (context) => const EditProfile(),

@@ -145,22 +145,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
-  device_info_plus:
-    dependency: transitive
-    description:
-      name: device_info_plus
-      sha256: "77f757b789ff68e4eaf9c56d1752309bd9f7ad557cb105b938a7f8eb89e59110"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.1.2"
-  device_info_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: device_info_plus_platform_interface
-      sha256: d3b01d5868b50ae571cd1dc6e502fc94d956b665756180f7b16ead09e836fd64
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.0.0"
   equatable:
     dependency: "direct main"
     description:
@@ -326,14 +310,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.1"
-  flutter_otp_text_field:
-    dependency: "direct main"
-    description:
-      name: flutter_otp_text_field
-      sha256: c9164ba391071fb9783698256ddbb9efc960cfed056d843db164711c65b1b114
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -456,14 +432,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.12.3+2"
-  graphs:
-    dependency: transitive
-    description:
-      name: graphs
-      sha256: aedc5a15e78fc65a6e23bcd927f24c64dd995062bcd1ca6eda65a3cff92a4d19
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.1"
   http:
     dependency: "direct main"
     description:
@@ -552,22 +520,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  logger:
-    dependency: transitive
-    description:
-      name: logger
-      sha256: "8c94b8c219e7e50194efc8771cd0e9f10807d8d3e219af473d89b06cc2ee4e04"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
-  lottie:
-    dependency: "direct main"
-    description:
-      name: lottie
-      sha256: ce2bb2605753915080e4ee47f036a64228c88dc7f56f7bc1dbe912d75b55b1e2
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
   matcher:
     dependency: transitive
     description:
@@ -592,14 +544,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
-  mobile_scanner:
-    dependency: "direct main"
-    description:
-      name: mobile_scanner
-      sha256: "827765afbd4792ff3fd105ad593821ac0f6d8a7d352689013b07ee85be336312"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.1"
   nested:
     dependency: transitive
     description:
@@ -720,30 +664,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.2"
-  rename:
-    dependency: "direct main"
-    description:
-      name: rename
-      sha256: "6ef5daf4b11130e71d93630cfb70725e5a35b19039739cfcd2b272c834ba25fe"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.2"
-  rive:
-    dependency: "direct main"
-    description:
-      name: rive
-      sha256: ec44b6cf7341e21727c4b0e762f4ac82f9a45f7e52df3ebad2d1289a726fbaaf
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.13.1"
-  rive_common:
-    dependency: transitive
-    description:
-      name: rive_common
-      sha256: "0f070bc0e764c570abd8b34d744ef30d1292bd4051f2e0951bbda755875fce6a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.3"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -800,35 +720,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
-  shimmer:
-    dependency: "direct main"
-    description:
-      name: shimmer
-      sha256: "5f88c883a22e9f9f299e5ba0e4f7e6054857224976a5d9f839d4ebdc94a14ac9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.99"
-  slidable_button:
-    dependency: "direct main"
-    description:
-      name: slidable_button
-      sha256: "8a20672f226898ff5ddaca38ebe87069020dc8d1b2512857b5ed335af0d7c893"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0+1"
-  slider_button:
-    dependency: "direct main"
-    description:
-      name: slider_button
-      sha256: dd0cb7e6658c817932767a063b98ec56b71d72bb12eb377e265e6a3727b070e7
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.0"
   source_span:
     dependency: transitive
     description:
@@ -917,14 +813,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
-  vibration:
-    dependency: transitive
-    description:
-      name: vibration
-      sha256: "778ace40e84852e6cf6017cdbaf6790a837d73ff3dd50b27da9ac232a19de8fc"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.8.4"
   vm_service:
     dependency: transitive
     description:
@@ -949,14 +837,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.2.0"
-  win32_registry:
-    dependency: transitive
-    description:
-      name: win32_registry
-      sha256: "41fd8a189940d8696b1b810efb9abcf60827b6cbfab90b0c43e8439e3a39d85a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.2"
   xdg_directories:
     dependency: transitive
     description:

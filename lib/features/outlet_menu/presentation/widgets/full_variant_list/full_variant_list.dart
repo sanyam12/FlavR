@@ -229,7 +229,7 @@ class _FullVariantsListState extends State<FullVariantsList> {
                                         fontSize: 20,
                                       ),
                                     ),
-                                    Image.asset("assets/images/veg_icon.png"),
+                                    Image.asset("assets/images/vegetarian48.png"),
                                   ],
                                 ),
                               ),

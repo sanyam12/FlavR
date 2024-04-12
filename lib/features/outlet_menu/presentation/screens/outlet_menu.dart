@@ -14,11 +14,11 @@ import 'package:flavr/features/outlet_menu/presentation/widgets/menu_screen/shim
 import 'package:flavr/features/outlet_menu/presentation/widgets/menu_screen/shimmer_cateogry_menu.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/menu_screen/top_row.dart';
 import 'package:flavr/features/outlet_menu/presentation/widgets/menu_screen/veg_selector.dart';
-import 'package:flavr/pages/profile_page/data/models/OrderData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../cart/data/models/Cart.dart';
+import '../../../profile_page/data/models/OrderData.dart';
 import '../../data/models/Categories.dart';
 import '../../bloc/menu_screen/outlet_menu_bloc.dart';
 import '../widgets/menu_screen/category_menu.dart';

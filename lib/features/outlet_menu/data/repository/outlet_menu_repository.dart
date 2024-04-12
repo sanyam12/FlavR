@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flavr/features/outlet_menu/data/data_provider/outlet_menu_storage_provider.dart';
 import 'package:flavr/features/outlet_menu/data/models/Categories.dart';
 import 'package:flavr/features/outlet_menu/data/models/Outlet.dart';
-import 'package:flavr/pages/profile_page/data/models/OrderData.dart';
 import '../../../cart/data/models/Cart.dart';
+import '../../../profile_page/data/models/OrderData.dart';
 import '../data_provider/outlet_menu_api_provider.dart';
 
 class OutletMenuRepository{

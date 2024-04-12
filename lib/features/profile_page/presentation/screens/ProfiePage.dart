@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/data_provider/core_storage_provider.dart';
-import 'package:flavr/pages/profile_page/bloc/profile_bloc.dart';
+import 'package:flavr/features/profile_page/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
