@@ -21,7 +21,6 @@ class OrdersListBloc extends Bloc<OrdersListEvent, OrdersListState> {
         try{
           final token = await _coreStorageProvider.getToken();
           List<OrderData> stream = await getOrders(token.toString());
-          throw Exception("message");
           emit(ProfileDataState(stream));
         }catch(e){
           emit(ShowSnackbar(e.toString()));
