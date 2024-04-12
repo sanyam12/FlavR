@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/core/components/shimmer.dart';
 import 'package:flavr/core/constants.dart';
@@ -55,13 +54,13 @@ import 'features/splash_screen/presentation/screens/splash_screen.dart';
 import 'firebase_options.dart';
 import 'package:http/http.dart' as http;
 
-@pragma("vm:entry-point")
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions().currentPlatform,
-  );
-  log("Handling a background message: ${message.messageId}");
-}
+// @pragma("vm:entry-point")
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions().currentPlatform,
+//   );
+//   log("Handling a background message: ${message.messageId}");
+// }
 
 void main() async {
   await dotenv.load();
@@ -70,7 +69,7 @@ void main() async {
     options: DefaultFirebaseOptions().currentPlatform,
   );
 
-  final fcmToken = await FirebaseMessaging.instance.getToken();
+  // final fcmToken = await FirebaseMessaging.instance.getToken();
   // TODO: Request permission
   // TODO: Register with FCM
   // TODO: Set up foreground message handler
@@ -85,7 +84,7 @@ void main() async {
     return true;
   };
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(const MyApp());
 }
