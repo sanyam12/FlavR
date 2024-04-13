@@ -1,0 +1,34 @@
+{
+  "name": "flutter_cashfree_pg_sdk",
+  "version": "0.0.1",
+  "summary": "A new Flutter plugin project.",
+  "description": "A new Flutter plugin project.",
+  "homepage": "http://cashfree.com",
+  "license": {
+    "file": "../LICENSE"
+  },
+  "authors": {
+    "Cashfree Payments": "develoeprs@cashfree.com"
+  },
+  "source": {
+    "path": "."
+  },
+  "source_files": "Classes/**/*",
+  "dependencies": {
+    "Flutter": [
+
+    ],
+    "CashfreePG": [
+      "~> 2.0.9"
+    ]
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "pod_target_xcconfig": {
+    "DEFINES_MODULE": "YES",
+    "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "i386"
+  },
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
+}

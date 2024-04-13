@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "504489315010",
+    "project_id": "flavr-c527b",
+    "storage_bucket": "flavr-c527b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504489315010:android:74ba6e0c6a61db2e59095b",
+        "android_client_info": {
+          "package_name": "com.example.flavr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504489315010-h6rh9b3405iliftjmp3l5fu6ipt25ma4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flavr",
+            "certificate_hash": "6d28a4b11c56f117064b20c3a3d396f049657264"
+          }
+        },
+        {
+          "client_id": "504489315010-mcbrk1k84mp5ml0bf2ml351cnpllj851.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flavr",
+            "certificate_hash": "f13174fad264bc18f4372b2c446ba9af407a7296"
+          }
+        },
+        {
+          "client_id": "504489315010-ogi1gl62fbmkjlshogak7ddg5bf0rrvu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flavr",
+            "certificate_hash": "00ed4118801ddf1ab28b133345af35f6755c2436"
+          }
+        },
+        {
+          "client_id": "504489315010-977njsjedt9jcl0b34d7h94ge28trepv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDADWA3r8MvQ4WhfZyCt0vpHF6q0yWwCFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504489315010-977njsjedt9jcl0b34d7h94ge28trepv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "504489315010-2m51cb97ritbdne2pi8vlqtfbmp9hhv6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flavr.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
