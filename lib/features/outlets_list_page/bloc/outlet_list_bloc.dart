@@ -15,31 +15,12 @@ class OutletListBloc extends Bloc<OutletListEvent, OutletListState> {
   final OutletListRepository _repository;
 
   OutletListBloc(this._repository) : super(OutletListInitial()) {
-    on<UsernameRequested>(_getUsername);
     on<OnProfileButtonClicked>(_onProfileButtonClicked);
     on<GetSavedOutletList>(_getSavedOutletList);
     on<GetAllOutletsList>(_getAllOutletsList);
     on<OnAddToFav>(_onAddToFav);
     on<OnOutletSelection>(_onOutletSelection);
     on<OnSearchEvent>(_onSearchEvent);
-  }
-
-  void _getUsername(
-    OutletListEvent event,
-    Emitter<OutletListState> emit,
-  ) async {
-    try {
-      final response = await _repository.getUsername();
-      if (response.statusCode == 201) {
-        final json = jsonDecode(response.body);
-        return emit(
-            UsernameFetchedState(json["user"][0]["userName"].toString()));
-      }
-      throw Exception("Response ${response.statusCode}");
-    } catch (e) {
-      emit(ErrorOccurred("Couldn't fetch username ${e.toString()}"));
-      emit(OutletListInitial());
-    }
   }
 
   void _onProfileButtonClicked(

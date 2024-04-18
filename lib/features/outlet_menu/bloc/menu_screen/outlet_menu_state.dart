@@ -37,8 +37,6 @@ class RefreshedOutletData extends OutletMenuState {
   //TODO: Incomplete orders list
   final String outletName;
   final List<Categories> menuList;
-  final Cart cart;
-  final List<OrderData> incompleteOrders;
 
   // final List<Product> productList;
   // final List<OrderDataClass.OrderData> incompleteOrders;
@@ -46,12 +44,10 @@ class RefreshedOutletData extends OutletMenuState {
   const RefreshedOutletData(
     this.outletName,
     this.menuList,
-    this.cart,
-    this.incompleteOrders,
   );
 
   @override
-  List<Object?> get props => [outletName];
+  List<Object?> get props => [outletName, menuList];
 }
 
 //update variables

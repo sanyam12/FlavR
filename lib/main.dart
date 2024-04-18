@@ -1,11 +1,7 @@
-import 'dart:developer';
 import 'dart:ui';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flavr/core/CartChangeProvider.dart';
-import 'package:flavr/core/components/shimmer.dart';
-import 'package:flavr/core/constants.dart';
 import 'package:flavr/core/data_provider/core_api_provider.dart';
 import 'package:flavr/core/data_provider/core_storage_provider.dart';
 import 'package:flavr/core/repository/core_cart_repository.dart';

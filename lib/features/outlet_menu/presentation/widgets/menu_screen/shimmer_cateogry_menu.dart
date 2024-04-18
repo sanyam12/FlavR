@@ -21,16 +21,14 @@ class _ShimmerCategoryMenuState extends State<ShimmerCategoryMenu> {
   Widget build(BuildContext context) {
     return ShimmerLoading(
       isLoading: true,
-      child: Container(
-        child: Column(
-          children: [
-            for (int i = 0; i < 6; i++)
-              ShimmerMenuItem(
-                width: widget.width,
-                height: widget.height,
-              ),
-          ],
-        ),
+      child: Column(
+        children: [
+          for (int i = 0; i < 6; i++)
+            ShimmerMenuItem(
+              width: widget.width,
+              height: widget.height,
+            ),
+        ],
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flavr/core/constants.dart';
 import 'package:flavr/core/data_provider/core_storage_provider.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,14 +16,6 @@ class OutletListStorageProvider{
       rethrow;
     }
 
-  }
-
-  Future<Response> getUsername()async{
-    final token = await getToken();
-    Response response = await get(
-        Uri.parse("${API_DOMAIN}user/userprofile"),
-        headers: {"Authorization": "Bearer $token"});
-    return response;
   }
 
   Future<void> setSelectedOutlet(String id) async {

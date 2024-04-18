@@ -10,7 +10,7 @@ class OutletListApiProvider {
 
   dynamic getAllOutlets() async {
     final response =
-        await get(Uri.parse("${API_DOMAIN}outlet/getAllOutlets"));
+        await client.get(Uri.parse("${API_DOMAIN}outlet/getAllOutlets"));
     return jsonDecode(response.body);
   }
 

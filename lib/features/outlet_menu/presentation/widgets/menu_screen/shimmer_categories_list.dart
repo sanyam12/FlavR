@@ -21,20 +21,18 @@ class _ShimmerCategoriesListState extends State<ShimmerCategoriesList> {
   Widget build(BuildContext context) {
     return ShimmerLoading(
       isLoading: true,
-      child: Container(
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 0.01625 * widget.height,
-          ),
-          child: SizedBox(
-            width: widget.width,
-            height: 120,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 6,
-              itemBuilder: (context, index) {
-                // return const Text("Pending 1");
-                return Card(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 0.01625 * widget.height,
+        ),
+        child: SizedBox(
+          width: widget.width,
+          height: 120,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              for (var i = 0; i < 4; i++)
+                Card(
                   color: Colors.black,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -44,9 +42,7 @@ class _ShimmerCategoriesListState extends State<ShimmerCategoriesList> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                          minWidth: 90
-                      ),
+                      constraints: const BoxConstraints(minWidth: 90),
                       child: Container(
                         color: Colors.black,
                         child: Column(
@@ -73,9 +69,8 @@ class _ShimmerCategoriesListState extends State<ShimmerCategoriesList> {
                       ),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
+            ],
           ),
         ),
       ),

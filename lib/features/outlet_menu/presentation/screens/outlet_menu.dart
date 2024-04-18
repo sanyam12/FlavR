@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flavr/core/CartChangeProvider.dart';
 import 'package:flavr/core/components/heading.dart';
 import 'package:flavr/core/components/shimmer.dart';
@@ -25,7 +23,7 @@ import '../widgets/menu_screen/category_menu.dart';
 
 //TODO price filters business logic pending
 class OutletMenu extends StatefulWidget {
-  const OutletMenu({Key? key}) : super(key: key);
+  const OutletMenu({super.key});
 
   @override
   State<OutletMenu> createState() => _OutletMenuState();
@@ -37,7 +35,6 @@ class _OutletMenuState extends State<OutletMenu> {
   late Cart cart;
   List<Categories> menuList = [];
   List<Categories> filteredMenuList = [];
-  List<OrderData> incompleteOrders = [];
   String selectedCategory = "All";
   String vegSelection = "normal";
 
@@ -100,12 +97,8 @@ class _OutletMenuState extends State<OutletMenu> {
                 }
                 if (state is RefreshedOutletData) {
                   outletName = state.outletName;
-                  cart = state.cart;
                   menuList = state.menuList;
                   filteredMenuList = state.menuList;
-                  incompleteOrders = state.incompleteOrders;
-
-                  context.read<CartChangeProvider>().updateCart(state.cart);
                 }
                 if (state is NavigateToOutletList) {
                   if (Navigator.of(context).canPop()) {

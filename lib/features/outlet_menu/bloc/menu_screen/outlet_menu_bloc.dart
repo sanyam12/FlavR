@@ -239,14 +239,12 @@ class OutletMenuBloc extends Bloc<OutletMenuEvent, OutletMenuState> {
     final token = await _coreCartRepository.getToken();
     final outlet = await _repository.getOutlet(token);
     final menu = await _repository.getOutletMenu(outlet.id);
-    final cart = await _repository.getCart(token, menu, outlet.id);
-    final incompleteOrders = await _repository.getIncompleteOrders(token);
     emit(RefreshedOutletData(
       outlet.outletName,
       menu,
-      cart,
-      incompleteOrders,
     ));
+    final cart = await _repository.getCart(token, menu, outlet.id);
+    emit(UpdatedCartState(cart));
   }
 
   _outletListClicked(

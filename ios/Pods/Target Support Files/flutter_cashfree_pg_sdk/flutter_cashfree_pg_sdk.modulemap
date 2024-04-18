@@ -1,6 +1,0 @@
-framework module flutter_cashfree_pg_sdk {
-  umbrella header "flutter_cashfree_pg_sdk-umbrella.h"
-
-  export *
-  module * { export * }
-}

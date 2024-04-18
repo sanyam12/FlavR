@@ -7,6 +7,69 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:504489315010:android:0f9253098e8d112959095b",
+        "android_client_info": {
+          "package_name": "com.bistroverse.flavr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504489315010-1c5lb1du7rtsqj2f9267ial2fa9ojdso.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bistroverse.flavr",
+            "certificate_hash": "f13174fad264bc18f4372b2c446ba9af407a7296"
+          }
+        },
+        {
+          "client_id": "504489315010-q4qkp05ffao0uu1u81fn5jk1guc44ncu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bistroverse.flavr",
+            "certificate_hash": "23eeb8d179aa613f66c30e01b4630977ac8cbc6d"
+          }
+        },
+        {
+          "client_id": "504489315010-qlkc7gnselrubseb5uccmubnbtsa1bpt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bistroverse.flavr",
+            "certificate_hash": "783290dbaacacd799cc0bbfc79087287abb4259c"
+          }
+        },
+        {
+          "client_id": "504489315010-977njsjedt9jcl0b34d7h94ge28trepv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhIaB3FUD6l5FVnyDubU77LfI0KG4NrgU"
+        },
+        {
+          "current_key": "AIzaSyDADWA3r8MvQ4WhfZyCt0vpHF6q0yWwCFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504489315010-977njsjedt9jcl0b34d7h94ge28trepv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "504489315010-2m51cb97ritbdne2pi8vlqtfbmp9hhv6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flavr.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:504489315010:android:74ba6e0c6a61db2e59095b",
         "android_client_info": {
           "package_name": "com.example.flavr"
@@ -43,6 +106,9 @@
         }
       ],
       "api_key": [
+        {
+          "current_key": "AIzaSyAhIaB3FUD6l5FVnyDubU77LfI0KG4NrgU"
+        },
         {
           "current_key": "AIzaSyDADWA3r8MvQ4WhfZyCt0vpHF6q0yWwCFY"
         }

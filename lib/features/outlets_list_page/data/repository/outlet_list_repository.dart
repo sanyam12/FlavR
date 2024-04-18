@@ -9,10 +9,6 @@ class OutletListRepository{
 
   OutletListRepository(this._storageProvider, this._apiProvider);
 
-  Future<Response> getUsername()async{
-    return await _storageProvider.getUsername();
-  }
-
   Future<List<Outlet>> getAllOutlets()async{
     final List<Outlet> list = [];
     final json = await _apiProvider.getAllOutlets();

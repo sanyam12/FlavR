@@ -30,7 +30,6 @@ class OutletMenuApiProvider {
   }
 
   Future<String> getCart(String token) async {
-    // return Cart();
     final response = await client.get(
         Uri.parse("${API_DOMAIN}user/getCartItems"),
         headers: {"Authorization": "Bearer $token"},

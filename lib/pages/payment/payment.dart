@@ -22,7 +22,7 @@ class _PaymentState extends State<Payment> {
   final orderIDController = TextEditingController();
   final sessionIDController = TextEditingController();
   String test = "test";
-  static const platform = MethodChannel('com.example.flavr/payment');
+  static const platform = MethodChannel('com.bistroverse.flavr/payment');
   String _batteryLevel = 'Unknown battery level.';
 
   Future<void> _getBatteryLevel() async{

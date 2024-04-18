@@ -1,11 +1,6 @@
-import 'dart:ui';
-
 import 'package:flavr/features/cart/data/models/Cart.dart';
 import 'package:flavr/features/outlet_menu/bloc/menu_screen/outlet_menu_bloc.dart';
-import 'package:flavr/features/outlet_menu/presentation/widgets/full_variant_list/full_variant_list.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../data/models/Product.dart';
