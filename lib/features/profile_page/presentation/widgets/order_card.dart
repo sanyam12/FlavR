@@ -81,7 +81,7 @@ class _OrderCardState extends State<OrderCard> {
       if (count >= 2) {
         list.add(
           Text(
-            "+ ${widget.data.products.length-1} more items...",
+            "+ ${widget.data.products.length - 1} more items...",
             style: const TextStyle(
               fontSize: 11,
               color: Color(0xFF004932),
@@ -230,7 +230,7 @@ class _OrderCardState extends State<OrderCard> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: 0.3333333333*width,
+                              width: 0.3333333333 * width,
                               child: Stack(
                                 children: [
                                   if (widget.data.products.length >= 3)
@@ -246,7 +246,8 @@ class _OrderCardState extends State<OrderCard> {
                                         radius: 32,
                                         child: ClipOval(
                                           child: Image.network(
-                                              widget.data.products[2].imageUrl),
+                                            widget.data.products[2].imageUrl,
+                                          ),
                                         ),
                                       ),
                                     ),
