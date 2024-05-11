@@ -3,6 +3,9 @@
 
 ![Demo](https://github.com/sanyam12/FlavR/assets/94290072/901f13a2-8e77-422a-b663-f811d6a38962)
 
+https://github.com/sanyam12/FlavR/assets/94290072/77bd7b1d-5d89-4171-89d5-668a8ed35499
+
+
 
 
 This food ordering project is a comprehensive solution that facilitates a seamless ordering process for users while providing efficient management tools for outlet owners. The project consists of two distinct apps developed using Flutter: a user app and an owner app.
