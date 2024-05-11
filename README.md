@@ -1,8 +1,6 @@
 
 # ![flavr (1)](https://github.com/mridul549/FlavR-Backend/assets/94969636/98f80461-cf23-4e8b-b6d2-3a6a435c434e)
 
-![Demo](https://github.com/sanyam12/FlavR/assets/94290072/901f13a2-8e77-422a-b663-f811d6a38962)
-
 https://github.com/sanyam12/FlavR/assets/94290072/77bd7b1d-5d89-4171-89d5-668a8ed35499
 
 
