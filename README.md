@@ -1,6 +1,9 @@
 
 # ![flavr (1)](https://github.com/mridul549/FlavR-Backend/assets/94969636/98f80461-cf23-4e8b-b6d2-3a6a435c434e)
 
+![Demo](https://github.com/sanyam12/FlavR/assets/94290072/901f13a2-8e77-422a-b663-f811d6a38962)
+
+
 
 This food ordering project is a comprehensive solution that facilitates a seamless ordering process for users while providing efficient management tools for outlet owners. The project consists of two distinct apps developed using Flutter: a user app and an owner app.
 
@@ -64,7 +67,7 @@ The user app can be used by the users to place orders on the food outlet of thei
 The website developed as part of the food ordering project serves as a comprehensive outlet management system for owners. Built using **React.js**, the website offers a user-friendly interface and a range of features that facilitate efficient management of the outlet's operations.
 
 #### Links
-* APK https://drive.google.com/file/d/1r3zALL1ghti6G4Kuf1EKPUbXFQCmP1Bt/view?usp=sharing
+* APK https://drive.google.com/file/d/1r3zALL1ghti6G4Kuf1EKPUbXFQCmP1Bt/view?usp=drive_link
 * Repo https://github.com/mridul549/ownerweb
 * Website live at https://flavr.onrender.com/
 
